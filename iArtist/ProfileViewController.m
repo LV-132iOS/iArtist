@@ -23,9 +23,32 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     self.nameLabel.text = (NSString*) [defaults objectForKey:@"username"];
     self.emailLabel.text = (NSString*) [defaults objectForKey:@"useremail"];
-    if ([defaults boolForKey:@"loggedInWithFacebook"] == YES) {
+    if ([defaults boolForKey:@"loggedInWithFacebook"]) {
         self.loggedinLabel.text = @"Facebook";
         self.changePasswordButton.hidden = YES;
+        
+        FBSession* session = [FBSession activeSession];
+
+        [session refreshPermissionsWithCompletionHandler:^(FBSession *session, NSError *error) {
+            if (error) {
+                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Facebook log-in error"
+                                                                    message:@"Please, try to log-in again"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles: nil];
+                [alertView show];
+                [session closeAndClearTokenInformation];
+                [defaults setBool:NO forKey:@"loggedIn"];
+                [defaults setBool:NO forKey:@"loggedInWithFacebook"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];
+                [session closeAndClearTokenInformation];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else{
+                NSLog(@"Everything is OK with FB session");
+            }
+        }];
+        
+        
     }
 }
 
@@ -51,6 +74,10 @@
         [session closeAndClearTokenInformation];
         [defaults setBool:NO forKey:@"loggedIn"];
         [defaults setBool:NO forKey:@"loggedInWithFacebook"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else if ([defaults boolForKey:@"loggedIn"]){
+        [defaults setBool:NO forKey:@"loggedIn"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];
         [self dismissViewControllerAnimated:YES completion:nil];
     }

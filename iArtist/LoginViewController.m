@@ -22,7 +22,7 @@
     // Do any additional setup after loading the view.
     FBdelegate = [[FacebookDelegate alloc] init];
     self.loginView.delegate = FBdelegate;
-    self.loginView.readPermissions = @[@"public_profile"];
+    self.loginView.readPermissions = @[@"public_profile", @"email"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(CloseView:)

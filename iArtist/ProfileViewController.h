@@ -13,8 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *loggedinLabel;
-@property (weak, nonatomic) IBOutlet UIButton *cartButton;
-@property (strong, nonatomic) IBOutlet UIButton *changePasswordButton;
-@property (weak, nonatomic) IBOutlet UIView *mainView;
+@property (weak, nonatomic) IBOutlet UIButton *changePasswordButton;
+
 
 @end
