@@ -77,6 +77,7 @@
     {
         [defaults setObject:[NSDate date] forKey:@"firstRun"];
         [defaults setBool:NO forKey:@"loggedIn"];
+        [defaults setBool:NO forKey:@"loggedInWithFacebook"];
         [defaults synchronize];
         [self performSegueWithIdentifier:@"FirstRunSegue" sender:nil];
     }

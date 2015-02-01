@@ -19,6 +19,15 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    self.nameLabel.text = (NSString*) [defaults objectForKey:@"username"];
+    self.emailLabel.text = (NSString*) [defaults objectForKey:@"useremail"];
+    if ([defaults boolForKey:@"loggedInWithFacebook"] == YES) {
+        self.loggedinLabel.text = @"Facebook";
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

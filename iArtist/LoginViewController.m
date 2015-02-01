@@ -7,8 +7,11 @@
 //
 
 #import "LoginViewController.h"
+#import "FacebookDelegate.h"
 
-@interface LoginViewController ()
+@interface LoginViewController (){
+    FacebookDelegate* FBdelegate;
+}
 
 @end
 
@@ -17,6 +20,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    FBdelegate = [[FacebookDelegate alloc] init];
+    self.loginView.delegate = FBdelegate;
+    self.loginView.readPermissions = @[@"public_profile"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(CloseView:)
+                                                 name:@"UserLoggedIn"
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,9 +37,6 @@
 
 - (IBAction)CloseView:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)loginWithFacebook:(id)sender {
 }
 
 - (IBAction)loginWithInstagram:(id)sender {
