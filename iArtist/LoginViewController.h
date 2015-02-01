@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import <TwitterKit/TwitterKit.h>
+#import <GooglePlus/GooglePlus.h>
+
 
 @interface LoginViewController : UIViewController
 @property (weak, nonatomic) IBOutlet FBLoginView *loginView;
