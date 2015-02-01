@@ -25,7 +25,11 @@
     self.emailLabel.text = (NSString*) [defaults objectForKey:@"useremail"];
     if ([defaults boolForKey:@"loggedInWithFacebook"] == YES) {
         self.loggedinLabel.text = @"Facebook";
+        self.changePasswordButton.hidden = YES;
     }
+}
+
+-(void)viewDidAppear:(BOOL)animated{
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,10 +45,16 @@
     //logout means sending info about logout to server,
     //deleteing info at local DB and
     //sending notification to programme
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:NO forKey:@"loggedIn"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];    
+    if ([defaults boolForKey:@"loggedInWithFacebook"]) {
+        FBSession* session = [FBSession activeSession];
+        [session closeAndClearTokenInformation];
+        [defaults setBool:NO forKey:@"loggedIn"];
+        [defaults setBool:NO forKey:@"loggedInWithFacebook"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    
 }
 
 
