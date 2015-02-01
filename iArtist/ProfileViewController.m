@@ -41,15 +41,37 @@
                 [defaults setBool:NO forKey:@"loggedIn"];
                 [defaults setBool:NO forKey:@"loggedInWithFacebook"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];
-                [session closeAndClearTokenInformation];
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else{
                 NSLog(@"Everything is OK with FB session");
             }
         }];
-        
-        
+    } else if ([defaults boolForKey:@"loggedInWithTwitter"]){
+        self.loggedinLabel.text = @"Twitter";
+        self.changePasswordButton.hidden = YES;
+        //there is no simple way to check if session is active, so I need to send smth to Twitter to get some response
+        [[[Twitter sharedInstance] APIClient] loadUserWithID:[[Twitter sharedInstance] session].userID
+                                                  completion:^(TWTRUser *user, NSError *error) {
+            if (error) {
+                NSLog(@"Error %@", [error localizedDescription]);
+                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Twitter log-in error"
+                                                                    message:@"Please, try to log-in again"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles: nil];
+                [alertView show];
+                [[Twitter sharedInstance] logOut];
+                [defaults setBool:NO forKey:@"loggedIn"];
+                [defaults setBool:NO forKey:@"loggedInWithTwitter"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else{
+                NSLog(@"Everything is OK with TWTR session");
+            }
+        }];
     }
+    
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -76,6 +98,14 @@
         [defaults setBool:NO forKey:@"loggedInWithFacebook"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];
         [self dismissViewControllerAnimated:YES completion:nil];
+    } else if ([defaults boolForKey:@"loggedInWithTwitter"]){
+        if ([defaults boolForKey:@"loggedInWithTwitter"]) {
+            [[Twitter sharedInstance] logOut];
+            [defaults setBool:NO forKey:@"loggedIn"];
+            [defaults setBool:NO forKey:@"loggedInWithTwitter"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     } else if ([defaults boolForKey:@"loggedIn"]){
         [defaults setBool:NO forKey:@"loggedIn"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];

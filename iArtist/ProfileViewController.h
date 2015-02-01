@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import <TwitterKit/TwitterKit.h>
 
 @interface ProfileViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <Fabric/Fabric.h>
+#import <TwitterKit/TwitterKit.h>
+
 
 @interface AppDelegate ()
 
@@ -19,6 +22,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch
     [FBLoginView class];
+    
+    [[Twitter sharedInstance] startWithConsumerKey:@"y8DNDO0szLitsLoo4tsVJWnwm"
+                                    consumerSecret:@"2APu9hHFWBuUI7YlFIYG9JJOYuaKTEAtDWeAvnAwmvrmhM7Ict"];
+    [Fabric with:@[[Twitter sharedInstance]]];
     return YES;
 }
 

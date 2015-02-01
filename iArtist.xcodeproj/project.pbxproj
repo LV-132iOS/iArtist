@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		843C96EC1A7E8A610080FCAA /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843C96E91A7E8A610080FCAA /* TwitterKit.framework */; };
+		843C96ED1A7E8A610080FCAA /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 843C96EA1A7E8A610080FCAA /* TwitterKitResources.bundle */; };
+		843C96EE1A7E8A610080FCAA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843C96EB1A7E8A610080FCAA /* Fabric.framework */; };
 		844D53061A7E2D4F0028FDFA /* FacebookDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 844D53051A7E2D4F0028FDFA /* FacebookDelegate.m */; };
 		844D54241A7E2FA90028FDFA /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844D53091A7E2FA80028FDFA /* FacebookSDK.framework */; };
 		844D54251A7E2FA90028FDFA /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844D530A1A7E2FA80028FDFA /* FBAudienceNetwork.framework */; };
@@ -64,6 +67,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		843C96E91A7E8A610080FCAA /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = SOURCE_ROOT; };
+		843C96EA1A7E8A610080FCAA /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle; sourceTree = SOURCE_ROOT; };
+		843C96EB1A7E8A610080FCAA /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		844D53041A7E2D4F0028FDFA /* FacebookDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookDelegate.h; sourceTree = "<group>"; };
 		844D53051A7E2D4F0028FDFA /* FacebookDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookDelegate.m; sourceTree = "<group>"; };
 		844D53091A7E2FA80028FDFA /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -150,6 +156,8 @@
 			files = (
 				844D54251A7E2FA90028FDFA /* FBAudienceNetwork.framework in Frameworks */,
 				844D54241A7E2FA90028FDFA /* FacebookSDK.framework in Frameworks */,
+				843C96EC1A7E8A610080FCAA /* TwitterKit.framework in Frameworks */,
+				843C96EE1A7E8A610080FCAA /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +426,9 @@
 		84A0E81F1A77B688009F6EA5 /* iArtist */ = {
 			isa = PBXGroup;
 			children = (
+				843C96E91A7E8A610080FCAA /* TwitterKit.framework */,
+				843C96EA1A7E8A610080FCAA /* TwitterKitResources.bundle */,
+				843C96EB1A7E8A610080FCAA /* Fabric.framework */,
 				844D53071A7E2FA80028FDFA /* FacebookSDK */,
 				84A0E82A1A77B688009F6EA5 /* Main.storyboard */,
 				846AB9311A795EF80043214F /* Preview on wall */,
@@ -513,6 +524,7 @@
 				84A0E8191A77B688009F6EA5 /* Sources */,
 				84A0E81A1A77B688009F6EA5 /* Frameworks */,
 				84A0E81B1A77B688009F6EA5 /* Resources */,
+				843C96E81A7E8A000080FCAA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -588,6 +600,7 @@
 				A1D147F81A7A44D200DFF5E8 /* Entitlements.plist in Resources */,
 				844D54281A7E2FA90028FDFA /* README.txt in Resources */,
 				84A0E82C1A77B688009F6EA5 /* Main.storyboard in Resources */,
+				843C96ED1A7E8A610080FCAA /* TwitterKitResources.bundle in Resources */,
 				84A4FBF51A7837190041BF50 /* shopping-cart-grey-hi.png in Resources */,
 				844D54271A7E2FA90028FDFA /* LICENSE in Resources */,
 				84663EF91A7915DB0038A5B1 /* Abstract-Art-masterpiece.jpg in Resources */,
@@ -606,6 +619,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		843C96E81A7E8A000080FCAA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 321f863f3be4d658eba949eafa757fb393a9ed18 0f526ed27658ffd057c0b45e0cf6eca4c4475f67d869cb0c0ef78b483f199838";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		84A0E8191A77B688009F6EA5 /* Sources */ = {
@@ -765,7 +794,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = /Users/admin/Documents/FacebookSDK;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Users/admin/Documents/FacebookSDK,
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = iArtist/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -776,7 +808,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = /Users/admin/Documents/FacebookSDK;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Users/admin/Documents/FacebookSDK,
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = iArtist/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
