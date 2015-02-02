@@ -146,7 +146,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedOut" object:nil];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-    
+    [defaults setBool:NO forKey:@"informationSent"];
 }
 
 

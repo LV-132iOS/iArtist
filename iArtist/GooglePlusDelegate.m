@@ -22,14 +22,22 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedIn" object:nil];
             
             NSLog(@"Now we have information to pass");
+            
+            if ([defaults boolForKey:@"informationSent"] == NO){
             NSString* localString = [[NSString alloc] init];
             GPPSignIn* signIn = [GPPSignIn sharedInstance];
             localString = signIn.googlePlusUser.displayName;
             [defaults setObject:localString forKey:@"username"];
             localString = signIn.userEmail;
             [defaults setObject:localString forKey:@"useremail"];
-            NSLog(@"username = %@", [defaults objectForKey:@"username"]);
+            localString = @"g+";
+            localString = [localString stringByAppendingString:signIn.userID];
+            [defaults setObject:localString forKey:@"id"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil];
+            }
             
+                
+            NSLog(@"username = %@", [defaults objectForKey:@"username"]);
             NSLog(@"User logged in");
         }
     } else{

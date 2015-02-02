@@ -29,12 +29,19 @@
     //3. if yes - download all user`s info
     NSLog(@"Now we have information to pass");
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    
+    if ([defaults boolForKey:@"informationSent"] == NO){
     NSString* localString = [[NSString alloc] init];
+    localString = @"fb";
+    localString = [localString stringByAppendingString:[user objectForKey:@"id"]];
+    [defaults setObject:localString forKey:@"id"];
     localString = [user objectForKey:@"name"];
     [defaults setObject:localString forKey:@"username"];
     localString = [user objectForKey:@"email"];
     [defaults setObject:localString forKey:@"useremail"];   
     NSLog(@"username = %@", [defaults objectForKey:@"username"]);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil];
+    }
 }
 
 - (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView{

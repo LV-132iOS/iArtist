@@ -26,6 +26,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(sendInfo)
+                                                 name:@"SendInfo"
+                                               object:nil];
     
     //Facebook
     FBdelegate = [[FacebookDelegate alloc] init];
@@ -36,6 +40,7 @@
                                              selector:@selector(CloseView:)
                                                  name:@"UserLoggedIn"
                                                object:nil];
+
     //
     
     //Twitter
@@ -52,11 +57,18 @@
                 NSLog(@"User logged in");
             }
             
+            if ([defaults boolForKey:@"informationSent"] == NO){
             NSString* localString = [[NSString alloc] init];
             localString = session.userName;
             [defaults setObject:localString forKey:@"username"];
             localString = @"unavailable";
             [defaults setObject:localString forKey:@"useremail"];
+            localString = @"tw";
+            localString = [localString stringByAppendingString:session.userID];
+            [defaults setObject:localString forKey:@"id"];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil];
+            }
             
             NSLog(@"signed in as %@", [session userName]);
         } else {
@@ -79,7 +91,8 @@
     signIn.delegate = GDelegate;
     signIn.attemptSSO = YES;
     signIn.shouldFetchGoogleUserEmail = YES;
-    signIn.shouldFetchGooglePlusUser = YES; 
+    signIn.shouldFetchGooglePlusUser = YES;
+    signIn.shouldFetchGoogleUserID = YES;
     
 
 }
@@ -97,6 +110,36 @@
 }
 
 - (IBAction)loginWithVkontakte:(id)sender {
+}
+
+-(void)sendInfo{
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary* dataToPass = @{ @"_id" : [defaults objectForKey:@"id"],
+                                  @"username" : [defaults objectForKey:@"username"],
+                                  @"useremail": [defaults objectForKey:@"useremail"] };
+    
+    
+    NSURL* url = [NSURL URLWithString:@"http://192.168.103.5:8080/users/"];
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+    
+    NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+
+    NSData* data = [NSJSONSerialization dataWithJSONObject:dataToPass options:0 error:nil];
+    request.HTTPMethod = @"POST"; 
+    
+    request.HTTPBody = data;
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"]; //4
+    
+    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data,
+                                                                                              NSURLResponse *response,
+                                                                                              NSError *error) {
+        NSLog(@"%@",response);
+    }];
+    
+    [dataTask resume];
+    [defaults setBool:YES forKey:@"informationSent"];
 }
 
 

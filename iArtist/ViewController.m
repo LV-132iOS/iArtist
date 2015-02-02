@@ -80,6 +80,7 @@
         [defaults setBool:NO forKey:@"loggedInWithFacebook"];
         [defaults setBool:NO forKey:@"loggedInWithTwitter"];
         [defaults setBool:NO forKey:@"loggedInWithGoogle"];
+        [defaults setBool:NO forKey:@"informationSent"];
         [defaults synchronize];
         [self performSegueWithIdentifier:@"FirstRunSegue" sender:nil];
     }
