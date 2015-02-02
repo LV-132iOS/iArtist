@@ -10,6 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <Fabric/Fabric.h>
 #import <TwitterKit/TwitterKit.h>
+#import <GooglePlus/GPPURLHandler.h>
 
 
 @interface AppDelegate ()
@@ -56,12 +57,14 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     NSLog(@"Trying to handle URL");
+    
     // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
     BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    wasHandled = [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
     
     // You can add your app-specific url handling code here if needed
     
-    return wasHandled;
+    return YES;
 }
 
 @end

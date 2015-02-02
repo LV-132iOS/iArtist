@@ -21,19 +21,21 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>SS.iArtist</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1384822491823366</string>
+				<string>SS.iArtist</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>SS.</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>SS.</string>
+				<string>fb1384822491823366</string>
 			</array>
 		</dict>
 	</array>

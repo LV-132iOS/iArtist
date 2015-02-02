@@ -8,11 +8,15 @@
 
 #import "LoginViewController.h"
 #import "FacebookDelegate.h"
+#import <GoogleOpenSource/GTLPlusConstants.h>
+#import "GooglePlusDelegate.h"
 
+@class GPPSignInButton;
 
 
 @interface LoginViewController (){
     FacebookDelegate* FBdelegate;
+    GooglePlusDelegate* GDelegate;
 }
 
 @end
@@ -22,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //Facebook
     FBdelegate = [[FacebookDelegate alloc] init];
     self.loginView.delegate = FBdelegate;
     self.loginView.readPermissions = @[@"public_profile", @"email"];
@@ -30,7 +36,9 @@
                                              selector:@selector(CloseView:)
                                                  name:@"UserLoggedIn"
                                                object:nil];
-
+    //
+    
+    //Twitter
     TWTRLogInButton *logInButton = [TWTRLogInButton buttonWithLogInCompletion:^(TWTRSession *session, NSError *error) {
         // play with Twitter session
         if (!error) {
@@ -58,6 +66,21 @@
 
     [logInButton setFrame:CGRectMake(16.0f, 102.0f, 268.0f, 44.0f)];
     [self.view addSubview:logInButton];
+    //
+    
+    //Google+
+    GDelegate = [[GooglePlusDelegate alloc] init];
+    GPPSignIn *signIn = [GPPSignIn sharedInstance];
+    signIn.clientID = kClientId;
+    signIn.scopes = [NSArray arrayWithObjects:
+                     kGTLAuthScopePlusLogin,
+                     kGTLAuthScopePlusUserinfoEmail,
+                     nil];
+    signIn.delegate = GDelegate;
+    signIn.attemptSSO = YES;
+    signIn.shouldFetchGoogleUserEmail = YES;
+    signIn.shouldFetchGooglePlusUser = YES; 
+    
 
 }
 
@@ -76,10 +99,5 @@
 - (IBAction)loginWithVkontakte:(id)sender {
 }
 
-- (IBAction)loginWithTwitter:(id)sender {
-}
-
-- (IBAction)loginWithGoogle:(id)sender {
-}
 
 @end
