@@ -11,6 +11,7 @@
 #import <TwitterKit/TwitterKit.h>
 #import <GooglePlus/GooglePlus.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
+#import <VKSdk/VKSdk.h>
 
 @interface ProfileViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

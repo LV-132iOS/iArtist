@@ -11,9 +11,12 @@
 #import <Fabric/Fabric.h>
 #import <TwitterKit/TwitterKit.h>
 #import <GooglePlus/GPPURLHandler.h>
+#import <VKSdk/VKSdk.h>
 
 
-@interface AppDelegate ()
+@interface AppDelegate (){
+    VKDelegate* vkDelegate;
+}
 
 @end
 
@@ -29,6 +32,10 @@
     [Fabric with:@[[Twitter sharedInstance]]];
     
     [GPPSignIn sharedInstance];
+    
+    vkDelegate = [[VKDelegate alloc] init];
+    [VKSdk initializeWithDelegate:vkDelegate andAppId:@"4738060"];
+    [VKSdk wakeUpSession];
     
     return YES;
 }
@@ -65,6 +72,7 @@
     BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
     wasHandled = [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
     
+    [VKSdk processOpenURL:url fromApplication:sourceApplication];
     // You can add your app-specific url handling code here if needed
     
     return YES;

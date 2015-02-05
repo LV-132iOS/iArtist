@@ -93,12 +93,10 @@
     signIn.shouldFetchGoogleUserEmail = YES;
     signIn.shouldFetchGooglePlusUser = YES;
     signIn.shouldFetchGoogleUserID = YES;
-    NSLog(@"%@", signIn.keychainName);
-    NSLog(@" Have auth in keychain: %@", [signIn hasAuthInKeychain]);
     //
     
     //Vkontakte
-    self.signWithVkontakte.layer.cornerRadius = 3;
+    
     //
     
 
@@ -115,6 +113,8 @@
 
 
 - (IBAction)loginWithVkontakte:(id)sender {
+    NSArray* vkScope = @[ @"email"];
+        [VKSdk authorize:vkScope revokeAccess:YES];
 }
 
 -(void)sendInfo{

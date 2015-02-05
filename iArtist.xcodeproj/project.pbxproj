@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		601B577F1A83641C00412435 /* VKDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 601B577E1A83641C00412435 /* VKDelegate.m */; };
 		603AFA121A7FE549001F65C3 /* AVAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 603AF9F71A7FE549001F65C3 /* AVAuthor.m */; };
 		603AFA131A7FE549001F65C3 /* AVDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 603AF9F91A7FE549001F65C3 /* AVDetailViewController.m */; };
 		603AFA141A7FE549001F65C3 /* AVImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 603AF9FB1A7FE549001F65C3 /* AVImagePickerController.m */; };
@@ -123,6 +124,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		601B577D1A83641C00412435 /* VKDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKDelegate.h; sourceTree = "<group>"; };
+		601B577E1A83641C00412435 /* VKDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKDelegate.m; sourceTree = "<group>"; };
 		603AF9F61A7FE549001F65C3 /* AVAuthor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVAuthor.h; sourceTree = "<group>"; };
 		603AF9F71A7FE549001F65C3 /* AVAuthor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVAuthor.m; sourceTree = "<group>"; };
 		603AF9F81A7FE549001F65C3 /* AVDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVDetailViewController.h; sourceTree = "<group>"; };
@@ -313,6 +316,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		601B577C1A8363FE00412435 /* VK delegate */ = {
+			isa = PBXGroup;
+			children = (
+				601B577D1A83641C00412435 /* VKDelegate.h */,
+				601B577E1A83641C00412435 /* VKDelegate.m */,
+			);
+			name = "VK delegate";
+			sourceTree = "<group>";
+		};
 		603AF9F51A7FE519001F65C3 /* AV */ = {
 			isa = PBXGroup;
 			children = (
@@ -483,6 +495,7 @@
 		84663EFA1A791AD40038A5B1 /* Login/Register */ = {
 			isa = PBXGroup;
 			children = (
+				601B577C1A8363FE00412435 /* VK delegate */,
 				609813031A7F5E5E00C8017B /* Google+ delegate */,
 				844D53031A7E2D1C0028FDFA /* Facebook delegate */,
 				84663EFE1A791B180038A5B1 /* LoginViewController.h */,
@@ -962,6 +975,7 @@
 				846AB8FB1A792ADD0043214F /* ProfileViewController.m in Sources */,
 				846AB9341A795F2C0043214F /* PreviewOnWallViewController.m in Sources */,
 				84A0E8291A77B688009F6EA5 /* ViewController.m in Sources */,
+				601B577F1A83641C00412435 /* VKDelegate.m in Sources */,
 				84663F001A791B180038A5B1 /* LoginViewController.m in Sources */,
 				84A4FBDA1A782ACF0041BF50 /* UIImage+FX.m in Sources */,
 				84A0E8581A780EE7009F6EA5 /* iCarousel.m in Sources */,
