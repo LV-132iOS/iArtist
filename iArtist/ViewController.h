@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <GooglePlus/GooglePlus.h>
 
 @interface ViewController : UIViewController
 
+@property (strong) GPPSignIn* signIn;
 @property (weak, nonatomic) IBOutlet iCarousel *priceCarousel;
 @property (weak, nonatomic) IBOutlet iCarousel *sizeCarousel;
 @property (weak, nonatomic) IBOutlet iCarousel *styleCarousel;

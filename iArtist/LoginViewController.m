@@ -93,6 +93,13 @@
     signIn.shouldFetchGoogleUserEmail = YES;
     signIn.shouldFetchGooglePlusUser = YES;
     signIn.shouldFetchGoogleUserID = YES;
+    NSLog(@"%@", signIn.keychainName);
+    NSLog(@" Have auth in keychain: %@", [signIn hasAuthInKeychain]);
+    //
+    
+    //Vkontakte
+    self.signWithVkontakte.layer.cornerRadius = 3;
+    //
     
 
 }
@@ -106,8 +113,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)loginWithInstagram:(id)sender {
-}
 
 - (IBAction)loginWithVkontakte:(id)sender {
 }
@@ -136,6 +141,8 @@
                                                                                               NSURLResponse *response,
                                                                                               NSError *error) {
         NSLog(@"%@",response);
+        NSLog(@"%@", data);
+        
     }];
     
     [dataTask resume];

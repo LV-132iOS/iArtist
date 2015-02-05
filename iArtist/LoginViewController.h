@@ -11,10 +11,11 @@
 #import <TwitterKit/TwitterKit.h>
 #import <GooglePlus/GooglePlus.h>
 
-static NSString * const kClientId = @"661776756048-mb2767usng2if6q57dejn5ck32eh350u.apps.googleusercontent.com";
+static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501k8u.apps.googleusercontent.com";
 
 @interface LoginViewController : UIViewController
 @property (weak, nonatomic) IBOutlet FBLoginView *loginView;
 @property (weak, nonatomic) IBOutlet GPPSignInButton *signWithGoogle;
+@property (weak, nonatomic) IBOutlet UIButton *signWithVkontakte;
 
 @end

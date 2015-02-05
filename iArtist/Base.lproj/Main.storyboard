@@ -243,32 +243,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="360"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7KA-VB-J7o">
-                                <rect key="frame" x="16" y="214" width="268" height="39"/>
-                                <color key="backgroundColor" red="0.35634878749999999" green="0.61991696799999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Log in with Vkontakte">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="loginWithVkontakte:" destination="Rtp-e4-1eQ" eventType="touchUpInside" id="3Qm-oF-w14"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eo-oa-qps">
-                                <rect key="frame" x="16" y="255" width="268" height="39"/>
-                                <color key="backgroundColor" red="0.11415412103635048" green="0.57164843239544672" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Log in with Instagram">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="loginWithInstagram:" destination="Rtp-e4-1eQ" eventType="touchUpInside" id="Bxe-B1-e4s"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Got-4C-c20">
-                                <rect key="frame" x="16" y="302" width="268" height="39"/>
+                                <rect key="frame" x="16" y="290" width="268" height="39"/>
                                 <color key="backgroundColor" red="0.019607843831181526" green="0.0039215688593685627" blue="0.011764707043766975" alpha="1" colorSpace="deviceRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Log in with e-mail">
@@ -280,7 +256,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iF-fM-hmm">
-                                <rect key="frame" x="16" y="349" width="268" height="39"/>
+                                <rect key="frame" x="16" y="337" width="268" height="39"/>
                                 <color key="backgroundColor" red="0.015686275437474251" green="0.0039215688593685627" blue="0.011764707043766975" alpha="1" colorSpace="deviceRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Register with e-mail">
@@ -292,7 +268,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3qO-QB-OV6">
-                                <rect key="frame" x="0.0" y="291" width="300" height="3"/>
+                                <rect key="frame" x="0.0" y="273" width="300" height="3"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mnm-5l-L0T" customClass="FBLoginView">
@@ -303,6 +279,17 @@
                                 <rect key="frame" x="16" y="152" width="268" height="44"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n9y-vM-WVR">
+                                <rect key="frame" x="16" y="204" width="268" height="44"/>
+                                <color key="backgroundColor" red="0.15836447105066609" green="0.29474410139901053" blue="0.7179129464285714" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Log in with Vkontakte" image="vk_logo.png">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginWithVkontakte:" destination="Rtp-e4-1eQ" eventType="touchUpInside" id="Xfe-JF-aql"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1928,6 +1915,7 @@
         <image name="placeholder.png" width="200" height="200"/>
         <image name="remove.png" width="512" height="512"/>
         <image name="shopping-cart-grey-hi.png" width="30" height="29"/>
+        <image name="vk_logo.png" width="70" height="70"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -1936,7 +1924,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="PFI-Gj-mtb"/>
-        <segue reference="1vl-M2-V4O"/>
         <segue reference="EKV-ku-ofk"/>
+        <segue reference="HlF-nq-ERh"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -76,6 +76,9 @@
         GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
         plusService.retryEnabled = YES;
         GPPSignIn *signIn = [GPPSignIn sharedInstance];
+        NSLog(@"Keychain name: %@",[signIn keychainName]);
+    
+        NSLog(@" Have auth in keychain: %hhd", [signIn hasAuthInKeychain]);
         [plusService setAuthorizer: signIn.authentication];
         
         GTLQueryPlus *query = [GTLQueryPlus queryForPeopleGetWithUserId:@"me"];

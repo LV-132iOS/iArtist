@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GooglePlus/GooglePlus.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+
 
 @property (strong, nonatomic) UIWindow *window;
 

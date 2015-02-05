@@ -53,6 +53,10 @@
 		609813011A7F5A5D00C8017B /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 609812FE1A7F5A5D00C8017B /* GooglePlus.bundle */; };
 		609813021A7F5A5D00C8017B /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 609812FF1A7F5A5D00C8017B /* GooglePlus.framework */; };
 		609813061A7F5E7B00C8017B /* GooglePlusDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 609813051A7F5E7B00C8017B /* GooglePlusDelegate.m */; };
+		6099E2C41A825AEC00513668 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6099E2C31A825AEC00513668 /* Entitlements.plist */; };
+		6099E2C91A82822700513668 /* VKSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6099E2C71A82822700513668 /* VKSdk.framework */; };
+		6099E2CA1A82822700513668 /* VKSdkResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6099E2C81A82822700513668 /* VKSdkResources.bundle */; };
+		6099E2CE1A82928300513668 /* vk_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6099E2CD1A82928300513668 /* vk_logo.png */; };
 		843C96EC1A7E8A610080FCAA /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843C96E91A7E8A610080FCAA /* TwitterKit.framework */; };
 		843C96ED1A7E8A610080FCAA /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 843C96EA1A7E8A610080FCAA /* TwitterKitResources.bundle */; };
 		843C96EE1A7E8A610080FCAA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843C96EB1A7E8A610080FCAA /* Fabric.framework */; };
@@ -180,6 +184,11 @@
 		609812FF1A7F5A5D00C8017B /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = "../../Documents/google-plus-ios-sdk-1.7.1/GooglePlus.framework"; sourceTree = "<group>"; };
 		609813041A7F5E7B00C8017B /* GooglePlusDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusDelegate.h; sourceTree = "<group>"; };
 		609813051A7F5E7B00C8017B /* GooglePlusDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusDelegate.m; sourceTree = "<group>"; };
+		6099E2C31A825AEC00513668 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		6099E2C51A825D8E00513668 /* iArtist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = iArtist.entitlements; sourceTree = "<group>"; };
+		6099E2C71A82822700513668 /* VKSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VKSdk.framework; sourceTree = "<group>"; };
+		6099E2C81A82822700513668 /* VKSdkResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = VKSdkResources.bundle; sourceTree = "<group>"; };
+		6099E2CD1A82928300513668 /* vk_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vk_logo.png; path = Images.xcassets/vk_logo.png; sourceTree = "<group>"; };
 		843C96E91A7E8A610080FCAA /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = SOURCE_ROOT; };
 		843C96EA1A7E8A610080FCAA /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle; sourceTree = SOURCE_ROOT; };
 		843C96EB1A7E8A610080FCAA /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
@@ -283,6 +292,7 @@
 				609813001A7F5A5D00C8017B /* GoogleOpenSource.framework in Frameworks */,
 				843C96FC1A7EC0730080FCAA /* CoreText.framework in Frameworks */,
 				843C96FA1A7EC06A0080FCAA /* CoreGraphics.framework in Frameworks */,
+				6099E2C91A82822700513668 /* VKSdk.framework in Frameworks */,
 				843C96F81A7EC0600080FCAA /* CoreMotion.framework in Frameworks */,
 				843C96F61A7EC0540080FCAA /* CoreLocation.framework in Frameworks */,
 				843C96F41A7EC0470080FCAA /* Foundation.framework in Frameworks */,
@@ -384,6 +394,8 @@
 		843C97071A7EC0EF0080FCAA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6099E2C71A82822700513668 /* VKSdk.framework */,
+				6099E2C81A82822700513668 /* VKSdkResources.bundle */,
 				609812FD1A7F5A5D00C8017B /* GoogleOpenSource.framework */,
 				609812FE1A7F5A5D00C8017B /* GooglePlus.bundle */,
 				609812FF1A7F5A5D00C8017B /* GooglePlus.framework */,
@@ -652,6 +664,9 @@
 		84A0E81F1A77B688009F6EA5 /* iArtist */ = {
 			isa = PBXGroup;
 			children = (
+				6099E2CD1A82928300513668 /* vk_logo.png */,
+				6099E2C51A825D8E00513668 /* iArtist.entitlements */,
+				6099E2C31A825AEC00513668 /* Entitlements.plist */,
 				603AF9F51A7FE519001F65C3 /* AV */,
 				84A0E82A1A77B688009F6EA5 /* Main.storyboard */,
 				846AB9311A795EF80043214F /* Preview on wall */,
@@ -786,6 +801,15 @@
 				TargetAttributes = {
 					84A0E81C1A77B688009F6EA5 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 7VZHFC2543;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					84A0E8351A77B688009F6EA5 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -863,7 +887,9 @@
 				603AFA4A1A7FE56B001F65C3 /* room3.jpg in Resources */,
 				603AFA411A7FE56B001F65C3 /* picture4.jpg in Resources */,
 				603AFA511A7FE56B001F65C3 /* room10.jpg in Resources */,
+				6099E2CE1A82928300513668 /* vk_logo.png in Resources */,
 				843C96ED1A7E8A610080FCAA /* TwitterKitResources.bundle in Resources */,
+				6099E2C41A825AEC00513668 /* Entitlements.plist in Resources */,
 				84A4FBF51A7837190041BF50 /* shopping-cart-grey-hi.png in Resources */,
 				603AFA3A1A7FE56B001F65C3 /* buy1.png in Resources */,
 				603AFA4D1A7FE56B001F65C3 /* room6.jpg in Resources */,
@@ -887,6 +913,7 @@
 				603AFA421A7FE56B001F65C3 /* picture5.jpg in Resources */,
 				84A0E8311A77B688009F6EA5 /* LaunchScreen.xib in Resources */,
 				603AFA441A7FE56B001F65C3 /* picture7.jpg in Resources */,
+				6099E2CA1A82822700513668 /* VKSdkResources.bundle in Resources */,
 				84A0E82E1A77B688009F6EA5 /* Images.xcassets in Resources */,
 				603AFA3C1A7FE56B001F65C3 /* person.png in Resources */,
 			);
@@ -1025,12 +1052,16 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1045,8 +1076,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "4c8633fb-7d08-48ba-95bc-e854a58b7354";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Debug;
 		};
@@ -1067,11 +1100,15 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1080,9 +1117,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "4c8633fb-7d08-48ba-95bc-e854a58b7354";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
-				VALIDATE_PRODUCT = YES;
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Release;
 		};
@@ -1090,13 +1128,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					/Users/admin/Documents/FacebookSDK,
-					"$(PROJECT_DIR)",
-					"/Users/admin/Documents/google-plus-ios-sdk-1.7.1",
-					/Users/vzamirko/Documents/FacebookSDK,
-					"/Users/vzamirko/Documents/google-plus-ios-sdk-1.7.1",
-				);
+				CODE_SIGN_ENTITLEMENTS = iArtist/iArtist.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = iArtist/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1104,6 +1142,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1111,13 +1150,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					/Users/admin/Documents/FacebookSDK,
-					"$(PROJECT_DIR)",
-					"/Users/admin/Documents/google-plus-ios-sdk-1.7.1",
-					/Users/vzamirko/Documents/FacebookSDK,
-					"/Users/vzamirko/Documents/google-plus-ios-sdk-1.7.1",
-				);
+				CODE_SIGN_ENTITLEMENTS = iArtist/iArtist.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = iArtist/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1125,6 +1164,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -1132,6 +1172,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1151,6 +1192,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

@@ -27,6 +27,9 @@
     [[Twitter sharedInstance] startWithConsumerKey:@"y8DNDO0szLitsLoo4tsVJWnwm"
                                     consumerSecret:@"2APu9hHFWBuUI7YlFIYG9JJOYuaKTEAtDWeAvnAwmvrmhM7Ict"];
     [Fabric with:@[[Twitter sharedInstance]]];
+    
+    [GPPSignIn sharedInstance];
+    
     return YES;
 }
 
