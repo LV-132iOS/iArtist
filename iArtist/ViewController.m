@@ -41,7 +41,7 @@
     self.priceCarousel.dataSource = priceCarouselDAndDS;
     self.priceCarousel.type = iCarouselTypeLinear;
     self.priceCarousel.bounces = NO;
-    self.priceCarousel.scrollEnabled = NO;
+    self.priceCarousel.scrollEnabled = YES;
     self.priceCarousel.centerItemWhenSelected = NO;
     self.priceCarousel.currentItemIndex = 2;
     
@@ -51,7 +51,7 @@
     self.sizeCarousel.dataSource = sizeCarouselDAndDS;
     self.sizeCarousel.type = iCarouselTypeLinear;
     self.sizeCarousel.bounces = NO;
-    self.sizeCarousel.scrollEnabled = NO;
+    self.sizeCarousel.scrollEnabled = YES;
     self.sizeCarousel.centerItemWhenSelected = NO;
     self.sizeCarousel.contentOffset = CGSizeMake(-365.0f, 0.0f);
     
@@ -67,9 +67,10 @@
     self.tagCarousel.dataSource = tagCarouselDAndDS;
     self.tagCarousel.type = iCarouselTypeLinear;
     self.tagCarousel.bounces = NO;
-    self.tagCarousel.scrollEnabled = NO;
+    self.tagCarousel.scrollEnabled = YES;
     self.tagCarousel.centerItemWhenSelected = NO;
     self.tagCarousel.currentItemIndex = 2;
+
     
 }
 

@@ -8,10 +8,19 @@
 
 #import "SizeCarouselDelegateAndDataSource.h"
 
+@interface SizeCarouselDelegateAndDataSource () {
+    
+    NSArray* arrayOfSize;
+    
+}
+@end
 
 @implementation SizeCarouselDelegateAndDataSource
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
+    
+    arrayOfSize = [[NSArray alloc] initWithObjects:@"Size1.jpg",@"Size2.jpg",@"Size3.jpg",@"Size4.jpg", nil];
+    
     return 4;
 }
 
@@ -24,24 +33,25 @@
         button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(0.0f, 0.0f, 220.0f, 110.0f);
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setBackgroundColor: [UIColor greenColor]];
-        button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(145, 10, 5, 10)];
+        [button setBackgroundImage:[UIImage imageNamed:arrayOfSize[index]] forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:20]];
         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     //set button label
     if (index == 0) {
-        button.titleLabel.font = [button.titleLabel.font fontWithSize:20];
+        //button.titleLabel.font = [button.titleLabel.font fontWithSize:20];
         [button setTitle:@"Small" forState:UIControlStateNormal];
     } else if (index == 1){
-        button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
-                [button setTitle:@"Medium" forState:UIControlStateNormal];
+        //button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
+        [button setTitle:@"Medium" forState:UIControlStateNormal];
     } else if (index == 2){
-        button.titleLabel.font = [button.titleLabel.font fontWithSize:30];
-                [button setTitle:@"Big" forState:UIControlStateNormal];
+        //button.titleLabel.font = [button.titleLabel.font fontWithSize:30];
+        [button setTitle:@"Big" forState:UIControlStateNormal];
     } else if (index == 3){
-        button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
-                [button setTitle:@"Several pictures" forState:UIControlStateNormal];
+        //button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
+        [button setTitle:@"Several pictures" forState:UIControlStateNormal];
     }
     
     
@@ -60,6 +70,5 @@
 - (void)buttonTapped:(UIButton *)sender{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
 }
-
 
 @end

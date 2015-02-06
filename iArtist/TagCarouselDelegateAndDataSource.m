@@ -8,9 +8,20 @@
 
 #import "TagCarouselDelegateAndDataSource.h"
 
+@interface TagCarouselDelegateAndDataSource () {
+    
+    NSArray* arrayOfTag;
+    
+}
+
+@end
+
 @implementation TagCarouselDelegateAndDataSource
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
+    
+    arrayOfTag = [[NSArray alloc] initWithObjects:@"Tags1.jpg",@"Tags2.jpg",@"Tags3.jpg",@"Tags4.jpg",@"Tags5.jpg", nil];
+    
     return 5;
 }
 
@@ -23,8 +34,9 @@
         button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(0.0f, 0.0f, 180.0f, 110.0f);
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setBackgroundColor: [UIColor orangeColor]];
-        button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(145, 10, 5, 10)];
+        [button setBackgroundImage:[UIImage imageNamed:arrayOfTag[index]] forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:20]];
         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -54,7 +66,7 @@
     return value;
 }
 
-- (void)buttonTapped:(UIButton *)sender{
+- (void)buttonTapped:(UIButton *)sender{    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
 }
 

@@ -10,6 +10,7 @@
 #import "AVCartCell.h"
 #import "AVPicture.h"
 #import "AVPictureViewController.h"
+#import "AVCartCell.h"
 
 @interface AVCartController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate >
 
@@ -41,6 +42,12 @@
     }
 
     self.totalPrise.text = [@"Total Prise: " stringByAppendingString:[NSString stringWithFormat:@"%d", totalNumber]];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(SendAMail:)
+                                                 name:@"send mail"
+                                               object:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -72,6 +79,8 @@
 - (IBAction)closeAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 /*- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
@@ -114,6 +123,112 @@
     if (buttonIndex == 1)[self reload];
     
 }
+
+
+- (void) SendAMail:(NSNotification *)notification{
+    
+    if ([MFMailComposeViewController canSendMail] == YES)
+        
+    {
+        // Set up
+        self.myMail = [[MFMailComposeViewController alloc] init];
+        
+        self.myMail.mailComposeDelegate = self;
+        
+        
+        // Set the subject
+        
+        [self.myMail setSubject:@"My app feedback"];
+        
+        // To recipients
+        
+        NSArray *toResipients = [[NSArray alloc] initWithObjects:@"iArtistGreatTeam@gmail.com", nil];
+        
+        [self.myMail setToRecipients:toResipients];
+        
+        // Add some text to message body
+        
+        NSString *sentFrom = @"Email sent from my app";
+        
+        [self.myMail setMessageBody:sentFrom
+                             isHTML:YES];
+        
+        // Include an attachment
+        
+        UIImage *tagImage = [UIImage imageNamed:@"background.jpg"];
+        
+        NSData *imageData = UIImageJPEGRepresentation(tagImage, 1.0);
+        
+        [self.myMail addAttachmentData:imageData
+                              mimeType:@"image/jpeg"
+                              fileName:@"tag"];
+        
+        // Display the view controller
+        
+        [self presentViewController:self.myMail
+                      animated:YES
+                    completion:nil];
+        
+    }
+    
+    else
+        
+    {
+        
+        UIAlertView *errorAlter = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message:@"Your device can not send email"
+                                                            delegate:self
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles: nil];
+        
+        [errorAlter show];
+        
+    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result) {
+            
+        case MFMailComposeResultCancelled:
+            // Do something
+            break;
+            
+        case MFMailComposeResultFailed:
+            // Do something
+            break;
+            
+        case MFMailComposeResultSaved:
+            // Do something
+            break;
+            
+        case MFMailComposeResultSent:
+        {
+            
+            UIAlertView *thankYouAlter = [[UIAlertView alloc] initWithTitle:@"Thank You"
+                                                                    message:@"Thank you for your email"
+                                                                   delegate:self cancelButtonTitle:@"OK"
+                                                          otherButtonTitles: nil];
+            
+            [thankYouAlter show];
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES
+                          completion:nil];
+    
+}
+
+
+// we remove our notification as soon as we don't need it
 
 /*
 #pragma mark - Navigation

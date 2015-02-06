@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
 #import "FirstRunCarouselDelegateAndDataSource.h"
+#import <MessageUI/MessageUI.h>
 
-@interface FirstRunViewController : UIViewController
+@interface FirstRunViewController : UIViewController <MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet iCarousel *guideCarousel;
+@property(strong, nonatomic) MFMailComposeViewController *myMail;
 
 @end

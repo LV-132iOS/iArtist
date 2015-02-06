@@ -52,11 +52,11 @@
         view = imageView;
     }
     
-    //show placeholder
-    ((FXImageView *)view).processedImage = [UIImage imageNamed:@"placeholder.png"];
-    
-    //set image
-    ((FXImageView *)view).image = [UIImage imageNamed:@"placeholder.png"];
+//    //show placeholder
+//    ((FXImageView *)view).processedImage = [UIImage imageNamed:@"placeholder.png"];
+//    
+//    //set image
+//    ((FXImageView *)view).image = [UIImage imageNamed:@"placeholder.png"];
     
     return view;
 }

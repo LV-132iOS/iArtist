@@ -8,18 +8,21 @@
 
 #import "StyleCarouselDelegateAndDataSource.h"
 
+
 @interface StyleCarouselDelegateAndDataSource (){
     NSArray* arrayOfStyles;
-    NSArray* arrayOfPictures; //for now disabled
+    NSArray* arrayOfPictures;
 }
 
 @end
 
 @implementation StyleCarouselDelegateAndDataSource
 
+
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
     
-    arrayOfStyles = [[NSArray alloc] initWithObjects:@"Modern",@"Nature",@"Abstract",@"Realism",@"Surrealism", nil];
+    arrayOfPictures = [[NSArray alloc] initWithObjects:@"Style1.jpg",@"Style2.jpg",@"Style3.jpg",@"Style4.jpg",@"Style5.jpg",@"Style6.jpg", nil];
+    arrayOfStyles = [[NSArray alloc] initWithObjects:@"History",@"Nature",@"Military",@"Portrait",@"Still life",@"Vanitas", nil];
     return arrayOfStyles.count;
     
 }
@@ -31,16 +34,17 @@
     {
         //no button available to recycle, so create new one
         button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(0.0f, 0.0f, 220.0f, 110.0f);
+        button.frame = CGRectMake(0.0f, 0.0f, 220.0f, 110.0f); //button.frame = CGRectMake(0.0f, 0.0f, 300.0f, 180.0f);
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        //instead of setting color it is needed to set picture from database
-        [button setBackgroundColor: [UIColor cyanColor]];
-        button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(160, 10, 5, 10)];
+        [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:20]];
         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     }
     
-    //set button label
+    //set button label and images
     [button setTitle:arrayOfStyles[index] forState:UIControlStateNormal];
+    [button setBackgroundImage: [UIImage imageNamed:arrayOfPictures[index]] forState:UIControlStateNormal];
+    button.contentMode = UIViewContentModeScaleAspectFit;
     return button;
 }
 
@@ -59,6 +63,7 @@
 - (void)buttonTapped:(UIButton *)sender{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
 }
+
 
 
 @end

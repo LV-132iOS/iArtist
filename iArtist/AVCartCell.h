@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface AVCartCell : UITableViewCell
+@interface AVCartCell : UITableViewCell <MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *artistName;
 
@@ -23,5 +24,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *pictureImage;
 
 @property (strong, nonatomic) IBOutlet UILabel *addedDate;
+
+@property(strong, nonatomic) MFMailComposeViewController *myMail;
 
 @end

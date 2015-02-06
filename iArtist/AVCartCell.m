@@ -7,6 +7,7 @@
 //
 
 #import "AVCartCell.h"
+#import <MessageUI/MessageUI.h>
 
 @implementation AVCartCell
 
@@ -18,6 +19,12 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (IBAction)sendAMailClicked:(id)sender {
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"send mail" object:nil userInfo:nil];
+    
 }
 
 @end

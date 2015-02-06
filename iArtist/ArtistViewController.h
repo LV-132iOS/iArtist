@@ -10,4 +10,9 @@
 
 @interface ArtistViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIImageView *imageOfArtist;
+@property (strong, nonatomic) IBOutlet UILabel *nameOfArtist;
+@property (strong, nonatomic) IBOutlet UILabel *locationOfArtist;
+@property (strong, nonatomic) IBOutlet UITextView *descriptionOfArtist;
+
 @end

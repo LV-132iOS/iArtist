@@ -9,13 +9,20 @@
 #import "PriceCarouselDelegateAndDataSource.h"
 
 
-
-
+@interface PriceCarouselDelegateAndDataSource () {
+    
+    NSArray* arrayOfPrice;
+    
+}
+@end
 
 @implementation PriceCarouselDelegateAndDataSource
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
-    return 5;
+    
+    arrayOfPrice = [[NSArray alloc] initWithObjects:@"Price1.jpg",@"Price2.jpg",@"Price3.jpg",@"Price4.jpg",@"Price5.jpg",@"Price6.jpg", nil];
+    
+    return [arrayOfPrice count];
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
@@ -27,28 +34,33 @@
         button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(0.0f, 0.0f, 180.0f, 110.0f);
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setBackgroundColor: [UIColor yellowColor]];
-        button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(145, 10, 5, 10)];
+        [button setBackgroundImage: [UIImage imageNamed:arrayOfPrice[index]] forState:UIControlStateNormal];
+        [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:20]];
         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     //set button label
     if (index == 0) {
-
+        
         [button setTitle:@"<750" forState:UIControlStateNormal];
     } else if (index == 1){
-
+        
         [button setTitle:@"750-1500" forState:UIControlStateNormal];
     } else if (index == 2){
-
+        
         [button setTitle:@"1500-3000" forState:UIControlStateNormal];
     } else if (index == 3){
-
-        [button setTitle:@"3000-5000" forState:UIControlStateNormal];
+        
+        [button setTitle:@"3000-4000" forState:UIControlStateNormal];
     } else if (index == 4){
-
+        
+        [button setTitle:@"4000-5000" forState:UIControlStateNormal];
+    } else if (index == 5){
+        
         [button setTitle:@">5000" forState:UIControlStateNormal];
     }
+    
     
     
     return button;
@@ -66,8 +78,5 @@
 - (void)buttonTapped:(UIButton *)sender{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
 }
-
-
-
 
 @end
