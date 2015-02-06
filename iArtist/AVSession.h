@@ -12,7 +12,7 @@
 @interface AVSession : NSObject
 
 @property (strong, nonatomic) NSString *sessionName;
-@property (strong, nonatomic) NSArray *arrayOfPictures;
+@property (strong, nonatomic) NSMutableArray *arrayOfPictures;
 
 + (AVSession *) sessionInit;
 

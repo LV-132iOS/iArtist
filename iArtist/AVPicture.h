@@ -22,4 +22,6 @@
 
 @property (nonatomic) NSInteger prise;
 
+@property (nonatomic) NSInteger numberOfLiked;
+
 @end

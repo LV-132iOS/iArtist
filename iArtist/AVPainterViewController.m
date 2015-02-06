@@ -247,7 +247,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 break;
             case AVDirrectionMoveLeft:
                 if (biggerHeigthOrWidth) {
-                    intToCompare = self.view.frame.size.width - self.pictureImage.frame.size.width / 2;
+                    intToCompare = self.pictureImage.frame.size.width / 2;
                 } else intToCompare = self.view.frame.size.width / 2 - self.roomImage.image.size.width /
                     self.roomImage.image.size.height * self.view.frame.size.height / 2 + self.pictureImage.frame.size.width / 2;
                 if (pickedPoint.x > intToCompare) return YES;
@@ -255,7 +255,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 break;
             case AVDirrectionMoveRigth:
                 if (biggerHeigthOrWidth) {
-                    intToCompare = self.pictureImage.frame.size.width / 2;
+                    intToCompare = self.view.frame.size.width - self.pictureImage.frame.size.width / 2;
                 } else intToCompare = self.view.frame.size.width / 2 + self.roomImage.image.size.width / self.roomImage.image.size.height *
                     self.view.frame.size.height / 2 - self.pictureImage.frame.size.width / 2;
                 if (pickedPoint.x < intToCompare) return YES;
@@ -332,7 +332,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                                               animated:YES];
     
     popoverController.delegate = self;
-    
     self.popover = popoverController;
     
     double delayInSeconds = 300.0;
@@ -389,38 +388,22 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     }
 }
 
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+
+    if ([segue.identifier isEqualToString:@"Preview On Wall to Cart"]) {
+    
+    
+    
+    }
+}
+
 - (void)viewWillDisappear:(BOOL)animated{
     
     self.dataManager = [AVManager sharedInstance];
     self.dataManager.index = self.pictureIndex;
     self.dataManager.wallImage = self.currentWall.wallPicture;
     
-}
-    
-
-
-- (IBAction)send:(id)sender {
-    
-    self.pictureController = [AVPictureViewController new];
-    
-    [self presentViewController:self.pictureController animated: YES completion:^{
-        
-    }];
-    
-}
-
-
-- (IBAction)performSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
-    
-    if ([identifier  isEqual: @"Back to view picture"]) {
-        
-        self.pictureController = [AVPictureViewController new];
-        
-        [self presentViewController:self.pictureController animated: YES completion:^{
-        
-        }];
-       
-    }
 }
 
 

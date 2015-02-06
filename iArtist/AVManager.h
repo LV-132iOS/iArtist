@@ -12,11 +12,13 @@
 
 @interface AVManager : NSObject
 
-@property (strong, nonatomic)AVSession * session;
+@property (strong, nonatomic) AVSession * session;
 
 @property (nonatomic) NSInteger index;
 
-@property (strong, nonatomic)UIImage *wallImage;
+@property (strong, nonatomic) UIImage *wallImage;
+
+@property (strong, nonatomic) NSArray *arrayOfUrlPicture;
 
 +(AVManager *) sharedInstance;
 

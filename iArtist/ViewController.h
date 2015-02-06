@@ -10,6 +10,8 @@
 #import "iCarousel.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <GooglePlus/GooglePlus.h>
+#import "AVManager.h"
+#import "AVSession.h"
 
 @interface ViewController : UIViewController
 

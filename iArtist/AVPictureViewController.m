@@ -10,6 +10,9 @@
 
 @interface AVPictureViewController ()
 
+@property (nonatomic) NSInteger likeCounter;
+@property (strong, nonatomic) UILabel *likeCounterLabel;
+
 @end
 
 @implementation AVPictureViewController
@@ -19,9 +22,8 @@
     if (self.session == nil) {
         self.session = [AVSession sessionInit];
         self.intputPictureIndex = 0;
-        
     }
-    
+
     self.pictureView.delegate = self;
     self.pictureView.dataSource = self;
     
@@ -31,14 +33,61 @@
     
     
     self.pictureView.type = iCarouselTypeInvertedRotary;
-    self.pictureView.scrollSpeed = 0.2f;
+    self.pictureView.scrollSpeed = 0.7f;
+    self.pictureView.pagingEnabled = YES;
     [self.backgroundView addSubview:self.pictureView];
     
     [self.backgroundView bringSubviewToFront:self.upToolBar];
     [self.backgroundView bringSubviewToFront:self.titleOfSession];
     [self.backgroundView bringSubviewToFront:self.previewOnWallButton];
     
+    [self.backgroundView bringSubviewToFront:self.likeButton];
+    
     [self.backgroundView bringSubviewToFront:self.bigPicture];
+
+    
+    self.likeCounter = self.currentPicture.numberOfLiked;
+    
+    self.likeCounterLabel = [[UILabel alloc] initWithFrame:
+                                 (CGRect){.origin.x = 5, .origin.y = 10, .size.width = 50, .size.height = 30 }];
+    self.likeCounterLabel.text = [NSString stringWithFormat:@"%d", self.likeCounter];
+    self.likeCounterLabel.textAlignment = NSTextAlignmentCenter;
+    self.likeCounterLabel.textColor = [UIColor whiteColor];
+    
+    [self.likeButton addSubview:self.likeCounterLabel];
+    
+    self.authorsImage = [[UIImageView alloc] initWithImage:self.currentPicture.pictureAuthor.authorsPhoto];
+    self.authorsImage.frame = (CGRect){ .origin.x = 0, .origin.y = 0, .size.width = 60.0, .size.height = 60.0 };
+    [self.authorButton addSubview:self.authorsImage];
+    self.authorsName = [UILabel new];
+    self.authorsName.frame = (CGRect){.origin.x = 60.0, .origin.y = 0, .size.width = 180.0, .size.height = 30.0 };
+    
+    if (self.session != nil) {
+        self.authorsName.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsName];
+    }
+    
+    self.authorsName.textColor = [UIColor whiteColor];
+    self.authorsName.shadowColor = [UIColor blackColor];
+    self.authorsName.textAlignment = NSTextAlignmentCenter;
+    
+    self.authorsType = [UILabel new];
+    self.authorsType.frame = (CGRect){.origin.x = 60.0, .origin.y = 30, .size.width = 180.0, .size.height = 30.0 };
+    
+    if (self.session != nil) {
+        self.authorsType.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsType];
+    }
+    
+    self.authorsType.textColor = [UIColor grayColor];
+    self.authorsType.shadowColor = [UIColor blackColor];
+    self.authorsType.textAlignment = NSTextAlignmentCenter;
+    
+    [self.authorButton addSubview:self.authorsName];
+    [self.authorButton addSubview:self.authorsType];
+    
+    [self.backgroundView bringSubviewToFront:self.authorButton];
+    [self.backgroundView bringSubviewToFront:self.price];
+    [self.backgroundView bringSubviewToFront:self.pictureSize];
+    
 }
 
 -(void)blurImage
@@ -93,9 +142,6 @@
 }
 */
 
-
-
-
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
     //return the total number of items in the carousel
     return [self.session.arrayOfPictures count];
@@ -124,17 +170,14 @@
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
     
-    view = [[UIImageView alloc] initWithFrame:(CGRect){ .origin.x = 0.0, .origin.y = 0.0, .size.width = 800, .size.height = 650}];
-    
+    view = [[UIImageView alloc] initWithFrame:(CGRect){ .origin.x = 0.0, .origin.y = 0.0, .size.width = 800, .size.height = 700}];
     
     if (self.session != nil) {
-        
         self.pictureIndex = index + self.intputPictureIndex;
         if (self.pictureIndex >= [self.session.arrayOfPictures count]) {
             self.pictureIndex -= [self.session.arrayOfPictures count];            
         } 
         self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
-        
     }
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:self.currentPicture.pictureImage];
@@ -145,56 +188,22 @@
 
     view.contentMode = UIViewContentModeCenter;
     
-    UIImageView *priseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buy1.png"]];
-    priseImage.frame = (CGRect){ .origin.x = 740.0, .origin.y = imageView.frame.size.height, .size.width = 60.0, .size.height = 60.0 };
-    [view addSubview:priseImage];
+
+    self.likeCounter = self.currentPicture.numberOfLiked;
+    self.likeCounterLabel.text = [NSString stringWithFormat:@"%d", self.likeCounter];
     
-    self.price = [UILabel new];
-    self.price.frame = (CGRect){.origin.x = 572.0, .origin.y = imageView.frame.size.height, .size.width = 168.0, .size.height = 28.0 };
     self.price.text = [NSString stringWithFormat:@"%ld",(long)self.currentPicture.prise];
-    self.price.textColor = [UIColor whiteColor];
-    self.price.shadowColor = [UIColor blackColor];
-    self.price.textAlignment = NSTextAlignmentCenter;
     
-    self.pictureSize = [UILabel new];
-    self.pictureSize.frame = (CGRect){.origin.x = 572.0, .origin.y = imageView.frame.size.height + 32, .size.width = 168.0, .size.height = 28.0 };
     self.pictureSize.text = [NSString stringWithFormat:@"W: %ld H: %ld", (long)self.currentPicture.pictureSize.width,
-                        (long)self.currentPicture.pictureSize.height];
-    self.pictureSize.textColor = [UIColor grayColor];
-    self.pictureSize.shadowColor = [UIColor blackColor];
-    self.pictureSize.textAlignment = NSTextAlignmentCenter;
+                             (long)self.currentPicture.pictureSize.height];
     
-    [view addSubview:self.price];
-    [view addSubview:self.pictureSize];
-    
-    self.authorsImage = [[UIImageView alloc] initWithImage:self.currentPicture.pictureAuthor.authorsPhoto];
-    self.authorsImage.frame = (CGRect){ .origin.x = imageView.frame.origin.x, .origin.y = imageView.frame.size.height, .size.width = 60.0, .size.height = 60.0 };
-    [view addSubview:self.authorsImage];
-    self.authorsName = [UILabel new];
-    self.authorsName.frame = (CGRect){.origin.x = 60.0 + self.authorsImage.frame.origin.x, .origin.y = imageView.frame.size.height, .size.width = 168.0, .size.height = 28.0 };
+    self.authorsImage.image = self.currentPicture.pictureAuthor.authorsPhoto;
     
     if (self.session != nil) {
         self.authorsName.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsName];
-    }
-    
-    self.authorsName.textColor = [UIColor whiteColor];
-    self.authorsName.shadowColor = [UIColor blackColor];
-    self.authorsName.textAlignment = NSTextAlignmentCenter;
-    
-    self.authorsType = [UILabel new];
-    self.authorsType.frame = (CGRect){.origin.x = 60.0 + self.authorsImage.frame.origin.x, .origin.y = imageView.frame.size.height + 32, .size.width = 168.0, .size.height = 28.0 };
-    
-    if (self.session != nil) {
         self.authorsType.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsType];
     }
-    
-    self.authorsType.textColor = [UIColor grayColor];
-    self.authorsType.shadowColor = [UIColor blackColor];
-    self.authorsType.textAlignment = NSTextAlignmentCenter;
-    
-    [view addSubview:self.authorsName];
-    [view addSubview:self.authorsType];
-    
+ 
     return view;
 }
 
@@ -225,7 +234,11 @@
         ((AVDetailViewController *)segue.destinationViewController).pictureAuthor =
         ((AVPicture *)[self.session.arrayOfPictures objectAtIndex:indexOutput]).pictureAuthor;
     }
-    
+    if ([segue.identifier isEqualToString:@"Picture Carusel to Cart"]) {
+        
+        
+        
+    }
 }
 
 - (IBAction)didBackButtonClick:(id)sender {
@@ -246,6 +259,8 @@
     
 }
 - (IBAction)didViewInCaruselSelected:(id)sender {
+    
+    NSLog(@"x:%f y:%f",[sender locationInView:self.likeButton].x,[sender locationInView:self.likeButton].y);
     
     CGRect currentViewRect = { .origin.x = 0., .origin.y = 0., .size.width = 800, .size.height = 632 };
     
@@ -280,6 +295,15 @@
         (locationInView.y < newPictureRect.size.height + newPictureRect.origin.y)){
         [self performSegueWithIdentifier:@"ModalToDetail" sender:nil];
     }
+}
+
+
+- (IBAction)likeClicked:(id)sender {
+    
+    
+    
+    NSLog(@"AAA ");
+    
 }
 
 @end

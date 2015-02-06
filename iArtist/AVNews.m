@@ -84,11 +84,8 @@
     
     cell.pictureName.text = picture.pictureName;
     
-    //cell.pictureTag;
-    
     cell.authorName.text = author.authorsName;
     
-    //cell.newsDescription;
     cell.tag = indexPath.row;
     // Configure the cell...
     
@@ -104,7 +101,14 @@
         ((AVPictureViewController *)segue.destinationViewController).session = self.session;
         ((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = ((AVNewsTableCell *)sender).tag;
         dataManager.index = ((AVNewsTableCell *)sender).tag;
+        
     }
+    if ([segue.identifier isEqualToString:@"News Cart"]) {
+        
+        
+        
+    }
+    
 }
 
 - (IBAction)backReturn:(id)sender {

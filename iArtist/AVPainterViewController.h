@@ -65,4 +65,8 @@
 
 @property (nonatomic) NSInteger pictureIndex;
 
+- (void) hideViews;
+
+- (void) pushVies;
+
 @end

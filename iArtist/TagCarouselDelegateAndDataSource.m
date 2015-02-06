@@ -55,13 +55,6 @@
 }
 
 - (void)buttonTapped:(UIButton *)sender{
-    UIAlertView* locAlertView = [[UIAlertView alloc] initWithTitle:@"ButtonPressed"
-                                                           message: [NSString stringWithFormat:@"Your category: %@", sender.titleLabel.text]
-                                                          delegate:nil
-                                                 cancelButtonTitle:@"OK"
-                                                 otherButtonTitles: nil];
-    [locAlertView show];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
 }
 

@@ -11,6 +11,7 @@
 #import "SizeCarouselDelegateAndDataSource.h"
 #import "StyleCarouselDelegateAndDataSource.h"
 #import "TagCarouselDelegateAndDataSource.h"
+#import "AVPictureViewController.h"
 
 @interface ViewController (){
     PriceCarouselDelegateAndDataSource* priceCarouselDAndDS;
@@ -147,10 +148,39 @@
 }
 
 -(void)goToPictures{
-    [self performSegueWithIdentifier:@"Paintings" sender:nil];
+    [self performSegueWithIdentifier:@"PictureView" sender:nil];
 }
 
 
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    AVSession *session = [AVSession sessionInit];
+    
+    AVManager *dataManager = [AVManager sharedInstance];
+    dataManager.session = session;
+    dataManager.index = 0;
+    dataManager.wallImage = [UIImage imageNamed:@"room1.jpg"];
+    
+    if ([segue.identifier isEqualToString:@"PictureView"]) {
+        ((AVPictureViewController *)segue.destinationViewController).session = session;
+        ((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = 0;
+    }
+    if ([segue.identifier isEqualToString:@"News"]) {
+        ((AVNews *)segue.destinationViewController).session = session;
+        
+    }
+    
+    if ([segue.identifier isEqualToString:@"pushToLiked"]) {
+        ((AVLikedViewController *)segue.destinationViewController).session = session;
+        
+    }
+    if ([segue.identifier isEqualToString:@"MainToCart"]) {
+        
+        //((AVCartController *)segue.destinationViewController).session = session;
+        
+    }
+}
 
 @end
 

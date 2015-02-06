@@ -12,7 +12,9 @@
 #import "AVSession.h"
 #import "AVPainterViewController.h"
 #import "AVManager.h"
-#import "AVTestViewController.h"
+//#import "AVTestViewController.h"
+#import "AVNews.h"
+#import "AVLikedViewController.h"
 #import "AVDetailViewController.h"
 
 @interface AVPictureViewController : UIViewController <iCarouselDelegate, iCarouselDataSource>
@@ -28,6 +30,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *actionBarBautton;
 
 @property (strong, nonatomic) IBOutlet UILabel *titleOfSession;
+@property (strong, nonatomic) IBOutlet UIButton *authorButton;
 
 @property (strong, nonatomic) IBOutlet UIButton *previewOnWallButton;
 
@@ -39,8 +42,8 @@
 @property (strong, nonatomic)  UILabel *authorsType;
 @property (strong, nonatomic)  UIImageView *authorsImage;
 
-@property (strong, nonatomic)  UILabel *price;
-@property (strong, nonatomic)  UILabel *pictureSize;
+@property (strong, nonatomic)  IBOutlet UILabel *price;
+@property (strong, nonatomic)  IBOutlet UILabel *pictureSize;
 
 @property (nonatomic) NSInteger intputPictureIndex;
 @property (nonatomic) NSInteger pictureIndex;
@@ -48,8 +51,9 @@
 @property (strong, nonatomic)AVManager *dataManager;
 
 @property (strong, nonatomic) UIViewController *painterController;
-///
+
 @property (strong, nonatomic) IBOutlet UIButton *bigPicture;
-///
+@property (strong, nonatomic) IBOutlet UIButton *likeButton;
+
 @end
 
