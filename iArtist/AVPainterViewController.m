@@ -150,6 +150,11 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     locUrlToPass = [[NSURL alloc] init];
     locHeadString = [[NSString alloc] init];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(shareWithTwitter:)
+                                                 name:@"ShareWithTwitter"
+                                               object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -470,6 +475,21 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     }
 }
 
-
+- (void)shareWithTwitter:(id)sender {
+    TWTRComposer* composer = [[TWTRComposer alloc] init];
+    
+    [composer setText:locHeadString];
+    [composer setImage:locImageToShare];
+    [composer setURL:locUrlToPass];
+    
+    [composer showWithCompletion:^(TWTRComposerResult result) {
+        if (result == TWTRComposerResultCancelled) {
+            NSLog(@"Tweet composition cancelled");
+        }
+        else {
+            NSLog(@"Sending Tweet!");
+        }
+    }];
+}
 
 @end

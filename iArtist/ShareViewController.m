@@ -9,7 +9,8 @@
 #import "ShareViewController.h"
 
 
-@implementation ShareViewController
+@implementation ShareViewController{
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,6 +28,7 @@
 
 - (IBAction)shareWithFacebook:(id)sender {
     // Check if the Facebook app is installed and we can present the share dialog
+    [self dismissViewControllerAnimated:YES completion:nil];
     FBLinkShareParams *params = [[FBLinkShareParams alloc] init];
     params.link = self.urlToPass;
     params.name = self.headString;
@@ -101,19 +103,8 @@
 }
 
 - (IBAction)shareWithTwitter:(id)sender {
-    TWTRComposer *composer = [[TWTRComposer alloc] init];
-    
-    [composer setText:self.headString];
-    [composer setImage:self.imageToShare];
-    [composer setURL:self.urlToPass];
-    
-    [composer showWithCompletion:^(TWTRComposerResult result) {
-        if (result == TWTRComposerResultCancelled) {
-            NSLog(@"Tweet composition cancelled");
-        }
-        else {
-            NSLog(@"Sending Tweet!");
-        }
+    [self dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ShareWithTwitter" object:nil];
     }];
 }
 
@@ -122,6 +113,21 @@
 }
 
 - (IBAction)shareWithVkontakte:(id)sender {
+    VKShareDialogController * shareDialog = [VKShareDialogController new]; //1
+    VKUploadImage* locImage = [VKUploadImage uploadImageWithImage:self.imageToShare
+                                                        andParams:[VKImageParameters pngImage]];
+    
+    shareDialog.dismissAutomatically = YES;
+    shareDialog.text = self.headString; //2
+    shareDialog.uploadImages = @[locImage]; //3
+    shareDialog.shareLink = [[VKShareLink alloc] initWithTitle:@"Picture on the wall"
+                                                          link:self.urlToPass]; //4
+//    [shareDialog setCompletionHandler:^(VKShareDialogControllerResult result) {
+//        [[self presentedViewController] dismissViewControllerAnimated:YES completion:nil];
+//    }]; //5
+//    [self presentViewController:shareDialog animated:YES completion:nil]; //6
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [[self presentingViewController] presentViewController:shareDialog animated:YES completion:nil];
     
 }
 
