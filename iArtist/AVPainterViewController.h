@@ -14,7 +14,7 @@
 #import "AVPictureViewController.h"
 #import "AVManager.h"
 
-@interface AVPainterViewController : UIViewController <UIGestureRecognizerDelegate, UIPopoverControllerDelegate>
+@interface AVPainterViewController : UIViewController <UIGestureRecognizerDelegate, UIPopoverControllerDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIViewController *pictureController;
 

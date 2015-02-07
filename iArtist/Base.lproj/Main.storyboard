@@ -986,6 +986,11 @@
                                     </barButtonItem>
                                     <barButtonItem systemItem="action" id="yez-Ib-UAS">
                                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
+                                        <connections>
+                                            <segue destination="8LZ-N4-2to" kind="popover" identifier="SimpleShare" popoverAnchorBarButtonItem="yez-Ib-UAS" id="yK2-r1-I2N">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1190,6 +1195,69 @@
             </objects>
             <point key="canvasLocation" x="2305" y="2393"/>
         </scene>
+        <!--Share View Controller-->
+        <scene sceneID="E1X-o6-JXC">
+            <objects>
+                <viewController id="8LZ-N4-2to" customClass="ShareViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9GB-Jj-7cs"/>
+                        <viewControllerLayoutGuide type="bottom" id="vdQ-Xd-J3P"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rcJ-fQ-uXx">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e8p-yO-Ufv">
+                                <rect key="frame" x="28" y="10" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="FB">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareWithFacebook:" destination="8LZ-N4-2to" eventType="touchUpInside" id="m6t-jA-Ngx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xTo-CQ-Xft">
+                                <rect key="frame" x="116" y="10" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="TW">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareWithTwitter:" destination="8LZ-N4-2to" eventType="touchUpInside" id="deN-ZE-AKd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5C-Jy-Byv">
+                                <rect key="frame" x="204" y="10" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="G+">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareWithGooglePlus:" destination="8LZ-N4-2to" eventType="touchUpInside" id="QTr-FV-fNJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhK-w3-xOB">
+                                <rect key="frame" x="292" y="10" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="VK">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareWithVkontakte:" destination="8LZ-N4-2to" eventType="touchUpInside" id="1aW-KP-YPb"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="400" height="100"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MMj-4L-mat" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3245" y="-92"/>
+        </scene>
         <!--Painter View Controller-->
         <scene sceneID="rvE-lY-PtX">
             <objects>
@@ -1227,6 +1295,9 @@
                                     </barButtonItem>
                                     <barButtonItem systemItem="action" id="ScX-qN-XmV">
                                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
+                                        <connections>
+                                            <action selector="SharePressed:" destination="Tnv-Us-reo" id="WFx-Ji-Ch5"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1330,6 +1401,9 @@
                         <outlet property="roomImage" destination="GXM-Kd-Mot" id="c8t-Lk-enP"/>
                         <outlet property="titleOfPicture" destination="RcT-Ep-zne" id="aip-Jj-4xS"/>
                         <outlet property="upToolBar" destination="2V1-re-8Hj" id="fXk-Lj-zAC"/>
+                        <segue destination="8LZ-N4-2to" kind="popover" identifier="Share" popoverAnchorBarButtonItem="ScX-qN-XmV" id="uAH-YQ-HPy">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Mo-Ji-BDj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1355,7 +1429,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3767" y="910"/>
+            <point key="canvasLocation" x="3759" y="889"/>
         </scene>
         <!--Popover Table View Controller-->
         <scene sceneID="CNr-xl-bpf">
@@ -1460,7 +1534,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sia-Df-Ohg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4808" y="1782"/>
+            <point key="canvasLocation" x="4808" y="1462"/>
         </scene>
         <!--View Controller Between Popover And Piker View-->
         <scene sceneID="KgP-1f-2ti">
@@ -1525,7 +1599,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Jb-ex-FGC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5266" y="1782"/>
+            <point key="canvasLocation" x="5266" y="1462"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="wk0-EX-UgV">
@@ -1727,7 +1801,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6GW-kq-hsL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5004" y="910"/>
+            <point key="canvasLocation" x="5004" y="590"/>
         </scene>
     </scenes>
     <resources>
@@ -1744,8 +1818,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Gp4-6c-vgY"/>
         <segue reference="q6B-kz-Vr1"/>
-        <segue reference="KUg-sq-ZK0"/>
+        <segue reference="mCU-p1-n0T"/>
+        <segue reference="uAH-YQ-HPy"/>
+        <segue reference="Bgk-k0-pqb"/>
     </inferredMetricsTieBreakers>
 </document>
