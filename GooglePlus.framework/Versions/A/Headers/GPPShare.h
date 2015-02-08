@@ -158,7 +158,7 @@ enum {
 
 // Attaches a video to be shared. If there is an existing media attachment, it is replaced.
 // The video URL should be a local URL referencing a file on the device. If the URL is invalid,
-// this method does nothing and returns nil.
+// this method does nothing and returns nil.                       
 // This method cannot be called in combination with either |setURLToShare:| or
 // |setTitle:description:thumbnailURL:|.
 - (id<GPPNativeShareBuilder>)attachVideoURL:(NSURL *)videoAttachment;

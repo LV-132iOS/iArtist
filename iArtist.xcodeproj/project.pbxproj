@@ -109,6 +109,9 @@
 		60E69AAA1A865E17007CA1C6 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E69AA21A865E17007CA1C6 /* UIWebView+AFNetworking.m */; };
 		60E69AAD1A865E2E007CA1C6 /* DArt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60E69AAB1A865E2E007CA1C6 /* DArt.xcdatamodeld */; };
 		60E69AB11A865E54007CA1C6 /* ServerFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E69AB01A865E54007CA1C6 /* ServerFetcher.m */; };
+		60E69AB71A87AC6D007CA1C6 /* user-icon-0910125612.png in Resources */ = {isa = PBXBuildFile; fileRef = 60E69AB61A87AC6D007CA1C6 /* user-icon-0910125612.png */; };
+		60E69ABB1A87C989007CA1C6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E69ABA1A87C989007CA1C6 /* Reachability.m */; };
+		60E69AC01A87C9F2007CA1C6 /* SessionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E69ABF1A87C9F2007CA1C6 /* SessionControl.m */; };
 		843C96EC1A7E8A610080FCAA /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843C96E91A7E8A610080FCAA /* TwitterKit.framework */; };
 		843C96ED1A7E8A610080FCAA /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 843C96EA1A7E8A610080FCAA /* TwitterKitResources.bundle */; };
 		843C96EE1A7E8A610080FCAA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843C96EB1A7E8A610080FCAA /* Fabric.framework */; };
@@ -321,6 +324,11 @@
 		60E69AAC1A865E2E007CA1C6 /* DArt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DArt.xcdatamodel; sourceTree = "<group>"; };
 		60E69AAF1A865E54007CA1C6 /* ServerFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerFetcher.h; sourceTree = "<group>"; };
 		60E69AB01A865E54007CA1C6 /* ServerFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerFetcher.m; sourceTree = "<group>"; };
+		60E69AB61A87AC6D007CA1C6 /* user-icon-0910125612.png */ = {isa = PBXFileReference; explicitFileType = image.bmp; path = "user-icon-0910125612.png"; sourceTree = "<group>"; };
+		60E69AB91A87C989007CA1C6 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		60E69ABA1A87C989007CA1C6 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		60E69ABE1A87C9F2007CA1C6 /* SessionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionControl.h; sourceTree = "<group>"; };
+		60E69ABF1A87C9F2007CA1C6 /* SessionControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionControl.m; sourceTree = "<group>"; };
 		843C96E91A7E8A610080FCAA /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = SOURCE_ROOT; };
 		843C96EA1A7E8A610080FCAA /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle; sourceTree = SOURCE_ROOT; };
 		843C96EB1A7E8A610080FCAA /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
@@ -406,11 +414,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				843C97021A7EC08E0080FCAA /* SystemConfiguration.framework in Frameworks */,
 				609813021A7F5A5D00C8017B /* GooglePlus.framework in Frameworks */,
 				843C97061A7EC09E0080FCAA /* AddressBook.framework in Frameworks */,
 				609812FC1A7F59CA00C8017B /* FBAudienceNetwork.framework in Frameworks */,
 				843C97041A7EC0960080FCAA /* UIKit.framework in Frameworks */,
-				843C97021A7EC08E0080FCAA /* SystemConfiguration.framework in Frameworks */,
 				843C97001A7EC0830080FCAA /* Security.framework in Frameworks */,
 				843C96FE1A7EC07B0080FCAA /* MediaPlayer.framework in Frameworks */,
 				609813001A7F5A5D00C8017B /* GoogleOpenSource.framework in Frameworks */,
@@ -677,6 +685,33 @@
 			name = "Download Manager";
 			sourceTree = "<group>";
 		};
+		60E69AB81A87C961007CA1C6 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				60E69AB91A87C989007CA1C6 /* Reachability.h */,
+				60E69ABA1A87C989007CA1C6 /* Reachability.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
+		60E69ABC1A87C997007CA1C6 /* SessionControl */ = {
+			isa = PBXGroup;
+			children = (
+				60E69ABD1A87C9BC007CA1C6 /* Session */,
+				60E69AB81A87C961007CA1C6 /* Reachability */,
+			);
+			name = SessionControl;
+			sourceTree = "<group>";
+		};
+		60E69ABD1A87C9BC007CA1C6 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				60E69ABE1A87C9F2007CA1C6 /* SessionControl.h */,
+				60E69ABF1A87C9F2007CA1C6 /* SessionControl.m */,
+			);
+			name = Session;
+			sourceTree = "<group>";
+		};
 		843C97071A7EC0EF0080FCAA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,6 +950,7 @@
 		84A0E81F1A77B688009F6EA5 /* iArtist */ = {
 			isa = PBXGroup;
 			children = (
+				60E69ABC1A87C997007CA1C6 /* SessionControl */,
 				60E69AAE1A865E3C007CA1C6 /* Download Manager */,
 				60E69A731A865DF8007CA1C6 /* AFNetworking */,
 				60E69A661A865DBB007CA1C6 /* Core Data */,
@@ -944,6 +980,7 @@
 		84A0E8201A77B688009F6EA5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				60E69AB61A87AC6D007CA1C6 /* user-icon-0910125612.png */,
 				843C97071A7EC0EF0080FCAA /* Frameworks */,
 				846AB9071A793E200043214F /* remove.png */,
 				84663EF81A7915DB0038A5B1 /* Abstract-Art-masterpiece.jpg */,
@@ -1173,6 +1210,7 @@
 				84663EF91A7915DB0038A5B1 /* Abstract-Art-masterpiece.jpg in Resources */,
 				606E20801A84E72D00121589 /* Size2.jpg in Resources */,
 				84A4FBDC1A782CF00041BF50 /* placeholder.png in Resources */,
+				60E69AB71A87AC6D007CA1C6 /* user-icon-0910125612.png in Resources */,
 				604413131A83D7E40099B184 /* picture3.jpg in Resources */,
 				606E205F1A84E5DB00121589 /* Tags3.jpg in Resources */,
 				604413171A83D7E40099B184 /* picture7.jpg in Resources */,
@@ -1213,9 +1251,11 @@
 				604412F51A83D7A10099B184 /* AVDetailViewController.m in Sources */,
 				846AB9181A794C900043214F /* LikedViewController.m in Sources */,
 				846AB9201A79596D0043214F /* BuyCartViewController.m in Sources */,
+				60E69ABB1A87C989007CA1C6 /* Reachability.m in Sources */,
 				604413021A83D7A10099B184 /* AVWall.m in Sources */,
 				604412F61A83D7A10099B184 /* AVImagePickerController.m in Sources */,
 				609813061A7F5E7B00C8017B /* GooglePlusDelegate.m in Sources */,
+				60E69AC01A87C9F2007CA1C6 /* SessionControl.m in Sources */,
 				60E69A8F1A865E0A007CA1C6 /* AFURLResponseSerialization.m in Sources */,
 				60E69AA81A865E17007CA1C6 /* UIProgressView+AFNetworking.m in Sources */,
 				846AB8F31A792A5B0043214F /* LoginEmailViewController.m in Sources */,

@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet iCarousel *sizeCarousel;
 @property (weak, nonatomic) IBOutlet iCarousel *styleCarousel;
 @property (weak, nonatomic) IBOutlet iCarousel *tagCarousel;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 
 

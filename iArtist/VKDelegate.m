@@ -8,66 +8,62 @@
 
 #import "VKDelegate.h"
 
+@interface VKDelegate(){
+    NSUserDefaults* defaults;
+}
+
+@end
+
 @implementation VKDelegate
 
 - (void)vkSdkNeedCaptchaEnter:(VKError *)captchaError{
-    
+    //this should never be called
+    NSLog(@"User need to enter VK captcha");
 }
 
 - (void)vkSdkTokenHasExpired:(VKAccessToken *)expiredToken{
-    
+    //this should never be called because our tokens live for eternity
+    NSLog(@"VK token has expired");
 }
 
 - (void)vkSdkUserDeniedAccess:(VKError *)authorizationError{
-    
+    //if user denied - do nothing, its his willing
+    NSLog(@"USer denied access to VK");
 }
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller{
-    
+    //this should not be ever called
+    NSLog(@"Vk try to present uiwebview in app");
 }
 
 - (void)vkSdkReceivedNewToken:(VKAccessToken *)newToken{
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:@"loggedInWithVkontakte"] == NO) {
-        [defaults setBool:YES forKey:@"loggedInWithVkontakte"];
-        [defaults setBool:YES forKey:@"loggedIn"];
-        [defaults synchronize];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedIn" object:nil];
-        NSLog(@"User logged in");
-    }
-    NSLog(@"User is in log in mode");
-    
-    NSLog(@"Now we have information to pass");
-    
-    if ([defaults boolForKey:@"informationSent"] == NO){
-        [[[VKApi users] get:@{ VK_API_FIELDS : @"first_name,last_name" }]
-         executeWithResultBlock:^(VKResponse *response) {
-             NSLog(@"%@",response);
-             NSString* localString = [[NSString alloc] init];
-             localString = @"vk";
-             localString = [localString stringByAppendingString:newToken.userId];
-             [defaults setObject:localString forKey:@"id"];
-             localString = [[response.json[0][@"first_name"]
-                            stringByAppendingString:@" " ]
-                            stringByAppendingString:response.json[0][@"last_name"]];
-             [defaults setObject:localString forKey:@"username"];
-             localString = newToken.email;
-             [defaults setObject:localString forKey:@"useremail"];
-             NSLog(@"username = %@", [defaults objectForKey:@"username"]);
-             [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil];
-             
-         } errorBlock:^(NSError *error) {
-             NSLog(@"Error: %@", error);
-         }];
-
-        
-        
-    }
-    
-
-    
+    // new token means new log in to app
+    //if it is called then there is no error with vk login
+    defaults = [NSUserDefaults standardUserDefaults];
+    //getting additional info about user
+    [[[VKApi users] get:@{ VK_API_FIELDS : @"first_name,last_name" }]
+     executeWithResultBlock:^(VKResponse *response) {
+         //creating id for user
+         NSString* localString = @"vk";
+         localString = [localString stringByAppendingString:newToken.userId];
+         [defaults setObject:localString forKey:@"id"];
+         //creating name for user
+         localString = [[response.json[0][@"first_name"]
+                         stringByAppendingString:@" " ]
+                        stringByAppendingString:response.json[0][@"last_name"]];
+         [defaults setObject:localString forKey:@"username"];
+         //writing email to defaults
+         [defaults setObject:newToken.email forKey:@"useremail"];
+           //send info to server
+         NSDictionary* info = @{ @"with": @"Vkontakte" };
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil userInfo:info];
+     } errorBlock:^(NSError *error) {
+         //something went wrong, do nothing
+         NSLog(@"Error with getting user info from VK: %@", [error localizedDescription]);
+     }];
 }
- 
+
+
 - (BOOL)vkSdkIsBasicAuthorization{
     return NO;
 }

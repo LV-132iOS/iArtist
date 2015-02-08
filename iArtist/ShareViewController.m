@@ -7,19 +7,25 @@
 //
 
 #import "ShareViewController.h"
+#import <GoogleOpenSource/GTLPlusConstants.h>
+#import "GooglePlusDelegate.h"
+
+static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501k8u.apps.googleusercontent.com";
 
 
-@implementation ShareViewController{
+@interface ShareViewController (){
+    GooglePlusDelegate* GDelegate;
 }
+
+@end
+
+@implementation ShareViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
--(void)viewWillAppear:(BOOL)animated{
-
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -104,11 +110,33 @@
 
 - (IBAction)shareWithTwitter:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"ShareWithTwitter" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"ShareWithTwitter"
+                                                                    object:nil];
     }];
 }
 
 - (IBAction)shareWithGooglePlus:(id)sender {
+    GPPSignIn *signIn = [GPPSignIn sharedInstance];
+    signIn.clientID = kClientId;
+    signIn.scopes = [NSArray arrayWithObjects:
+                     kGTLAuthScopePlusLogin,
+                     kGTLAuthScopePlusUserinfoEmail,
+                     nil];
+    signIn.attemptSSO = YES;
+    
+    [signIn trySilentAuthentication];
+
+    if ([signIn authentication]) {
+        id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+        [shareBuilder setPrefillText:@"Achievement unlocked! I just scored 99 points. Can you beat me?"];
+        [shareBuilder attachImage:self.imageToShare];
+        [shareBuilder open];
+    } else {
+        [signIn authenticate];
+    }
+    
+
+    
     
 }
 
