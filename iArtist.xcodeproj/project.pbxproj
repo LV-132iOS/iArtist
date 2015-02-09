@@ -950,6 +950,7 @@
 		84A0E81F1A77B688009F6EA5 /* iArtist */ = {
 			isa = PBXGroup;
 			children = (
+				84A0E82A1A77B688009F6EA5 /* Main.storyboard */,
 				60E69ABC1A87C997007CA1C6 /* SessionControl */,
 				60E69AAE1A865E3C007CA1C6 /* Download Manager */,
 				60E69A731A865DF8007CA1C6 /* AFNetworking */,
@@ -957,10 +958,6 @@
 				604845311A852B6600C52F1F /* Share */,
 				604413031A83D7C00099B184 /* Images */,
 				604412CF1A83D7870099B184 /* AV classes */,
-				6099E2CD1A82928300513668 /* vk_logo.png */,
-				6099E2C51A825D8E00513668 /* iArtist.entitlements */,
-				6099E2C31A825AEC00513668 /* Entitlements.plist */,
-				84A0E82A1A77B688009F6EA5 /* Main.storyboard */,
 				846AB9311A795EF80043214F /* Preview on wall */,
 				846AB92D1A795C630043214F /* Artist Info */,
 				846AB9291A795BC80043214F /* Search Results */,
@@ -980,6 +977,9 @@
 		84A0E8201A77B688009F6EA5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6099E2CD1A82928300513668 /* vk_logo.png */,
+				6099E2C51A825D8E00513668 /* iArtist.entitlements */,
+				6099E2C31A825AEC00513668 /* Entitlements.plist */,
 				60E69AB61A87AC6D007CA1C6 /* user-icon-0910125612.png */,
 				843C97071A7EC0EF0080FCAA /* Frameworks */,
 				846AB9071A793E200043214F /* remove.png */,
@@ -1470,6 +1470,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -1492,6 +1493,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

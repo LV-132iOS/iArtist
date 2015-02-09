@@ -27,7 +27,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch
-    self.control = [[SessionControl alloc] init];
+    self.control = [SessionControl sharedManager];
     [self.control beginNotify];
     
     [FBLoginView class];

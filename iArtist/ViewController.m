@@ -12,6 +12,7 @@
 #import "StyleCarouselDelegateAndDataSource.h"
 #import "TagCarouselDelegateAndDataSource.h"
 #import "AVPictureViewController.h"
+#import "SessionControl.h"
 
 @interface ViewController (){
     PriceCarouselDelegateAndDataSource* priceCarouselDAndDS;
@@ -99,16 +100,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)loginButtonAction:(id)sender {
-    //if person logged in - then show profile of the person
-    //in other case show login/register view controller
-     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:@"loggedIn"]) {
-        [self performSegueWithIdentifier:@"Profile" sender:nil];
-    } else{
-        [self performSegueWithIdentifier:@"Login" sender:nil];
-    }
-}
 
 -(void)goToPictures {
     //method used by notification to go to pictures
@@ -163,7 +154,7 @@
         NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
         request.HTTPMethod = @"POST";
         request.HTTPBody = dataToPass;
-        request.timeoutInterval = 5;
+        //request.timeoutInterval = 20;
         [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         //creating data task
         
@@ -202,6 +193,19 @@
         [dataTask resume];
         
     }
+}
+
+- (IBAction)goToProfile:(id)sender {
+    SessionControl* control = [SessionControl sharedManager];
+    [control refresh];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500000000), dispatch_get_main_queue(), ^{
+        if ([defaults boolForKey:@"loggedIn"]) {
+            [self performSegueWithIdentifier:@"GoToProfile" sender:nil];
+        } else{
+            [self performSegueWithIdentifier:@"Login" sender:nil];
+        }
+    });
 }
 
 @end

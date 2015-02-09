@@ -8,10 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SessionControl : NSObject
+@interface SessionControl : NSObject{
+}
 
 -(void)beginNotify;
 -(BOOL)checkInternetConnection;
 -(BOOL)checkSession:(NSString*)sessionName;
+-(NSString*)currentSocialNetwork;
+-(void)refresh;
+
++(id)sharedManager;
 
 @end

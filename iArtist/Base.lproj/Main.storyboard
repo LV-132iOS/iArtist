@@ -58,7 +58,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="loginButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="n0q-HF-lmz"/>
+                                                <action selector="goToProfile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X0P-J4-Zgb"/>
                                             </connections>
                                         </button>
                                         <connections>
@@ -121,7 +121,7 @@
                         <outlet property="styleCarousel" destination="VfS-XD-CyK" id="1lV-Gc-6cd"/>
                         <outlet property="tagCarousel" destination="VPR-df-nJy" id="mEF-JT-dJZ"/>
                         <segue destination="aVD-sd-ueB" kind="modal" identifier="Login" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="dsw-wX-cc4"/>
-                        <segue destination="LDj-qJ-gC6" kind="modal" identifier="Profile" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="bbn-J7-77p"/>
+                        <segue destination="LDj-qJ-gC6" kind="modal" identifier="GoToProfile" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="bbn-J7-77p"/>
                         <segue destination="LmL-hT-0P2" kind="modal" identifier="Search" modalPresentationStyle="fullScreen" modalTransitionStyle="partialCurl" id="fN9-6z-HVe"/>
                         <segue destination="fnz-I7-myP" kind="modal" identifier="PictureView" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="eIb-37-wBW"/>
                     </connections>

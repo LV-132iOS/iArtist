@@ -26,6 +26,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //setting Facebook
+    FBdelegate = [[FacebookDelegate alloc] init];
+    _loginView.delegate = FBdelegate;
+    self.loginView.readPermissions = @[@"public_profile", @"email"];
     defaults = [NSUserDefaults standardUserDefaults];
     //notification to close this view controller (used by social networks delegates)
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -85,10 +90,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //setting Facebook
-    FBdelegate = [[FacebookDelegate alloc] init];
-    self.loginView.delegate = FBdelegate;
-    self.loginView.readPermissions = @[@"public_profile", @"email"];
+   
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -99,7 +101,7 @@
 - (IBAction)loginWithVkontakte:(id)sender {
     //first it will try to open vk app. If fails then will open safari
     NSArray* vkScope = @[ @"email"];
-    [VKSdk authorize:vkScope  revokeAccess:YES forceOAuth:NO inApp:NO];
+    [VKSdk authorize:vkScope  revokeAccess:YES];
 }
 
 @end
