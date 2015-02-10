@@ -12,10 +12,9 @@
 
 @end
 
-
-
 @implementation AVImagePickerController
 
+//rempve autorotation
 - (BOOL)shouldAutorotate{
     return NO;
 }
@@ -29,6 +28,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation

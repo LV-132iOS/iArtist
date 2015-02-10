@@ -20,7 +20,8 @@ NSString *const AVDidSelectDistanceToWall = @"AVDidSelectDistanceToWall";
     
     [super viewDidLoad];
     
-    self.showInputNumber.text = [[NSString alloc] initWithFormat:@"%.1f",self.inputNumber.value];
+    self.showInputNumber.text = [[NSString stringWithFormat:@"%.1f",self.inputNumber.value]
+                                 stringByAppendingString:@" meters"];
     // Do any additional setup after loading the view.
 }
 
@@ -49,7 +50,8 @@ NSString *const AVDidSelectDistanceToWall = @"AVDidSelectDistanceToWall";
 */
 //if we change slider value
 - (IBAction)valueChanged:(id)sender {
-    self.showInputNumber.text = [[NSString alloc] initWithFormat:@"%.1f",self.inputNumber.value];
+    self.showInputNumber.text = [[NSString stringWithFormat:@"%.1f",self.inputNumber.value]
+                                 stringByAppendingString:@" meters"];
     self.distanceToWall = @(self.inputNumber.value);
 }
 //put distance into notification if ok click

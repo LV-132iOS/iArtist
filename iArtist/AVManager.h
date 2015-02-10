@@ -18,8 +18,12 @@
 
 @property (strong, nonatomic) UIImage *wallImage;
 
+@property (strong, nonatomic) NSMutableArray *wallArray;
+
 @property (strong, nonatomic) NSArray *arrayOfUrlPicture;
 
 +(AVManager *) sharedInstance;
+
+- (void)wallArrayInit;
 
 @end

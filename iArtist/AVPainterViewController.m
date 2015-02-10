@@ -7,18 +7,25 @@
 //
 
 #import "AVPainterViewController.h"
-#import <QuartzCore/QuartzCore.h>
-#import "ShareViewController.h"
 
-@interface AVPainterViewController (){
-    NSString* kindOfSharing;
-    UIImage* locImageToShare;
-    NSURL* locImageUrl;
-    NSString* locHeadString;
-    NSURL* locUrlToPass;
-}
+@interface AVPainterViewController ()
 
 @property (strong, nonatomic) UIPopoverController *popover;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *rightSwipe;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *leftSwipe;
+@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
+@property (strong, nonatomic) IBOutlet UIToolbar *upToolBar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarBatton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *cameraBurButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *actionBarBautton;
+@property (strong, nonatomic) IBOutlet UILabel *titleOfPicture;
+@property (strong, nonatomic) IBOutlet UIView *authorsView;
+@property (strong, nonatomic) IBOutlet UILabel *authorsName;
+@property (strong, nonatomic) IBOutlet UILabel *authorsType;
+@property (strong, nonatomic) IBOutlet UIImageView *authorsImage;
+@property (strong, nonatomic) IBOutlet UIView *priceView;
+@property (strong, nonatomic) IBOutlet UILabel *price;
+@property (strong, nonatomic) IBOutlet UILabel *pictureSize;
 
 @end
 
@@ -52,89 +59,51 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 
 - (void) setImageWithWall :(UIImage *)image :(CGPoint)pictureCenter :(AVTypeOfPictureChange)typeOfPictureChange{
     
-    //NSLog(@"%d", self.pictureIndex);
-    
     NSNumber *alpha = @1;
-    
-    CGPoint sizeOfNewPicture = CGPointMake(image.size.width / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue),
-                                           image.size.height / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue));
-    
-    CGRect frame = { .origin.x = 0.0, .origin.y = 0.0, .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y };
-    
+    CGPoint sizeOfNewPicture = CGPointMake(
+            self.currentPicture.pictureSize.width / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue),
+            self.currentPicture.pictureSize.height / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue));
+    CGRect frame = {.origin.x = 0.0, .origin.y = 0.0, .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
     [self.pictureImage removeFromSuperview];
-    
     self.pictureImage = [[UIImageView alloc] initWithFrame:frame];
-    
     self.pictureImage.image = image;
-    
     self.price.text = [NSString stringWithFormat:@"%ld",(long)self.currentPicture.prise];
-    
     self.pictureSize.text = [NSString stringWithFormat:@"W: %ld H: %ld", (long)self.currentPicture.pictureSize.width,
                              (long)self.currentPicture.pictureSize.height];
-    
     self.authorsImage.image = self.currentPicture.pictureAuthor.authorsPhoto;
-    
     self.authorsName.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsName];
-   
     self.authorsType.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsType];
-    
     self.titleOfPicture.text = [NSString stringWithString:self.currentPicture.pictureName];
-    
     if (typeOfPictureChange == AVInitTypeOfPictureChange) {
-        
         self.pictureImage.center = self.view.center;
-        
         [self.roomImage addSubview:self.pictureImage];
-        
     }
-    
     if (typeOfPictureChange == AVSwipeTypeOfPictureChange) {
-        
         if (pictureCenter.x - self.pictureImage.frame.size.width / 2 < 0)pictureCenter.x = self.pictureImage.frame.size.width / 2;
         if (pictureCenter.x + self.pictureImage.frame.size.width / 2 > 1024)pictureCenter.x = 1024 - self.pictureImage.frame.size.width / 2;
         if (pictureCenter.y - self.pictureImage.frame.size.height / 2 < 0)pictureCenter.y = self.pictureImage.frame.size.height / 2;
         if (pictureCenter.y + self.pictureImage.frame.size.height / 2 > 768)pictureCenter.y = 768 - self.pictureImage.frame.size.height / 2;
         self.pictureImage.center = pictureCenter;
-        
         [self.roomImage addSubview:self.pictureImage];
-
     }
-    
 }
 
 - (void) mainInit{
-    
-    if (self.session == nil) {
-        self.session = [AVSession sessionInit];
-        self.pictureIndex = 0;
-        
-    }
-    
+    AVManager *manager = [AVManager sharedInstance];
+    self.pictureIndex = manager.index;
     self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
-    
-    
     [self initWals];
-    
     self.roomImage.image = self.currentWall.wallPicture;
-    
     UIImage *picture = self.currentPicture.pictureImage;
-    
     [self setImageWithWall:picture
                           :self.roomImage.center
                           :AVInitTypeOfPictureChange];
-    
     self.rightSwipe = [UISwipeGestureRecognizer new];
-    
     self.rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
-    
     self.rightSwipe.delegate = self;
-    
     self.leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    
     self.leftSwipe.delegate = self;
-    
     self.panGestureRecognizer.delegate = self;
-   
 }
 
 - (void)viewDidLoad {
@@ -144,17 +113,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     
     [self mainInit];
     
-    kindOfSharing = [[NSMutableString alloc] init];
-    locImageToShare = [[UIImage alloc] init];
-    locImageUrl = [[NSURL alloc] init];
-    locUrlToPass = [[NSURL alloc] init];
-    locHeadString = [[NSString alloc] init];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(shareWithTwitter:)
-                                                 name:@"ShareWithTwitter"
-                                               object:nil];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -162,9 +120,17 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     // Dispose of any resources that can be recreated.
 }
 
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 - (void) hideViews{
-    
     self.upToolBar.hidden = YES;
     self.priceView.hidden = YES;
     self.authorsView.hidden = YES;
@@ -172,7 +138,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 }
 
 - (void) pushVies{
-    
     self.upToolBar.hidden = NO;
     self.priceView.hidden = NO;
     self.authorsView.hidden = NO;
@@ -280,70 +245,63 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 
 //pan picture recognizer for moving picture on the screen
 - (IBAction)pictureGestureRecognizerAction:(UIPanGestureRecognizer *)sender {
-    
     if (sender.state == UIGestureRecognizerStateBegan) {
-            
         positionOfFirstTapPanGestureGecognizer = [sender locationInView:self.pictureImage];
         [self hideViews];
     }
-        
     CGPoint differenceInLocation = CGPointMake([sender locationInView:self.pictureImage].x - positionOfFirstTapPanGestureGecognizer.x,
                                                    [sender locationInView:self.pictureImage].y - positionOfFirstTapPanGestureGecognizer.y);
-        
     CGPoint newCenter = CGPointMake(self.pictureImage.center.x + differenceInLocation.x,
                                         self.pictureImage.center.y + differenceInLocation.y);
-    
     if ([self canMovePicture:newCenter dirrectionToMove:AVDirrectionMoveUp]&&
         [self canMovePicture:newCenter dirrectionToMove:AVDirrectionMoveDown])
         self.pictureImage.center = CGPointMake(self.pictureImage.center.x, newCenter.y);
-    
     if ([self canMovePicture:newCenter dirrectionToMove:AVDirrectionMoveLeft]&&
         [self canMovePicture:newCenter dirrectionToMove:AVDirrectionMoveRigth])
         self.pictureImage.center = CGPointMake(newCenter.x, self.pictureImage.center.y);
-    
     if (sender.state == UIGestureRecognizerStateEnded) {
         [self pushVies];
     }
-
+}
+// twaice tap gesture recognizer
+- (IBAction)logAction:(id)sender {
+    if ([self ifPointInsidePicture: [(UIGestureRecognizer *)sender locationInView:self.roomImage]]) {
+        [self backReturn:sender];
+    } else {
+        [self setImageWithWall:self.currentPicture.pictureImage
+                              :[(UIGestureRecognizer *)sender locationInView: self.roomImage]
+                              :AVSwipeTypeOfPictureChange];
+    }
 }
 
 //this method is for avoiding any conflicts by different gesture recognizers
 - (BOOL) gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
-    
     CGPoint currentPoint = [gestureRecognizer locationInView:self.roomImage];
     if ([gestureRecognizer isKindOfClass: [UIPanGestureRecognizer class]]){
         if ([self ifPointInsidePicture: currentPoint])return YES;
         else return NO;
     }
-    
     if ([gestureRecognizer isKindOfClass: [UISwipeGestureRecognizer class]]){
         if ([self ifPointInsidePicture: currentPoint])return NO;
         else return YES;
     }
-    
     return YES;
-    
 }
 
 #pragma mark - popover
 //here we push popower om thr screen
 - (IBAction) pushPopover:(UIBarButtonItem *)sender {
-    
     AVPopoverTableViewController *tableController = [self.storyboard instantiateViewControllerWithIdentifier:@"popover"];
-    
     UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:tableController];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(changeWall:)
                                                  name:AVDidSelectWall
                                                object:nil];
-    
     [popoverController presentPopoverFromBarButtonItem:sender
                               permittedArrowDirections:UIPopoverArrowDirectionDown
                                               animated:YES];
-    
     popoverController.delegate = self;
     self.popover = popoverController;
-    
     double delayInSeconds = 300.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds *NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -355,141 +313,30 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 //get a notification from popower controler whith chosen wall
 //we also put wall on the screen
 - (void) changeWall:(NSNotification *)notification{
-    
     self.currentWall = [notification.userInfo valueForKey:@"wall"];
     self.roomImage.image = self.currentWall.wallPicture;
     [self setImageWithWall:self.currentPicture.pictureImage
                           :self.pictureImage.center
                           :AVInitTypeOfPictureChange];
     [self.popover dismissPopoverAnimated:YES];
-    
-    
 }
 
 // we remove our notification as soon as we don't need it
 - (void) popoverControllerDidDismissPopover:(UIPopoverController *)popoverController{
     self.popover = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
 }
+#pragma mark - desappearing controller
 
+//dismiss viewconroller on click back button
 - (IBAction)backReturn:(id)sender {
-    
-    //self.dataManager = [AVManager sharedInstance];
-    //self.dataManager.session = self.session;
-    //self.dataManager.index = self.pictureIndex;
-   
-    //self.dataManager.wallImage = self.currentWall.wallPicture;
-    
-    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-- (IBAction)logAction:(id)sender {
-    
-    if ([self ifPointInsidePicture: [(UIGestureRecognizer *)sender locationInView:self.roomImage]]) {
-        
-        [self backReturn:sender];
-        
-    } else {
-        [self setImageWithWall:self.currentPicture.pictureImage
-                              :[(UIGestureRecognizer *)sender locationInView: self.roomImage]
-                              :AVSwipeTypeOfPictureChange];
-    }
-}
-
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
-    if ([segue.identifier isEqualToString:@"Share"]) {
-        if ([kindOfSharing isEqualToString:@"PictureOnWall"]) {
-            //get screenshot of view
-            [self hideViews];
-            UIGraphicsBeginImageContext(self.view.window.bounds.size);
-            [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
-            locImageToShare = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            [self pushVies];
-            //set text
-            locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@ on the wall!",
-                             self.currentPicture.pictureName,
-                             self.currentPicture.pictureAuthor.authorsName];
-            //
-        } else if ([kindOfSharing isEqualToString:@"OnlyPicture"]){
-            //get only picture
-            locImageToShare = self.pictureImage.image;
-            //set text
-            locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@!",
-                             self.currentPicture.pictureName,
-                             self.currentPicture.pictureAuthor.authorsName];
-            //
-        }
-        //pass picture to server and get its url (for PictureOnWall only)
-        //if  OnlyPicture - then pass picture url
-        locImageUrl = [NSURL URLWithString:@"http://www.google.com/images/srpr/logo11w.png"];
-        // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [NSURL URLWithString:@"http://www.yandex.ru"];
-        
-        ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
-        ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;
-        ((ShareViewController*)segue.destinationViewController).headString = locHeadString;
-        ((ShareViewController*)segue.destinationViewController).urlToPass = locUrlToPass;
-    }
-    
-}
-
+//input data into manager when we disappear view controller
 - (void)viewWillDisappear:(BOOL)animated{
-    
     self.dataManager = [AVManager sharedInstance];
     self.dataManager.index = self.pictureIndex;
     self.dataManager.wallImage = self.currentWall.wallPicture;
-    
-}
-
-
-- (IBAction)SharePressed:(id)sender {
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Would you like to share..."
-                                                       message:@""
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Only picture", @"Picture on wall", nil];
-    alertView.alertViewStyle = UIAlertControllerStyleActionSheet;
-    [alertView show];
-    
-}
-
-#pragma mark UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"%ld", (long)buttonIndex);
-    if (buttonIndex == 1) {
-        //only picture
-        kindOfSharing = @"OnlyPicture";
-        [self performSegueWithIdentifier:@"Share" sender:nil];
-        
-    } else if (buttonIndex == 2) {
-        //picture with wall
-        kindOfSharing = @"PictureOnWall";
-        [self performSegueWithIdentifier:@"Share" sender:nil];
-    } else if (buttonIndex == 0) {
-        //do nothing
-    }
-}
-
-- (void)shareWithTwitter:(id)sender {
-    TWTRComposer* composer = [[TWTRComposer alloc] init];
-    
-    [composer setText:locHeadString];
-    [composer setImage:locImageToShare];
-    [composer setURL:locUrlToPass];
-    
-    [composer showWithCompletion:^(TWTRComposerResult result) {
-        if (result == TWTRComposerResultCancelled) {
-            NSLog(@"Tweet composition cancelled");
-        }
-        else {
-            NSLog(@"Sending Tweet!");
-        }
-    }];
 }
 
 @end

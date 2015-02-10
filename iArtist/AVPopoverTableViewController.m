@@ -8,49 +8,26 @@
 
 #import "AVPopoverTableViewController.h"
 #import "AVViewControllerBetweenPopoverAndPikerView.h"
+#import "AVManager.h"
 
 NSString *const AVDidSelectWall = @"AVDidSelectWall";
 
 @interface AVPopoverTableViewController ()
 
+@property (strong, nonatomic) NSMutableArray *arrayOfWals;
+
 @end
 
 @implementation AVPopoverTableViewController
 
-NSArray *arrayOfWals;
-
 #pragma mark initialization
 //initialization walls
-- (void) initWals{
+- (void) initWalls{
     
-    AVWall *wall1 = [AVWall new];
-    wall1.wallPicture = [UIImage imageNamed:@"room1.jpg"];
-    wall1.distanceToWall = @1;
-    AVWall *wall2 = [AVWall new];
-    wall2.wallPicture = [UIImage imageNamed:@"room2.jpg"];
-    wall2.distanceToWall = @6;
-    AVWall *wall3 = [AVWall new];
-    wall3.wallPicture = [UIImage imageNamed:@"room3.jpg"];
-    wall3.distanceToWall = @1;
-    AVWall *wall4 = [AVWall new];
-    wall4.wallPicture = [UIImage imageNamed:@"room4.jpg"];
-    wall4.distanceToWall = @3;
-    AVWall *wall5 = [AVWall new];
-    wall5.wallPicture = [UIImage imageNamed:@"room5.jpg"];
-    wall5.distanceToWall = @2;
-    AVWall *wall6 = [AVWall new];
-    wall6.wallPicture = [UIImage imageNamed:@"room6.jpg"];
-    wall6.distanceToWall = @4;
-    AVWall *wall7 = [AVWall new];
-    wall7.wallPicture = [UIImage imageNamed:@"room7.jpg"];
-    wall7.distanceToWall = @1;
-    AVWall *wall8 = [AVWall new];
-    wall8.wallPicture = [UIImage imageNamed:@"room8.jpg"];
-    wall8.distanceToWall = @2;
-    AVWall *wall9 = [AVWall new];
-    wall9.wallPicture = [UIImage imageNamed:@"room9.jpg"];
-    wall9.distanceToWall = @8;
-    arrayOfWals = @[wall1, wall2, wall3, wall4, wall5, wall6, wall7, wall8, wall9];
+    //get wals from data
+    AVManager *manager = [AVManager sharedInstance];
+
+    self.arrayOfWals = manager.wallArray;
 }
 
 - (void)viewDidLoad {
@@ -62,7 +39,7 @@ NSArray *arrayOfWals;
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    [self initWals];
+    [self initWalls];
     
 }
 
@@ -77,7 +54,7 @@ NSArray *arrayOfWals;
 }
 //number of cells in collection view
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return [arrayOfWals count];
+    return [self.arrayOfWals count];
 }
 //we put picture from a data to the cell
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -87,7 +64,7 @@ NSArray *arrayOfWals;
     
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:100];
     
-    AVWall *wall = [arrayOfWals objectAtIndex:indexPath.row];
+    AVWall *wall = [self.arrayOfWals objectAtIndex:indexPath.row];
     UIImage *image = wall.wallPicture;
     
     imageView.image = image;
@@ -97,7 +74,7 @@ NSArray *arrayOfWals;
 //here we put chosen wal wrom a collection view to a notification
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    AVWall *selectedWall = [arrayOfWals objectAtIndex:indexPath.row];
+    AVWall *selectedWall = [self.arrayOfWals objectAtIndex:indexPath.row];
     
     NSDictionary *newDictionary = @{@"wall": selectedWall};
     [[NSNotificationCenter defaultCenter]postNotificationName:AVDidSelectWall object:nil userInfo:newDictionary];
@@ -172,6 +149,7 @@ NSArray *arrayOfWals;
 
 // notification here we post notification with chosen wall
 - (void) selectDistanceToWall:(NSNotification *)notification{
+    
     self.distanceToWall = [notification.userInfo valueForKey:@"distance"];
     
     AVWall *selectedWall = [AVWall new];
@@ -179,9 +157,19 @@ NSArray *arrayOfWals;
     
     selectedWall.distanceToWall = self.distanceToWall;
     
+    //put wall into data
+
+    AVManager *manager = [AVManager sharedInstance];
+    
+    [manager.wallArray addObject:selectedWall];
+    
     NSDictionary *newDictionary = @{@"wall" :selectedWall};
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter]postNotificationName:AVDidSelectWall object:nil userInfo:newDictionary];
     
 }
+
+
+
 
 @end
