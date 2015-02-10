@@ -24,4 +24,10 @@
 
 @property (nonatomic) NSInteger numberOfLiked;
 
+@property (strong, nonatomic) NSString *pictureDescription;
+
+@property (strong, nonatomic) NSMutableArray *pictureTags;
+
+@property (strong, nonatomic) NSString *dateOfInput;
+
 @end

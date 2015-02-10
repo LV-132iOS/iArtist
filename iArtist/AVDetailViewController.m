@@ -7,6 +7,7 @@
 //
 
 #import "AVDetailViewController.h"
+#import "ServerFetcher.h"
 
 
 typedef NS_ENUM(NSInteger, AVLeftView) {
@@ -26,7 +27,9 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 @property (strong, nonatomic) IBOutlet UILabel *authorsType;
 @property (strong, nonatomic) IBOutlet UIImageView *authorsImage;
 @property (strong, nonatomic) IBOutlet UITextView *pictureDescription;
-@property (strong, nonatomic) IBOutlet UIImageView *authorDescription;
+@property (strong, nonatomic) IBOutlet UITextView *authorDescription;
+@property (strong, nonatomic) ServerFetcher *DownloadManager;
+
 
 
 @property (nonatomic) AVLeftView leftviewindex;
@@ -35,54 +38,59 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 
 @implementation AVDetailViewController
 
-- (void)iputDataInit{
-    
-    self.pictureName.text = self.inputPicture.pictureName;
-    
-    self.picturePrize.text = [NSString stringWithFormat:@"%ld",(long)self.inputPicture.prise];
-    
-    self.authorsName.text = self.pictureAuthor.authorsName;
-    
-    self.authorsType.text = self.pictureAuthor.authorsType;
-    
-    self.authorsImage.image = self.pictureAuthor.authorsPhoto;
-    self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
-    
-}
+#pragma mark - data initialization
+//getting data from input
 
-- (void)mainInit{
+
+- (void)mainInit
+{
+   // NSLog(@"%@",self.DownloadManager.image);
     self.mainView.contentSize = CGSizeMake(1024, 768);
-    [self iputDataInit];
-    
     self.leftviewindex = AVLeftViewEnable;
-    self.imageView = [[UIImageView alloc] initWithImage:self.inputPicture.pictureImage];
-    self.imageView.frame = self.mainView.frame;
-    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-
-    [self.mainView addSubview:self.imageView];
     self.mainView.delegate = self;
     self.mainView.maximumZoomScale = 2.5;
     self.mainView.minimumZoomScale = 1;
-    
     [self.mainView bringSubviewToFront:self.closeButton];
     
 }
 
+- (void)inputDataInit{
+    
+    self.pictureName.text = [self.paintingData valueForKey:@"title"];
+    self.picturePrize.text = [self.paintingData valueForKey:@"price"];
+    self.pictureDescription.text = [self.paintingData valueForKey:@"description"];
+    self.pictureSize.text = [self.paintingData valueForKey:@"realsize"];
+    self.pictureTag.text = [(NSArray*)[self.paintingData valueForKey:@"tags"] componentsJoinedByString:@","];
+    // self.authorsName.text = self.pictureAuthor.authorsName;
+    //self.authorsType.text = self.pictureAuthor.authorsType;
+    //self.authorsImage.image = self.pictureAuthor.authorsPhoto;
+    //self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+}
+
+
 - (void)viewDidLoad {
+ 
     
     [super viewDidLoad];
-    
     [self mainInit];
+    [self inputDataInit];
+    self.DownloadManager = [ServerFetcher sharedInstance];
+    self.imageView = [[UIImageView alloc]initWithImage:[self.DownloadManager GetPictureWithID:[self.paintingData valueForKey:@"_id"] toView:nil]];
+    self.imageView.frame = self.mainView.frame;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.mainView addSubview:self.imageView];
+
+
     
     // Do any additional setup after loading the view.
 }
-
+//metod for scroll view
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     
     return self.imageView;
-//    return self.view;
 }
-
+//tap gesture recognizer
 - (IBAction)tapAction:(id)sender {
     
     if (self.leftviewindex == AVLeftViewEnable) {
@@ -93,9 +101,10 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
         self.leftView.hidden = NO;
     }
 }
-
+//dismissing current view controller
 - (IBAction)closeController:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {

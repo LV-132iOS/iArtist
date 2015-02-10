@@ -99,7 +99,7 @@
     
     if ([segue.identifier isEqualToString:@"FromNewsToPicture"]) {
         ((AVPictureViewController *)segue.destinationViewController).session = self.session;
-        ((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = ((AVNewsTableCell *)sender).tag;
+        //((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = ((AVNewsTableCell *)sender).tag;
         dataManager.index = ((AVNewsTableCell *)sender).tag;
         
     }

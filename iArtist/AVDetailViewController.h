@@ -20,4 +20,6 @@
 
 @property (strong, nonatomic) AVAuthor *pictureAuthor;
 
+@property (strong, nonatomic) NSDictionary *paintingData;
+
 @end

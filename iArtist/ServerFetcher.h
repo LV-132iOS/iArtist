@@ -7,19 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-static  NSMutableDictionary *Artistdic;
+static  NSMutableDictionary *Paintingdic;
+static NSMutableArray *urls;
 @interface ServerFetcher : NSObject
-//- (void)Fetch;
+@property (nonatomic, strong) NSDictionary *Paintingdic;
+@property (nonatomic, strong) NSDictionary *artistdic;
+@property (nonatomic, strong) UIImage *image;
 - (UIImage*)GetPictureWithID:(NSString*)_id toView:(UIView*)view;
 - (void)reloadDB;
 - (void)FetchArtists;
 - (void)PutLikes;
 - (void)GetLikes;
-- (NSString*)GenerateQueryForTag:(NSString*)querry;
-- (NSMutableDictionary*)RunQuery:(NSString*)queryString;
-- (NSString*)GenerateQueryForPrice:(NSString*)querry;
-- (NSString*)GenerateQueryForSize:(NSString*)querry;
-
+-(id)init;
+- (void)GenerateQueryForTag:(NSString*)querry;
+- (NSMutableArray*)RunQuery;
+- (void)GenerateQueryForPrice:(int)min :(int)max;
+- (void)GenerateQueryForSize:(NSString*)querry;
+-(NSDictionary *)Paintingdic;
++ (ServerFetcher *)sharedInstance;
 
 
 @end

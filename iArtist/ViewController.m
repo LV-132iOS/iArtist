@@ -10,14 +10,12 @@
 #import "PriceCarouselDelegateAndDataSource.h"
 #import "SizeCarouselDelegateAndDataSource.h"
 #import "StyleCarouselDelegateAndDataSource.h"
-#import "TagCarouselDelegateAndDataSource.h"
 #import "AVPictureViewController.h"
 
 @interface ViewController (){
     PriceCarouselDelegateAndDataSource* priceCarouselDAndDS;
     SizeCarouselDelegateAndDataSource* sizeCarouselDAndDS;
     StyleCarouselDelegateAndDataSource* styleCarouselDAndDS;
-    TagCarouselDelegateAndDataSource* tagCarouselDAndDS;
 }
 
 @end
@@ -26,14 +24,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     _signIn = [GPPSignIn sharedInstance];
     // Do any additional setup after loading the view, typically from a nib.
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewWillAppear:) name:@"UserLoggedIn" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewWillAppear:) name:@"UserLoggedOut" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToPictures) name:@"GoToPictures" object:nil];
-
     
     //Price Carousel
     priceCarouselDAndDS = [[PriceCarouselDelegateAndDataSource alloc] init];
@@ -41,9 +37,11 @@
     self.priceCarousel.dataSource = priceCarouselDAndDS;
     self.priceCarousel.type = iCarouselTypeLinear;
     self.priceCarousel.bounces = NO;
-    self.priceCarousel.scrollEnabled = YES;
+    self.priceCarousel.scrollEnabled = NO;
     self.priceCarousel.centerItemWhenSelected = NO;
-    self.priceCarousel.currentItemIndex = 2;
+    self.priceCarousel.currentItemIndex = 3;
+    self.priceCarousel.contentOffset = CGSizeMake(40.0f, 0.0f);
+
     
     //Size Carousel
     sizeCarouselDAndDS = [[SizeCarouselDelegateAndDataSource alloc] init];
@@ -51,7 +49,7 @@
     self.sizeCarousel.dataSource = sizeCarouselDAndDS;
     self.sizeCarousel.type = iCarouselTypeLinear;
     self.sizeCarousel.bounces = NO;
-    self.sizeCarousel.scrollEnabled = YES;
+    self.sizeCarousel.scrollEnabled = NO;
     self.sizeCarousel.centerItemWhenSelected = NO;
     self.sizeCarousel.contentOffset = CGSizeMake(-365.0f, 0.0f);
     
@@ -59,17 +57,9 @@
     styleCarouselDAndDS = [[StyleCarouselDelegateAndDataSource alloc] init];
     self.styleCarousel.delegate = styleCarouselDAndDS;
     self.styleCarousel.dataSource = styleCarouselDAndDS;
-    self.styleCarousel.type = iCarouselTypeCoverFlow;
-    
-    //TagCarousel
-    tagCarouselDAndDS = [[TagCarouselDelegateAndDataSource alloc] init];
-    self.tagCarousel.delegate = tagCarouselDAndDS;
-    self.tagCarousel.dataSource = tagCarouselDAndDS;
-    self.tagCarousel.type = iCarouselTypeLinear;
-    self.tagCarousel.bounces = NO;
-    self.tagCarousel.scrollEnabled = YES;
-    self.tagCarousel.centerItemWhenSelected = NO;
-    self.tagCarousel.currentItemIndex = 2;
+    self.styleCarousel.type = iCarouselTypeRotary;
+    self.styleCarousel.pagingEnabled = YES;
+    self.styleCarousel.centerItemWhenSelected = YES;
 
     
 }
@@ -150,6 +140,9 @@
 
 -(void)goToPictures{
     [self performSegueWithIdentifier:@"PictureView" sender:nil];
+   
+    
+
 }
 
 
@@ -165,7 +158,7 @@
     
     if ([segue.identifier isEqualToString:@"PictureView"]) {
         ((AVPictureViewController *)segue.destinationViewController).session = session;
-        ((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = 0;
+        //((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = 0;
     }
     if ([segue.identifier isEqualToString:@"News"]) {
         ((AVNews *)segue.destinationViewController).session = session;

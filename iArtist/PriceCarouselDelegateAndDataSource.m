@@ -7,6 +7,7 @@
 //
 
 #import "PriceCarouselDelegateAndDataSource.h"
+#import "ServerFetcher.h"
 
 
 @interface PriceCarouselDelegateAndDataSource () {
@@ -32,7 +33,7 @@
     {
         //no button available to recycle, so create new one
         button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(0.0f, 0.0f, 180.0f, 110.0f);
+        button.frame = CGRectMake(0.0f, 0.0f, 140.0f, 110.0f);
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(145, 10, 5, 10)];
         [button setBackgroundImage: [UIImage imageNamed:arrayOfPrice[index]] forState:UIControlStateNormal];
@@ -42,23 +43,17 @@
     
     //set button label
     if (index == 0) {
-        
-        [button setTitle:@"<750" forState:UIControlStateNormal];
+        [button setTitle:@"<100" forState:UIControlStateNormal];
     } else if (index == 1){
-        
-        [button setTitle:@"750-1500" forState:UIControlStateNormal];
+        [button setTitle:@"100-150" forState:UIControlStateNormal];
     } else if (index == 2){
-        
-        [button setTitle:@"1500-3000" forState:UIControlStateNormal];
+        [button setTitle:@"150-200" forState:UIControlStateNormal];
     } else if (index == 3){
-        
-        [button setTitle:@"3000-4000" forState:UIControlStateNormal];
+        [button setTitle:@"200-300" forState:UIControlStateNormal];
     } else if (index == 4){
-        
-        [button setTitle:@"4000-5000" forState:UIControlStateNormal];
+        [button setTitle:@"300-400" forState:UIControlStateNormal];
     } else if (index == 5){
-        
-        [button setTitle:@">5000" forState:UIControlStateNormal];
+        [button setTitle:@">500" forState:UIControlStateNormal];
     }
     
     
@@ -76,7 +71,24 @@
 }
 
 - (void)buttonTapped:(UIButton *)sender{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
+    ServerFetcher *DownloadManager;
+    DownloadManager = [ServerFetcher sharedInstance];
+    if ([sender.titleLabel.text isEqualToString:@"<100"]) {
+        [DownloadManager GenerateQueryForPrice:0 :100];
+        
+    } else if ([sender.titleLabel.text isEqualToString:@"100-150"]){
+        [DownloadManager GenerateQueryForPrice:100 :150];
+        
+    }else if ([sender.titleLabel.text isEqualToString:@"150-200"]){
+        [DownloadManager GenerateQueryForPrice:150 :200];
+        
+    }else if ([sender.titleLabel.text isEqualToString:@"300-400"]){
+        [DownloadManager GenerateQueryForPrice:300 :400];
+    } else if ([sender.titleLabel.text isEqualToString:@">500"]){
+        [DownloadManager GenerateQueryForPrice:500 :10000];
+    }
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil];
 }
 
 @end

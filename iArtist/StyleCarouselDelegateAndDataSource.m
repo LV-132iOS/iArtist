@@ -7,6 +7,7 @@
 //
 
 #import "StyleCarouselDelegateAndDataSource.h"
+#import "ServerFetcher.h"
 
 
 @interface StyleCarouselDelegateAndDataSource (){
@@ -34,7 +35,7 @@
     {
         //no button available to recycle, so create new one
         button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(0.0f, 0.0f, 220.0f, 110.0f); //button.frame = CGRectMake(0.0f, 0.0f, 300.0f, 180.0f);
+        button.frame = CGRectMake(0.0f, 0.0f, 500.0f, 300.0f); //button.frame = CGRectMake(0.0f, 0.0f, 300.0f, 180.0f);
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(160, 10, 5, 10)];
         [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:20]];
@@ -54,13 +55,36 @@
         return 1.0f;
     }
     if (option == iCarouselOptionSpacing) {
-        return 0.7f;
+        return 1.4f;
+    }
+    if (option == iCarouselOptionVisibleItems) {
+        return 5;
     }
     
     return value;
 }
 
 - (void)buttonTapped:(UIButton *)sender{
+    ServerFetcher *DownloadManager;
+      DownloadManager = [ServerFetcher sharedInstance];
+    if ([sender.titleLabel.text isEqualToString:@"History"]) {
+        [DownloadManager GenerateQueryForTag:@"History"];
+        
+    } else if ([sender.titleLabel.text isEqualToString:@"Nature"]){
+        [DownloadManager GenerateQueryForTag:@"Nature"];
+        
+    }else if ([sender.titleLabel.text isEqualToString:@"Military"]){
+        [DownloadManager GenerateQueryForTag:@"Red"];
+    }
+    if ([sender.titleLabel.text isEqualToString:@"Portrait"]) {
+        [DownloadManager GenerateQueryForTag:@"Portrait"];
+        
+    }else if ([sender.titleLabel.text isEqualToString:@"Still life"]){
+        [DownloadManager GenerateQueryForTag:@"Korkuna"];
+    }  if ([sender.titleLabel.text isEqualToString:@"Vanitas"]) {
+        [DownloadManager  GenerateQueryForTag:@"Blue"];
+    
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
 }
 

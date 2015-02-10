@@ -87,11 +87,13 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         [self.roomImage addSubview:self.pictureImage];
     }
 }
-
+#warning Change
 - (void) mainInit{
     AVManager *manager = [AVManager sharedInstance];
     self.pictureIndex = manager.index;
+    
     self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
+    
     [self initWals];
     self.roomImage.image = self.currentWall.wallPicture;
     UIImage *picture = self.currentPicture.pictureImage;
@@ -151,7 +153,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 
 
 
-
+#warning Change
 #pragma mark - gesture recognizers
 // swipe gesture recognizers left and right and changing picture
 - (IBAction) swipePressAction:(UISwipeGestureRecognizer *)sender {
@@ -164,7 +166,9 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
             if (self.pictureIndex == 0){
                 self.pictureIndex = [self.session.arrayOfPictures count] - 1;
             } else self.pictureIndex--;
+            
             self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
+            
             [self setImageWithWall:self.currentPicture.pictureImage
                                   :self.pictureImage.center
                                   :AVSwipeTypeOfPictureChange];
@@ -173,7 +177,9 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
             if (self.pictureIndex == [self.session.arrayOfPictures count] - 1){
                 self.pictureIndex = 0;
             } else self.pictureIndex++;
+            
             self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
+            
             [self setImageWithWall:self.currentPicture.pictureImage
                                   :self.pictureImage.center
                                   :AVSwipeTypeOfPictureChange];

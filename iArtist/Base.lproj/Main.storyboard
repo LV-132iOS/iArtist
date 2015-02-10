@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
@@ -20,13 +20,13 @@
                                 <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VfS-XD-CyK" customClass="iCarousel">
-                                <rect key="frame" x="16" y="93" width="992" height="135"/>
+                                <rect key="frame" x="16" y="93" width="992" height="311"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8M3-WI-aSO" customClass="iCarousel">
-                                <rect key="frame" x="16" y="265" width="992" height="135"/>
+                                <rect key="frame" x="19" y="441" width="992" height="135"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcB-eE-UWS" customClass="iCarousel">
-                                <rect key="frame" x="16" y="437" width="992" height="135"/>
+                                <rect key="frame" x="16" y="613" width="992" height="135"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNQ-jG-kkI">
                                 <rect key="frame" x="16" y="71" width="54" height="21"/>
@@ -34,15 +34,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Price" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SWr-LV-x6K">
-                                <rect key="frame" x="16" y="408" width="51" height="21"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VPR-df-nJy" customClass="iCarousel">
-                                <rect key="frame" x="16" y="613" width="992" height="135"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tags" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGk-9y-5oz">
-                                <rect key="frame" x="16" y="584" width="47" height="21"/>
+                                <rect key="frame" x="19" y="584" width="51" height="21"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -93,7 +85,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Size" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ZY-Tw-K97">
-                                <rect key="frame" x="16" y="236" width="48" height="21"/>
+                                <rect key="frame" x="16" y="412" width="48" height="21"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -106,7 +98,6 @@
                         <outlet property="priceCarousel" destination="gcB-eE-UWS" id="ee8-ek-asx"/>
                         <outlet property="sizeCarousel" destination="8M3-WI-aSO" id="OZv-ea-87r"/>
                         <outlet property="styleCarousel" destination="VfS-XD-CyK" id="1lV-Gc-6cd"/>
-                        <outlet property="tagCarousel" destination="VPR-df-nJy" id="mEF-JT-dJZ"/>
                         <segue destination="8c7-Hf-k4L" kind="modal" identifier="FirstRunSegue" modalPresentationStyle="fullScreen" id="s2o-Wr-DNh"/>
                         <segue destination="aVD-sd-ueB" kind="modal" identifier="Login" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="dsw-wX-cc4"/>
                         <segue destination="LDj-qJ-gC6" kind="modal" identifier="Profile" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="bbn-J7-77p"/>
@@ -1019,6 +1010,15 @@
                                     <segue destination="AqX-hk-yQu" kind="modal" modalPresentationStyle="formSheet" id="Gp4-6c-vgY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2P-iU-4bZ">
+                                <rect key="frame" x="630" y="691" width="110" height="77"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addPictureToCart:" destination="fnz-I7-myP" eventType="touchUpInside" id="9cL-Ub-R26"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r32-MU-bQ5" customClass="iCarousel">
                                 <rect key="frame" x="42" y="39" width="1024" height="704"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1034,6 +1034,7 @@
                     <size key="freeformSize" width="1024" height="768"/>
                     <connections>
                         <outlet property="actionBarBautton" destination="yez-Ib-UAS" id="I6L-1N-fAR"/>
+                        <outlet property="addToCart" destination="q2P-iU-4bZ" id="lAI-6J-kCc"/>
                         <outlet property="authorButton" destination="qrn-Np-xWO" id="RMX-Bb-qOZ"/>
                         <outlet property="backBarBatton" destination="XW3-J9-AZJ" id="vYz-F0-JTv"/>
                         <outlet property="backgroundView" destination="xW1-a0-fEv" id="k0F-C1-Nnd"/>
@@ -1713,14 +1714,14 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="1024" height="768"/>
                     <connections>
-                        <outlet property="authorDescription" destination="h6C-ox-9a7" id="JdN-XA-ClX"/>
+                        <outlet property="authorDescription" destination="4RM-bK-Pbq" id="lmY-d5-nQ6"/>
                         <outlet property="authorsImage" destination="h6C-ox-9a7" id="fO8-L4-Tep"/>
                         <outlet property="authorsName" destination="SdA-uU-3ex" id="z4G-oF-r0Z"/>
                         <outlet property="authorsType" destination="6md-s8-omF" id="bHQ-aC-7fU"/>
                         <outlet property="closeButton" destination="tcW-dj-rkt" id="D25-4z-3Xb"/>
                         <outlet property="leftView" destination="FwC-Ga-mB3" id="utd-TM-55r"/>
                         <outlet property="mainView" destination="Deh-y1-8VA" id="RN5-i1-BgC"/>
-                        <outlet property="pictureDescription" destination="4RM-bK-Pbq" id="LQs-2H-EPc"/>
+                        <outlet property="pictureDescription" destination="eoV-og-fED" id="8cz-y6-5Uq"/>
                         <outlet property="pictureName" destination="BAA-KN-4xK" id="cpj-wM-I7s"/>
                         <outlet property="picturePrize" destination="L6D-C0-Io5" id="8HW-lN-jpl"/>
                         <outlet property="pictureSize" destination="5TH-dA-xJ9" id="Ycb-Ky-Ihm"/>
@@ -1818,9 +1819,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="q6B-kz-Vr1"/>
-        <segue reference="mCU-p1-n0T"/>
-        <segue reference="uAH-YQ-HPy"/>
-        <segue reference="Bgk-k0-pqb"/>
+        <segue reference="Gp4-6c-vgY"/>
+        <segue reference="eIb-37-wBW"/>
+        <segue reference="yK2-r1-I2N"/>
+        <segue reference="KUg-sq-ZK0"/>
     </inferredMetricsTieBreakers>
 </document>

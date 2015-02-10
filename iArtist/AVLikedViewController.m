@@ -82,7 +82,7 @@
                             indexPathForCell:(UICollectionViewCell *)sender].row;
         dataManager.index = index;
         ((AVPictureViewController *)segue.destinationViewController).session = session;
-        ((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = index;
+        //((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = index;
     }
     if ([segue.identifier isEqualToString:@"Liked Cart"]) {
         
