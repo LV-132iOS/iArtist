@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
@@ -41,10 +41,18 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R6n-W9-scP">
                                 <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
                                 <items>
-                                    <barButtonItem title="Log-in/Register" id="hGQ-mp-K2p">
-                                        <connections>
-                                            <action selector="loginButtonAction:" destination="BYZ-38-t0r" id="Bda-BC-weC"/>
-                                        </connections>
+                                    <barButtonItem title="Item" style="plain" id="HNs-V3-3LK">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mgz-2M-24i">
+                                            <rect key="frame" x="20" y="2" width="35" height="35"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" backgroundImage="user-icon-0910125612.png">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="goToProfile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tm0-Sd-jdU"/>
+                                            </connections>
+                                        </button>
                                     </barButtonItem>
                                     <barButtonItem title="My News" id="PV6-cV-Jrn">
                                         <connections>
@@ -94,13 +102,12 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
-                        <outlet property="loginButton" destination="hGQ-mp-K2p" id="KbC-Je-ZYf"/>
                         <outlet property="priceCarousel" destination="gcB-eE-UWS" id="ee8-ek-asx"/>
                         <outlet property="sizeCarousel" destination="8M3-WI-aSO" id="OZv-ea-87r"/>
                         <outlet property="styleCarousel" destination="VfS-XD-CyK" id="1lV-Gc-6cd"/>
                         <segue destination="8c7-Hf-k4L" kind="modal" identifier="FirstRunSegue" modalPresentationStyle="fullScreen" id="s2o-Wr-DNh"/>
                         <segue destination="aVD-sd-ueB" kind="modal" identifier="Login" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="dsw-wX-cc4"/>
-                        <segue destination="LDj-qJ-gC6" kind="modal" identifier="Profile" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="bbn-J7-77p"/>
+                        <segue destination="LDj-qJ-gC6" kind="modal" identifier="GoToProfile" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="bbn-J7-77p"/>
                         <segue destination="LmL-hT-0P2" kind="modal" identifier="Search" modalPresentationStyle="fullScreen" modalTransitionStyle="partialCurl" id="fN9-6z-HVe"/>
                         <segue destination="fnz-I7-myP" kind="modal" identifier="PictureView" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="eIb-37-wBW"/>
                     </connections>
@@ -1811,6 +1818,7 @@
         <image name="placeholder.png" width="200" height="200"/>
         <image name="remove.png" width="512" height="512"/>
         <image name="shopping-cart-grey-hi.png" width="30" height="29"/>
+        <image name="user-icon-0910125612.png" width="512" height="512"/>
         <image name="vk_logo.png" width="70" height="70"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

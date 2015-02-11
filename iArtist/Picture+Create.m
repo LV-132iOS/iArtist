@@ -42,7 +42,7 @@
         picture.size = [data valueForKeyPath:[NSString stringWithFormat:@"%d.size",i ]];
         picture.realsize = [data valueForKeyPath:[NSString stringWithFormat:@"%d.realsize",i ]];
         //picture.thumbnailURL = [data valueForKeyPath:[NSString stringWithFormat:@"%d.title",i ]];
-        picture.orginURL = [data valueForKeyPath:[NSString stringWithFormat:@"http://192.168.103.5:8080/paintings/%@",_id]];
+        picture.orginURL = [data valueForKeyPath:[NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com:8080/paintings/%@",_id]];
         picture.price = [data valueForKeyPath:[NSString stringWithFormat:@"%d.price",i ]];
         
        // picture.owner = [Artist CreateArtistinWithId:[data valueForKeyPath:[NSString stringWithFormat:@"%d.artistId",i ]] inManagedobjectcontext:context];

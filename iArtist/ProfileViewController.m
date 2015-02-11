@@ -39,7 +39,7 @@
 
     if ([control checkInternetConnection]) {
         if (![[control currentSocialNetwork] isEqualToString:@"none"]) {
-            if(!([control checkSession:[control currentSocialNetwork]] == YES)) {
+            if(!([[control checkSession:[control currentSocialNetwork]] isEqualToString:@"yes"])) {
                 UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Sesion error"
                                                                 message:@"Please, re-login"
                                                                delegate:nil

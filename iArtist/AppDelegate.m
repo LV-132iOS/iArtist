@@ -13,10 +13,13 @@
 #import <GooglePlus/GPPURLHandler.h>
 #import <VKSdk/VKSdk.h>
 #import "ServerFetcher.h"
+#import "SessionControl.h"
 
 @interface AppDelegate (){
     VKDelegate* vkDelegate;
 }
+
+@property (nonatomic, strong) SessionControl* control;
 
 @end
 
@@ -25,6 +28,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch
+    self.control = [SessionControl sharedManager];
+    [self.control beginNotify];
+    
     [FBLoginView class];
     
     [[Twitter sharedInstance] startWithConsumerKey:@"y8DNDO0szLitsLoo4tsVJWnwm"
@@ -68,8 +74,8 @@
     NSLog(@"Trying to handle URL");
     
     // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
-    BOOL wasHandled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-    wasHandled = [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
+    [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
     
     [VKSdk processOpenURL:url fromApplication:sourceApplication];
     // You can add your app-specific url handling code here if needed
