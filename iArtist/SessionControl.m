@@ -50,7 +50,7 @@
         isOK = NO;
         isOKSocial = NO;
         currentSocial = @"none";
-        Reachable = [Reachability reachabilityWithHostname:@"ec2-54-93-36-107.eu-central-1.compute.amazonaws.com:8080/"];
+        Reachable = [Reachability reachabilityWithHostname:@"ec2-54-93-36-107.eu-central-1.compute.amazonaws.com"];
         // Internet is reachable
         Reachable.reachableBlock = ^(Reachability*reach)
         {
@@ -207,6 +207,13 @@
                                                               userInfo:locDictionary];
         }];
     }
+}
+
+
+-(void)reset{
+    isOK = NO;
+    isOKSocial = NO;
+    currentSocial = @"none";
 }
 
 @end

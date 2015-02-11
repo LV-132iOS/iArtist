@@ -11,7 +11,7 @@
 #import "Picture+Create.h"
 #import "AppDelegate.h"
 //static NSString * const BaseURLString = @"http://192.168.103.5:8080/";
-static NSString * const BaseURLString = @"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com:8080/";
+static NSString * const BaseURLString = @"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/";
 static  AFHTTPSessionManager *manager;
 static NSString *querystring;
 
@@ -73,7 +73,7 @@ static NSString *querystring;
     NSMutableArray *urls = [[NSMutableArray alloc]init];
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    NSString *str = [@"paintings/db?query=" stringByAppendingString:querystring];
+    NSString *str = [@"/paintings/db?query=" stringByAppendingString:querystring];
     [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             for (int i = 0; i<((NSArray*)responseObject).count; i++)
             {

@@ -177,7 +177,7 @@
                                                              options:0
                                                                error:nil];
         //current url for request
-        NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com:8080/users/"];
+        NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
         //creating request to use it with dataTask
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
         //preparing session and request
@@ -193,7 +193,7 @@
                                                     completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
                                                         //logging received response
                                                         NSLog(@"%@",response);
-                                                        NSLog(@"%@",(NSDictionary*)data);
+                                                    
                                                         if (!error) {
                                                             NSString* locString = [NSString stringWithFormat:@"loggedInWith%@",
                                                                                    [notification.userInfo objectForKey:@"with"]];

@@ -91,6 +91,9 @@
     [defaults setObject:@"null" forKey:@"useremail"];
     [defaults setBool:NO forKey:@"informationSent"];
     [defaults synchronize];
+    //rewrite session
+    SessionControl* control = [SessionControl sharedManager];
+    [control reset];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -16,6 +16,7 @@
 -(NSString*)checkSession:(NSString*)sessionName;
 -(NSString*)currentSocialNetwork;
 -(void)refresh;
+-(void)reset;
 
 +(id)sharedManager;
 
