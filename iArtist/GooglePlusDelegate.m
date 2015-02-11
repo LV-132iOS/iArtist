@@ -12,23 +12,27 @@
 
 - (void)finishedWithAuth:(GTMOAuth2Authentication *)auth
                    error:(NSError *)error{
-    if (!error) {
-        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-        //getting singleton object
-        GPPSignIn* signIn = [GPPSignIn sharedInstance];
-        //creating info for user
-        NSString* localString = [@"g+" stringByAppendingString:signIn.userID];
-        [defaults setObject:localString forKey:@"id"];
-        [defaults setObject:signIn.googlePlusUser.displayName forKey:@"username"];
-        [defaults setObject:signIn.userEmail forKey:@"useremail"];
-        //send info to server
-        NSDictionary* info = @{ @"with": @"Google" };
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil userInfo:info];
-    } else{
-        NSLog(@"Error wih Google %@", [error localizedDescription]);
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    
+    if ([[defaults objectForKey:@"flagForGoogleShare"] isEqualToString:@"yes"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GoogleShare" object:nil];
+    } else {
+        if (!error) {
+            //getting singleton object
+            GPPSignIn* signIn = [GPPSignIn sharedInstance];
+            //creating info for user
+            NSString* localString = [@"g+" stringByAppendingString:signIn.userID];
+            [defaults setObject:localString forKey:@"id"];
+            [defaults setObject:signIn.googlePlusUser.displayName forKey:@"username"];
+            [defaults setObject:signIn.userEmail forKey:@"useremail"];
+            //send info to server
+            NSDictionary* info = @{ @"with": @"Google" };
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil userInfo:info];
+        } else{
+            NSLog(@"Error wih Google %@", [error localizedDescription]);
+        }
+        
     }
-    
-    
 }
 
 - (void)didDisconnectWithError:(NSError *)error{

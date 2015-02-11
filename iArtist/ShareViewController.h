@@ -14,7 +14,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 
 
-@interface ShareViewController : UIViewController
+@interface ShareViewController : UIViewController <UIAlertViewDelegate>
 
 @property (nonatomic, strong) UIImage* imageToShare; 
 @property (nonatomic, strong) NSURL* imageUrl;

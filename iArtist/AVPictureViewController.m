@@ -10,8 +10,16 @@
 #import "ServerFetcher.h"
 #import <CoreData/CoreData.h>
 #import "AsyncImageView.h"
+#import <TwitterKit/TwitterKit.h>
+#import "ShareViewController.h"
 
-@interface AVPictureViewController ()
+@interface AVPictureViewController (){
+    NSString* kindOfSharing;
+    UIImage* locImageToShare;
+    NSURL* locImageUrl;
+    NSString* locHeadString;
+    NSURL* locUrlToPass;
+}
 
 @property (nonatomic, strong) NSMutableArray *urls;
 @property (nonatomic, strong) NSDictionary *PaintingData;
@@ -110,6 +118,10 @@
     self.pictureView.dataSource =self;
     [self mainInit];
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(shareWithTwitter:)
+                                                 name:@"ShareWithTwitter"
+                                               object:nil];
 }
 //view will appear. we need this when we dismiss presented view controller and return here
 - (void)viewWillAppear:(BOOL)animated{
@@ -216,6 +228,28 @@
         //((AVDetailViewController *)segue.destinationViewController).pictureAuthor =
         //((AVPicture *)[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex]).pictureAuthor;
     }
+    
+    if ([segue.identifier isEqualToString:@"SimpleShare"]) {
+            //get only picture
+        locImageToShare = self.currentPicture.pictureImage;
+            //set text
+            locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@!",
+                             self.currentPicture.pictureName,
+                             self.currentPicture.pictureAuthor.authorsName];
+            //
+    
+        //pass picture to server and get its url (for PictureOnWall only)
+        //if  OnlyPicture - then pass picture url
+        locImageUrl = [NSURL URLWithString:@"http://www.google.com/images/srpr/logo11w.png"];
+        // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
+        locUrlToPass = [NSURL URLWithString:@"http://www.yandex.ru"];
+        
+        ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
+        ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;
+        ((ShareViewController*)segue.destinationViewController).headString = locHeadString;
+        ((ShareViewController*)segue.destinationViewController).urlToPass = locUrlToPass;
+    }
+
 
 }
 //dismiss current view
@@ -265,6 +299,25 @@
     if (isLike == NO) {
         [inputPicture.pictureTags addObject:@"Like"];
     }
+}
+
+
+- (void)shareWithTwitter:(NSNotification*)notification {
+    TWTRComposer* composer = [[TWTRComposer alloc] init];
+
+    
+    [composer setText:locHeadString];
+    [composer setImage:self.currentPicture.pictureImage];
+    [composer setURL:locImageUrl];
+    
+    [composer showWithCompletion:^(TWTRComposerResult result) {
+        if (result == TWTRComposerResultCancelled) {
+            NSLog(@"Tweet composition cancelled");
+        }
+        else {
+            NSLog(@"Sending Tweet!");
+        }
+    }];
 }
 
 @end

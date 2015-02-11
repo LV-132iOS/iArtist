@@ -7,8 +7,16 @@
 //
 
 #import "AVPainterViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "ShareViewController.h"
 
-@interface AVPainterViewController ()
+@interface AVPainterViewController (){
+    NSString* kindOfSharing;
+    UIImage* locImageToShare;
+    NSURL* locImageUrl;
+    NSString* locHeadString;
+    NSURL* locUrlToPass;
+}
 
 @property (strong, nonatomic) UIPopoverController *popover;
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *rightSwipe;
@@ -114,6 +122,17 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     // Do any additional setup after loading the view.
     
     [self mainInit];
+    
+    kindOfSharing = [[NSMutableString alloc] init];
+    locImageToShare = [[UIImage alloc] init];
+    locImageUrl = [[NSURL alloc] init];
+    locUrlToPass = [[NSURL alloc] init];
+    locHeadString = [[NSString alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(shareWithTwitter:)
+                                                 name:@"ShareWithTwitter"
+                                               object:nil];
     
 }
 
@@ -343,6 +362,93 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     self.dataManager = [AVManager sharedInstance];
     self.dataManager.index = self.pictureIndex;
     self.dataManager.wallImage = self.currentWall.wallPicture;
+}
+
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if ([segue.identifier isEqualToString:@"Share"]) {
+        if ([kindOfSharing isEqualToString:@"PictureOnWall"]) {
+            //get screenshot of view
+            [self hideViews];
+            UIGraphicsBeginImageContext(self.view.window.bounds.size);
+            [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
+            locImageToShare = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            [self pushVies];
+            //set text
+            locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@ on the wall!",
+                             self.currentPicture.pictureName,
+                             self.currentPicture.pictureAuthor.authorsName];
+            //
+        } else if ([kindOfSharing isEqualToString:@"OnlyPicture"]){
+            //get only picture
+            locImageToShare = self.pictureImage.image;
+            //set text
+            locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@!",
+                             self.currentPicture.pictureName,
+                             self.currentPicture.pictureAuthor.authorsName];
+            //
+        }
+        //pass picture to server and get its url (for PictureOnWall only)
+        //if  OnlyPicture - then pass picture url
+        locImageUrl = [NSURL URLWithString:@"http://www.google.com/images/srpr/logo11w.png"];
+        // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
+        locUrlToPass = [NSURL URLWithString:@"http://www.yandex.ru"];
+        
+        ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
+        ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;
+        ((ShareViewController*)segue.destinationViewController).headString = locHeadString;
+        ((ShareViewController*)segue.destinationViewController).urlToPass = locUrlToPass;
+    }
+    
+}
+
+- (IBAction)SharePressed:(id)sender {
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Would you like to share..."
+                                                        message:@""
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Only picture", @"Picture on wall", nil];
+    alertView.alertViewStyle = UIAlertControllerStyleActionSheet;
+    [alertView show];
+    
+}
+
+
+#pragma mark UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"%ld", (long)buttonIndex);
+    if (buttonIndex == 1) {
+        //only picture
+        kindOfSharing = @"OnlyPicture";
+        [self performSegueWithIdentifier:@"Share" sender:nil];
+        
+    } else if (buttonIndex == 2) {
+        //picture with wall
+        kindOfSharing = @"PictureOnWall";
+        [self performSegueWithIdentifier:@"Share" sender:nil];
+    } else if (buttonIndex == 0) {
+        //do nothing
+    }
+}
+
+- (void)shareWithTwitter:(id)sender {
+    TWTRComposer* composer = [[TWTRComposer alloc] init];
+    
+    [composer setText:locHeadString];
+    [composer setImage:locImageToShare];
+    [composer setURL:locUrlToPass];
+    
+    [composer showWithCompletion:^(TWTRComposerResult result) {
+        if (result == TWTRComposerResultCancelled) {
+            NSLog(@"Tweet composition cancelled");
+        }
+        else {
+            NSLog(@"Sending Tweet!");
+        }
+    }];
 }
 
 @end

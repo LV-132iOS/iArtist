@@ -66,19 +66,19 @@
         FBSession* session = [FBSession activeSession];
         [session closeAndClearTokenInformation];
         session = nil;
-        [self performLogoutWith:@"loggedInWithFacebook"];
+        [self performLogoutWith:@"Facebook"];
     }
     if ([defaults boolForKey:@"loggedInWithTwitter"]) {
         [[Twitter sharedInstance] logOut];
-        [self performLogoutWith:@"loggedInWithTwitter"];
+        [self performLogoutWith:@"Twitter"];
     }
     if ([defaults boolForKey:@"loggedInWithGoogle"]){
         [[GPPSignIn sharedInstance] signOut];
-        [self performLogoutWith:@"loggedInWithGoogle"];
+        [self performLogoutWith:@"Google"];
     }
     if ([defaults boolForKey:@"loggedInWithVkontakte"]){
         [VKSdk forceLogout];
-        [self performLogoutWith:@"loggedInWithVkontakte"];
+        [self performLogoutWith:@"Vkontakte"];
     }
 }
 

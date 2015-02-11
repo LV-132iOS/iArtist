@@ -7,6 +7,16 @@
 //
 
 #import "ShareViewController.h"
+#import "GooglePlusDelegate.h"
+
+@interface ShareViewController (){
+    GPPSignIn *signIn;
+    GooglePlusDelegate* delegateG;
+}
+
+@end
+
+static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501k8u.apps.googleusercontent.com";
 
 
 @implementation ShareViewController{
@@ -15,6 +25,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GoogleShare) name:@"GoogleShare" object:nil];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -104,31 +116,83 @@
 
 - (IBAction)shareWithTwitter:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"ShareWithTwitter" object:nil];
+        NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:self.headString forKey:@"head"];
+        [dic  setObject:self.urlToPass forKey:@"url"];
+        [dic setObject:self.imageToShare forKey:@"image"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShareWithTwitter" object:nil userInfo:dic];
     }];
 }
 
 - (IBAction)shareWithGooglePlus:(id)sender {
+    signIn = [GPPSignIn sharedInstance];
+    signIn.clientID = kClientId;
+    signIn.scopes = [NSArray arrayWithObjects:
+                     kGTLAuthScopePlusLogin,
+                     kGTLAuthScopePlusUserinfoEmail,
+                     nil];
+    signIn.attemptSSO = YES;
+    if (signIn.delegate == nil) {
+        delegateG = [[GooglePlusDelegate alloc] init];
+        signIn.delegate = delegateG;
+    }
     
+    if ([signIn authentication]) {
+        id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+        [shareBuilder setPrefillText:self.headString];
+        [shareBuilder attachImage:self.imageToShare];
+        [shareBuilder open];
+        
+    } else {
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"You need to login first."
+                                                        message:@"Do you want to log in?"
+                                                       delegate:self
+                                              cancelButtonTitle:@"No"
+                                              otherButtonTitles:@"Yes", nil];
+        [alert show];
+    }
 }
 
 - (IBAction)shareWithVkontakte:(id)sender {
-    VKShareDialogController * shareDialog = [VKShareDialogController new]; //1
+    VKShareDialogController * shareDialog = [VKShareDialogController new]; 
     VKUploadImage* locImage = [VKUploadImage uploadImageWithImage:self.imageToShare
                                                         andParams:[VKImageParameters pngImage]];
     
     shareDialog.dismissAutomatically = YES;
-    shareDialog.text = self.headString; //2
-    shareDialog.uploadImages = @[locImage]; //3
+    shareDialog.text = self.headString;
+    shareDialog.uploadImages = @[locImage];
     shareDialog.shareLink = [[VKShareLink alloc] initWithTitle:@"Picture on the wall"
-                                                          link:self.urlToPass]; //4
-//    [shareDialog setCompletionHandler:^(VKShareDialogControllerResult result) {
-//        [[self presentedViewController] dismissViewControllerAnimated:YES completion:nil];
-//    }]; //5
-//    [self presentViewController:shareDialog animated:YES completion:nil]; //6
+                                                          link:self.urlToPass];
     [self dismissViewControllerAnimated:YES completion:nil];
     [[self presentingViewController] presentViewController:shareDialog animated:YES completion:nil];
     
+}
+
+#pragma mark UIAlertView delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@"yes" forKey:@"flagForGoogleShare"];
+        [signIn authenticate];
+    }
+}
+
+-(void)GoogleShare {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
+    signIn = [GPPSignIn sharedInstance];
+    signIn.clientID = kClientId;
+    signIn.scopes = [NSArray arrayWithObjects:
+                     kGTLAuthScopePlusLogin,
+                     kGTLAuthScopePlusUserinfoEmail,
+                     nil];
+    signIn.attemptSSO = YES;
+            id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+            [shareBuilder setPrefillText:self.headString];
+            [shareBuilder attachImage:self.imageToShare];
+            [shareBuilder open];
+        [defaults setObject:@"no" forKey:@"flagForGoogleShare"];
 }
 
 @end
