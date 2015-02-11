@@ -286,79 +286,6 @@
             </objects>
             <point key="canvasLocation" x="2395" y="-428"/>
         </scene>
-        <!--Password Changing-->
-        <scene sceneID="niT-Vp-Shl">
-            <objects>
-                <viewController id="43T-3k-DgD" customClass="PasswordChangingViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="WXQ-XL-gwN"/>
-                        <viewControllerLayoutGuide type="bottom" id="aLY-hW-nQQ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lKi-hb-muB">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your old password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjx-UV-mNw">
-                                <rect key="frame" x="16" y="52" width="268" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X5j-Fg-ShW">
-                                <rect key="frame" x="16" y="87" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your new password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wnq-q6-eV8">
-                                <rect key="frame" x="16" y="125" width="268" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XoT-69-hMT">
-                                <rect key="frame" x="16" y="160" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Re-enter your new password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mi0-dk-aIN">
-                                <rect key="frame" x="16" y="198" width="268" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ubx-qy-UVi">
-                                <rect key="frame" x="16" y="233" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8f-k7-wJO">
-                                <rect key="frame" x="16" y="277" width="268" height="47"/>
-                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Confirm">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="confirmButtonAction:" destination="43T-3k-DgD" eventType="touchUpInside" id="rac-Ub-hnR"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Password Changing" id="Sgl-2C-uBI">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="yQr-Ws-MOw"/>
-                    </navigationItem>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="300"/>
-                    <connections>
-                        <outlet property="passwordNew1Field" destination="XoT-69-hMT" id="xrO-nF-xgc"/>
-                        <outlet property="passwordNew2Field" destination="Ubx-qy-UVi" id="zJH-JD-0dd"/>
-                        <outlet property="passwordOldField" destination="X5j-Fg-ShW" id="RFf-n1-YpO"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="N4F-A4-5dc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2395" y="148"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="llj-a3-DAR">
             <objects>
@@ -469,13 +396,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05H-Zv-He2">
-                                <rect key="frame" x="16" y="162" width="268" height="44"/>
+                                <rect key="frame" x="16" y="214" width="268" height="44"/>
                                 <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Change password">
+                                <state key="normal" title="Delete account">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="43T-3k-DgD" kind="push" id="gww-7R-x2c"/>
+                                    <action selector="DeleteAccount:" destination="39T-Ih-Jb7" eventType="touchUpInside" id="xN0-hl-Jzp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fwM-nm-Fqt">
@@ -486,17 +413,6 @@
                                 </state>
                                 <connections>
                                     <action selector="logoutButtonAction:" destination="39T-Ih-Jb7" eventType="touchUpInside" id="vKf-BG-noi"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7m8-D3-7jJ">
-                                <rect key="frame" x="16" y="214" width="268" height="44"/>
-                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Cart">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="cartButtonAction:" destination="39T-Ih-Jb7" eventType="touchUpInside" id="Bje-KL-BET"/>
-                                    <segue destination="MYj-qk-6mf" kind="modal" id="JpB-si-Czw"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IQh-h7-sqc">
@@ -535,6 +451,17 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7m8-D3-7jJ">
+                                <rect key="frame" x="16" y="162" width="268" height="44"/>
+                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Cart">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cartButtonAction:" destination="39T-Ih-Jb7" eventType="touchUpInside" id="Bje-KL-BET"/>
+                                    <segue destination="MYj-qk-6mf" kind="modal" id="JpB-si-Czw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -550,7 +477,6 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="300" height="300"/>
                     <connections>
-                        <outlet property="changePasswordButton" destination="05H-Zv-He2" id="beC-Ab-hqU"/>
                         <outlet property="emailLabel" destination="P4Y-4N-yu6" id="LoU-if-vwG"/>
                         <outlet property="loggedinLabel" destination="Njs-Dc-pIH" id="ckh-5f-tUb"/>
                         <outlet property="nameLabel" destination="3wy-JI-ehh" id="TDv-vm-Bpe"/>
@@ -1828,8 +1754,8 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="eIb-37-wBW"/>
-        <segue reference="KUg-sq-ZK0"/>
         <segue reference="yK2-r1-I2N"/>
         <segue reference="Gp4-6c-vgY"/>
+        <segue reference="JpB-si-Czw"/>
     </inferredMetricsTieBreakers>
 </document>

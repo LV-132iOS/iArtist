@@ -177,7 +177,8 @@
                                                              options:0
                                                                error:nil];
         //current url for request
-        NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
+//        NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
+        NSURL* url = [NSURL URLWithString:@"http://192.168.103.5/users/"];
         //creating request to use it with dataTask
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
         //preparing session and request

@@ -13,11 +13,11 @@
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <VKSdk/VKSdk.h>
 
-@interface ProfileViewController : UIViewController
+@interface ProfileViewController : UIViewController <UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *loggedinLabel;
-@property (weak, nonatomic) IBOutlet UIButton *changePasswordButton;
+
 
 
 @end

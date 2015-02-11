@@ -100,5 +100,41 @@
 - (IBAction)closeView:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+- (IBAction)DeleteAccount:(id)sender {
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?"
+message:@"You will not be able to recover your account info" delegate:self
+cancelButtonTitle:@"No"
+otherButtonTitles:@"Yes", nil];
+    [alert show];
+}
+
+#pragma mark UIAlertView
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        //current url for request
+        NSURL* url = [NSURL URLWithString:[@"http://192.168.103.5/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
+        //creating request to use it with dataTask
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+        //preparing session and request
+        NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
+        request.HTTPMethod = @"DELETE";
+        //request.timeoutInterval = 20;
+        //creating data task
+        
+        NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
+                                                    completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
+                                                        //logging received response
+                                                        NSLog(@"%@",response);
+                                                        [self logoutButtonAction:nil];
+                                                        
+                                                        
+                                                    }];
+        //sending data task
+        
+        [dataTask resume];
+
+    }
+}
 
 @end
