@@ -13,43 +13,22 @@
 - (void)finishedWithAuth:(GTMOAuth2Authentication *)auth
                    error:(NSError *)error{
     if (!error) {
-        NSLog(@"Description of received object %@", auth);
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-        if ([defaults boolForKey:@"loggedInWithGoogle"] == NO) {
-            [defaults setBool:YES forKey:@"loggedInWithGoogle"];
-            [defaults setBool:YES forKey:@"loggedIn"];
-            [defaults synchronize];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLoggedIn" object:nil];
-            
-            NSLog(@"Now we have information to pass");
-            
-            if ([defaults boolForKey:@"informationSent"] == NO){
-            NSString* localString = [[NSString alloc] init];
-            GPPSignIn* signIn = [GPPSignIn sharedInstance];
-            localString = signIn.googlePlusUser.displayName;
-            [defaults setObject:localString forKey:@"username"];
-            localString = signIn.userEmail;
-            [defaults setObject:localString forKey:@"useremail"];
-            localString = @"g+";
-            localString = [localString stringByAppendingString:signIn.userID];
-            [defaults setObject:localString forKey:@"id"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil];
-            }
-            
-                
-            NSLog(@"username = %@", [defaults objectForKey:@"username"]);
-            NSLog(@"User logged in");
-        }
+        //getting singleton object
+        GPPSignIn* signIn = [GPPSignIn sharedInstance];
+        //creating info for user
+        NSString* localString = [@"g+" stringByAppendingString:signIn.userID];
+        [defaults setObject:localString forKey:@"id"];
+        [defaults setObject:signIn.googlePlusUser.displayName forKey:@"username"];
+        [defaults setObject:signIn.userEmail forKey:@"useremail"];
+        //send info to server
+        NSDictionary* info = @{ @"with": @"Google" };
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil userInfo:info];
     } else{
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Failed to log in"
-                                                            message:[error localizedDescription]
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-        NSLog(@"Error wih Google auth %@", [error localizedDescription]);
-        
+        NSLog(@"Error wih Google %@", [error localizedDescription]);
     }
+    
+    
 }
 
 - (void)didDisconnectWithError:(NSError *)error{
