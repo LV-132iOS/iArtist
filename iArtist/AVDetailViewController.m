@@ -60,10 +60,11 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
     self.pictureDescription.text = [self.paintingData valueForKey:@"description"];
     self.pictureSize.text = [self.paintingData valueForKey:@"realsize"];
     self.pictureTag.text = [(NSArray*)[self.paintingData valueForKey:@"tags"] componentsJoinedByString:@","];
-    // self.authorsName.text = self.pictureAuthor.authorsName;
-    //self.authorsType.text = self.pictureAuthor.authorsType;
-    //self.authorsImage.image = self.pictureAuthor.authorsPhoto;
-    //self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
+     self.authorsName.text = [self.artistData valueForKey:@"name"];
+    NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.artistData valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    UIImage *img = [UIImage imageWithData:imageData];
+    self.authorsImage.image = img;
+    self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
     
 }
 

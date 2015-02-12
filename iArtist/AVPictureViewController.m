@@ -245,24 +245,27 @@
         AVManager *manager = [AVManager sharedInstance];
         manager.index = self.pictureView.currentItemIndex;
         ((AVDetailViewController *)segue.destinationViewController).paintingData = self.CurrentPaintingData;
+          ((AVDetailViewController *)segue.destinationViewController).artistData = self.CurrentArtistData;
         //((AVDetailViewController *)segue.destinationViewController).pictureAuthor =
         //((AVPicture *)[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex]).pictureAuthor;
     }
     
     if ([segue.identifier isEqualToString:@"SimpleShare"]) {
             //get only picture
-        locImageToShare = self.currentPicture.pictureImage;
+        locImageToShare = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image;
             //set text
-            locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@!",
-                             self.currentPicture.pictureName,
-                             self.currentPicture.pictureAuthor.authorsName];
+        locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@ on the wall!",
+                         [self.CurrentPaintingData valueForKey:@"title"],
+                         [self.CurrentArtistData valueForKey:@"name"]];
             //
     
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
-        locImageUrl = [NSURL URLWithString:@"http://www.google.com/images/srpr/logo11w.png"];
+        locImageUrl = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureView.currentItemIndex]];
+
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [NSURL URLWithString:@"http://www.yandex.ru"];
+        locUrlToPass = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureView.currentItemIndex]];
+
         
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
         ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;
