@@ -66,10 +66,10 @@
     [self.backgroundView bringSubviewToFront:self.titleOfSession];
     [self.backgroundView bringSubviewToFront:self.previewOnWallButton];
     [self.backgroundView bringSubviewToFront:self.likeButton];
-    self.likeCounter = self.currentPicture.numberOfLiked;
+
     self.likeCounterLabel = [[UILabel alloc] initWithFrame:
                              (CGRect){.origin.x = 5, .origin.y = 10, .size.width = 50, .size.height = 30 }];
-    self.likeCounterLabel.text = [NSString stringWithFormat:@"%ld", (long)self.likeCounter];
+    self.likeCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray*)[self.CurrentPaintingData valueForKeyPath:@"liked_by"] count]];
     self.likeCounterLabel.textAlignment = NSTextAlignmentCenter;
     self.likeCounterLabel.textColor = [UIColor whiteColor];
     [self.likeButton addSubview:self.likeCounterLabel];
@@ -84,16 +84,7 @@
     self.authorsName.textColor = [UIColor whiteColor];
     self.authorsName.shadowColor = [UIColor blackColor];
     self.authorsName.textAlignment = NSTextAlignmentCenter;
-    self.authorsType = [UILabel new];
-    self.authorsType.frame = (CGRect){.origin.x = 60.0, .origin.y = 30, .size.width = 180.0, .size.height = 30.0 };
-    if (self.session != nil) {
-        self.authorsType.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsType];
-    }
-    self.authorsType.textColor = [UIColor grayColor];
-    self.authorsType.shadowColor = [UIColor blackColor];
-    self.authorsType.textAlignment = NSTextAlignmentCenter;
     [self.authorButton addSubview:self.authorsName];
-    [self.authorButton addSubview:self.authorsType];
     [self.backgroundView bringSubviewToFront:self.authorButton];
     [self.backgroundView bringSubviewToFront:self.price];
     [self.backgroundView bringSubviewToFront:self.pictureSize];
@@ -188,8 +179,8 @@
 //load view in icarusel
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
     self.PaintingData = [self.DownloadManager Paintingdic];
-    self.CurrentPaintingData = [self.PaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureView.currentItemIndex]];
-    self.CurrentArtistData = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureView.currentItemIndex]];
+    self.CurrentPaintingData = [self.PaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
+    self.CurrentArtistData = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
     
     
     if (view == nil)
@@ -206,7 +197,7 @@
     ((AsyncImageView *)view).imageURL = url;
     [self.ImageArray replaceObjectAtIndex:index withObject:view];
 
-    self.likeCounter = [(NSArray*)[self.CurrentPaintingData valueForKeyPath:@"liked_by"] count];
+    self.likeCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray*)[self.CurrentPaintingData valueForKeyPath:@"liked_by"] count]];
     
     self.price.text = [self.CurrentPaintingData valueForKey:@"price"];
     self.pictureSize.text = [self.CurrentPaintingData valueForKey:@"realsize"];
@@ -261,10 +252,10 @@
     
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
-        locImageUrl = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]];
+        locImageUrl = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureView.currentItemIndex]];
 
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]];
+        locUrlToPass = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureView.currentItemIndex]];
 
         
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
@@ -312,16 +303,8 @@
 //like button clicked
 - (IBAction)likeClicked:(id)sender {
     
-    AVPicture *inputPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex];
-    BOOL isLike = NO;
-    for (int i = 0; i < inputPicture.pictureTags.count; i++) {
-        if ([@"Like" isEqualToString:(NSString *)[inputPicture.pictureTags objectAtIndex:i]]) {
-            isLike = YES;
-        }
-    }
-    if (isLike == NO) {
-        [inputPicture.pictureTags addObject:@"Like"];
-    }
+    [self.DownloadManager PutLikes:[self.CurrentPaintingData valueForKey:@"_id"]];
+    self.likeCounterLabel.text = [self.DownloadManager GetLikes:[self.CurrentPaintingData valueForKey:@"_id"]];
 }
 
 

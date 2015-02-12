@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+<<<<<<< HEAD
 
 @protocol ServerFetcherDelegate
 @required
@@ -18,6 +19,14 @@
 
 static  NSMutableDictionary                 *Paintingdic;
 static NSMutableArray                       *urls;
+=======
+@protocol Delegate
+@property (nonatomic,strong)NSMutableDictionary *Paintings;
+
+@end
+static  NSMutableDictionary *Paintingdic;
+static NSMutableArray *urls;
+>>>>>>> Clark+Vitalik
 @interface ServerFetcher : NSObject
 @property (nonatomic, strong) NSDictionary  *Paintingdic;
 @property (nonatomic, strong) NSDictionary  *artistdic;
@@ -26,7 +35,7 @@ static NSMutableArray                       *urls;
 - (UIImage*)GetPictureWithID:(NSString*)_id;
 - (void)reloadDB;
 - (void)FetchArtists;
-- (void)GetLikes;
+- (NSString *)GetLikes:(NSString*)_id;
 -(id)init;
 - (void)GenerateQueryForTag:(NSString*)querry;
 - (NSMutableArray*)RunQuery;
