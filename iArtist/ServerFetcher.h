@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-static  NSMutableDictionary *Paintingdic;
-static NSMutableArray *urls;
+#import "ViewController.h"
+
+
+
+static  NSMutableDictionary                 *Paintingdic;
+static NSMutableArray                       *urls;
 @interface ServerFetcher : NSObject
-@property (nonatomic, strong) NSDictionary *Paintingdic;
-@property (nonatomic, strong) NSDictionary *artistdic;
-@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSDictionary  *Paintingdic;
+@property (nonatomic, strong) NSDictionary  *artistdic;
+@property (nonatomic, strong) UIImage       *image;
 - (UIImage*)GetPictureThumbWithID:(NSString*)_id;
 - (UIImage*)GetPictureWithID:(NSString*)_id;
 - (void)reloadDB;
@@ -25,6 +29,10 @@ static NSMutableArray *urls;
 - (void)GenerateQueryForSize:(NSString*)querry;
 -(NSDictionary *)Paintingdic;
 - (void)PutLikes:(NSString*)_id;
+
+- (void)SearchString:(NSString*)string
+           forCaller:(ViewController*)caller;
+
 + (ServerFetcher *)sharedInstance;
 
 

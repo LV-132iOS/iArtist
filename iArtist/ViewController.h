@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet iCarousel          *tagCarousel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem    *loginButton;
 @property (weak, nonatomic) IBOutlet UISearchBar        *searchBar;
-
+@property (strong, nonatomic) NSMutableDictionary       *searchDictionary;
 
 
 @end

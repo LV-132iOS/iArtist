@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "Picture+Create.h"
 #import "AppDelegate.h"
+
 static NSString * const BaseURLString = @"http://192.168.103.5/";
 //static NSString * const BaseURLString = @"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/";
 static  AFHTTPSessionManager *manager;
@@ -37,18 +38,22 @@ static NSString *querystring;
 
     querystring = querryStr;
 }
-- (void)Search:(NSString*)querry{
-    NSString *querryStr = [NSString stringWithFormat:@"?search=%@",querry];
-    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                                     (CFStringRef)querryStr,
+- (void)SearchString:(NSString*)string
+           forCaller:(ViewController*)caller{
+    NSString * querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                     (CFStringRef)string,
                                                                                      NULL,
                                                                                      (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
     
+    querryStr = [NSString stringWithFormat:@"?search=%@",querryStr];
     [manager GET:querryStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@",responseObject);
+        [caller setSearchDictionary:responseObject];       
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
-    }];
+    }];   
+    
 }
 
 

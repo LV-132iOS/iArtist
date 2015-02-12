@@ -12,6 +12,7 @@
 #import "StyleCarouselDelegateAndDataSource.h"
 #import "AVPictureViewController.h"
 #import "SessionControl.h"
+#import "ServerFetcher.h"
 
 @interface ViewController (){
     PriceCarouselDelegateAndDataSource* priceCarouselDAndDS;
@@ -23,8 +24,11 @@
 
 @implementation ViewController
 
+@synthesize searchDictionary;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.searchDictionary = [NSMutableDictionary dictionary];
     //allocating user defaults for the whole file
     //not sure if this needed
     _signIn = [GPPSignIn sharedInstance];
@@ -267,6 +271,16 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     NSLog(@"Text changed search");
+    dispatch_group_t group = dispatch_group_create();
+    
+    dispatch_group_async(group, dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
+          [[ServerFetcher sharedInstance]SearchString:self.searchBar.text forCaller:self];
+        NSLog(@"fetching json");
+    });
+    
+    dispatch_group_async(group, dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
+        NSLog(@"getting json, %@",self.searchDictionary);
+    });
 }
 
 // called when keyboard search button pressed
