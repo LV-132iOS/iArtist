@@ -7,7 +7,7 @@
 //
 
 #import "AVPainterViewController.h"
-#import <QuartzCore/QuartzCore.h>
+#import "ServerFetcher.h"
 #import "ShareViewController.h"
 
 @interface AVPainterViewController (){
@@ -34,6 +34,7 @@
 @property (strong, nonatomic) IBOutlet UIView *priceView;
 @property (strong, nonatomic) IBOutlet UILabel *price;
 @property (strong, nonatomic) IBOutlet UILabel *pictureSize;
+@property (nonatomic, strong) ServerFetcher *DownloadManager;
 
 @end
 
@@ -66,25 +67,30 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 
 
 - (void) setImageWithWall :(UIImage *)image :(CGPoint)pictureCenter :(AVTypeOfPictureChange)typeOfPictureChange{
+     self.CurrentArtist = [[NSDictionary alloc]init];
+     self.CurrentPainting = [[NSDictionary alloc]init];
     
+    self.CurrentPainting = [self.PictureData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureIndex]];
+    self.CurrentArtist = [self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureIndex]];
     NSNumber *alpha = @1;
     CGPoint sizeOfNewPicture = CGPointMake(
-            self.currentPicture.pictureSize.width / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue),
-            self.currentPicture.pictureSize.height / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue));
+                                           /*self.currentPicture.pictureSize*/image.size.width / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue),
+                                           /*self.currentPicture.pictureSize*/image.size.height / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue));
     CGRect frame = {.origin.x = 0.0, .origin.y = 0.0, .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
     [self.pictureImage removeFromSuperview];
     self.pictureImage = [[UIImageView alloc] initWithFrame:frame];
     self.pictureImage.image = image;
-    self.price.text = [NSString stringWithFormat:@"%ld",(long)self.currentPicture.prise];
-    self.pictureSize.text = [NSString stringWithFormat:@"W: %ld H: %ld", (long)self.currentPicture.pictureSize.width,
-                             (long)self.currentPicture.pictureSize.height];
-    self.authorsImage.image = self.currentPicture.pictureAuthor.authorsPhoto;
-    self.authorsName.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsName];
-    self.authorsType.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsType];
-    self.titleOfPicture.text = [NSString stringWithString:self.currentPicture.pictureName];
+    self.price.text = [self.CurrentPainting valueForKey:@"price"];
+    self.pictureSize.text = [self.CurrentPainting valueForKey:@"size"];
+    NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    UIImage *img = [UIImage imageWithData:imageData];
+    self.authorsImage = [[UIImageView alloc]initWithImage:img];
+    self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
+    
+    //self.titleOfPicture.text = [NSString stringWithString:self.currentPicture.pictureName];
     if (typeOfPictureChange == AVInitTypeOfPictureChange) {
         self.pictureImage.center = self.view.center;
-        [self.roomImage addSubview:self.pictureImage];
+        
     }
     if (typeOfPictureChange == AVSwipeTypeOfPictureChange) {
         if (pictureCenter.x - self.pictureImage.frame.size.width / 2 < 0)pictureCenter.x = self.pictureImage.frame.size.width / 2;
@@ -92,37 +98,34 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         if (pictureCenter.y - self.pictureImage.frame.size.height / 2 < 0)pictureCenter.y = self.pictureImage.frame.size.height / 2;
         if (pictureCenter.y + self.pictureImage.frame.size.height / 2 > 768)pictureCenter.y = 768 - self.pictureImage.frame.size.height / 2;
         self.pictureImage.center = pictureCenter;
-        [self.roomImage addSubview:self.pictureImage];
+        
     }
-}
-#warning Change
-- (void) mainInit{
-    AVManager *manager = [AVManager sharedInstance];
-    self.pictureIndex = manager.index;
     
-    self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
+    [self.roomImage addSubview:self.pictureImage];
+}
+- (void) mainInit{
+    //AVManager *manager = [AVManager sharedInstance];
+    //self.pictureIndex = manager.index;
     
     [self initWals];
     self.roomImage.image = self.currentWall.wallPicture;
-    UIImage *picture = self.currentPicture.pictureImage;
+    UIImage *picture = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+    //self.roomImage.backgroundColor = [UIColor colorWithPatternImage:picture];
+    
     [self setImageWithWall:picture
                           :self.roomImage.center
                           :AVInitTypeOfPictureChange];
+    //[self.view addSubview:self.pictureImage];
+    //UIImageView *imm = [[UIImageView alloc] initWithImage:picture];
+    //[self.roomImage addSubview:imm];
+    
+    
     self.rightSwipe = [UISwipeGestureRecognizer new];
     self.rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
     self.rightSwipe.delegate = self;
     self.leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
     self.leftSwipe.delegate = self;
     self.panGestureRecognizer.delegate = self;
-}
-
-- (void)viewDidLoad {
-    
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    [self mainInit];
-    
     kindOfSharing = [[NSMutableString alloc] init];
     locImageToShare = [[UIImage alloc] init];
     locImageUrl = [[NSURL alloc] init];
@@ -133,6 +136,15 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                                              selector:@selector(shareWithTwitter:)
                                                  name:@"ShareWithTwitter"
                                                object:nil];
+
+}
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    self.DownloadManager = [ServerFetcher sharedInstance];
+    // Do any additional setup after loading the view.
+    [self mainInit];
     
 }
 
@@ -142,14 +154,14 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (void) hideViews{
     self.upToolBar.hidden = YES;
@@ -172,7 +184,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 
 
 
-#warning Change
 #pragma mark - gesture recognizers
 // swipe gesture recognizers left and right and changing picture
 - (IBAction) swipePressAction:(UISwipeGestureRecognizer *)sender {
@@ -183,26 +194,42 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     if (![self ifPointInsidePicture: currentPoint]){
         if (sender.direction == UISwipeGestureRecognizerDirectionRight){
             if (self.pictureIndex == 0){
-                self.pictureIndex = [self.session.arrayOfPictures count] - 1;
-            } else self.pictureIndex--;
+                self.pictureIndex = [self.ImageArray count] - 1;
+            } else
+                self.pictureIndex--;
             
-            self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
+            if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
+                UIImageView *imgv = [[UIImageView alloc]initWithImage:[self.DownloadManager GetPictureThumbWithID:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureIndex]]]];
+                [self.ImageArray replaceObjectAtIndex:self.pictureIndex  withObject:imgv];
+                
+            }
             
-            [self setImageWithWall:self.currentPicture.pictureImage
+            
+            UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+            
+            [self setImageWithWall:img
                                   :self.pictureImage.center
                                   :AVSwipeTypeOfPictureChange];
         }
         if (sender.direction == UISwipeGestureRecognizerDirectionLeft){
-            if (self.pictureIndex == [self.session.arrayOfPictures count] - 1){
+            if (self.pictureIndex == [self.ImageArray count]-1 ){
                 self.pictureIndex = 0;
-            } else self.pictureIndex++;
+            } else
+                self.pictureIndex++;
             
-            self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
+            if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
+                UIImageView *imgv = [[UIImageView alloc]initWithImage:[self.DownloadManager GetPictureThumbWithID:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureIndex]] ]];
+                [self.ImageArray replaceObjectAtIndex:self.pictureIndex  withObject:imgv];
+                
+            }
             
-            [self setImageWithWall:self.currentPicture.pictureImage
+            
+            UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+            
+            [self setImageWithWall:img
                                   :self.pictureImage.center
                                   :AVSwipeTypeOfPictureChange];
-        }        
+        }
     }
     if (sender.state == UIGestureRecognizerStateEnded) {
         [self pushVies];
@@ -275,9 +302,9 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         [self hideViews];
     }
     CGPoint differenceInLocation = CGPointMake([sender locationInView:self.pictureImage].x - positionOfFirstTapPanGestureGecognizer.x,
-                                                   [sender locationInView:self.pictureImage].y - positionOfFirstTapPanGestureGecognizer.y);
+                                               [sender locationInView:self.pictureImage].y - positionOfFirstTapPanGestureGecognizer.y);
     CGPoint newCenter = CGPointMake(self.pictureImage.center.x + differenceInLocation.x,
-                                        self.pictureImage.center.y + differenceInLocation.y);
+                                    self.pictureImage.center.y + differenceInLocation.y);
     if ([self canMovePicture:newCenter dirrectionToMove:AVDirrectionMoveUp]&&
         [self canMovePicture:newCenter dirrectionToMove:AVDirrectionMoveDown])
         self.pictureImage.center = CGPointMake(self.pictureImage.center.x, newCenter.y);
@@ -364,7 +391,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     self.dataManager.wallImage = self.currentWall.wallPicture;
 }
 
-
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if ([segue.identifier isEqualToString:@"Share"]) {
@@ -378,23 +404,24 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
             [self pushVies];
             //set text
             locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@ on the wall!",
-                             self.currentPicture.pictureName,
-                             self.currentPicture.pictureAuthor.authorsName];
+                             [self.CurrentPainting valueForKey:@"title"],
+                             [self.CurrentArtist valueForKey:@"name"]];
             //
         } else if ([kindOfSharing isEqualToString:@"OnlyPicture"]){
             //get only picture
-            locImageToShare = self.pictureImage.image;
+            locImageToShare = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
             //set text
-            locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@!",
-                             self.currentPicture.pictureName,
-                             self.currentPicture.pictureAuthor.authorsName];
+            locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@ on the wall!",
+                             [self.CurrentPainting valueForKey:@"title"],
+                             [self.CurrentArtist valueForKey:@"name"]];
             //
         }
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
-        locImageUrl = [NSURL URLWithString:@"http://www.google.com/images/srpr/logo11w.png"];
+        
+        locImageUrl = [NSURL URLWithString:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureIndex]]];
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [NSURL URLWithString:@"http://www.yandex.ru"];
+        locUrlToPass = [NSURL URLWithString:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureIndex]]];
         
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
         ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;
@@ -450,5 +477,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         }
     }];
 }
+
+
 
 @end

@@ -26,6 +26,12 @@
 @property (strong, nonatomic) AVWall *currentWall;
 @property (strong, nonatomic) AVManager *dataManager;
 @property (nonatomic) NSInteger pictureIndex;
+@property (nonatomic, strong) NSDictionary *PictureData;
+@property (strong,nonatomic) NSMutableArray *ImageArray;
+@property (nonatomic, strong) NSDictionary *CurrentPainting;
+@property (nonatomic, strong) NSDictionary *CurrentArtist;
+
+
 
 - (void) hideViews;
 - (void) pushVies;

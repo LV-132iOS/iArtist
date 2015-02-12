@@ -43,6 +43,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *likeButton;
 @property (nonatomic, strong) NSDictionary *CurrentPaintingData;
 @property (nonatomic, strong) NSDictionary *CurrentArtistData;
+@property (nonatomic,strong) NSMutableArray *ImageArray;
+
 
 @end
 
@@ -72,7 +74,6 @@
     self.likeCounterLabel.textColor = [UIColor whiteColor];
     [self.likeButton addSubview:self.likeCounterLabel];
     self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.dataManager.index];
-    self.authorsImage = [[UIImageView alloc] initWithImage:self.currentPicture.pictureAuthor.authorsPhoto];
     self.authorsImage.frame = (CGRect){ .origin.x = 0, .origin.y = 0, .size.width = 60.0, .size.height = 60.0 };
     [self.authorButton addSubview:self.authorsImage];
     self.authorsName = [UILabel new];
@@ -113,6 +114,15 @@
     [super viewDidLoad];
     self.DownloadManager = [ServerFetcher sharedInstance];
     self.urls = [[NSMutableArray alloc]initWithArray:[self.DownloadManager RunQuery]];
+    self.authorsImage = [[UIImageView alloc]init];
+    self.authorsName = [UILabel new];
+    self.urls = [[NSMutableArray alloc]initWithArray:[self.DownloadManager RunQuery]];
+    self.ImageArray = [[NSMutableArray alloc]init];
+    for (int i=0;i<self.urls.count;i++) {
+        [self.ImageArray addObject:[NSNull null]];
+    }
+    
+    
     //NSLog(@"%@",_urls);
     self.pictureView.delegate = self;
     self.pictureView.dataSource =self;
@@ -179,30 +189,36 @@
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
     self.PaintingData = [self.DownloadManager Paintingdic];
     self.CurrentPaintingData = [self.PaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
-    self.CurrentArtistData = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistid",self.pictureView.currentItemIndex]];
-
+    self.CurrentArtistData = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
+    
+    
     if (view == nil)
     {
         view = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];
         view.contentMode = UIViewContentModeScaleAspectFit;
-
-}
+        
+        
+        
+    }
+    
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:view];
     NSURL *url = [[NSURL alloc]initWithString:[self.urls objectAtIndex:index]];
     ((AsyncImageView *)view).imageURL = url;
+    [self.ImageArray replaceObjectAtIndex:index withObject:view];
 
+    self.likeCounter = [(NSArray*)[self.CurrentPaintingData valueForKeyPath:@"liked_by"] count];
     
-     //self.likeCounter = picture.numberOfLiked;
-     //self.likeCounterLabel.text = [NSString stringWithFormat:@"%d", self.likeCounter];
     self.price.text = [self.CurrentPaintingData valueForKey:@"price"];
-     self.pictureSize.text = [self.CurrentPaintingData valueForKey:@"realsize"];
-    //NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtistData valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    //UIImage *img = [UIImage imageWithData:imageData];
-    //NSLog(@"%@",img);
-    //self.authorsImage.image = img;
-     //self.authorsName.text = [self.CurrentArtistData valueForKey:@"name"];
+    self.pictureSize.text = [self.CurrentPaintingData valueForKey:@"realsize"];
+    NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtistData valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    UIImage *img = [UIImage imageWithData:imageData];
     
-  
+    self.authorsImage.image = img;
+    self.authorsName.text = [self.CurrentArtistData valueForKey:@"name"];
+    
+    
+    
+    
     return view;
 }
 #pragma mark - seque
@@ -213,18 +229,22 @@
         ((AVPainterViewController *)segue.destinationViewController).session = self.session;
         ((AVPainterViewController *)segue.destinationViewController).pictureIndex = self.pictureView.currentItemIndex;
         
+        
         self.dataManager = [AVManager sharedInstance];
         self.dataManager.index = self.pictureView.currentItemIndex;
-        ((AVPainterViewController *)segue.destinationViewController).dataManager = self.dataManager;
-    }
+        ((AVPainterViewController *)segue.destinationViewController).PictureData = self.PaintingData;
+        
+        ((AVPainterViewController *)segue.destinationViewController).ImageArray = self.ImageArray;
+        
     
+    
+    }
 
     if ([segue.identifier isEqualToString: @"ModalToDetail"]) {
         
         AVManager *manager = [AVManager sharedInstance];
         manager.index = self.pictureView.currentItemIndex;
         ((AVDetailViewController *)segue.destinationViewController).paintingData = self.CurrentPaintingData;
-        NSLog(@"%@  %ld", ((AVDetailViewController *)segue.destinationViewController).paintingData, self.pictureView.currentItemIndex );
         //((AVDetailViewController *)segue.destinationViewController).pictureAuthor =
         //((AVPicture *)[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex]).pictureAuthor;
     }
