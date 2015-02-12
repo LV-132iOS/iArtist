@@ -1759,10 +1759,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="uAH-YQ-HPy"/>
         <segue reference="eIb-37-wBW"/>
         <segue reference="lYa-8K-vnO"/>
-        <segue reference="mCU-p1-n0T"/>
+        <segue reference="uAH-YQ-HPy"/>
         <segue reference="vib-vZ-Kxc"/>
     </inferredMetricsTieBreakers>
 </document>

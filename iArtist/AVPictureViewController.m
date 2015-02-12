@@ -69,7 +69,7 @@
     self.likeCounter = self.currentPicture.numberOfLiked;
     self.likeCounterLabel = [[UILabel alloc] initWithFrame:
                              (CGRect){.origin.x = 5, .origin.y = 10, .size.width = 50, .size.height = 30 }];
-    self.likeCounterLabel.text = [NSString stringWithFormat:@"%ld", self.likeCounter];
+    self.likeCounterLabel.text = [NSString stringWithFormat:@"%ld", (long)self.likeCounter];
     self.likeCounterLabel.textAlignment = NSTextAlignmentCenter;
     self.likeCounterLabel.textColor = [UIColor whiteColor];
     [self.likeButton addSubview:self.likeCounterLabel];
@@ -188,8 +188,8 @@
 //load view in icarusel
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
     self.PaintingData = [self.DownloadManager Paintingdic];
-    self.CurrentPaintingData = [self.PaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
-    self.CurrentArtistData = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
+    self.CurrentPaintingData = [self.PaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureView.currentItemIndex]];
+    self.CurrentArtistData = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureView.currentItemIndex]];
     
     
     if (view == nil)
@@ -261,10 +261,10 @@
     
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
-        locImageUrl = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureView.currentItemIndex]];
+        locImageUrl = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]];
 
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureView.currentItemIndex]];
+        locUrlToPass = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]];
 
         
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;

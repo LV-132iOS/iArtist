@@ -72,8 +72,8 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
      self.CurrentArtist = [[NSDictionary alloc]init];
      self.CurrentPainting = [[NSDictionary alloc]init];
     
-    self.CurrentPainting = [self.PictureData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureIndex]];
-    self.CurrentArtist = [self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureIndex]];
+    self.CurrentPainting = [self.PictureData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureIndex]];
+    self.CurrentArtist = [self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureIndex]];
     NSNumber *alpha = @1;
     CGPoint sizeOfNewPicture = CGPointMake(
                                            /*self.currentPicture.pictureSize*/image.size.width / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue),
@@ -203,7 +203,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 self.pictureIndex--;
             
             if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-                UIImageView *imgv = [[UIImageView alloc]initWithImage:[self.DownloadManager GetPictureThumbWithID:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureIndex]]]];
+                UIImageView *imgv = [[UIImageView alloc]initWithImage:[self.DownloadManager GetPictureThumbWithID:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]]];
                 [self.ImageArray replaceObjectAtIndex:self.pictureIndex  withObject:imgv];
                 
             }
@@ -222,7 +222,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 self.pictureIndex++;
             
             if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-                UIImageView *imgv = [[UIImageView alloc]initWithImage:[self.DownloadManager GetPictureThumbWithID:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureIndex]] ]];
+                UIImageView *imgv = [[UIImageView alloc]initWithImage:[self.DownloadManager GetPictureThumbWithID:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]] ]];
                 [self.ImageArray replaceObjectAtIndex:self.pictureIndex  withObject:imgv];
                 
             }
@@ -423,9 +423,9 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
         
-        locImageUrl = [NSURL URLWithString:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureIndex]]];
+        locImageUrl = [NSURL URLWithString:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]];
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [NSURL URLWithString:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureIndex]]];
+        locUrlToPass = [NSURL URLWithString:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]];
         
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
         ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;

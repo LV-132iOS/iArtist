@@ -12,8 +12,9 @@
 #import <GooglePlus/GooglePlus.h>
 #import "AVManager.h"
 #import "AVSession.h"
+#import "ServerFetcher.h"
 
-@interface ViewController : UIViewController<UISearchBarDelegate>
+@interface ViewController : UIViewController<UISearchBarDelegate,ServerFetcherDelegate>
 
 @property (strong) GPPSignIn* signIn;
 @property (weak, nonatomic) IBOutlet iCarousel          *priceCarousel;

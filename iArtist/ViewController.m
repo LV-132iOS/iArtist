@@ -12,7 +12,6 @@
 #import "StyleCarouselDelegateAndDataSource.h"
 #import "AVPictureViewController.h"
 #import "SessionControl.h"
-#import "ServerFetcher.h"
 
 @interface ViewController (){
     PriceCarouselDelegateAndDataSource* priceCarouselDAndDS;
@@ -24,11 +23,11 @@
 
 @implementation ViewController
 
-@synthesize searchDictionary;
+@synthesize paintings;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.searchDictionary = [NSMutableDictionary dictionary];
+    self.paintings = [NSMutableDictionary dictionary];
     //allocating user defaults for the whole file
     //not sure if this needed
     _signIn = [GPPSignIn sharedInstance];
@@ -277,9 +276,8 @@
           [[ServerFetcher sharedInstance]SearchString:self.searchBar.text forCaller:self];
         NSLog(@"fetching json");
     });
-    
     dispatch_group_async(group, dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
-        NSLog(@"getting json, %@",self.searchDictionary);
+        NSLog(@"getting json, %@",self.paintings);
     });
 }
 

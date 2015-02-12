@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+
+@protocol ServerFetcherDelegate
+@required
+@property NSMutableDictionary* paintings;
+
+@end
+
 #import "ViewController.h"
-
-
 
 static  NSMutableDictionary                 *Paintingdic;
 static NSMutableArray                       *urls;
@@ -31,9 +36,10 @@ static NSMutableArray                       *urls;
 - (void)PutLikes:(NSString*)_id;
 
 - (void)SearchString:(NSString*)string
-           forCaller:(ViewController*)caller;
+           forCaller:(UIViewController<ServerFetcherDelegate>*)caller;
 
 + (ServerFetcher *)sharedInstance;
 
 
 @end
+
