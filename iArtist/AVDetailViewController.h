@@ -22,4 +22,7 @@
 
 @property (strong, nonatomic) NSDictionary *paintingData;
 
+@property (strong, nonatomic) NSDictionary *artistData;
+
+
 @end

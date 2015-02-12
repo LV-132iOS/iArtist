@@ -9,6 +9,7 @@
 #import "AVPainterViewController.h"
 #import "ServerFetcher.h"
 #import "ShareViewController.h"
+#import "ArtistViewController.h"
 
 @interface AVPainterViewController (){
     NSString* kindOfSharing;
@@ -35,6 +36,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *price;
 @property (strong, nonatomic) IBOutlet UILabel *pictureSize;
 @property (nonatomic, strong) ServerFetcher *DownloadManager;
+@property (nonatomic, strong) UIImage *img;
 
 @end
 
@@ -84,8 +86,10 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     self.pictureSize.text = [self.CurrentPainting valueForKey:@"size"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *img = [UIImage imageWithData:imageData];
-    self.authorsImage = [[UIImageView alloc]initWithImage:img];
+    self.authorsImage.image = img;// = [[UIImageView alloc]initWithImage:img];
+    //self.authorsImage.frame = CGRectMake(0, 708, 60, 60);
     self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
+    self.img = img;
     
     //self.titleOfPicture.text = [NSString stringWithString:self.currentPicture.pictureName];
     if (typeOfPictureChange == AVInitTypeOfPictureChange) {
@@ -427,6 +431,23 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;
         ((ShareViewController*)segue.destinationViewController).headString = locHeadString;
         ((ShareViewController*)segue.destinationViewController).urlToPass = locUrlToPass;
+    }
+    if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
+        ((ArtistViewController*)segue.destinationViewController).name = [self.CurrentArtist valueForKey:@"name"];
+        ((ArtistViewController*)segue.destinationViewController).location = [self.CurrentArtist valueForKey:@"location"];
+        ((ArtistViewController*)segue.destinationViewController).descr = [self.CurrentArtist valueForKey:@"biography"];
+        ((ArtistViewController*)segue.destinationViewController).img = self.img;
+        ((ArtistViewController*)segue.destinationViewController).tosell = [NSString stringWithFormat:@"%lud",(unsigned long)[(NSArray*)[self.CurrentArtist valueForKey:@"paintings"] count]];
+        ((ArtistViewController*)segue.destinationViewController).tosell = [NSString stringWithFormat:@"%lud",(unsigned long)[(NSArray*)[self.CurrentArtist valueForKey:@"followers"] count]];
+
+
+      
+
+
+
+
+
+        
     }
     
 }

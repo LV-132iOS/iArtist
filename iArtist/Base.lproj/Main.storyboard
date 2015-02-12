@@ -537,7 +537,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="Jjg-eH-Rm0">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jjg-eH-Rm0">
                                 <rect key="frame" x="16" y="53" width="200" height="200"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name of artist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3XG-rr-QdI">
@@ -583,10 +583,12 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="700" height="500"/>
                     <connections>
+                        <outlet property="Folowers" destination="mrO-V7-rPg" id="UxG-eR-hr7"/>
                         <outlet property="descriptionOfArtist" destination="YUq-vg-hch" id="dc2-uu-gZv"/>
                         <outlet property="imageOfArtist" destination="Jjg-eH-Rm0" id="MzN-4L-CCs"/>
                         <outlet property="locationOfArtist" destination="G5i-lq-2F8" id="K8R-Mc-ftZ"/>
                         <outlet property="nameOfArtist" destination="3XG-rr-QdI" id="i3D-4y-BHv"/>
+                        <outlet property="tosale" destination="yXu-B7-WyN" id="pJZ-Ha-j2P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JO0-PI-dzr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1296,7 +1298,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="AqX-hk-yQu" kind="modal" modalPresentationStyle="formSheet" id="mCU-p1-n0T"/>
+                                            <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" modalPresentationStyle="formSheet" id="mCU-p1-n0T"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1761,5 +1763,6 @@
         <segue reference="eIb-37-wBW"/>
         <segue reference="lYa-8K-vnO"/>
         <segue reference="mCU-p1-n0T"/>
+        <segue reference="vib-vZ-Kxc"/>
     </inferredMetricsTieBreakers>
 </document>

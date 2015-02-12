@@ -29,7 +29,7 @@ static NSString *querystring;
 
 
 - (void)GenerateQueryForTag:(NSString*)querry{
-    NSString *querryStr = [NSString stringWithFormat:@"{ \"tags\": \"%@\" }",querry];
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"tags\": \"%@ 11\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                             (CFStringRef)querryStr,
                                                                                             NULL,
@@ -37,6 +37,21 @@ static NSString *querystring;
 
     querystring = querryStr;
 }
+- (void)Search:(NSString*)querry{
+    NSString *querryStr = [NSString stringWithFormat:@"?search=%@",querry];
+    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                     (CFStringRef)querryStr,
+                                                                                     NULL,
+                                                                                     (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
+    
+    [manager GET:querryStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"%@",responseObject);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
+
+
 
 - (void)GenerateQueryForPrice:(int)min :(int)max{
     NSString *querryStr = [NSString stringWithFormat:@"{ \"price\": {\"\$gte\":%d,\"\$lte\":%d} }",min,max];
@@ -47,6 +62,8 @@ static NSString *querystring;
     
     querystring = querryStr;
 }
+
+
 
 - (void)GenerateQueryForSize:(NSString*)querry{
     NSString *querryStr = [NSString stringWithFormat:@"{ \"realsize\": \"%@\" }",querry];
