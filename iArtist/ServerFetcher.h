@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol Delegate
+@property (nonatomic,strong)NSMutableDictionary *Paintings;
+
+@end
 static  NSMutableDictionary *Paintingdic;
 static NSMutableArray *urls;
 @interface ServerFetcher : NSObject
@@ -17,7 +21,7 @@ static NSMutableArray *urls;
 - (UIImage*)GetPictureWithID:(NSString*)_id;
 - (void)reloadDB;
 - (void)FetchArtists;
-- (void)GetLikes;
+- (NSString *)GetLikes:(NSString*)_id;
 -(id)init;
 - (void)GenerateQueryForTag:(NSString*)querry;
 - (NSMutableArray*)RunQuery;

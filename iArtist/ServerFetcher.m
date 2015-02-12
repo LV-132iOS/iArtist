@@ -130,12 +130,23 @@ static NSString *querystring;
 }];
 }
 
-+ (void)GetLikes{
-    [manager GET:@"/" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@",responseObject);
+- (NSString*)GetLikes:(NSString*)_id{
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    __block NSString *count = [[NSString alloc]init];
+    [manager GET:[NSString stringWithFormat:@"paintings/db/%@?likes=true",_id] parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        //NSLog(@"%@",responseObject);
+        count = [(NSDictionary *)responseObject objectForKey:@"count"];
+        dispatch_semaphore_signal(semaphore);
+
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
+        dispatch_semaphore_signal(semaphore);
+
     }];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+
+    return count;
 }
 
 -(id)init{
