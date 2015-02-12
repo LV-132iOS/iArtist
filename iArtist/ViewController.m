@@ -240,6 +240,40 @@
     });
 }
 
+#pragma mark UISearchBar
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    NSLog(@"started editing text");
+    [UIView animateWithDuration:0.3 animations:^{
+        [[self searchBar]setFrame:CGRectMake(self.searchBar.frame.origin.x - 100,
+                                             self.searchBar.frame.origin.y,
+                                             self.searchBar.frame.size.width + 100,
+                                             self.searchBar.frame.size.height )];
+        [self.searchBar layoutSubviews];
+    }];
+}
+// called when text ends editing
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    NSLog(@"finished editing text");
+    [UIView animateWithDuration:0.3 animations:^{
+        [[self searchBar]setFrame:CGRectMake(self.searchBar.frame.origin.x + 100,
+                                             self.searchBar.frame.origin.y,
+                                             self.searchBar.frame.size.width - 100,
+                                             self.searchBar.frame.size.height )];
+        [self.searchBar layoutSubviews];
+    }];
+}
+
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    NSLog(@"Text changed search");
+}
+
+// called when keyboard search button pressed
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+        NSLog(@"Search button");
+}
+
 @end
 
 

@@ -74,9 +74,12 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ToU-ob-Uzi"/>
                                     <barButtonItem id="LaL-8y-Qpc">
                                         <searchBar key="customView" contentMode="redraw" searchBarStyle="minimal" placeholder="search" id="AvZ-Bj-GJu">
-                                            <rect key="frame" x="66" y="0.0" width="270" height="44"/>
+                                            <rect key="frame" x="594" y="0.0" width="270" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="BYZ-38-t0r" id="Rkv-7d-WdZ"/>
+                                            </connections>
                                         </searchBar>
                                     </barButtonItem>
                                     <barButtonItem image="shopping-cart-grey-hi.png" id="hB7-ma-zdF">
@@ -103,6 +106,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="priceCarousel" destination="gcB-eE-UWS" id="ee8-ek-asx"/>
+                        <outlet property="searchBar" destination="AvZ-Bj-GJu" id="jKX-jV-tsb"/>
                         <outlet property="sizeCarousel" destination="8M3-WI-aSO" id="OZv-ea-87r"/>
                         <outlet property="styleCarousel" destination="VfS-XD-CyK" id="1lV-Gc-6cd"/>
                         <segue destination="8c7-Hf-k4L" kind="modal" identifier="FirstRunSegue" modalPresentationStyle="fullScreen" id="s2o-Wr-DNh"/>
@@ -1753,9 +1757,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Bgk-k0-pqb"/>
-        <segue reference="eIb-37-wBW"/>
-        <segue reference="mCU-p1-n0T"/>
         <segue reference="uAH-YQ-HPy"/>
+        <segue reference="eIb-37-wBW"/>
+        <segue reference="lYa-8K-vnO"/>
+        <segue reference="mCU-p1-n0T"/>
     </inferredMetricsTieBreakers>
 </document>

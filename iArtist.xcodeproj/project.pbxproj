@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45E298E51A8CD6E8003CC0D6 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */; };
 		4B1FE8881A87838C00897D7B /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1FE8871A87838C00897D7B /* AsyncImageView.m */; };
 		4BC7F86C1A8A2C900061CAAA /* AVManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F86B1A8A2C900061CAAA /* AVManager.m */; };
 		4BC7F8751A8A2D000061CAAA /* AVImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F86E1A8A2D000061CAAA /* AVImagePickerController.m */; };
@@ -88,7 +89,6 @@
 		606E20941A84E74D00121589 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 606E20931A84E74D00121589 /* background.jpg */; };
 		609812FB1A7F59CA00C8017B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 609812F91A7F59CA00C8017B /* FacebookSDK.framework */; };
 		609812FC1A7F59CA00C8017B /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 609812FA1A7F59CA00C8017B /* FBAudienceNetwork.framework */; };
-		609813001A7F5A5D00C8017B /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 609812FD1A7F5A5D00C8017B /* GoogleOpenSource.framework */; };
 		609813021A7F5A5D00C8017B /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 609812FF1A7F5A5D00C8017B /* GooglePlus.framework */; };
 		6099E2C41A825AEC00513668 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6099E2C31A825AEC00513668 /* Entitlements.plist */; };
 		6099E2C91A82822700513668 /* VKSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6099E2C71A82822700513668 /* VKSdk.framework */; };
@@ -172,6 +172,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
 		4B1FE8861A87838C00897D7B /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		4B1FE8871A87838C00897D7B /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		4BC7F86A1A8A2C900061CAAA /* AVManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVManager.h; sourceTree = "<group>"; };
@@ -408,6 +409,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45E298E51A8CD6E8003CC0D6 /* GoogleOpenSource.framework in Frameworks */,
 				609813021A7F5A5D00C8017B /* GooglePlus.framework in Frameworks */,
 				843C97061A7EC09E0080FCAA /* AddressBook.framework in Frameworks */,
 				609812FC1A7F59CA00C8017B /* FBAudienceNetwork.framework in Frameworks */,
@@ -415,7 +417,6 @@
 				843C97021A7EC08E0080FCAA /* SystemConfiguration.framework in Frameworks */,
 				843C97001A7EC0830080FCAA /* Security.framework in Frameworks */,
 				843C96FE1A7EC07B0080FCAA /* MediaPlayer.framework in Frameworks */,
-				609813001A7F5A5D00C8017B /* GoogleOpenSource.framework in Frameworks */,
 				843C96FC1A7EC0730080FCAA /* CoreText.framework in Frameworks */,
 				843C96FA1A7EC06A0080FCAA /* CoreGraphics.framework in Frameworks */,
 				6099E2C91A82822700513668 /* VKSdk.framework in Frameworks */,
@@ -909,6 +910,7 @@
 		84A0E8141A77B688009F6EA5 = {
 			isa = PBXGroup;
 			children = (
+				45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */,
 				84A0E81F1A77B688009F6EA5 /* iArtist */,
 				84A0E8391A77B688009F6EA5 /* iArtistTests */,
 				84A0E81E1A77B688009F6EA5 /* Products */,
