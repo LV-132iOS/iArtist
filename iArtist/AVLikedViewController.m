@@ -9,8 +9,12 @@
 #import "AVLikedViewController.h"
 #import "AVPicture.h"
 #import "AVPictureViewController.h"
+#import "ServerFetcher.h"
 
 @interface AVLikedViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
+@property (nonatomic,strong) NSDictionary *AllPaintingData;
+@property (nonatomic,strong) NSMutableArray *urls;
+@property (nonatomic) NSUInteger *index;
 
 @end
 
@@ -18,7 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     AVManager *manager = [AVManager sharedInstance];
     self.session = manager.session;
     UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:manager.wallImage];
@@ -26,6 +29,17 @@
     [self.view addSubview:backgroundImage];
     [self blurImage];
     [self.view sendSubviewToBack:backgroundImage];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.urls = [[NSMutableArray alloc]init];
+    self.AllPaintingData = [[NSDictionary alloc]init];
+    self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:[defaults valueForKey:@"id"]];
+    self.AllPaintingData = Paintingdic;
+
+
+    
+    
+    
     
 }
 
@@ -46,16 +60,17 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return [self.session.arrayOfPictures count];
+    return [self.urls count];
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
+    self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
+    NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",indexPath.row]];
+
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
     
-    UIImageView *image = [[UIImageView alloc] initWithImage:
-                          ((AVPicture *)[self.session.arrayOfPictures objectAtIndex:indexPath.row]).pictureImage];
+    UIImageView *image =  [[UIImageView alloc]initWithImage: [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]]];
     image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
     image.contentMode = UIViewContentModeScaleAspectFit;
     
@@ -64,6 +79,7 @@
     cell.layer.borderWidth = 4.0f;
     cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
     cell.layer.cornerRadius = 40;
+    self.index = indexPath.row;
     return cell;
 }
 
@@ -81,8 +97,11 @@
         NSInteger index =  [((UICollectionView *)(((UICollectionViewCell *)sender).superview))
                             indexPathForCell:(UICollectionViewCell *)sender].row;
         dataManager.index = index;
-        ((AVPictureViewController *)segue.destinationViewController).session = session;
-        //((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = index;
+        ((AVPictureViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
+        ((AVPictureViewController *)segue.destinationViewController).urls = self.urls;
+        ((AVPictureViewController *)segue.destinationViewController).index = index;
+
+
     }
     if ([segue.identifier isEqualToString:@"Liked Cart"]) {
         

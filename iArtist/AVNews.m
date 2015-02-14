@@ -30,8 +30,12 @@
     tableHeader.text = @"News";
     tableHeader.textColor = [UIColor blackColor];
     tableHeader.textAlignment = NSTextAlignmentCenter;
-    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.urls = [[NSMutableArray alloc]init];
+    self.AllPaintingData = [[NSDictionary alloc]init];
+    self.AllPaintingData = Paintingdic;
     self.newsTable.tableHeaderView = tableHeader;
+    self.urls =  [[ServerFetcher sharedInstance]GetNewsForUser:[defaults valueForKey:@"id"]];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -71,20 +75,26 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%@",indexPath]];
+    self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%@.artistId",indexPath]];
+    NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    UIImage *img = [UIImage imageWithData:imageData];
+
+    
     AVNewsTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AVTableViewCell" forIndexPath:indexPath];
     
-    AVPicture *picture = [self.session.arrayOfPictures objectAtIndex:indexPath.row];
+    cell.pictureImage.image = [[ServerFetcher sharedInstance]GetPictureThumbWithID:[self.urls objectAtIndex:indexPath.row]];
     
-    AVAuthor *author = picture.pictureAuthor;
+
+
     
-    cell.pictureImage.image = picture.pictureImage;
     cell.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
     
-    cell.authorImage.image = author.authorsPhoto;
+    cell.authorImage.image = img;
     
-    cell.pictureName.text = picture.pictureName;
+    cell.pictureName.text = [self.CurrentPainting valueForKey:@"title"];
     
-    cell.authorName.text = author.authorsName;
+    cell.authorName.text = [self.CurrentArtist valueForKey:@"name"];
     
     cell.tag = indexPath.row;
     // Configure the cell...
@@ -98,12 +108,15 @@
     dataManager.session = self.session;
     
     if ([segue.identifier isEqualToString:@"FromNewsToPicture"]) {
-        ((AVPictureViewController *)segue.destinationViewController).session = self.session;
+        ((AVPictureViewController *)segue.destinationViewController).urls = self.urls;
+        ((AVPictureViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
+
         //((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = ((AVNewsTableCell *)sender).tag;
         dataManager.index = ((AVNewsTableCell *)sender).tag;
         
     }
     if ([segue.identifier isEqualToString:@"News Cart"]) {
+        
         
         
         

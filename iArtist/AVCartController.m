@@ -12,6 +12,7 @@
 #import "AVPictureViewController.h"
 #import "AVCartCell.h"
 
+
 @interface AVCartController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate >
 
 @property (strong, nonatomic) IBOutlet UILabel *totalAmount;
@@ -24,24 +25,32 @@
 
 @end
 
+
 @implementation AVCartController
 
+-(NSMutableArray *)AllPaintingData{
+     @synchronized(self){return PurchuasedPaintingData;}
+}
+
+-(NSMutableArray *)ImageArray{
+    @synchronized(self){return PurchuasedImageArray;}
+}
+
+
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
-    AVManager *manager = [AVManager sharedInstance];
-    self.pictureArray = [[NSMutableArray alloc] initWithArray:manager.session.arrayOfPictures];
+  
     self.totalAmount.text = [@"Total Amount: " stringByAppendingString:
-                             [NSString stringWithFormat:@"%d", [self.pictureArray count]]];
-    NSInteger totalNumber = 0;
+                             [NSString stringWithFormat:@"%lu", (unsigned long)[self.ImageArray count]]];
+    NSInteger Overal = 0;
 
-    for (int i = 0; i < [self.pictureArray count]; i++) {
+    for (int i = 0; i < [PurchuasedPaintingData count]; i++) {
         
-        AVPicture *picture = (AVPicture *)[self.pictureArray objectAtIndex:i];
-        totalNumber += picture.prise;
-    }
+      Overal += [[PurchuasedPaintingData[i] valueForKey:@"price"]  integerValue];
+        
+           }
 
-    self.totalPrise.text = [@"Total Prise: " stringByAppendingString:[NSString stringWithFormat:@"%d", totalNumber]];
+    self.totalPrise.text = [@"Overal: " stringByAppendingString:[NSString stringWithFormat:@"%ld", (long)Overal]];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -59,18 +68,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return [self.pictureArray count];
+    return [PurchuasedImageArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     AVCartCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Buy Cell" forIndexPath:indexPath];
 
-    AVPicture *currentPicture = [self.pictureArray objectAtIndex:indexPath.row];
-    cell.artistName.text = currentPicture.pictureAuthor.authorsName;
-    cell.pictureName.text = currentPicture.pictureName;
-    cell.picturePrise.text = [NSString stringWithFormat: @"%d", currentPicture.prise];
-    cell.pictureImage.image = currentPicture.pictureImage;
+    cell.artistName.text = [[self.AllPaintingData objectAtIndex:indexPath.row] valueForKeyPath:@"artistid.name"];
+    cell.pictureName.text = [[self.AllPaintingData objectAtIndex:indexPath.row] valueForKeyPath:@"title"];
+    cell.picturePrise.text = [[self.AllPaintingData objectAtIndex:indexPath.row] valueForKeyPath:@"price"];
+    cell.pictureImage.image = [self.ImageArray objectAtIndex:indexPath.row];
     cell.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
     cell.tag = indexPath.row;
     return cell;
@@ -96,13 +104,13 @@
     NSString *str1 = [self.totalAmount.text substringFromIndex:14];
     NSInteger totalAmount = str1.intValue;
     totalAmount --;
-    self.totalAmount.text = [@"Total Amount: " stringByAppendingString:[NSString stringWithFormat:@"%d", totalAmount]];
+    self.totalAmount.text = [@"Total Amount: " stringByAppendingString:[NSString stringWithFormat:@"%ld", (long)totalAmount]];
     NSString *str2 = [self.totalPrise.text substringFromIndex:13];
     NSInteger totalPrise = str2.intValue;
-    totalPrise -= ((AVPicture *)[self.pictureArray objectAtIndex:self.indexDelete]).prise;
-    self.totalPrise.text = [@"Total Prise: " stringByAppendingString:[NSString stringWithFormat:@"%d", totalPrise]];
+    totalPrise -= [[self.AllPaintingData[self.indexDelete] valueForKey:@"price"]  integerValue];;
+    self.totalPrise.text = [@"Overal: " stringByAppendingString:[NSString stringWithFormat:@"%ld", (long)totalPrise]];
     
-    [self.pictureArray removeObjectAtIndex:self.indexDelete];
+    [self.ImageArray removeObjectAtIndex:self.indexDelete];
     
     [self.cartTableView reloadData];
 }

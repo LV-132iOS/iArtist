@@ -547,19 +547,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20 Followers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrO-V7-rPg">
-                                <rect key="frame" x="230" y="185" width="197" height="36"/>
+                                <rect key="frame" x="229" y="154" width="197" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lviv, Ukraine" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G5i-lq-2F8">
                                 <rect key="frame" x="383" y="110" width="197" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="7 For Sale" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yXu-B7-WyN">
-                                <rect key="frame" x="494" y="185" width="197" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -575,6 +569,23 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="FollowButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q1B-Em-U29">
+                                <rect key="frame" x="229" y="194" width="126" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Follow+">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="FollowArtist:" destination="AqX-hk-yQu" eventType="touchUpInside" id="GNd-oZ-RNL"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="7 For Sale" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yXu-B7-WyN">
+                                <rect key="frame" x="487" y="154" width="197" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -583,6 +594,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="700" height="500"/>
                     <connections>
+                        <outlet property="FollowButton" destination="q1B-Em-U29" id="mbE-X5-7JG"/>
                         <outlet property="Folowers" destination="mrO-V7-rPg" id="UxG-eR-hr7"/>
                         <outlet property="descriptionOfArtist" destination="YUq-vg-hch" id="dc2-uu-gZv"/>
                         <outlet property="imageOfArtist" destination="Jjg-eH-Rm0" id="MzN-4L-CCs"/>
@@ -946,7 +958,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="AqX-hk-yQu" kind="modal" modalPresentationStyle="formSheet" id="Gp4-6c-vgY"/>
+                                    <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" modalPresentationStyle="formSheet" id="Gp4-6c-vgY"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2P-iU-4bZ">
@@ -1133,7 +1145,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HNi-Zy-pHS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2305" y="2393"/>
+            <point key="canvasLocation" x="2417" y="2553"/>
         </scene>
         <!--Share View Controller-->
         <scene sceneID="E1X-o6-JXC">
@@ -1759,9 +1771,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="Bgk-k0-pqb"/>
         <segue reference="eIb-37-wBW"/>
-        <segue reference="lYa-8K-vnO"/>
+        <segue reference="Gp4-6c-vgY"/>
         <segue reference="uAH-YQ-HPy"/>
-        <segue reference="vib-vZ-Kxc"/>
     </inferredMetricsTieBreakers>
 </document>

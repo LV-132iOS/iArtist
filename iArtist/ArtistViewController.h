@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageOfArtist;
 @property (strong, nonatomic) UIImage *img;
+@property (strong, nonatomic) NSDictionary *CurrentArtist;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *location;
 @property (strong, nonatomic) NSString *descr;

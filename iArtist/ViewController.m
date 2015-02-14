@@ -23,11 +23,9 @@
 
 @implementation ViewController
 
-@synthesize paintings;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.paintings = [NSMutableDictionary dictionary];
     //allocating user defaults for the whole file
     //not sure if this needed
     _signIn = [GPPSignIn sharedInstance];
@@ -271,13 +269,16 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     NSLog(@"Text changed search");
     dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_queue_create("312qweq", DISPATCH_QUEUE_SERIAL);
     
-    dispatch_group_async(group, dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
-          [[ServerFetcher sharedInstance]SearchString:self.searchBar.text forCaller:self];
+   
+  
+    
+    dispatch_group_async(group, queue, ^{
         NSLog(@"fetching json");
     });
-    dispatch_group_async(group, dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
-        NSLog(@"getting json, %@",self.paintings);
+    dispatch_group_async(group, queue, ^{
+        NSLog(@"getting json,");
     });
 }
 

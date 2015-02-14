@@ -26,7 +26,7 @@
 @property (strong, nonatomic) AVWall *currentWall;
 @property (strong, nonatomic) AVManager *dataManager;
 @property (nonatomic) NSInteger pictureIndex;
-@property (nonatomic, strong) NSDictionary *PictureData;
+@property (nonatomic, strong) NSDictionary *AllPaintingData;
 @property (strong,nonatomic) NSMutableArray *ImageArray;
 @property (nonatomic, strong) NSDictionary *CurrentPainting;
 @property (nonatomic, strong) NSDictionary *CurrentArtist;

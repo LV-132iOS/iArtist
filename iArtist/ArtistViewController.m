@@ -7,8 +7,10 @@
 //
 
 #import "ArtistViewController.h"
+#import "ServerFetcher.h"
 
 @interface ArtistViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *FollowButton;
 
 @end
 
@@ -19,12 +21,16 @@
     // Do any additional setup after loading the view.
     
     //set imageOfArtist
+   // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults ];
+    BOOL isFollowed = [[ServerFetcher sharedInstance]CheckIsFollowing:[self.CurrentArtist valueForKey:@"_id"] ];
+    isFollowed?[self.FollowButton setTitle:@"Unfollow-" forState:UIControlStateNormal]:nil;
     self.imageOfArtist.image = self.img;
-    self.nameOfArtist.text = self.name;
-    self.descriptionOfArtist.text = self.descr;
-    self.Folowers.text = self.followers;
-    self.tosale.text = self.tosell;
-    self.locationOfArtist.text = self.location;
+    self.nameOfArtist.text = [self.CurrentArtist valueForKey:@"name"];
+    self.descriptionOfArtist.text = [self.CurrentArtist valueForKey:@"biography"];
+    self.Folowers.text = [[NSString stringWithFormat:@"%lu",[(NSArray*)[self.CurrentArtist valueForKey:@"followers"] count]] stringByAppendingString:@" Followers"];
+    self.tosale.text = [[NSString stringWithFormat:@"%lu",[(NSArray*)[self.CurrentArtist valueForKey:@"paintings"] count]] stringByAppendingString:@" Paintings"];
+
+    self.locationOfArtist.text = [self.CurrentArtist valueForKey:@"location"];
     self.imageOfArtist.layer.backgroundColor = [[UIColor clearColor] CGColor];
     self.imageOfArtist.layer.cornerRadius = 100;
     self.imageOfArtist.layer.borderWidth = 2.0;
@@ -36,6 +42,21 @@
   
 
 }
+- (IBAction)FollowArtist:(UIButton*)sender {
+    [sender setTitle:@"Unfollow-" forState:UIControlStateNormal];
+     BOOL isFollowed = [[ServerFetcher sharedInstance]BecomeAFollower:[self.CurrentArtist valueForKey:@"_id"]];
+    int n = self.Folowers.text.intValue;
+    if(isFollowed){
+        n++;
+        [sender setTitle:@"Unfollow-" forState:UIControlStateNormal];
+    }
+    else{
+        n--;
+        [sender setTitle:@"Follow+" forState:UIControlStateNormal];
+    }
+    self.Folowers.text = [[[NSNumber numberWithInt:n]stringValue] stringByAppendingString:@" Folowers"];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -43,7 +64,7 @@
 }
 
 - (IBAction)closeViewAction:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

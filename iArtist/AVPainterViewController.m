@@ -10,6 +10,7 @@
 #import "ServerFetcher.h"
 #import "ShareViewController.h"
 #import "ArtistViewController.h"
+#import "AVCartController.h"
 
 @interface AVPainterViewController (){
     NSString* kindOfSharing;
@@ -35,7 +36,6 @@
 @property (strong, nonatomic) IBOutlet UIView *priceView;
 @property (strong, nonatomic) IBOutlet UILabel *price;
 @property (strong, nonatomic) IBOutlet UILabel *pictureSize;
-@property (nonatomic, strong) ServerFetcher *DownloadManager;
 @property (nonatomic, strong) UIImage *img;
 
 @end
@@ -72,8 +72,8 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
      self.CurrentArtist = [[NSDictionary alloc]init];
      self.CurrentPainting = [[NSDictionary alloc]init];
     
-    self.CurrentPainting = [self.PictureData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureIndex]];
-    self.CurrentArtist = [self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureIndex]];
+    self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureIndex]];
+    self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureIndex]];
     NSNumber *alpha = @1;
     CGPoint sizeOfNewPicture = CGPointMake(
                                            /*self.currentPicture.pictureSize*/image.size.width / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue),
@@ -146,7 +146,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.DownloadManager = [ServerFetcher sharedInstance];
     // Do any additional setup after loading the view.
     [self mainInit];
     
@@ -203,7 +202,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 self.pictureIndex--;
             
             if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-                UIImageView *imgv = [[UIImageView alloc]initWithImage:[self.DownloadManager GetPictureThumbWithID:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]]];
+                UIImageView *imgv = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]]];
                 [self.ImageArray replaceObjectAtIndex:self.pictureIndex  withObject:imgv];
                 
             }
@@ -222,7 +221,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 self.pictureIndex++;
             
             if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-                UIImageView *imgv = [[UIImageView alloc]initWithImage:[self.DownloadManager GetPictureThumbWithID:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]] ]];
+                UIImageView *imgv = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]] ]];
                 [self.ImageArray replaceObjectAtIndex:self.pictureIndex  withObject:imgv];
                 
             }
@@ -423,9 +422,9 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
         
-        locImageUrl = [NSURL URLWithString:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]];
+        locImageUrl = [NSURL URLWithString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]];
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [NSURL URLWithString:[self.PictureData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]];
+        locUrlToPass = [NSURL URLWithString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]];
         
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
         ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;
@@ -433,20 +432,9 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         ((ShareViewController*)segue.destinationViewController).urlToPass = locUrlToPass;
     }
     if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
-        ((ArtistViewController*)segue.destinationViewController).name = [self.CurrentArtist valueForKey:@"name"];
-        ((ArtistViewController*)segue.destinationViewController).location = [self.CurrentArtist valueForKey:@"location"];
-        ((ArtistViewController*)segue.destinationViewController).descr = [self.CurrentArtist valueForKey:@"biography"];
+        ((ArtistViewController*)segue.destinationViewController).CurrentArtist = self.CurrentArtist;
+
         ((ArtistViewController*)segue.destinationViewController).img = self.img;
-        ((ArtistViewController*)segue.destinationViewController).tosell = [NSString stringWithFormat:@"%lud",(unsigned long)[(NSArray*)[self.CurrentArtist valueForKey:@"paintings"] count]];
-        ((ArtistViewController*)segue.destinationViewController).tosell = [NSString stringWithFormat:@"%lud",(unsigned long)[(NSArray*)[self.CurrentArtist valueForKey:@"followers"] count]];
-
-
-      
-
-
-
-
-
         
     }
     

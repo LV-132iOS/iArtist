@@ -7,26 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-<<<<<<< HEAD
 
-@protocol ServerFetcherDelegate
-@required
-@property NSMutableDictionary* paintings;
-
-@end
-
-#import "ViewController.h"
-
-static  NSMutableDictionary                 *Paintingdic;
-static NSMutableArray                       *urls;
-=======
-@protocol Delegate
-@property (nonatomic,strong)NSMutableDictionary *Paintings;
-
-@end
 static  NSMutableDictionary *Paintingdic;
+static  NSMutableDictionary *Artistdic;
+
 static NSMutableArray *urls;
->>>>>>> Clark+Vitalik
 @interface ServerFetcher : NSObject
 @property (nonatomic, strong) NSDictionary  *Paintingdic;
 @property (nonatomic, strong) NSDictionary  *artistdic;
@@ -35,17 +20,18 @@ static NSMutableArray *urls;
 - (UIImage*)GetPictureWithID:(NSString*)_id;
 - (void)reloadDB;
 - (void)FetchArtists;
-- (NSString *)GetLikes:(NSString*)_id;
--(id)init;
+- (NSMutableArray*)GetLikesForUser:(NSString*)_id;
+- (NSMutableArray*)GetNewsForUser:(NSString*)_id;
 - (void)GenerateQueryForTag:(NSString*)querry;
 - (NSMutableArray*)RunQuery;
 - (void)GenerateQueryForPrice:(int)min :(int)max;
 - (void)GenerateQueryForSize:(NSString*)querry;
--(NSDictionary *)Paintingdic;
-- (void)PutLikes:(NSString*)_id;
+- (NSDictionary *)Paintingdic;
+- (NSString*)PutLikes:(NSString*)_id;
+- (NSString*)GetLikesCount:(NSString*)_id;
+- (BOOL)BecomeAFollower:(NSString *)Artist;
+- (BOOL)CheckIsFollowing:(NSString *)_id;
 
-- (void)SearchString:(NSString*)string
-           forCaller:(UIViewController<ServerFetcherDelegate>*)caller;
 
 + (ServerFetcher *)sharedInstance;
 

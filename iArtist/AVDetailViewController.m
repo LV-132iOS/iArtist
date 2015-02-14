@@ -28,7 +28,6 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 @property (strong, nonatomic) IBOutlet UIImageView *authorsImage;
 @property (strong, nonatomic) IBOutlet UITextView *pictureDescription;
 @property (strong, nonatomic) IBOutlet UITextView *authorDescription;
-@property (strong, nonatomic) ServerFetcher *DownloadManager;
 
 
 
@@ -76,8 +75,7 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
     [self mainInit];
     [self inputDataInit];
  
-    self.DownloadManager = [ServerFetcher sharedInstance];
-    self.imageView = [[UIImageView alloc]initWithImage:[self.DownloadManager GetPictureWithID:[self.paintingData valueForKey:@"_id"] ]];
+    self.imageView = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance] GetPictureWithID:[self.paintingData valueForKey:@"_id"] ]];
     self.imageView.frame = self.mainView.frame;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.mainView addSubview:self.imageView];

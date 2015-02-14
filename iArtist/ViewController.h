@@ -14,7 +14,7 @@
 #import "AVSession.h"
 #import "ServerFetcher.h"
 
-@interface ViewController : UIViewController<UISearchBarDelegate,ServerFetcherDelegate>
+@interface ViewController : UIViewController<UISearchBarDelegate>
 
 @property (strong) GPPSignIn* signIn;
 @property (weak, nonatomic) IBOutlet iCarousel          *priceCarousel;

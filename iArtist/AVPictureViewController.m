@@ -12,6 +12,8 @@
 #import "AsyncImageView.h"
 #import <TwitterKit/TwitterKit.h>
 #import "ShareViewController.h"
+#import "AVCartController.h"
+#import "ArtistViewController.h"
 
 @interface AVPictureViewController (){
     NSString* kindOfSharing;
@@ -21,9 +23,7 @@
     NSURL* locUrlToPass;
 }
 
-@property (nonatomic, strong) NSMutableArray *urls;
-@property (nonatomic, strong) NSDictionary *PaintingData;
-@property (nonatomic, strong) ServerFetcher *DownloadManager;
+
 @property (nonatomic) NSInteger likeCounter;
 @property (strong, nonatomic) UILabel *likeCounterLabel;
 @property (strong, nonatomic) IBOutlet UIButton *addToCart;
@@ -41,8 +41,8 @@
 @property (strong, nonatomic)  IBOutlet UILabel *price;
 @property (strong, nonatomic)  IBOutlet UILabel *pictureSize;
 @property (strong, nonatomic) IBOutlet UIButton *likeButton;
-@property (nonatomic, strong) NSDictionary *CurrentPaintingData;
-@property (nonatomic, strong) NSDictionary *CurrentArtistData;
+@property (nonatomic, strong) NSDictionary *CurrentPainting;
+@property (nonatomic, strong) NSDictionary *CurrentArtist;
 @property (nonatomic,strong) NSMutableArray *ImageArray;
 
 
@@ -69,18 +69,18 @@
 
     self.likeCounterLabel = [[UILabel alloc] initWithFrame:
                              (CGRect){.origin.x = 5, .origin.y = 10, .size.width = 50, .size.height = 30 }];
-    self.likeCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray*)[self.CurrentPaintingData valueForKeyPath:@"liked_by"] count]];
+    self.likeCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray*)[self.CurrentPainting valueForKeyPath:@"liked_by"] count]];
     self.likeCounterLabel.textAlignment = NSTextAlignmentCenter;
     self.likeCounterLabel.textColor = [UIColor whiteColor];
     [self.likeButton addSubview:self.likeCounterLabel];
     self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.dataManager.index];
     self.authorsImage.frame = (CGRect){ .origin.x = 0, .origin.y = 0, .size.width = 60.0, .size.height = 60.0 };
     [self.authorButton addSubview:self.authorsImage];
-    self.authorsName = [UILabel new];
+    //self.authorsName = [UILabel new];
     self.authorsName.frame = (CGRect){.origin.x = 60.0, .origin.y = 0, .size.width = 180.0, .size.height = 30.0 };
-    if (self.session != nil) {
-        self.authorsName.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsName];
-    }
+    //if (self.session != nil) {
+        //self.authorsName.text = [NSString stringWithString:self.currentPicture.pictureAuthor.authorsName];
+    //}
     self.authorsName.textColor = [UIColor whiteColor];
     self.authorsName.shadowColor = [UIColor blackColor];
     self.authorsName.textAlignment = NSTextAlignmentCenter;
@@ -99,15 +99,17 @@
     visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     visualEffectView.frame = self.backgroundView.frame;
     [self.backgroundView addSubview:visualEffectView];
+  //  [self.backgroundView sendSubviewToBack:visualEffectView];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.DownloadManager = [ServerFetcher sharedInstance];
-    self.urls = [[NSMutableArray alloc]initWithArray:[self.DownloadManager RunQuery]];
+    if (self.urls == nil) {
+        self.urls = [[NSMutableArray alloc]initWithArray:[[ServerFetcher sharedInstance] RunQuery]];
+    }
+    self.pictureView.currentItemIndex = self.index;
     self.authorsImage = [[UIImageView alloc]init];
     self.authorsName = [UILabel new];
-    self.urls = [[NSMutableArray alloc]initWithArray:[self.DownloadManager RunQuery]];
     self.ImageArray = [[NSMutableArray alloc]init];
     for (int i=0;i<self.urls.count;i++) {
         [self.ImageArray addObject:[NSNull null]];
@@ -125,15 +127,6 @@
                                                object:nil];
 }
 //view will appear. we need this when we dismiss presented view controller and return here
-- (void)viewWillAppear:(BOOL)animated{
-    
-    self.dataManager = [AVManager sharedInstance];
-    
-    if (self.dataManager.wallImage != nil) {
-        self.backgroundView.image = self.dataManager.wallImage;
-    }
-    self.pictureView.currentItemIndex = self.dataManager.index;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -178,9 +171,9 @@
 }
 //load view in icarusel
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
-    self.PaintingData = [self.DownloadManager Paintingdic];
-    self.CurrentPaintingData = [self.PaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
-    self.CurrentArtistData = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
+    self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
+    self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureView.currentItemIndex]];
+    self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureView.currentItemIndex]];
     
     
     if (view == nil)
@@ -188,25 +181,31 @@
         view = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];
         view.contentMode = UIViewContentModeScaleAspectFit;
         
-        
-        
     }
     
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:view];
     NSURL *url = [[NSURL alloc]initWithString:[self.urls objectAtIndex:index]];
     ((AsyncImageView *)view).imageURL = url;
     [self.ImageArray replaceObjectAtIndex:index withObject:view];
-
-    self.likeCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray*)[self.CurrentPaintingData valueForKeyPath:@"liked_by"] count]];
+    __block NSString* str = [[NSString alloc] init];
     
-    self.price.text = [self.CurrentPaintingData valueForKey:@"price"];
-    self.pictureSize.text = [self.CurrentPaintingData valueForKey:@"realsize"];
-    NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtistData valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    dispatch_group_t group =  dispatch_group_create();
+    dispatch_queue_t my_queue = dispatch_queue_create("myqueue", DISPATCH_QUEUE_CONCURRENT);
+    
+    dispatch_group_async(group, my_queue, ^{
+         str = [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]];
+    });
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+       self.likeCounterLabel.text = str;    });
+    
+    self.price.text = [self.CurrentPainting valueForKey:@"price"];
+    self.pictureSize.text = [self.CurrentPainting valueForKey:@"realsize"];
+    NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *img = [UIImage imageWithData:imageData];
     
     self.authorsImage.image = img;
-    self.authorsName.text = [self.CurrentArtistData valueForKey:@"name"];
-    
+    self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
+
     
     
     
@@ -223,7 +222,7 @@
         
         self.dataManager = [AVManager sharedInstance];
         self.dataManager.index = self.pictureView.currentItemIndex;
-        ((AVPainterViewController *)segue.destinationViewController).PictureData = self.PaintingData;
+        ((AVPainterViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
         
         ((AVPainterViewController *)segue.destinationViewController).ImageArray = self.ImageArray;
         
@@ -235,10 +234,8 @@
         
         AVManager *manager = [AVManager sharedInstance];
         manager.index = self.pictureView.currentItemIndex;
-        ((AVDetailViewController *)segue.destinationViewController).paintingData = self.CurrentPaintingData;
-          ((AVDetailViewController *)segue.destinationViewController).artistData = self.CurrentArtistData;
-        //((AVDetailViewController *)segue.destinationViewController).pictureAuthor =
-        //((AVPicture *)[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex]).pictureAuthor;
+        ((AVDetailViewController *)segue.destinationViewController).paintingData = self.CurrentPainting;
+          ((AVDetailViewController *)segue.destinationViewController).artistData = self.CurrentArtist;
     }
     
     if ([segue.identifier isEqualToString:@"SimpleShare"]) {
@@ -246,23 +243,26 @@
         locImageToShare = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image;
             //set text
         locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@ on the wall!",
-                         [self.CurrentPaintingData valueForKey:@"title"],
-                         [self.CurrentArtistData valueForKey:@"name"]];
+                         [self.CurrentPainting valueForKey:@"title"],
+                         [self.CurrentArtist valueForKey:@"name"]];
             //
     
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
-        locImageUrl = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureView.currentItemIndex]];
-
+        locImageUrl = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]];
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [self.PaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",self.pictureView.currentItemIndex]];
-
-        
+        locUrlToPass = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]];
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
         ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;
         ((ShareViewController*)segue.destinationViewController).headString = locHeadString;
         ((ShareViewController*)segue.destinationViewController).urlToPass = locUrlToPass;
+      
     }
+    if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
+        ((ArtistViewController*)segue.destinationViewController).CurrentArtist = self.CurrentArtist;
+        ((ArtistViewController*)segue.destinationViewController).img = self.authorsImage.image;
+    }
+
 
 
 }
@@ -295,16 +295,22 @@
 }
 //if you want to add picture to cart
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (PurchuasedImageArray == nil || PurchuasedPaintingData == nil) {
+        PurchuasedImageArray = [[NSMutableArray alloc]init];
+        PurchuasedPaintingData = [[NSMutableArray alloc]init];
+
+    }
+    [PurchuasedImageArray addObject:[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]];
+    [PurchuasedPaintingData addObject:self.CurrentPainting];
+
     
-    AVPicture *inputPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex];
-    if (buttonIndex == 1)[inputPicture.pictureTags addObject:@"Cart"];
 }
 
 //like button clicked
 - (IBAction)likeClicked:(id)sender {
     
-    [self.DownloadManager PutLikes:[self.CurrentPaintingData valueForKey:@"_id"]];
-    self.likeCounterLabel.text = [self.DownloadManager GetLikes:[self.CurrentPaintingData valueForKey:@"_id"]];
+    NSString *likescount = [[ServerFetcher sharedInstance] PutLikes:[self.CurrentPainting valueForKey:@"_id"]];
+    self.likeCounterLabel.text = likescount;
 }
 
 
