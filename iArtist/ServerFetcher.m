@@ -38,23 +38,7 @@ static NSString *querystring;
 
     querystring = querryStr;
 }
-- (void)SearchString:(NSString*)string
-           forCaller:(UIViewController<ServerFetcherDelegate>*)caller{
-    NSString * querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                                     (CFStringRef)string,
-                                                                                     NULL,
-                                                                                     (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
-    
-    querryStr = [NSString stringWithFormat:@"?search=%@",querryStr];
-    [manager GET:querryStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@",responseObject);
-        [caller setPaintings:responseObject];
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"%@",error);
-    }];   
-    
-}
+
 
 
 
