@@ -90,7 +90,9 @@
     author2.pictures = @[picture2, picture4, picture7, picture8];
     author2.authorsType = @"Old style";
     
-    newSession.arrayOfPictures = @[picture1, picture2, picture3, picture4, picture5, picture6, picture7, picture8, picture9];
+    newSession.arrayOfPictures = [NSMutableArray arrayWithObjects:picture1, picture2, picture3, picture4, picture5, picture6, picture7, picture8, picture9, nil];
+  
+  
     newSession.sessionName = @"Session one";
     
     return newSession;

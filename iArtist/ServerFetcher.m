@@ -43,7 +43,11 @@ static NSString *querystring;
 
 
 - (void)GenerateQueryForPrice:(int)min :(int)max{
+#pragma warning (push)
+#pragma warning (disable : unknown escape sequence '\$')
     NSString *querryStr = [NSString stringWithFormat:@"{ \"price\": {\"\$gte\":%d,\"\$lte\":%d} }",min,max];
+#pragma warning (pop)
+
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)querryStr,
                                                                                      NULL,
@@ -142,7 +146,7 @@ static NSString *querystring;
     
     Artistdic = [[NSMutableDictionary alloc]init];
     NSMutableArray *urls = [[NSMutableArray alloc]init];
-     __block NSMutableDictionary *Paintingids =[[NSMutableArray alloc]init];
+   //  __block NSMutableDictionary *Paintingids =[[NSMutableArray alloc]init];
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     NSString *str = [NSString stringWithFormat:@"%@/favorite_artists",_id];

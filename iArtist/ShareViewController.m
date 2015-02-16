@@ -29,9 +29,6 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
     
 }
 
--(void)viewWillAppear:(BOOL)animated{
-
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -114,15 +111,6 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
     return params;
 }
 
-- (IBAction)shareWithTwitter:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
-        NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:self.headString forKey:@"head"];
-        [dic  setObject:self.urlToPass forKey:@"url"];
-        [dic setObject:self.imageToShare forKey:@"image"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShareWithTwitter" object:nil userInfo:dic];
-    }];
-}
 
 - (IBAction)shareWithGooglePlus:(id)sender {
     signIn = [GPPSignIn sharedInstance];
@@ -193,6 +181,24 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
             [shareBuilder attachImage:self.imageToShare];
             [shareBuilder open];
         [defaults setObject:@"no" forKey:@"flagForGoogleShare"];
+}
+
+- (void)shareWithTwitter:(NSNotification*)notification {
+    TWTRComposer* composer = [[TWTRComposer alloc] init];
+    
+    
+    [composer setText:self.headString];
+    [composer setImage:self.imageToShare];
+    [composer setURL:self.urlToPass];
+    
+    [composer showWithCompletion:^(TWTRComposerResult result) {
+        if (result == TWTRComposerResultCancelled) {
+            NSLog(@"Tweet composition cancelled");
+        }
+        else {
+            NSLog(@"Sending Tweet!");
+        }
+    }];
 }
 
 @end

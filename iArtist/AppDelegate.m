@@ -37,7 +37,6 @@
                                     consumerSecret:@"2APu9hHFWBuUI7YlFIYG9JJOYuaKTEAtDWeAvnAwmvrmhM7Ict"];
     [Fabric with:@[[Twitter sharedInstance]]];
     
-    [GPPSignIn sharedInstance];
     
     vkDelegate = [[VKDelegate alloc] init];
     [VKSdk initializeWithDelegate:vkDelegate andAppId:@"4738060"];
