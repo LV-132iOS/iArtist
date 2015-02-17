@@ -115,7 +115,7 @@
     dataManager.wallImage.wallPicture = [UIImage imageNamed:@"room1.jpg"];
     dataManager.wallImage.distanceToWall = @1;
     [dataManager wallArrayInit];
-
+    
     
 }
 
@@ -173,7 +173,7 @@
     SessionControl* control = [SessionControl sharedManager];
     [control refresh];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500000000), dispatch_get_main_queue(), ^{
-        [self performSegueWithIdentifier:@"Liked" sender:nil];
+        [self performSegueWithIdentifier:@"pushToLiked" sender:nil];
     });
 }
 
@@ -224,8 +224,8 @@
                                                              options:0
                                                                error:nil];
         //current url for request
-//        NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
-        NSURL* url = [NSURL URLWithString:@"http://192.168.103.5/users/"];
+                NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
+        //NSURL* url = [NSURL URLWithString:@"http://192.168.103.5/users/"];
         //creating request to use it with dataTask
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
         //preparing session and request
@@ -241,7 +241,7 @@
                                                     completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
                                                         //logging received response
                                                         NSLog(@"%@",response);
-                                                    
+                                                        
                                                         if (!error) {
                                                             NSString* locString = [NSString stringWithFormat:@"loggedInWith%@",
                                                                                    [notification.userInfo objectForKey:@"with"]];
@@ -277,8 +277,9 @@
 - (IBAction)goToProfile:(id)sender {
     SessionControl* control = [SessionControl sharedManager];
     [control refresh];
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+   
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500000000), dispatch_get_main_queue(), ^{
+         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         if ([defaults boolForKey:@"loggedIn"]) {
             [self performSegueWithIdentifier:@"GoToProfile" sender:nil];
         } else{
@@ -317,8 +318,8 @@
     dispatch_group_t group = dispatch_group_create();
     dispatch_queue_t queue = dispatch_queue_create("312qweq", DISPATCH_QUEUE_SERIAL);
     
-   
-  
+    
+    
     
     dispatch_group_async(group, queue, ^{
         NSLog(@"fetching json");
@@ -330,7 +331,7 @@
 
 // called when keyboard search button pressed
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-        NSLog(@"Search button");
+    NSLog(@"Search button");
 }
 
 @end

@@ -246,24 +246,24 @@ UIVisualEffectView *visualEffectView;
     }
     
     if ([segue.identifier isEqualToString:@"SimpleShare"]) {
-            //get only picture
+        //get only picture
         locImageToShare = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image;
-            //set text
-        locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@ on the wall!",
+        //set text
+        locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@!",
                          [self.CurrentPainting valueForKey:@"title"],
                          [self.CurrentArtist valueForKey:@"name"]];
-            //
-    
+        //
+        
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
-        locImageUrl = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]];
+        locImageUrl =[NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/" stringByAppendingString: [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]]]];
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]];
+        locUrlToPass = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/" stringByAppendingString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]]]];
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
-        ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;
+        ((ShareViewController*)segue.destinationViewController).imageUrl =locImageUrl;
         ((ShareViewController*)segue.destinationViewController).headString = locHeadString;
-        ((ShareViewController*)segue.destinationViewController).urlToPass = locUrlToPass;
-      
+        ((ShareViewController*)segue.destinationViewController).urlToPass =locUrlToPass;
+        
     }
     if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
         ((ArtistViewController*)segue.destinationViewController).CurrentArtist = self.CurrentArtist;
@@ -424,22 +424,5 @@ UIVisualEffectView *visualEffectView;
 }
 
 
-- (void)shareWithTwitter:(NSNotification*)notification {
-    TWTRComposer* composer = [[TWTRComposer alloc] init];
-
-    
-    [composer setText:locHeadString];
-    [composer setImage:self.currentPicture.pictureImage];
-    [composer setURL:locImageUrl];
-    
-    [composer showWithCompletion:^(TWTRComposerResult result) {
-        if (result == TWTRComposerResultCancelled) {
-            NSLog(@"Tweet composition cancelled");
-        }
-        else {
-            NSLog(@"Sending Tweet!");
-        }
-    }];
-}
 
 @end

@@ -164,7 +164,8 @@
         //check if session is valid be sending a request that needs authorization
         
         GPPSignIn *signIn = [GPPSignIn sharedInstance];
-        GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
+        signIn.keychainName = @"123";
+        GTLServicePlus* plusService = [signIn plusService];
         plusService.retryEnabled = YES;
         [plusService setAuthorizer: signIn.authentication];
         

@@ -219,10 +219,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     locUrlToPass = [[NSURL alloc] init];
     locHeadString = [[NSString alloc] init];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(shareWithTwitter:)
-                                                 name:@"ShareWithTwitter"
-                                               object:nil];
 
 }
 
@@ -524,7 +520,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
             //get only picture
             locImageToShare = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
             //set text
-            locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@ on the wall!",
+            locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@!",
                              [self.CurrentPainting valueForKey:@"title"],
                              [self.CurrentArtist valueForKey:@"name"]];
             //
@@ -532,9 +528,12 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
         
-        locImageUrl = [NSURL URLWithString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]];
+        locImageUrl = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/"
+                                            stringByAppendingString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]]];
+        
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [NSURL URLWithString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]];
+        locUrlToPass = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/"
+                                             stringByAppendingString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]]];
         
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
         ((ShareViewController*)segue.destinationViewController).imageUrl = locImageUrl;
@@ -580,22 +579,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     }
 }
 
-- (void)shareWithTwitter:(id)sender {
-    TWTRComposer* composer = [[TWTRComposer alloc] init];
-    
-    [composer setText:locHeadString];
-    [composer setImage:locImageToShare];
-    [composer setURL:locUrlToPass];
-    
-    [composer showWithCompletion:^(TWTRComposerResult result) {
-        if (result == TWTRComposerResultCancelled) {
-            NSLog(@"Tweet composition cancelled");
-        }
-        else {
-            NSLog(@"Sending Tweet!");
-        }
-    }];
-}
 
 
 

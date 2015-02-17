@@ -4,122 +4,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="9zI-gd-UbE">
-                                <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VfS-XD-CyK" customClass="iCarousel">
-                                <rect key="frame" x="16" y="93" width="992" height="311"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8M3-WI-aSO" customClass="iCarousel">
-                                <rect key="frame" x="19" y="441" width="992" height="135"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcB-eE-UWS" customClass="iCarousel">
-                                <rect key="frame" x="16" y="613" width="992" height="135"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNQ-jG-kkI">
-                                <rect key="frame" x="16" y="71" width="54" height="21"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Price" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SWr-LV-x6K">
-                                <rect key="frame" x="19" y="584" width="51" height="21"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R6n-W9-scP">
-                                <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
-                                <items>
-                                    <barButtonItem title="Item" style="plain" id="HNs-V3-3LK">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mgz-2M-24i">
-                                            <rect key="frame" x="20" y="2" width="35" height="35"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <state key="normal" backgroundImage="user-icon-0910125612.png">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="goToProfile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tm0-Sd-jdU"/>
-                                            </connections>
-                                        </button>
-                                    </barButtonItem>
-                                    <barButtonItem title="My News" id="PV6-cV-Jrn">
-                                        <connections>
-                                            <action selector="myNewsButtonAction:" destination="BYZ-38-t0r" id="zKa-fR-vaQ"/>
-                                            <segue destination="h88-e1-SN3" kind="modal" identifier="News" id="lxh-gY-P9i"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Liked" id="uZr-Rh-B3c">
-                                        <connections>
-                                            <action selector="likedButtonAction:" destination="BYZ-38-t0r" id="gwg-A4-t0m"/>
-                                            <segue destination="2lr-JY-tvU" kind="modal" identifier="pushToLiked" id="k6H-GK-ee1"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Help" id="OwS-pn-wVM">
-                                        <connections>
-                                            <action selector="HelpButtonAction:" destination="BYZ-38-t0r" id="LSX-y8-G0f"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ToU-ob-Uzi"/>
-                                    <barButtonItem id="LaL-8y-Qpc">
-                                        <searchBar key="customView" contentMode="redraw" searchBarStyle="minimal" placeholder="search" id="AvZ-Bj-GJu">
-                                            <rect key="frame" x="594" y="0.0" width="270" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                                            <connections>
-                                                <outlet property="delegate" destination="BYZ-38-t0r" id="Rkv-7d-WdZ"/>
-                                            </connections>
-                                        </searchBar>
-                                    </barButtonItem>
-                                    <barButtonItem image="shopping-cart-grey-hi.png" id="hB7-ma-zdF">
-                                        <connections>
-                                            <segue destination="MYj-qk-6mf" kind="modal" identifier="ModalToCart" id="lYa-8K-vnO"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="iArtist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tHi-jC-eMS">
-                                <rect key="frame" x="487" y="31" width="50" height="21"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Size" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ZY-Tw-K97">
-                                <rect key="frame" x="16" y="412" width="48" height="21"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <connections>
-                        <outlet property="priceCarousel" destination="gcB-eE-UWS" id="ee8-ek-asx"/>
-                        <outlet property="searchBar" destination="AvZ-Bj-GJu" id="jKX-jV-tsb"/>
-                        <outlet property="sizeCarousel" destination="8M3-WI-aSO" id="OZv-ea-87r"/>
-                        <outlet property="styleCarousel" destination="VfS-XD-CyK" id="1lV-Gc-6cd"/>
-                        <segue destination="8c7-Hf-k4L" kind="modal" identifier="FirstRunSegue" modalPresentationStyle="fullScreen" id="s2o-Wr-DNh"/>
-                        <segue destination="aVD-sd-ueB" kind="modal" identifier="Login" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="dsw-wX-cc4"/>
-                        <segue destination="LDj-qJ-gC6" kind="modal" identifier="GoToProfile" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="bbn-J7-77p"/>
-                        <segue destination="LmL-hT-0P2" kind="modal" identifier="Search" modalPresentationStyle="fullScreen" modalTransitionStyle="partialCurl" id="fN9-6z-HVe"/>
-                        <segue destination="fnz-I7-myP" kind="modal" identifier="PictureView" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="eIb-37-wBW"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1541" y="542"/>
-        </scene>
         <!--Log-in/Register-->
         <scene sceneID="tp8-ld-xAC">
             <objects>
@@ -140,9 +24,6 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="Jge-iN-hI6" kind="push" id="ong-8T-CrW"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iF-fM-hmm">
                                 <rect key="frame" x="16" y="337" width="268" height="39"/>
@@ -152,9 +33,6 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="WUX-gb-hQs" kind="push" id="o4L-kc-4wE"/>
-                                </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3qO-QB-OV6">
                                 <rect key="frame" x="0.0" y="273" width="300" height="3"/>
@@ -203,92 +81,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KoE-2R-YVp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1975" y="-686"/>
-        </scene>
-        <!--Register with e-mail-->
-        <scene sceneID="sXJ-hl-yXU">
-            <objects>
-                <viewController id="WUX-gb-hQs" customClass="RegisterEmailViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ddK-3J-1mH"/>
-                        <viewControllerLayoutGuide type="bottom" id="4tY-TC-UI5"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Bt2-em-3eB">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4UZ-gV-vog">
-                                <rect key="frame" x="16" y="44" width="268" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tVN-Vu-1IX">
-                                <rect key="frame" x="16" y="79" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your e-mail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sw3-fD-izp">
-                                <rect key="frame" x="16" y="117" width="268" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NYe-ir-FmV">
-                                <rect key="frame" x="16" y="152" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E6n-7h-8xg">
-                                <rect key="frame" x="16" y="190" width="268" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yhi-QV-uxW">
-                                <rect key="frame" x="16" y="225" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Re-enter your password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PvW-N6-vcT">
-                                <rect key="frame" x="16" y="263" width="268" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LOG-7D-BBs">
-                                <rect key="frame" x="16" y="300" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jwd-9j-1uS">
-                                <rect key="frame" x="16" y="345" width="268" height="47"/>
-                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Register">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="registerButtonAction:" destination="WUX-gb-hQs" eventType="touchUpInside" id="ihN-4x-bY2"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Register with e-mail" id="l1j-3w-AU1">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="Aq5-9I-tsG"/>
-                    </navigationItem>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="400"/>
-                    <connections>
-                        <outlet property="emailField" destination="NYe-ir-FmV" id="ksy-qI-68H"/>
-                        <outlet property="nameField" destination="tVN-Vu-1IX" id="idi-rR-q2T"/>
-                        <outlet property="password1Field" destination="yhi-QV-uxW" id="AUY-l8-uJZ"/>
-                        <outlet property="password2Field" destination="LOG-7D-BBs" id="8eG-0S-gsi"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="m3f-ck-WN0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2395" y="-428"/>
+            <point key="canvasLocation" x="1081" y="-686"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="llj-a3-DAR">
@@ -308,67 +101,6 @@
             </objects>
             <point key="canvasLocation" x="570" y="-12"/>
         </scene>
-        <!--Log-in with e-mail-->
-        <scene sceneID="dXT-BG-gzr">
-            <objects>
-                <viewController id="Jge-iN-hI6" customClass="LoginEmailViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fAR-m5-YNK"/>
-                        <viewControllerLayoutGuide type="bottom" id="IIZ-Xb-FNP"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="aet-SS-Fjl">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your e-mail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAz-BS-O5F">
-                                <rect key="frame" x="16" y="102" width="268" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jtk-tx-l4G">
-                                <rect key="frame" x="16" y="137" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter your password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RRr-UT-0Pa">
-                                <rect key="frame" x="16" y="175" width="268" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XeX-pq-QCU">
-                                <rect key="frame" x="16" y="210" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="urY-Rw-kOF">
-                                <rect key="frame" x="16" y="307" width="268" height="47"/>
-                                <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Log-in">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="loginButtonAction:" destination="Jge-iN-hI6" eventType="touchUpInside" id="DQO-5R-JGA"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Log-in with e-mail" id="AUR-rc-M9W">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="xJ8-xu-KKt"/>
-                    </navigationItem>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="400"/>
-                    <connections>
-                        <outlet property="emailField" destination="Jtk-tx-l4G" id="cuF-TS-aFz"/>
-                        <outlet property="passwordField" destination="XeX-pq-QCU" id="QP9-Pg-fPx"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pwj-EK-ujv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2395" y="-890"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="NcN-hd-fEE">
             <objects>
@@ -385,7 +117,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fy5-QY-L4K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1490" y="-671"/>
+            <point key="canvasLocation" x="596" y="-671"/>
         </scene>
         <!--Profile-->
         <scene sceneID="hF2-8q-2sP">
@@ -929,11 +661,6 @@
                                     </barButtonItem>
                                     <barButtonItem systemItem="action" id="yez-Ib-UAS">
                                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <segue destination="8LZ-N4-2to" kind="popover" identifier="SimpleShare" popoverAnchorBarButtonItem="yez-Ib-UAS" id="yK2-r1-I2N">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
-                                        </connections>
                                     </barButtonItem>
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1209,7 +936,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MMj-4L-mat" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3181" y="-588"/>
+            <point key="canvasLocation" x="3533" y="1462"/>
         </scene>
         <!--Painter View Controller-->
         <scene sceneID="rvE-lY-PtX">
@@ -1354,9 +1081,6 @@
                         <outlet property="roomImage" destination="GXM-Kd-Mot" id="c8t-Lk-enP"/>
                         <outlet property="titleOfPicture" destination="RcT-Ep-zne" id="aip-Jj-4xS"/>
                         <outlet property="upToolBar" destination="2V1-re-8Hj" id="fXk-Lj-zAC"/>
-                        <segue destination="8LZ-N4-2to" kind="popover" identifier="Share" popoverAnchorBarButtonItem="ScX-qN-XmV" id="uAH-YQ-HPy">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Mo-Ji-BDj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1772,7 +1496,7 @@
                                 <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eUc-6H-YTB">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
                                 <items>
                                     <barButtonItem title="Item" style="plain" id="aTF-U5-DiE">
                                         <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Jfg-WY-Fng">
@@ -1783,7 +1507,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="goToProfile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TQb-e7-dtE"/>
+                                                <action selector="goToProfile:" destination="0ka-ro-dsY" eventType="touchUpInside" id="joK-wE-ewZ"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
@@ -1884,7 +1608,7 @@
                                 </subviews>
                             </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="iArtist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOu-Ke-ITx">
-                                <rect key="frame" x="487" y="11" width="50" height="21"/>
+                                <rect key="frame" x="487" y="31" width="50" height="21"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -1970,6 +1694,11 @@
                                     <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="cIe-Ws-RHc"/>
                                     <barButtonItem systemItem="action" id="xbc-1K-amS">
                                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
+                                        <connections>
+                                            <segue destination="8LZ-N4-2to" kind="popover" identifier="SimpleShare" popoverAnchorBarButtonItem="xbc-1K-amS" id="9Q1-oe-U60">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1994,6 +1723,9 @@
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="AqX-hk-yQu" kind="modal" modalPresentationStyle="formSheet" modalTransitionStyle="partialCurl" id="XqC-q2-HwM"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugo-8U-A9p">
                                 <rect key="frame" x="640" y="708" width="196" height="60"/>
@@ -2053,7 +1785,7 @@
                     </connections>
                 </pinchGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1072" y="1810"/>
+            <point key="canvasLocation" x="1016" y="1806"/>
         </scene>
         <!--Painter View Controller-->
         <scene sceneID="0hv-YD-aTK">
@@ -2091,6 +1823,9 @@
                                     <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="jNb-Zg-bn8"/>
                                     <barButtonItem systemItem="action" id="0AA-le-wzn">
                                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
+                                        <connections>
+                                            <action selector="SharePressed:" destination="glK-by-361" id="ck3-OB-nuo"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2172,6 +1907,9 @@
                         <outlet property="roomImage" destination="Mlh-5y-5e2" id="sIp-YI-G06"/>
                         <outlet property="titleOfPicture" destination="1u9-gJ-jN1" id="oyr-SJ-TeR"/>
                         <outlet property="upToolBar" destination="uIR-6g-Nry" id="efB-R2-dLu"/>
+                        <segue destination="8LZ-N4-2to" kind="popover" identifier="Share" popoverAnchorBarButtonItem="0AA-le-wzn" id="nay-hd-SZI">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IVE-mA-1Yb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2208,7 +1946,7 @@
                     </connections>
                 </pinchGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2633" y="2074"/>
+            <point key="canvasLocation" x="2755" y="2178"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="eLl-YR-xKp">
@@ -2419,7 +2157,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2368" y="1267"/>
+            <point key="canvasLocation" x="2602" y="1023"/>
         </scene>
     </scenes>
     <resources>
@@ -2437,15 +2175,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="QDs-DP-rXf"/>
         <segue reference="q6B-kz-Vr1"/>
-        <segue reference="bda-3C-H6Z"/>
-        <segue reference="MA6-Vu-UJR"/>
-        <segue reference="5WJ-1P-ot0"/>
-        <segue reference="duq-qo-J8G"/>
-        <segue reference="pQI-Cp-QqQ"/>
-        <segue reference="TQJ-pO-fDV"/>
-        <segue reference="fQk-lz-yUq"/>
-        <segue reference="uAH-YQ-HPy"/>
-        <segue reference="Bgk-k0-pqb"/>
+        <segue reference="XqC-q2-HwM"/>
+        <segue reference="nay-hd-SZI"/>
     </inferredMetricsTieBreakers>
 </document>
