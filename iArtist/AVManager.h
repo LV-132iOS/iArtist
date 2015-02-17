@@ -16,7 +16,7 @@
 
 @property (nonatomic) NSInteger index;
 
-@property (strong, nonatomic) UIImage *wallImage;
+@property (strong, nonatomic) AVWall *wallImage;
 
 @property (strong, nonatomic) NSMutableArray *wallArray;
 
