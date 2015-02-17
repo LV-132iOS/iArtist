@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "iCarousel.h"
+#import "ServerFetcher.h"
 
 
 @interface ColorCarouselDelegateAndDataSource : NSObject <iCarouselDelegate, iCarouselDataSource>

@@ -26,5 +26,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *authorName;
 
 @property (strong, nonatomic) IBOutlet UITextView *newsDescription;
+@property (weak, nonatomic) IBOutlet UILabel *date;
 
 @end

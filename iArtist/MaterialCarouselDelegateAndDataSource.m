@@ -75,6 +75,27 @@
 }
 
 - (void)buttonTapped:(UIButton *)sender{
+    ServerFetcher *DownloadManager;
+    DownloadManager = [ServerFetcher sharedInstance];
+    if ([sender.titleLabel.text isEqualToString:@"Pastel"]) {
+        [DownloadManager GenerateQueryForMaterial:@"Pastel"];
+        
+    } else if ([sender.titleLabel.text isEqualToString:@"Oil on canvas"]){
+        [DownloadManager GenerateQueryForMaterial:@"Oil on canvas"];
+        
+    }else if ([sender.titleLabel.text isEqualToString:@"Enamel"]){
+        [DownloadManager GenerateQueryForMaterial:@"Enamel"];
+        
+    }else if ([sender.titleLabel.text isEqualToString:@"Acrylic on canvas"]){
+        [DownloadManager GenerateQueryForMaterial:@"Acrylic on canvas"];
+    } else if ([sender.titleLabel.text isEqualToString:@"Acrylic & Enamel"]){
+        [DownloadManager GenerateQueryForMaterial:@"Acrylic & Enamel"];
+    }
+    else if ([sender.titleLabel.text isEqualToString:@"Pastel on canvas"]){
+        [DownloadManager GenerateQueryForMaterial:@"Pastel on canvas"];
+    }
+    
+
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
 }

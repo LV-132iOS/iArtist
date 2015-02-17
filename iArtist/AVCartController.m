@@ -28,18 +28,21 @@
 
 @implementation AVCartController
 
+
 -(NSMutableArray *)AllPaintingData{
      @synchronized(self){return PurchuasedPaintingData;}
 }
 
 -(NSMutableArray *)ImageArray{
+    NSLog(@"%@",PurchuasedImageArray);
     @synchronized(self){return PurchuasedImageArray;}
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
+
+
     self.totalAmount.text = [@"Total Amount: " stringByAppendingString:
                              [NSString stringWithFormat:@"%lu", (unsigned long)[self.ImageArray count]]];
     NSInteger Overal = 0;

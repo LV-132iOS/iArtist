@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
     AVLeftViewDisable
 };
 
-@interface AVDetailViewController ()<UIScrollViewDelegate>
+@interface AVDetailViewController ()<UIScrollViewDelegate,  UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UIButton *closeButton;
 @property (strong, nonatomic) IBOutlet UIView *leftView;
@@ -89,6 +89,50 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
     
     return self.imageView;
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 5;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *newCell = [UITableViewCell new];
+    switch (indexPath.row) {
+        case 0:
+            newCell = [tableView dequeueReusableCellWithIdentifier:@"Picture Name" forIndexPath:indexPath];
+            newCell.textLabel.text = [self.paintingData valueForKey:@"title"];
+            break;
+        case 1:
+            newCell = [tableView dequeueReusableCellWithIdentifier:@"Picture genre" forIndexPath:indexPath];
+            newCell.textLabel.text = [self.paintingData valueForKey:@"genre"];
+
+            break;
+        case 2:
+            newCell = [tableView dequeueReusableCellWithIdentifier:@"Picture size" forIndexPath:indexPath];
+            newCell.textLabel.text = [self.paintingData valueForKey:@"size"];
+
+            break;
+        case 3:
+            newCell = [tableView dequeueReusableCellWithIdentifier:@"Picture material" forIndexPath:indexPath];
+            newCell.textLabel.text = [self.paintingData valueForKey:@"material"];
+            break;
+        case 4:
+            newCell = [tableView dequeueReusableCellWithIdentifier:@"Picture Description" forIndexPath:indexPath];
+            self.pictureDescription = [[UITextView alloc] initWithFrame:(CGRect){.origin.x = 0, .origin.y = 0,
+                .size.width = 394, .size.height = 397}];
+            self.pictureDescription.text = [self.paintingData valueForKey:@"description"];
+            self.pictureDescription.textColor = [UIColor whiteColor];
+            self.pictureDescription.backgroundColor = [UIColor clearColor];
+            [newCell.contentView addSubview:self.pictureDescription];
+            break;
+        default:
+            break;
+    }
+    newCell.textLabel.textColor = [UIColor whiteColor];
+    [newCell setBackgroundColor:[UIColor clearColor]];
+    [[newCell contentView] setBackgroundColor:[UIColor clearColor]];
+    [[newCell backgroundView] setBackgroundColor:[UIColor clearColor]];
+    return newCell;
+}
+
 //tap gesture recognizer
 - (IBAction)tapAction:(id)sender {
     

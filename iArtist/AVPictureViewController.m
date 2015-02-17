@@ -14,6 +14,7 @@
 #import "ShareViewController.h"
 #import "AVCartController.h"
 #import "ArtistViewController.h"
+#import "AVWall.h"
 
 @interface AVPictureViewController (){
     NSString* kindOfSharing;
@@ -45,17 +46,21 @@
 @property (nonatomic, strong) NSDictionary *CurrentArtist;
 @property (nonatomic,strong) NSMutableArray *ImageArray;
 
+@property (strong, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
 
 @end
 
 @implementation AVPictureViewController
+
+UIVisualEffectView *visualEffectView;
+
 #pragma mark - initialization in view didload
 //main init
 - (void) mainInit{
-    self.dataManager = [AVManager sharedInstance];
-    self.pictureView.delegate = self;
+ 
+    AVManager *dataManager = [AVManager sharedInstance];
     self.pictureView.dataSource = self;
-    self.pictureView.contentOffset = (CGSize) {.width = -45, .height = 0};
+    self.pictureView.contentOffset = (CGSize) {.width = 0, .height = 0};
     self.backgroundView.image = [UIImage imageNamed:@"room1.jpg"];
     [self blurImage];
     self.pictureView.type = iCarouselTypeInvertedRotary;
@@ -69,7 +74,9 @@
 
     self.likeCounterLabel = [[UILabel alloc] initWithFrame:
                              (CGRect){.origin.x = 5, .origin.y = 10, .size.width = 50, .size.height = 30 }];
+    
     self.likeCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray*)[self.CurrentPainting valueForKeyPath:@"liked_by"] count]];
+    
     self.likeCounterLabel.textAlignment = NSTextAlignmentCenter;
     self.likeCounterLabel.textColor = [UIColor whiteColor];
     [self.likeButton addSubview:self.likeCounterLabel];
@@ -133,15 +140,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)viewWillAppear:(BOOL)animated{
+    
+    self.pictureView.hidden = NO;
+    [self.backgroundView sendSubviewToBack:visualEffectView];
+    //self.intputPictureIndex = self.dataManager.index;
+    
 }
-*/
+
 #pragma mark - icarusel data source
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
     //return the total number of items in the carousel
@@ -186,6 +192,7 @@
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:view];
     NSURL *url = [[NSURL alloc]initWithString:[self.urls objectAtIndex:index]];
     ((AsyncImageView *)view).imageURL = url;
+    view = ((UIImageView*)view);
     [self.ImageArray replaceObjectAtIndex:index withObject:view];
     __block NSString* str = [[NSString alloc] init];
     
@@ -270,10 +277,113 @@
 - (IBAction)didBackButtonClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 //select view in carusel
 - (IBAction)didViewInCaruselSelected:(id)sender {
-           [self performSegueWithIdentifier:@"ModalToDetail" sender:nil];
+    CGRect currentViewRect = { .origin.x = 0., .origin.y = 0., .size.width = 800, .size.height = 656 };
+    UIImage * currentImage = ((AVPicture *)[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex]).pictureImage;
+    CGRect newPictureRect;
+    newPictureRect.origin.x = 0.;
+    newPictureRect.origin.y = 0.;
+    if (currentImage.size.width * currentViewRect.size.height > currentImage.size.height * currentViewRect.size.width){
+        newPictureRect.size.width = currentViewRect.size.width;
+        newPictureRect.size.height = currentImage.size.height / currentImage.size.width * currentViewRect.size.width;
+    }
+    else {
+        newPictureRect.size.height = currentViewRect.size.height;
+        newPictureRect.size.width = currentImage.size.width / currentImage.size.height * currentViewRect.size.height;
+    }
+    newPictureRect.origin.x = 400 - newPictureRect.size.width / 2;
+    newPictureRect.origin.y = 316 - newPictureRect.size.height / 2;
+    CGPoint locationInView = [sender locationInView:self.pictureView.currentItemView];
+    if ((locationInView.x > newPictureRect.origin.x)&&
+        (locationInView.x < newPictureRect.size.width + newPictureRect.origin.x)&&
+        (locationInView.y > newPictureRect.origin.y)&&
+        (locationInView.y < newPictureRect.size.height + newPictureRect.origin.y)){
+        
+        CGFloat timeForAnimation = 0.3;
+        
+        [self animate:timeForAnimation whithSeque:@"ModalToDetail"];
+    }
 }
+
+- (IBAction)animationToSegue:(id)sender {
+    
+    if (((UIPinchGestureRecognizer *)sender).state == UIGestureRecognizerStateBegan) {
+        
+        CGFloat timeForAnimation = 0.3;
+        
+        if (((UIPinchGestureRecognizer *)sender).scale < 1) {
+            
+            [self animate:timeForAnimation whithSeque:@"ModalToPreviewOnWall"];
+            
+        } else if (((UIPinchGestureRecognizer *)sender).scale > 1) {
+            [self animate:timeForAnimation whithSeque:@"ModalToDetail"];
+            
+        }
+    }
+}
+
+-(void)animate:(CGFloat)time whithSeque:(NSString *)identifier{
+    __block UIImageView *imageView = [[UIImageView alloc] initWithImage:((UIImageView *)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image];
+                                   
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.frame = (CGRect){ .origin.x = 109, .origin.y = 46, .size.width = 800 , .size.height = 656};
+    [self.view addSubview:imageView];
+    [self.backgroundView bringSubviewToFront:self.authorButton];
+    [self.backgroundView bringSubviewToFront:self.price];
+    [self.backgroundView bringSubviewToFront:self.pictureSize];
+    [self.backgroundView bringSubviewToFront:self.addToCart];
+    [self.backgroundView bringSubviewToFront:self.upToolBar];
+    [self.backgroundView bringSubviewToFront:self.titleOfSession];
+    [self.backgroundView bringSubviewToFront:self.previewOnWallButton];
+    [self.backgroundView bringSubviewToFront:self.likeButton];
+    self.pictureView.hidden = YES;
+    CGRect rect;
+    if ([identifier isEqualToString: @"ModalToPreviewOnWall"]) {
+        
+        
+        NSNumber *number = [NSNumber numberWithDouble:(3 * [AVManager sharedInstance].wallImage.distanceToWall.doubleValue)];
+        CGPoint sizeOfNewPicture = CGPointMake(
+                                               (((UIImageView *)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image.size.width)
+                                               / number.doubleValue,
+                                                (((UIImageView *)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image.size.height)
+                                                 /number.doubleValue);
+        
+        rect = (CGRect){.origin.x = 512 - sizeOfNewPicture.x / 2, .origin.y = 384 - sizeOfNewPicture.y / 2,
+            .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
+    } else if ([identifier isEqualToString:@"ModalToDetail"]){
+        rect = CGRectMake(0, 0, 1024, 768);
+    }
+    [UIView animateWithDuration:time
+                     animations:^{
+                         imageView.frame = rect;
+                         imageView.contentMode = UIViewContentModeScaleAspectFit;
+                         if ([identifier isEqualToString: @"ModalToPreviewOnWall"]) {
+                             visualEffectView.alpha = 0;
+                         } else if ([identifier isEqualToString:@"ModalToDetail"]){
+                             visualEffectView.backgroundColor = [UIColor blackColor];
+                         }
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:time
+                                          animations:^{
+                                              [self performSegueWithIdentifier:identifier sender:nil];
+                                          }
+                                          completion:^(BOOL finished) {
+                                              [imageView removeFromSuperview];
+                                              visualEffectView.alpha = 0.35;
+
+                                          }];
+                     }];
+}
+
+- (IBAction)goToPreviewOnWall:(id)sender {
+    CGFloat timeForAnimation = 0.3;
+    
+    [self animate:timeForAnimation whithSeque:@"ModalToPreviewOnWall"];
+}
+
 //add to cart button clicked
 - (IBAction)addPictureToCart:(id)sender {
     AVPicture *inputPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex];

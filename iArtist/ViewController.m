@@ -7,16 +7,22 @@
 //
 
 #import "ViewController.h"
-#import "PriceCarouselDelegateAndDataSource.h"
-#import "SizeCarouselDelegateAndDataSource.h"
 #import "StyleCarouselDelegateAndDataSource.h"
+#import "ColorCarouselDelegateAndDataSource.h"
+#import "MaterialCarouselDelegateAndDataSource.h"
+#import "SizeCarouselDelegateAndDataSource.h"
+#import "PriceCarouselDelegateAndDataSource.h"
+#import "ArtistsCarouselDelegateAndDataSource.h"
 #import "AVPictureViewController.h"
 #import "SessionControl.h"
 
 @interface ViewController (){
-    PriceCarouselDelegateAndDataSource* priceCarouselDAndDS;
-    SizeCarouselDelegateAndDataSource* sizeCarouselDAndDS;
     StyleCarouselDelegateAndDataSource* styleCarouselDAndDS;
+    ColorCarouselDelegateAndDataSource* colorCarouselDAndDS;
+    MaterialCarouselDelegateAndDataSource* materialCarouselDAndDS;
+    SizeCarouselDelegateAndDataSource* sizeCarouselDAndDS;
+    PriceCarouselDelegateAndDataSource* priceCarouselDAndDS;
+    ArtistsCarouselDelegateAndDataSource* artistsCarouselDAndDS;
 }
 
 @end
@@ -40,17 +46,34 @@
                                                  name:@"GoToPictures"
                                                object:nil];
     
-    //Price Carousel
-    priceCarouselDAndDS = [[PriceCarouselDelegateAndDataSource alloc] init];
-    self.priceCarousel.delegate = priceCarouselDAndDS;
-    self.priceCarousel.dataSource = priceCarouselDAndDS;
-    self.priceCarousel.type = iCarouselTypeLinear;
-    self.priceCarousel.bounces = NO;
-    self.priceCarousel.scrollEnabled = NO;
-    self.priceCarousel.centerItemWhenSelected = NO;
-    self.priceCarousel.currentItemIndex = 3;
-    self.priceCarousel.contentOffset = CGSizeMake(40.0f, 0.0f);
-
+    //Style Carousel
+    styleCarouselDAndDS = [[StyleCarouselDelegateAndDataSource alloc] init];
+    self.styleCarousel.delegate = styleCarouselDAndDS;
+    self.styleCarousel.dataSource = styleCarouselDAndDS;
+    self.styleCarousel.type = iCarouselTypeRotary;
+    
+    
+    //Color Carousel
+    colorCarouselDAndDS = [[ColorCarouselDelegateAndDataSource alloc] init];
+    self.colorCarousel.delegate = colorCarouselDAndDS;
+    self.colorCarousel.dataSource = colorCarouselDAndDS;
+    self.colorCarousel.type = iCarouselTypeLinear;
+    self.colorCarousel.bounces = YES;
+    self.colorCarousel.scrollEnabled = YES;
+    self.colorCarousel.centerItemWhenSelected = NO;
+    self.colorCarousel.currentItemIndex = 2;
+    
+    
+    //Material Carousel
+    materialCarouselDAndDS = [[MaterialCarouselDelegateAndDataSource alloc] init];
+    self.materialCarousel.delegate = materialCarouselDAndDS;
+    self.materialCarousel.dataSource = materialCarouselDAndDS;
+    self.materialCarousel.type = iCarouselTypeLinear;
+    self.materialCarousel.bounces = YES;
+    self.materialCarousel.scrollEnabled = YES;
+    self.materialCarousel.centerItemWhenSelected = NO;
+    self.materialCarousel.currentItemIndex = 2;
+    
     
     //Size Carousel
     sizeCarouselDAndDS = [[SizeCarouselDelegateAndDataSource alloc] init];
@@ -62,13 +85,36 @@
     self.sizeCarousel.centerItemWhenSelected = NO;
     self.sizeCarousel.contentOffset = CGSizeMake(-365.0f, 0.0f);
     
-    //Style Carousel
-    styleCarouselDAndDS = [[StyleCarouselDelegateAndDataSource alloc] init];
-    self.styleCarousel.delegate = styleCarouselDAndDS;
-    self.styleCarousel.dataSource = styleCarouselDAndDS;
-    self.styleCarousel.type = iCarouselTypeRotary;
-    self.styleCarousel.pagingEnabled = YES;
-    self.styleCarousel.centerItemWhenSelected = YES;
+    
+    //Price Carousel
+    priceCarouselDAndDS = [[PriceCarouselDelegateAndDataSource alloc] init];
+    self.priceCarousel.delegate = priceCarouselDAndDS;
+    self.priceCarousel.dataSource = priceCarouselDAndDS;
+    self.priceCarousel.type = iCarouselTypeLinear;
+    self.priceCarousel.bounces = YES;
+    self.priceCarousel.scrollEnabled = YES;
+    self.priceCarousel.centerItemWhenSelected = NO;
+    self.priceCarousel.currentItemIndex = 2;
+    
+    
+    //Artists Carousel
+    artistsCarouselDAndDS = [[ArtistsCarouselDelegateAndDataSource alloc] init];
+    self.artistsCarousel.delegate = artistsCarouselDAndDS;
+    self.artistsCarousel.dataSource = artistsCarouselDAndDS;
+    self.artistsCarousel.type = iCarouselTypeLinear;
+    self.artistsCarousel.bounces = YES;
+    self.artistsCarousel.scrollEnabled = NO;
+    self.artistsCarousel.centerItemWhenSelected = NO;
+    self.artistsCarousel.currentItemIndex = 2;
+    
+    
+    self.scroll.contentSize = CGSizeMake(1024, 1069);
+    AVManager *dataManager = [AVManager sharedInstance];
+    dataManager.index = 0;
+    dataManager.wallImage = [AVWall new];
+    dataManager.wallImage.wallPicture = [UIImage imageNamed:@"room1.jpg"];
+    dataManager.wallImage.distanceToWall = @1;
+    [dataManager wallArrayInit];
 
     
 }
@@ -144,7 +190,7 @@
     AVManager *dataManager = [AVManager sharedInstance];
     dataManager.session = session;
     dataManager.index = 0;
-    dataManager.wallImage = [UIImage imageNamed:@"room1.jpg"];
+    dataManager.wallImage.wallPicture = [UIImage imageNamed:@"room1.jpg"];
     if ([segue.identifier isEqualToString:@"PictureView"]) {
         ((AVPictureViewController *)segue.destinationViewController).session = session;
     }

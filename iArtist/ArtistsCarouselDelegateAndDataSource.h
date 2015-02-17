@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "iCarousel.h"
-
+#import "ServerFetcher.h"
 
 @interface ArtistsCarouselDelegateAndDataSource : NSObject <iCarouselDelegate, iCarouselDataSource>
 

@@ -74,7 +74,29 @@
 }
 
 - (void)buttonTapped:(UIButton *)sender{
-   
+    ServerFetcher *DownloadManager;
+    DownloadManager = [ServerFetcher sharedInstance];
+    if ([sender.titleLabel.text isEqualToString:@"Red"]) {
+        [DownloadManager GenerateQueryForTag:@"Red"];
+        
+    } if ([sender.titleLabel.text isEqualToString:@"Blue"]) {
+        [DownloadManager GenerateQueryForTag:@"Blue"];
+        
+    }else if ([sender.titleLabel.text isEqualToString:@"Orange"]) {
+        [DownloadManager GenerateQueryForTag:@"Orange"];
+        
+    }else if ([sender.titleLabel.text isEqualToString:@"Green"]) {
+        [DownloadManager GenerateQueryForTag:@"Green"];
+    } else  if ([sender.titleLabel.text isEqualToString:@"Yellow"]) {
+        [DownloadManager GenerateQueryForTag:@"Yellow"];
+    }
+    else  if ([sender.titleLabel.text isEqualToString:@"Grey"]) {
+        [DownloadManager GenerateQueryForTag:@"Grey"];
+    }
+    else  if ([sender.titleLabel.text isEqualToString:@"Brown"]) {
+        [DownloadManager GenerateQueryForTag:@"Brown"];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
 }
 

@@ -14,9 +14,6 @@
 #import "AVPictureViewController.h"
 #import "AVManager.h"
 
-//#import <QuartzCore/QuartzCore.h>
-
-
 @interface AVPainterViewController : UIViewController <UIGestureRecognizerDelegate, UIPopoverControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *roomImage;

@@ -10,7 +10,7 @@
 #import "AVManager.h"
 #import "AVSession.h"
 #import <MessageUI/MessageUI.h>
-static NSMutableArray *PurchuasedImageArray;
+static  NSMutableArray *PurchuasedImageArray;
 static NSMutableArray *PurchuasedPaintingData;
 
 @interface AVCartController : UIViewController<MFMailComposeViewControllerDelegate>

@@ -11,8 +11,8 @@
 #import "Picture+Create.h"
 #import "AppDelegate.h"
 
-static NSString * const BaseURLString = @"http://192.168.103.5/";
-//static NSString * const BaseURLString = @"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/";
+//static NSString * const BaseURLString = @"http://192.168.103.5/";
+static NSString * const BaseURLString = @"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/";
 static  AFHTTPSessionManager *manager;
 static NSString *querystring;
 
@@ -28,9 +28,41 @@ static NSString *querystring;
     @synchronized(self){return Paintingdic;}
 }
 
+-(NSMutableArray *)artistdic{
+    @synchronized(self){return Artistdic;}
+}
 
 - (void)GenerateQueryForTag:(NSString*)querry{
-    NSString *querryStr = [NSString stringWithFormat:@"{ \"tags\": \"%@ 11\" }",querry];
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"tags\": \"%@\" }",querry];
+    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                     (CFStringRef)querryStr,
+                                                                                     NULL,
+                                                                                     (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
+    
+    querystring = querryStr;
+}
+
+- (void)GenerateQueryForMaterial:(NSString*)querry{
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"material\": \"%@\" }",querry];
+    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                     (CFStringRef)querryStr,
+                                                                                     NULL,
+                                                                                     (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
+    
+    querystring = querryStr;
+}
+
+- (void)GenerateQueryForArtist:(NSString*)querry{
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"Artist\": \"%@\" }",querry];
+    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                     (CFStringRef)querryStr,
+                                                                                     NULL,
+                                                                                     (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
+    
+    querystring = querryStr;
+}
+- (void)GenerateQueryForColor:(NSString*)querry{
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"Color\": \"%@\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                             (CFStringRef)querryStr,
                                                                                             NULL,
@@ -137,39 +169,42 @@ static NSString *querystring;
         return urls;
         }
 
-- (NSMutableArray*)GetNewsForUser:(NSString *)_id
-{
     
-    Artistdic = [[NSMutableDictionary alloc]init];
-    NSMutableArray *urls = [[NSMutableArray alloc]init];
-     __block NSMutableDictionary *Paintingids =[[NSMutableArray alloc]init];
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
+- (void)GetNewsForUser:(NSString *)_id
+              callback:(void (^)(NSMutableArray* responde))callback
+{
+    Paintingdic =[[NSMutableDictionary alloc]init];
+    Artistdic = [[NSMutableArray alloc]init];
+    __block NSMutableArray *ids = [[NSMutableArray alloc]init];
     NSString *str = [NSString stringWithFormat:@"%@/favorite_artists",_id];
     [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        for (int i = 0; i<((NSArray*)responseObject).count; i++)
-        {
-            //NSString *str = [BaseURLString stringByAppendingString:@"paintings/files/%@"];
-          //  [Artistdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
-         // [Paintingids insertObject:<#(id)#> atIndex:<#(NSUInteger)#>  (NSArray*)[Artistdic valueForKeyPath:[NSString stringWithFormat:@"%d.paintings",i]];
-//            Urlstr = [Urlstr stringByAppendingString:@"?thumb=true"];
-//            NSLog(@"%@",Urlstr);
-//            [urls addObject:Urlstr];
+        Artistdic = (NSMutableArray *)responseObject;
+        for (int i=0; i<Artistdic.count; i++) {
+            for (int j=0; j<[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) count]; j++) {
+                [ids addObject: [[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) objectAtIndex:j] valueForKey:@"_id" ]];
+                [Paintingdic setObject:[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) objectAtIndex:j]forKey:[NSString stringWithFormat:@"%d",j]];
+            }
             
         }
-        NSLog(@"%@",Artistdic);
+    
+       // NSLog(@"%@",ids);
+
+        callback(ids);
+    
+          NSLog(@"%@",Paintingdic);
+            
+       // NSLog(@"%@",ids);
         
         
         // [Picture CreatePictureWithData:dic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
-        dispatch_semaphore_signal(semaphore);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
-        dispatch_semaphore_signal(semaphore);
+
         
     }];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    return urls;
 }
+
 
 - (BOOL)BecomeAFollower:(NSString *)_id{
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);

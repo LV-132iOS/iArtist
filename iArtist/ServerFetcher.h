@@ -9,19 +9,20 @@
 #import <UIKit/UIKit.h>
 
 static  NSMutableDictionary *Paintingdic;
-static  NSMutableDictionary *Artistdic;
+static  NSMutableArray *Artistdic;
 
 static NSMutableArray *urls;
 @interface ServerFetcher : NSObject
 @property (nonatomic, strong) NSDictionary  *Paintingdic;
-@property (nonatomic, strong) NSDictionary  *artistdic;
+@property (nonatomic, strong) NSMutableArray  *artistdic;
 @property (nonatomic, strong) UIImage       *image;
 - (UIImage*)GetPictureThumbWithID:(NSString*)_id;
 - (UIImage*)GetPictureWithID:(NSString*)_id;
 - (void)reloadDB;
 - (void)FetchArtists;
 - (NSMutableArray*)GetLikesForUser:(NSString*)_id;
-- (NSMutableArray*)GetNewsForUser:(NSString*)_id;
+- (void)GetNewsForUser:(NSString *)_id
+              callback:(void (^)(NSMutableArray* responde))callback;
 - (void)GenerateQueryForTag:(NSString*)querry;
 - (NSMutableArray*)RunQuery;
 - (void)GenerateQueryForPrice:(int)min :(int)max;
@@ -31,6 +32,11 @@ static NSMutableArray *urls;
 - (NSString*)GetLikesCount:(NSString*)_id;
 - (BOOL)BecomeAFollower:(NSString *)Artist;
 - (BOOL)CheckIsFollowing:(NSString *)_id;
+- (void)GenerateQueryForMaterial:(NSString*)querry;
+- (void)GenerateQueryForArtist:(NSString*)querry;
+- (void)GenerateQueryForColor:(NSString*)querry;
+
+
 
 
 + (ServerFetcher *)sharedInstance;

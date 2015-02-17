@@ -13,6 +13,10 @@
 
 
 @property (strong, nonatomic) IBOutlet UITableView *newsTable;
+@property (strong, nonatomic) NSMutableArray *AllArtistData;
+@property (strong, nonatomic) __block NSMutableArray *Ids;
+@property (strong,nonatomic) NSMutableArray *ImagesArray;
+
 
 @end
 
@@ -26,16 +30,35 @@
     
     
     UILabel *tableHeader = [[UILabel alloc] initWithFrame:(CGRect)
-    {.origin.x = 482,.origin.y = 0,.size.height = 60,.size.width = 60}];
+                            {.origin.x = 482,.origin.y = 0,.size.height = 60,.size.width = 60}];
     tableHeader.text = @"News";
     tableHeader.textColor = [UIColor blackColor];
     tableHeader.textAlignment = NSTextAlignmentCenter;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.urls = [[NSMutableArray alloc]init];
     self.AllPaintingData = [[NSDictionary alloc]init];
-    self.AllPaintingData = Paintingdic;
+    self.AllArtistData = [[NSMutableArray alloc]init];
+    self.ImagesArray = [[NSMutableArray alloc]init];
+    
+    //    - (void)GetNewsForUser:(NSString *)_id
+    //callback:(void (^)(NSMutableArray* responde))callback
+    
+    void (^callback)(NSMutableArray*) = ^(NSMutableArray* array){
+        [self setIds:array];
+        self.AllArtistData = [[ServerFetcher sharedInstance]artistdic];
+        self.AllPaintingData = [[ServerFetcher sharedInstance]Paintingdic];
+        for (int i=0; i<self.Ids.count;i++){
+            [self.ImagesArray addObject:([[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[i]])];}
+        [self.newsTable reloadData];
+    };
+    
+    [[ServerFetcher sharedInstance]GetNewsForUser:[defaults valueForKey:@"id"] callback:callback];
+    
+    // NSLog(@"%@",self.AllArtistData);
+    //  NSLog(@"%@",self.AllPaintingData);
+    
+    
     self.newsTable.tableHeaderView = tableHeader;
-    self.urls =  [[ServerFetcher sharedInstance]GetNewsForUser:[defaults valueForKey:@"id"]];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -64,39 +87,63 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return self.AllArtistData.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    // Return the number of rows in the section.
-    return [self.session.arrayOfPictures count];
+    
+        return self.Ids.count ;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%@",indexPath]];
-    self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%@.artistId",indexPath]];
-    NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    UIImage *img = [UIImage imageWithData:imageData];
-
-    
     AVNewsTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AVTableViewCell" forIndexPath:indexPath];
-    
-    cell.pictureImage.image = [[ServerFetcher sharedInstance]GetPictureThumbWithID:[self.urls objectAtIndex:indexPath.row]];
-    
 
-
-    
-    cell.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
-    
-    cell.authorImage.image = img;
-    
+     self.CurrentPainting = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld",indexPath.row]];
+    // NSLog(@"%@",[self.CurrentPainting valueForKey:@"_id"]);
+    // NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKeyPath:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    // UIImage *img = [UIImage imageWithData:imageData];
     cell.pictureName.text = [self.CurrentPainting valueForKey:@"title"];
+    cell.newsDescription.text = [self.CurrentPainting valueForKey:@"description"];
+    cell.pictureTag.text = [(NSArray*)[self.CurrentPainting valueForKey:@"tags"] componentsJoinedByString:@"," ];
+    cell.date.text = [self.CurrentPainting valueForKey:@"created_at"];
+    //cell.authorName.text = []
+
     
-    cell.authorName.text = [self.CurrentArtist valueForKey:@"name"];
+    UIImage *img = [UIImage new];
+    img = cell.pictureImage.image ;
+  
     
-    cell.tag = indexPath.row;
+       // NSLog(@"row %ld",indexPath.row);
+       // NSLog(@"section %ld",indexPath.section);
+    //if(cell.pictureImage.image == nil){
+       //cell.pictureImage = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[indexPath.row] ]];
+
+    UIImage * im = self.ImagesArray[indexPath.row];
+        UIImageView *imm = [[UIImageView alloc] initWithImage:im];
+        imm.frame = CGRectMake(10, 10, 290, 290);
+        [cell addSubview:imm];
+ /*
+         cell.pictureImage.image = [[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[0][indexPath.section][indexPath.row]];
+          cell.pictureName.text = [self.AllArtistData[i] valueForKeyPath:[(NSArray*)[NSString stringWithFormat:@"paintings.%ld",indexPath.row]objectAtIndex:indexPath.row]];
+         cell.authorName.text = [self.AllArtistData[indexPath.section] valueForKey:@"name"];
+         NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.AllArtistData[indexPath.section] valueForKeyPath:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+         UIImage *img = [UIImage imageWithData:imageData];
+         cell.authorImage.image = img;     [[AVNewsTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AVTableViewCell"];
+         
+         */
+        cell.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+        //cell.authorImage.image = img;
+        
+        
+        //cell.authorName.text = [self.CurrentArtist valueForKey:@"name"];
+        
+
+  
+    
+    
+    
     // Configure the cell...
     
     return cell;
@@ -110,7 +157,7 @@
     if ([segue.identifier isEqualToString:@"FromNewsToPicture"]) {
         ((AVPictureViewController *)segue.destinationViewController).urls = self.urls;
         ((AVPictureViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
-
+        
         //((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = ((AVNewsTableCell *)sender).tag;
         dataManager.index = ((AVNewsTableCell *)sender).tag;
         

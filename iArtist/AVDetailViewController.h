@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AVPicture.h"
-#import "AVAuthor.h"
+
 
 @interface AVDetailViewController : UIViewController
 
@@ -16,9 +15,6 @@
 
 @property (strong, nonatomic) UIImageView *imageView;
 
-@property (strong, nonatomic) AVPicture *inputPicture;
-
-@property (strong, nonatomic) AVAuthor *pictureAuthor;
 
 @property (strong, nonatomic) NSDictionary *paintingData;
 

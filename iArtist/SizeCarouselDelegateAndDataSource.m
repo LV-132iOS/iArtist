@@ -52,7 +52,7 @@
         [button setTitle:@"Big" forState:UIControlStateNormal];
     } else if (index == 3){
         //button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
-        [button setTitle:@"Several pictures" forState:UIControlStateNormal];
+        [button setTitle:@"Very Big" forState:UIControlStateNormal];
     }
     
     

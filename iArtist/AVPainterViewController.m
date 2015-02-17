@@ -11,6 +11,7 @@
 #import "ShareViewController.h"
 #import "ArtistViewController.h"
 #import "AVCartController.h"
+#import "AVManager.h"
 
 @interface AVPainterViewController (){
     NSString* kindOfSharing;
@@ -38,12 +39,16 @@
 @property (strong, nonatomic) IBOutlet UILabel *pictureSize;
 @property (nonatomic, strong) UIImage *img;
 
+@property (strong, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
+
 @end
 
 @implementation AVPainterViewController
 
 NSArray *arrayOfWals;
 CGPoint positionOfFirstTapPanGestureGecognizer;
+CGFloat lenght;
+CGPoint centre;
 
 typedef NS_ENUM(NSInteger, AVDirrectionMove){
     AVDirrectionMoveUp,
@@ -53,8 +58,10 @@ typedef NS_ENUM(NSInteger, AVDirrectionMove){
 };
 
 typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
-    AVSwipeTypeOfPictureChange,
-    AVInitTypeOfPictureChange
+    AVSwipeRightTypeOfPictureChange,
+    AVSwipeLeftTypeOfPictureChange,
+    AVInitTypeOfPictureChange,
+    AVDoubleTapOfPictureChange
 };
 
 #pragma mark - Initialisation for work
@@ -76,36 +83,104 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureIndex]];
     NSNumber *alpha = @1;
     CGPoint sizeOfNewPicture = CGPointMake(
-                                           /*self.currentPicture.pictureSize*/image.size.width / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue),
-                                           /*self.currentPicture.pictureSize*/image.size.height / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue));
+                                           image.size.width / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue),
+                                           image.size.height / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue));
     CGRect frame = {.origin.x = 0.0, .origin.y = 0.0, .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
-    [self.pictureImage removeFromSuperview];
-    self.pictureImage = [[UIImageView alloc] initWithFrame:frame];
-    self.pictureImage.image = image;
+    
+    //self.pictureImage.hidden = YES;
+    //self.pictureImage.image = image;
     self.price.text = [self.CurrentPainting valueForKey:@"price"];
     self.pictureSize.text = [self.CurrentPainting valueForKey:@"size"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *img = [UIImage imageWithData:imageData];
-    self.authorsImage.image = img;// = [[UIImageView alloc]initWithImage:img];
-    //self.authorsImage.frame = CGRectMake(0, 708, 60, 60);
+    self.authorsImage.image = img;
     self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
     self.img = img;
     
-    //self.titleOfPicture.text = [NSString stringWithString:self.currentPicture.pictureName];
     if (typeOfPictureChange == AVInitTypeOfPictureChange) {
+        [self.pictureImage removeFromSuperview];
+        self.pictureImage = [[UIImageView alloc] initWithFrame:frame];
+        self.pictureImage.image = image;
         self.pictureImage.center = self.view.center;
-        
+        [self.roomImage addSubview:self.pictureImage];
     }
-    if (typeOfPictureChange == AVSwipeTypeOfPictureChange) {
-        if (pictureCenter.x - self.pictureImage.frame.size.width / 2 < 0)pictureCenter.x = self.pictureImage.frame.size.width / 2;
-        if (pictureCenter.x + self.pictureImage.frame.size.width / 2 > 1024)pictureCenter.x = 1024 - self.pictureImage.frame.size.width / 2;
-        if (pictureCenter.y - self.pictureImage.frame.size.height / 2 < 0)pictureCenter.y = self.pictureImage.frame.size.height / 2;
-        if (pictureCenter.y + self.pictureImage.frame.size.height / 2 > 768)pictureCenter.y = 768 - self.pictureImage.frame.size.height / 2;
+    if (typeOfPictureChange == AVDoubleTapOfPictureChange) {
+        
+        self.pictureImage.hidden = YES;
+        self.pictureImage.frame = frame;
+        self.pictureImage.image = image;
+        self.pictureImage.center = self.view.center;
+        if (pictureCenter.x - self.pictureImage.frame.size.width / 2 < 0)
+            pictureCenter.x = self.pictureImage.frame.size.width / 2;
+        if (pictureCenter.x + self.pictureImage.frame.size.width / 2 > 1024)
+            pictureCenter.x = 1024 - self.pictureImage.frame.size.width / 2;
+        if (pictureCenter.y - self.pictureImage.frame.size.height / 2 < 0)
+            pictureCenter.y = self.pictureImage.frame.size.height / 2;
+        if (pictureCenter.y + self.pictureImage.frame.size.height / 2 > 768)
+            pictureCenter.y = 768 - self.pictureImage.frame.size.height / 2;
         self.pictureImage.center = pictureCenter;
+        self.pictureImage.hidden = NO;
         
     }
-    
-    [self.roomImage addSubview:self.pictureImage];
+    if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChange == AVSwipeLeftTypeOfPictureChange)) {
+        CGFloat left = 0;
+        CGFloat right = 1024;
+        CGFloat up = 0;
+        CGFloat down = 768;
+        BOOL biggerHeigthOrWidth;
+        if (self.roomImage.image.size.width * self.view.frame.size.height >
+            self.roomImage.image.size.height * self.view.frame.size.width)biggerHeigthOrWidth = YES;
+        else biggerHeigthOrWidth = NO;
+        if (biggerHeigthOrWidth) {
+            up = self.view.frame.size.height / 2 - self.roomImage.image.size.height /
+            self.roomImage.image.size.width * self.view.frame.size.width / 2 ;
+            down = self.view.frame.size.height / 2 + self.roomImage.image.size.height /
+            self.roomImage.image.size.width * self.view.frame.size.width / 2 ;
+            right = self.view.frame.size.width ;
+        } else {
+            down = self.view.frame.size.height ;
+            left = self.view.frame.size.width / 2 - self.roomImage.image.size.width /
+            self.roomImage.image.size.height * self.view.frame.size.height / 2 ;
+            right = self.view.frame.size.width / 2 + self.roomImage.image.size.width /
+            self.roomImage.image.size.height * self.view.frame.size.height / 2 ;
+        }
+        if (pictureCenter.x - frame.size.width / 2 < left)pictureCenter.x = left + frame.size.width / 2;
+        if (pictureCenter.x + frame.size.width / 2 > right)pictureCenter.x = right - frame.size.width / 2;
+        if (pictureCenter.y - frame.size.height / 2 < up)pictureCenter.y = up + frame.size.height / 2;
+        if (pictureCenter.y + frame.size.height / 2 > down)pictureCenter.y = down - frame.size.height / 2;
+        CABasicAnimation *pictureMoveAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+        [pictureMoveAnimation setFromValue:[NSValue valueWithCGPoint:[[self.pictureImage layer]position]]];
+        CGFloat timeForAnimation = 0.35;
+        CGFloat xLocation = 0.0;
+        if (typeOfPictureChange == AVSwipeRightTypeOfPictureChange) {
+            [pictureMoveAnimation setToValue:[NSValue valueWithCGPoint:(CGPoint){.
+                x = 1024 + self.pictureImage.frame.size.width / 2, .y = self.pictureImage.center.y}]];
+            xLocation = - frame.size.width / 2;
+        }
+        if (typeOfPictureChange == AVSwipeLeftTypeOfPictureChange) {
+            [pictureMoveAnimation setToValue:[NSValue valueWithCGPoint:(CGPoint){.
+                x = - self.pictureImage.frame.size.width / 2, .y = self.pictureImage.center.y}]];
+            xLocation = 1024 + frame.size.width / 2;
+        }
+        [pictureMoveAnimation setDuration:timeForAnimation];
+        [self.pictureImage.layer addAnimation:pictureMoveAnimation forKey:@"pictureAnimation"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((timeForAnimation - 0.05) * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
+                           self.pictureImage.hidden = YES;
+                           self.pictureImage.frame = frame;
+                           self.pictureImage.center = pictureCenter;
+                           self.pictureImage.image = image;
+                           [self.pictureImage.layer removeAnimationForKey:@"pictureAnimation"];
+                       });
+        [pictureMoveAnimation setFromValue:[NSValue valueWithCGPoint:(CGPoint){.x = xLocation, .y = self.pictureImage.center.y}]];
+        [pictureMoveAnimation setToValue:[NSValue valueWithCGPoint:pictureCenter]];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeForAnimation * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
+                           self.pictureImage.hidden = NO;
+                           [self.pictureImage.layer addAnimation:pictureMoveAnimation forKey:@"pictureAnimation"];
+                       });
+    }
+
 }
 - (void) mainInit{
     //AVManager *manager = [AVManager sharedInstance];
@@ -116,20 +191,28 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     UIImage *picture = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
     //self.roomImage.backgroundColor = [UIColor colorWithPatternImage:picture];
     
-    [self setImageWithWall:picture
-                          :self.roomImage.center
-                          :AVInitTypeOfPictureChange];
-    //[self.view addSubview:self.pictureImage];
-    //UIImageView *imm = [[UIImageView alloc] initWithImage:picture];
-    //[self.roomImage addSubview:imm];
+    AVManager *manager = [AVManager sharedInstance];
+     self.pictureIndex = manager.index;
+     self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
+     
+     self.currentWall = manager.wallImage;
+     
+     self.roomImage.image = self.currentWall.wallPicture;
     
+     [self setImageWithWall:picture
+                           :self.roomImage.center
+                           :AVInitTypeOfPictureChange];
+     self.rightSwipe = [UISwipeGestureRecognizer new];
+     self.rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
+     self.rightSwipe.delegate = self;
+     self.leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
+     self.leftSwipe.delegate = self;
+     self.panGestureRecognizer.delegate = self;
+     self.pinchGestureRecognizer = [UIPinchGestureRecognizer new];
+     self.pinchGestureRecognizer.delegate = self;
+     [self.pinchGestureRecognizer addTarget:self action:@selector(pinchAction:)];
+     [self.roomImage addGestureRecognizer:self.pinchGestureRecognizer];
     
-    self.rightSwipe = [UISwipeGestureRecognizer new];
-    self.rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
-    self.rightSwipe.delegate = self;
-    self.leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    self.leftSwipe.delegate = self;
-    self.panGestureRecognizer.delegate = self;
     kindOfSharing = [[NSMutableString alloc] init];
     locImageToShare = [[UIImage alloc] init];
     locImageUrl = [[NSURL alloc] init];
@@ -156,33 +239,27 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 
 - (void) hideViews{
     self.upToolBar.hidden = YES;
-    self.priceView.hidden = YES;
+    self.price.hidden = YES;
+    self.pictureSize.hidden = YES;
     self.authorsView.hidden = YES;
     self.titleOfPicture.hidden = YES;
 }
 
 - (void) pushVies{
     self.upToolBar.hidden = NO;
-    self.priceView.hidden = NO;
+    self.price.hidden = NO;
+    self.pictureSize.hidden = NO;
     self.authorsView.hidden = NO;
     self.titleOfPicture.hidden = NO;
-    
     [self.roomImage bringSubviewToFront:self.titleOfPicture];
     [self.roomImage bringSubviewToFront:self.upToolBar];
     [self.roomImage bringSubviewToFront:self.authorsView];
-    [self.roomImage bringSubviewToFront:self.priceView];
+    [self.roomImage bringSubviewToFront:self.price];
+    [self.roomImage bringSubviewToFront:self.pictureSize];
 }
 
 
@@ -212,7 +289,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
             
             [self setImageWithWall:img
                                   :self.pictureImage.center
-                                  :AVSwipeTypeOfPictureChange];
+                                  :AVSwipeRightTypeOfPictureChange];
         }
         if (sender.direction == UISwipeGestureRecognizerDirectionLeft){
             if (self.pictureIndex == [self.ImageArray count]-1 ){
@@ -231,7 +308,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
             
             [self setImageWithWall:img
                                   :self.pictureImage.center
-                                  :AVSwipeTypeOfPictureChange];
+                                  :AVSwipeLeftTypeOfPictureChange];
         }
     }
     if (sender.state == UIGestureRecognizerStateEnded) {
@@ -323,11 +400,43 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     if ([self ifPointInsidePicture: [(UIGestureRecognizer *)sender locationInView:self.roomImage]]) {
         [self backReturn:sender];
     } else {
-        [self setImageWithWall:self.currentPicture.pictureImage
+        [self setImageWithWall:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image
                               :[(UIGestureRecognizer *)sender locationInView: self.roomImage]
-                              :AVSwipeTypeOfPictureChange];
+                              :AVDoubleTapOfPictureChange];
     }
 }
+
+- (IBAction)pinchAction:(id)sender {
+    if (((UIPinchGestureRecognizer *)sender).scale > 1) {
+        [self pinchAnimation];
+    }
+}
+
+- (void)pinchAnimation{
+    
+    UIVisualEffect *blurEffect;
+    blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView *visualEffectView;
+    visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    visualEffectView.frame = self.roomImage.frame;
+    
+    visualEffectView.alpha = 0;
+    
+    [self.roomImage addSubview:visualEffectView];
+    [self.roomImage sendSubviewToBack:visualEffectView];
+    
+    CGFloat timeForAnimation = 0.3;
+    [UIView animateWithDuration:timeForAnimation animations:^{
+        self.pictureImage.frame = CGRectMake(112, 44, 800, 656);
+        self.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
+        visualEffectView.alpha = 0.31;
+    } completion:NULL];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((timeForAnimation) * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                       [self dismissViewControllerAnimated:NO completion:nil];
+                   });
+}
+
 
 //this method is for avoiding any conflicts by different gesture recognizers
 - (BOOL) gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
@@ -385,13 +494,14 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 
 //dismiss viewconroller on click back button
 - (IBAction)backReturn:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 //input data into manager when we disappear view controller
 - (void)viewWillDisappear:(BOOL)animated{
     self.dataManager = [AVManager sharedInstance];
     self.dataManager.index = self.pictureIndex;
-    self.dataManager.wallImage = self.currentWall.wallPicture;
+    //self.dataManager.wallImage = self.currentWall.wallPicture;
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
