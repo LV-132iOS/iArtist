@@ -13,7 +13,7 @@
 #import "SizeCarouselDelegateAndDataSource.h"
 #import "PriceCarouselDelegateAndDataSource.h"
 #import "ArtistsCarouselDelegateAndDataSource.h"
-#import "AVPictureViewController.h"
+#import "iCaruselViewController.h"
 #import "SessionControl.h"
 
 @interface ViewController (){
@@ -111,7 +111,7 @@
     self.scroll.contentSize = CGSizeMake(1024, 1069);
     AVManager *dataManager = [AVManager sharedInstance];
     dataManager.index = 0;
-    dataManager.wallImage = [AVWall new];
+    dataManager.wallImage = [Wall new];
     dataManager.wallImage.wallPicture = [UIImage imageNamed:@"room1.jpg"];
     dataManager.wallImage.distanceToWall = @1;
     [dataManager wallArrayInit];
@@ -186,20 +186,20 @@
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     //preparing other view controllers with background images and so on
-    AVSession *session = [AVSession sessionInit];
+    Sesion *session = [Sesion sessionInit];
     AVManager *dataManager = [AVManager sharedInstance];
     dataManager.session = session;
     dataManager.index = 0;
     dataManager.wallImage.wallPicture = [UIImage imageNamed:@"room1.jpg"];
     if ([segue.identifier isEqualToString:@"PictureView"]) {
-        ((AVPictureViewController *)segue.destinationViewController).session = session;
+        ((iCaruselViewController *)segue.destinationViewController).session = session;
     }
     if ([segue.identifier isEqualToString:@"News"]) {
-        ((AVNews *)segue.destinationViewController).session = session;
+        ((NewsViewController *)segue.destinationViewController).session = session;
         
     }
     if ([segue.identifier isEqualToString:@"pushToLiked"]) {
-        ((AVLikedViewController *)segue.destinationViewController).session = session;
+        ((LikedViewController *)segue.destinationViewController).session = session;
         
     }
 }

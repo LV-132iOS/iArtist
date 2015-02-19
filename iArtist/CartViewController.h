@@ -8,15 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "AVManager.h"
-#import "AVSession.h"
+#import "Sesion.h"
 #import <MessageUI/MessageUI.h>
 static  NSMutableArray *PurchuasedImageArray;
 static NSMutableArray *PurchuasedPaintingData;
 
-@interface AVCartController : UIViewController<MFMailComposeViewControllerDelegate>
+@interface CartViewController : UIViewController<MFMailComposeViewControllerDelegate>
 @property (strong, nonatomic) AVManager *manager;
 
-//@property (strong, nonatomic) AVSession *session;
 @property (strong, nonatomic) NSMutableArray *ImageArray;
 
 @property (strong, nonatomic) NSMutableDictionary *pictureInfo;

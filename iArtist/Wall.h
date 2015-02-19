@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface AVWall : NSObject
+@interface Wall : NSObject
 
 @property (strong, nonatomic) UIImage *wallPicture;
 

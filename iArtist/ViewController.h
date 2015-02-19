@@ -11,7 +11,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <GooglePlus/GooglePlus.h>
 #import "AVManager.h"
-#import "AVSession.h"
+#import "Sesion.h"
 #import "ServerFetcher.h"
 
 @interface ViewController : UIViewController<UISearchBarDelegate>

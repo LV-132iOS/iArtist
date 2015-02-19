@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
-#import "AVNews.h"
-#import "AVPictureViewController.h"
+#import "NewsViewController.h"
+#import "iCaruselViewController.h"
 
-@interface AVNews () <UITableViewDelegate, UITableViewDataSource>
+@interface NewsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 
 @property (strong, nonatomic) IBOutlet UITableView *newsTable;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation AVNews
+@implementation NewsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -97,9 +97,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    AVNewsTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AVTableViewCell" forIndexPath:indexPath];
+    NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AVTableViewCell" forIndexPath:indexPath];
 
-     self.CurrentPainting = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld",indexPath.row]];
+     self.CurrentPainting = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
     // NSLog(@"%@",[self.CurrentPainting valueForKey:@"_id"]);
     // NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKeyPath:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     // UIImage *img = [UIImage imageWithData:imageData];
@@ -155,11 +155,11 @@
     dataManager.session = self.session;
     
     if ([segue.identifier isEqualToString:@"FromNewsToPicture"]) {
-        ((AVPictureViewController *)segue.destinationViewController).urls = self.urls;
-        ((AVPictureViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
+        ((iCaruselViewController *)segue.destinationViewController).urls = self.urls;
+        ((iCaruselViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
         
         //((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = ((AVNewsTableCell *)sender).tag;
-        dataManager.index = ((AVNewsTableCell *)sender).tag;
+        dataManager.index = ((NewsTableViewCell *)sender).tag;
         
     }
     if ([segue.identifier isEqualToString:@"News Cart"]) {

@@ -9,20 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
 #import "AVPicture.h"
-#import "AVSession.h"
-#import "AVPainterViewController.h"
+#import "Sesion.h"
+#import "PreviewOnWallViewController.h"
 #import "AVManager.h"
-#import "AVNews.h"
-#import "AVLikedViewController.h"
-#import "AVDetailViewController.h"
+#import "NewsViewController.h"
+#import "LikedViewController.h"
+#import "FullSizePictureViewController.h"
 #import "ServerFetcher.h"
 
 
-@interface AVPictureViewController : UIViewController <iCarouselDelegate, iCarouselDataSource >
+@interface iCaruselViewController : UIViewController <iCarouselDelegate, iCarouselDataSource >
 
 @property (strong, nonatomic) AVPicture *currentPicture;
 
-@property (strong, nonatomic) AVSession *session;
+@property (strong, nonatomic) Sesion *session;
 
 @property (strong, nonatomic)AVManager *dataManager;
 

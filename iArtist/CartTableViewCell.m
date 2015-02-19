@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
-#import "AVCartCell.h"
+#import "CartTableViewCell.h"
 #import <MessageUI/MessageUI.h>
 
-@implementation AVCartCell
+@implementation CartTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

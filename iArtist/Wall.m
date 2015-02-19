@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Andrii V. All rights reserved.
 //
 
-#import "AVWall.h"
+#import "Wall.h"
 
-@implementation AVWall
+@implementation Wall
 
 @end

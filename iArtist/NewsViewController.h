@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "AVManager.h"
-#import "AVSession.h"
-#import "AVNewsTableCell.h"
+#import "Sesion.h"
+#import "NewsTableViewCell.h"
 
-@interface AVNews : UIViewController
+@interface NewsViewController : UIViewController
 
 @property (strong, nonatomic) AVManager *dataManger;
-@property (strong, nonatomic) AVSession *session;
+@property (strong, nonatomic) Sesion *session;
 @property (nonatomic, strong) NSDictionary *AllPaintingData;
 @property (strong,nonatomic) NSMutableArray *ImageArray;
 @property (nonatomic, strong) NSDictionary *CurrentPainting;

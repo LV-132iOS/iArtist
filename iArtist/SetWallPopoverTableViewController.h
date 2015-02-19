@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AVWall.h"
-#import "AVImagePickerController.h"
+#import "Wall.h"
+#import "ImagePickerController.h"
 
-@interface AVPopoverTableViewController : UITableViewController <UICollectionViewDelegate, UICollectionViewDataSource,
+@interface SetWallPopoverTableViewController : UITableViewController <UICollectionViewDelegate, UICollectionViewDataSource,
 UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate>
 
 extern NSString *const AVDidSelectWall;
 
-@property (strong, nonatomic) AVImagePickerController *imagePickerController;
+@property (strong, nonatomic) ImagePickerController *imagePickerController;
 
 @property (strong, nonatomic) NSNumber *distanceToWall;
 

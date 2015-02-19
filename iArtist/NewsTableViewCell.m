@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
-#import "AVNewsTableCell.h"
+#import "NewsTableViewCell.h"
 
-@interface AVNewsTableCell()
+@interface NewsTableViewCell()
 
 
 @end
 
 
-@implementation AVNewsTableCell
+@implementation NewsTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

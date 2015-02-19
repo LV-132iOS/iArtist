@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "AVPicture.h"
 
-@interface AVSession : NSObject
+@interface Sesion : NSObject
 
 @property (strong, nonatomic) NSString *sessionName;
 @property (strong, nonatomic) NSMutableArray *arrayOfPictures;
 
-+ (AVSession *) sessionInit;
++ (Sesion *) sessionInit;
 
 @end

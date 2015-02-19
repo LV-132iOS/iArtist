@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Andrii V. All rights reserved.
 //
 
-#import "AVImagePickerController.h"
+#import "ImagePickerController.h"
 
-@interface AVImagePickerController ()
+@interface ImagePickerController ()
 
 @end
 
-@implementation AVImagePickerController
+@implementation ImagePickerController
 
 //rempve autorotation
 - (BOOL)shouldAutorotate{

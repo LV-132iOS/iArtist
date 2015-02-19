@@ -10,10 +10,7 @@
 #import "AVPicture.h"
 #import "AVAuthor.h"
 
-@interface AVNewsTableCell : UITableViewCell
-
-//@property (strong, nonatomic) AVPicture *newsPicture;
-//@property (strong, nonatomic) AVAuthor *newsAutor;
+@interface NewsTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *pictureImage;
 

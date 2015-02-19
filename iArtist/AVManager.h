@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AVSession.h"
-#import "AVWall.h"
+#import "Sesion.h"
+#import "Wall.h"
 
 @interface AVManager : NSObject
 
-@property (strong, nonatomic) AVSession * session;
+@property (strong, nonatomic) Sesion * session;
 
 @property (nonatomic) NSInteger index;
 
-@property (strong, nonatomic) AVWall *wallImage;
+@property (strong, nonatomic) Wall *wallImage;
 
 @property (strong, nonatomic) NSMutableArray *wallArray;
 

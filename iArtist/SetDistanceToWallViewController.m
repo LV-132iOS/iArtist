@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 Andrii V. All rights reserved.
 //
 
-#import "AVViewControllerBetweenPopoverAndPikerView.h"
+#import "SetDistanceToWallViewController.h"
 
 NSString *const AVDidSelectDistanceToWall = @"AVDidSelectDistanceToWall";
 
-@interface AVViewControllerBetweenPopoverAndPikerView ()
+@interface SetDistanceToWallViewController ()
 
 @end
 
-@implementation AVViewControllerBetweenPopoverAndPikerView
+@implementation SetDistanceToWallViewController
 
 - (void)viewDidLoad {
     

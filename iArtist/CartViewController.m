@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
-#import "AVCartController.h"
-#import "AVCartCell.h"
+#import "CartViewController.h"
+#import "CartTableViewCell.h"
 #import "AVPicture.h"
-#import "AVPictureViewController.h"
-#import "AVCartCell.h"
+#import "iCaruselViewController.h"
 
 
-@interface AVCartController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate >
+
+@interface CartViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate >
 
 @property (strong, nonatomic) IBOutlet UILabel *totalAmount;
 
@@ -26,7 +26,7 @@
 @end
 
 
-@implementation AVCartController
+@implementation CartViewController
 
 
 -(NSMutableArray *)AllPaintingData{
@@ -76,7 +76,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    AVCartCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Buy Cell" forIndexPath:indexPath];
+    CartTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"Buy Cell" forIndexPath:indexPath];
 
     cell.artistName.text = [[self.AllPaintingData objectAtIndex:indexPath.row] valueForKeyPath:@"artistid.name"];
     cell.pictureName.text = [[self.AllPaintingData objectAtIndex:indexPath.row] valueForKeyPath:@"title"];
@@ -91,17 +91,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-
-/*- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
-    AVManager *dataManager = [AVManager sharedInstance];
-    dataManager.session.arrayOfPictures = [[NSMutableArray alloc] initWithArray:self.pictureArray];
-    dataManager.index = ((AVCartCell *)sender).tag;
-    if ([segue.identifier isEqualToString:@"Cart to Picture View"]) {
-        
-    }
-}*/
 
 - (void)reload{
     NSString *str1 = [self.totalAmount.text substringFromIndex:14];
@@ -119,7 +108,7 @@
 }
 
 - (IBAction)deleteFromCart:(id)sender {
-    AVCartCell *currentCell =  (AVCartCell *)((((UIButton *)sender).superview).superview);
+    CartTableViewCell *currentCell =  (CartTableViewCell *)((((UIButton *)sender).superview).superview);
     self.indexDelete = currentCell.tag;
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"You clicked on delete"
                                                     message:@"Do you want to remove picture from cart?"
@@ -237,18 +226,5 @@
                           completion:nil];
     
 }
-
-
-// we remove our notification as soon as we don't need it
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

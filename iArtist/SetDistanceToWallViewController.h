@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AVViewControllerBetweenPopoverAndPikerView : UIViewController
+@interface SetDistanceToWallViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIImageView *background;
 

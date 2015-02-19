@@ -6,17 +6,17 @@
 //  Copyright (c) 2015 Andrii V. All rights reserved.
 //
 
-#import "AVPictureViewController.h"
+#import "iCaruselViewController.h"
 #import "ServerFetcher.h"
 #import <CoreData/CoreData.h>
 #import "AsyncImageView.h"
 #import <TwitterKit/TwitterKit.h>
 #import "ShareViewController.h"
-#import "AVCartController.h"
+#import "CartViewController.h"
 #import "ArtistViewController.h"
-#import "AVWall.h"
+#import "Wall.h"
 
-@interface AVPictureViewController (){
+@interface iCaruselViewController (){
     NSString* kindOfSharing;
     UIImage* locImageToShare;
     NSURL* locImageUrl;
@@ -50,7 +50,7 @@
 
 @end
 
-@implementation AVPictureViewController
+@implementation iCaruselViewController
 
 UIVisualEffectView *visualEffectView;
 
@@ -58,7 +58,6 @@ UIVisualEffectView *visualEffectView;
 //main init
 - (void) mainInit{
  
-    AVManager *dataManager = [AVManager sharedInstance];
     self.pictureView.dataSource = self;
     self.pictureView.contentOffset = (CGSize) {.width = 0, .height = 0};
     self.backgroundView.image = [UIImage imageNamed:@"room1.jpg"];
@@ -180,7 +179,7 @@ UIVisualEffectView *visualEffectView;
     
     if (view == nil)
     {
-        view = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];
+        view = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];//?
         view.contentMode = UIViewContentModeScaleAspectFit;
         
     }
@@ -219,15 +218,15 @@ UIVisualEffectView *visualEffectView;
     
     if ([segue.identifier isEqualToString: @"ModalToPreviewOnWall"]) {
         
-        ((AVPainterViewController *)segue.destinationViewController).session = self.session;
-        ((AVPainterViewController *)segue.destinationViewController).pictureIndex = self.pictureView.currentItemIndex;
+        ((PreviewOnWallViewController *)segue.destinationViewController).session = self.session;
+        ((PreviewOnWallViewController *)segue.destinationViewController).pictureIndex = self.pictureView.currentItemIndex;
         
         
         self.dataManager = [AVManager sharedInstance];
         self.dataManager.index = self.pictureView.currentItemIndex;
-        ((AVPainterViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
+        ((PreviewOnWallViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
         
-        ((AVPainterViewController *)segue.destinationViewController).ImageArray = self.ImageArray;
+        ((PreviewOnWallViewController *)segue.destinationViewController).ImageArray = self.ImageArray;
         
     
     
@@ -237,10 +236,12 @@ UIVisualEffectView *visualEffectView;
         
         AVManager *manager = [AVManager sharedInstance];
         manager.index = self.pictureView.currentItemIndex;
-        ((AVDetailViewController *)segue.destinationViewController).paintingData = self.CurrentPainting;
-          ((AVDetailViewController *)segue.destinationViewController).artistData = self.CurrentArtist;
-        ((AVDetailViewController *)segue.destinationViewController).ImageThumb = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image;
-
+        ((FullSizePictureViewController *)segue.destinationViewController).paintingData = self.CurrentPainting;
+          ((FullSizePictureViewController *)segue.destinationViewController).artistData = self.CurrentArtist;
+        
+        ((FullSizePictureViewController *)segue.destinationViewController).ImageThumb =
+        ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image;
+        
     }
     
     if ([segue.identifier isEqualToString:@"SimpleShare"]) {

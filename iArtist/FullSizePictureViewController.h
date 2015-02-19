@@ -9,17 +9,18 @@
 #import <UIKit/UIKit.h>
 
 
-@interface AVDetailViewController : UIViewController
+@interface FullSizePictureViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIScrollView *mainView;
 
 @property (strong, nonatomic) UIImageView *imageView;
 
-@property (strong, nonatomic) UIImage *ImageThumb;
 
 @property (strong, nonatomic) NSDictionary *paintingData;
 
 @property (strong, nonatomic) NSDictionary *artistData;
+
+@property (strong, nonatomic) UIImage *ImageThumb;
 
 
 @end

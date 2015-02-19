@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 
-@interface AVCartCell : UITableViewCell <MFMailComposeViewControllerDelegate>
+@interface CartTableViewCell : UITableViewCell <MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *artistName;
 

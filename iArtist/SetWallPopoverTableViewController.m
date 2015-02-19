@@ -6,19 +6,19 @@
 //  Copyright (c) 2015 Andrii V. All rights reserved.
 //
 
-#import "AVPopoverTableViewController.h"
-#import "AVViewControllerBetweenPopoverAndPikerView.h"
+#import "SetWallPopoverTableViewController.h"
+#import "SetDistanceToWallViewController.h"
 #import "AVManager.h"
 
 NSString *const AVDidSelectWall = @"AVDidSelectWall";
 
-@interface AVPopoverTableViewController ()
+@interface SetWallPopoverTableViewController ()
 
 @property (strong, nonatomic) NSMutableArray *arrayOfWals;
 
 @end
 
-@implementation AVPopoverTableViewController
+@implementation SetWallPopoverTableViewController
 
 #pragma mark initialization
 //initialization walls
@@ -64,7 +64,7 @@ NSString *const AVDidSelectWall = @"AVDidSelectWall";
     
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:100];
     
-    AVWall *wall = [self.arrayOfWals objectAtIndex:indexPath.row];
+    Wall *wall = [self.arrayOfWals objectAtIndex:indexPath.row];
     UIImage *image = wall.wallPicture;
     
     imageView.image = image;
@@ -74,7 +74,7 @@ NSString *const AVDidSelectWall = @"AVDidSelectWall";
 //here we put chosen wal wrom a collection view to a notification
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    AVWall *selectedWall = [self.arrayOfWals objectAtIndex:indexPath.row];
+    Wall *selectedWall = [self.arrayOfWals objectAtIndex:indexPath.row];
     
     NSDictionary *newDictionary = @{@"wall": selectedWall};
     [[NSNotificationCenter defaultCenter]postNotificationName:AVDidSelectWall object:nil userInfo:newDictionary];
@@ -96,8 +96,13 @@ NSString *const AVDidSelectWall = @"AVDidSelectWall";
     
     self.wallImage = [info valueForKey:UIImagePickerControllerOriginalImage];
     
+<<<<<<< HEAD:iArtist/AVPopoverTableViewController.m
     AVViewControllerBetweenPopoverAndPikerView *inputDistanceController;// = [[AVViewControllerBetweenPopoverAndPikerView alloc] init];
      //   [AVViewControllerBetweenPopoverAndPikerView new];
+=======
+    SetDistanceToWallViewController *inputDistanceController =
+        [SetDistanceToWallViewController new];
+>>>>>>> Clark's:iArtist/SetWallPopoverTableViewController.m
     
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         inputDistanceController = [self.storyboard instantiateViewControllerWithIdentifier:@"InputDistanceToCamera"];
@@ -122,7 +127,7 @@ NSString *const AVDidSelectWall = @"AVDidSelectWall";
     UITableViewCell *theCellClicked = [self.tableView cellForRowAtIndexPath:indexPath];
     if (theCellClicked == self.importPhotoStaticCell) {
         
-        self.imagePickerController = [AVImagePickerController new];
+        self.imagePickerController = [ImagePickerController new];
 
         self.imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
         self.imagePickerController.delegate = self;
@@ -132,7 +137,7 @@ NSString *const AVDidSelectWall = @"AVDidSelectWall";
     }
     if (theCellClicked == self.takeNewPhotoStaticCell) {
         
-        self.imagePickerController = [AVImagePickerController new];
+        self.imagePickerController = [ImagePickerController new];
         
         self.imagePickerController.modalPresentationStyle = UIModalPresentationFullScreen;
         self.imagePickerController.delegate = self;
@@ -152,7 +157,7 @@ NSString *const AVDidSelectWall = @"AVDidSelectWall";
     
     self.distanceToWall = [notification.userInfo valueForKey:@"distance"];
     
-    AVWall *selectedWall = [AVWall new];
+    Wall *selectedWall = [Wall new];
     selectedWall.wallPicture = self.wallImage;
     
     selectedWall.distanceToWall = self.distanceToWall;

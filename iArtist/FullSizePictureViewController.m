@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
-#import "AVDetailViewController.h"
+#import "FullSizePictureViewController.h"
 #import "ServerFetcher.h"
 
 
@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
     AVLeftViewDisable
 };
 
-@interface AVDetailViewController ()<UIScrollViewDelegate,  UITableViewDelegate, UITableViewDataSource>
+@interface FullSizePictureViewController ()<UIScrollViewDelegate,  UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UIButton    *closeButton;
 @property (strong, nonatomic) IBOutlet UIView      *leftView;
@@ -29,15 +29,15 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 @property (nonatomic)                  AVLeftView  leftviewindex;
 @property (strong, nonatomic) IBOutlet UILabel     *price;
 @property (strong, nonatomic) IBOutlet UIButton    *like;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
 
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *Indicator;
 
 
 
 
 @end
 
-@implementation AVDetailViewController
+@implementation FullSizePictureViewController
 
 CGFloat neededScale;
 
@@ -69,6 +69,20 @@ CGFloat neededScale;
     self.authorsImage.image = img;
     self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
     
+    [self.indicator startAnimating];
+    [self.view bringSubviewToFront:self.indicator];
+    
+    [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.imageView.image = responde;
+            [self.indicator stopAnimating];
+            [self.indicator removeFromSuperview];
+            
+            NSLog(@"Ok");
+        });
+        
+    }];
+    
 }
 
 - (IBAction)switchData:(id)sender {
@@ -88,28 +102,17 @@ CGFloat neededScale;
     [super viewDidLoad];
     [self mainInit];
     [self inputDataInit];
-    NSLog(@"%@",self.paintingData);
  
     self.imageView = [[UIImageView alloc]initWithImage:self.ImageThumb];
+    
     self.imageView.frame = self.mainView.frame;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.mainView addSubview:self.imageView];
-    [self.Indicator startAnimating];
-    [self.mainView bringSubviewToFront:self.Indicator];
-    [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.imageView.image = responde;
-            [self.Indicator stopAnimating];
-            [self.Indicator removeFromSuperview];
-            NSLog(@"Ok");
-        });
 
-            }];
 
-}
     
     // Do any additional setup after loading the view.
-
+}
 //metod for scroll view
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     
