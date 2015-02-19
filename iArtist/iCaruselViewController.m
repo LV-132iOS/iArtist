@@ -240,19 +240,12 @@ UIVisualEffectView *visualEffectView;
         
         AVManager *manager = [AVManager sharedInstance];
         manager.index = self.pictureView.currentItemIndex;
-<<<<<<< HEAD:iArtist/iCaruselViewController.m
         ((FullSizePictureViewController *)segue.destinationViewController).paintingData = self.CurrentPainting;
           ((FullSizePictureViewController *)segue.destinationViewController).artistData = self.CurrentArtist;
         
         ((FullSizePictureViewController *)segue.destinationViewController).ImageThumb =
         ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image;
         
-=======
-        ((AVDetailViewController *)segue.destinationViewController).paintingData = self.CurrentPainting;
-          ((AVDetailViewController *)segue.destinationViewController).artistData = self.CurrentArtist;
-        ((AVDetailViewController *)segue.destinationViewController).ImageThumb = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image;
-
->>>>>>> 8f5d3db6e6b3016ca192fb4a7ee94f7b8b6ec7de:iArtist/AVPictureViewController.m
     }
     
     if ([segue.identifier isEqualToString:@"SimpleShare"]) {

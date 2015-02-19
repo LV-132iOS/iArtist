@@ -15,7 +15,6 @@
 
 @property (strong, nonatomic) UIImageView *imageView;
 
-@property (strong, nonatomic) UIImage *ImageThumb;
 
 @property (strong, nonatomic) NSDictionary *paintingData;
 

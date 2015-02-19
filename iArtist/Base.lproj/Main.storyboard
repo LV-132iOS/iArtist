@@ -1516,12 +1516,6 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0p-L9-U9A">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="r9e-Zh-tPV">
-                                        <rect key="frame" x="502" y="374" width="20" height="20"/>
-                                        <color key="color" cocoaTouchSystemColor="darkTextColor"/>
-                                    </activityIndicatorView>
-                                </subviews>
                                 <gestureRecognizers/>
                             </scrollView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a2G-I0-2HD">
@@ -1701,7 +1695,6 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="1024" height="768"/>
                     <connections>
-                        <outlet property="Indicator" destination="r9e-Zh-tPV" id="4ad-JD-OnF"/>
                         <outlet property="authorButton" destination="Yck-AB-e9D" id="YgC-j2-5UI"/>
                         <outlet property="authorInfo" destination="IVC-Tt-v5t" id="QZ1-nP-PIB"/>
                         <outlet property="authorsData" destination="reK-aw-d3l" id="MBh-Bh-y6O"/>
@@ -1723,11 +1716,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-<<<<<<< HEAD
             <point key="canvasLocation" x="2330" y="-42"/>
-=======
-            <point key="canvasLocation" x="2362" y="1318"/>
->>>>>>> 8f5d3db6e6b3016ca192fb4a7ee94f7b8b6ec7de
         </scene>
     </scenes>
     <resources>
@@ -1744,15 +1733,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-<<<<<<< HEAD
         <segue reference="vib-vZ-Kxc"/>
         <segue reference="MJL-gi-ees"/>
         <segue reference="nay-hd-SZI"/>
-=======
-        <segue reference="KUg-sq-ZK0"/>
-        <segue reference="q6B-kz-Vr1"/>
-        <segue reference="9Q1-oe-U60"/>
-        <segue reference="XqC-q2-HwM"/>
->>>>>>> 8f5d3db6e6b3016ca192fb4a7ee94f7b8b6ec7de
     </inferredMetricsTieBreakers>
 </document>
