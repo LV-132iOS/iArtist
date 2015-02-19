@@ -20,5 +20,7 @@
 
 @property (strong, nonatomic) NSDictionary *artistData;
 
+@property (strong, nonatomic) UIImage *ImageThumb;
+
 
 @end

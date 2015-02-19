@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 @property (nonatomic)                  AVLeftView  leftviewindex;
 @property (strong, nonatomic) IBOutlet UILabel     *price;
 @property (strong, nonatomic) IBOutlet UIButton    *like;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
 
 
 
@@ -68,6 +69,20 @@ CGFloat neededScale;
     self.authorsImage.image = img;
     self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
     
+    [self.indicator startAnimating];
+    [self.view bringSubviewToFront:self.indicator];
+    
+    [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.imageView.image = responde;
+            [self.indicator stopAnimating];
+            [self.indicator removeFromSuperview];
+            
+            NSLog(@"Ok");
+        });
+        
+    }];
+    
 }
 
 - (IBAction)switchData:(id)sender {
@@ -88,7 +103,8 @@ CGFloat neededScale;
     [self mainInit];
     [self inputDataInit];
  
-    self.imageView = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance] GetPictureWithID:[self.paintingData valueForKey:@"_id"] ]];
+    self.imageView = [[UIImageView alloc]initWithImage:self.ImageThumb];
+    
     self.imageView.frame = self.mainView.frame;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.mainView addSubview:self.imageView];

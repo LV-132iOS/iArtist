@@ -1322,7 +1322,7 @@
                         <outlet property="titleOfSession" destination="kiq-qA-WAp" id="hb4-Id-21b"/>
                         <outlet property="upToolBar" destination="cad-OD-XKh" id="Ehf-sh-Wrs"/>
                         <segue destination="glK-by-361" kind="modal" identifier="ModalToPreviewOnWall" animates="NO" id="arn-3u-DES"/>
-                        <segue destination="Llz-p3-sxk" kind="modal" identifier="ModalToDetail" id="2hq-en-bLH"/>
+                        <segue destination="Llz-p3-sxk" kind="modal" identifier="ModalToDetail" animates="NO" id="2hq-en-bLH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pxg-QS-fhg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1681,6 +1681,10 @@
                                     <action selector="closeController:" destination="Llz-p3-sxk" eventType="touchUpInside" id="m7h-oB-fkU"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Vtd-CN-9nv">
+                                <rect key="frame" x="502" y="374" width="20" height="20"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <connections>
@@ -1696,6 +1700,7 @@
                         <outlet property="authorsData" destination="reK-aw-d3l" id="MBh-Bh-y6O"/>
                         <outlet property="authorsName" destination="A4o-sb-uf7" id="pvC-5W-uty"/>
                         <outlet property="closeButton" destination="wfU-hy-aUa" id="eBZ-Ky-iro"/>
+                        <outlet property="indicator" destination="Vtd-CN-9nv" id="z9f-Z4-jaV"/>
                         <outlet property="leftView" destination="a2G-I0-2HD" id="qAb-2P-GCI"/>
                         <outlet property="like" destination="3x1-da-Tay" id="iak-p4-WdO"/>
                         <outlet property="mainView" destination="Y0p-L9-U9A" id="cqF-WQ-aMf"/>
