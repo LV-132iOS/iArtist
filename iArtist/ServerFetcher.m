@@ -43,7 +43,7 @@ static NSString *querystring;
 }
 
 - (void)GenerateQueryForMaterial:(NSString*)querry{
-    NSString *querryStr = [NSString stringWithFormat:@"{ \"material\": \"%@\" }",querry];
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"materials\": \"%@\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)querryStr,
                                                                                      NULL,
@@ -87,7 +87,7 @@ static NSString *querystring;
 
 
 - (void)GenerateQueryForSize:(NSString*)querry{
-    NSString *querryStr = [NSString stringWithFormat:@"{ \"realsize\": \"%@\" }",querry];
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"size\": \"%@\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)querryStr,
                                                                                      NULL,

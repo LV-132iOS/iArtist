@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="0ka-ro-dsY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="0ka-ro-dsY">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
@@ -337,7 +337,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JO0-PI-dzr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4125" y="3561"/>
+            <point key="canvasLocation" x="3261" y="3577"/>
         </scene>
         <!--First Run View Controller-->
         <scene sceneID="tPM-Ma-c4W">
@@ -383,12 +383,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lv7-9w-imW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1943" y="2203"/>
+            <point key="canvasLocation" x="-1967" y="2491"/>
         </scene>
-        <!--News-->
+        <!--News View Controller-->
         <scene sceneID="jcV-UG-X7y">
             <objects>
-                <viewController id="h88-e1-SN3" customClass="AVNews" sceneMemberID="viewController">
+                <viewController id="h88-e1-SN3" customClass="NewsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RvS-38-ZRs"/>
                         <viewControllerLayoutGuide type="bottom" id="n5k-hN-Yf1"/>
@@ -425,7 +425,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="320" reuseIdentifier="AVTableViewCell" rowHeight="320" id="QeI-3y-VlO" customClass="AVNewsTableCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="320" reuseIdentifier="AVTableViewCell" rowHeight="320" id="QeI-3y-VlO" customClass="NewsTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QeI-3y-VlO" id="Bnb-dU-aUO">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -493,7 +493,6 @@
                                             <outlet property="pictureImage" destination="ILj-fk-fAN" id="GwB-AP-TpY"/>
                                             <outlet property="pictureName" destination="QrN-4c-4t6" id="YvZ-yM-V44"/>
                                             <outlet property="pictureTag" destination="faO-23-aAh" id="M6R-rk-0Jl"/>
-                                            <segue destination="fnz-I7-myP" kind="modal" identifier="FromNewsToPicture" id="q6B-kz-Vr1"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -512,12 +511,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O9P-LO-Fc9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-327" y="3620"/>
+            <point key="canvasLocation" x="-527" y="3988"/>
         </scene>
         <!--Liked View Controller-->
         <scene sceneID="iPF-z1-pOq">
             <objects>
-                <viewController id="2lr-JY-tvU" customClass="AVLikedViewController" sceneMemberID="viewController">
+                <viewController id="2lr-JY-tvU" customClass="LikedViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bwa-d4-uCm"/>
                         <viewControllerLayoutGuide type="bottom" id="v7r-rH-fDA"/>
@@ -549,16 +548,13 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="fnz-I7-myP" kind="modal" identifier="LikedToPicture" id="GIq-ea-rgx"/>
-                                        </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="DPW-eQ-x6F">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="header" id="DPW-eQ-x6F">
                                     <rect key="frame" x="0.0" y="0.0" width="1024" height="10"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mfD-Jd-i0x">
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="footer" id="mfD-Jd-i0x">
                                     <rect key="frame" x="0.0" y="230" width="1024" height="10"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
@@ -599,148 +595,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tct-wY-YSZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1140" y="3989"/>
+            <point key="canvasLocation" x="364" y="2941"/>
         </scene>
-        <!--Picture View Controller-->
-        <scene sceneID="PPO-zW-xVw">
-            <objects>
-                <viewController id="fnz-I7-myP" customClass="AVPictureViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Fua-1a-0le"/>
-                        <viewControllerLayoutGuide type="bottom" id="J0K-vX-G5a"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleAspectFit" id="xW1-a0-fEv" customClass="UIImageView">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2LM-eX-n02">
-                                <rect key="frame" x="442" y="708" width="180" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Preview on wall">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Tnv-Us-reo" kind="modal" identifier="ModalToPreviewOnWall" id="gX2-EI-AMh"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Session" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfT-bx-ChY">
-                                <rect key="frame" x="422" y="14" width="180" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOQ-Be-1xh">
-                                <rect key="frame" x="356" y="708" width="58" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="60"/>
-                                <state key="normal" title="♡">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="likeClicked:" destination="fnz-I7-myP" eventType="touchUpInside" id="6Go-f1-Isa"/>
-                                </connections>
-                            </button>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6JX-xW-fGZ">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <barButtonItem systemItem="reply" id="XW3-J9-AZJ">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <action selector="didBackButtonClick:" destination="fnz-I7-myP" id="we0-vm-sLj"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="879" style="plain" systemItem="fixedSpace" id="Tqz-q2-1MB"/>
-                                    <barButtonItem image="shopping-cart-grey-hi.png" id="Hxh-ja-yQj">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <segue destination="MYj-qk-6mf" kind="modal" identifier="Picture Carusel to Cart" id="KUg-sq-ZK0"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem systemItem="action" id="yez-Ib-UAS">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                    </barButtonItem>
-                                </items>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </toolbar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OsA-0O-P5C">
-                                <rect key="frame" x="748" y="700" width="180" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXf-wm-F97">
-                                <rect key="frame" x="748" y="730" width="180" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrn-Np-xWO">
-                                <rect key="frame" x="21" y="691" width="187" height="57"/>
-                                <state key="normal">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" modalPresentationStyle="formSheet" id="Gp4-6c-vgY"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2P-iU-4bZ">
-                                <rect key="frame" x="630" y="691" width="110" height="77"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="addPictureToCart:" destination="fnz-I7-myP" eventType="touchUpInside" id="9cL-Ub-R26"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r32-MU-bQ5" customClass="iCarousel">
-                                <rect key="frame" x="42" y="39" width="1024" height="704"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="OXn-Qf-3uE" appends="YES" id="NDl-S9-PjW"/>
-                                </connections>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="iZG-CB-RrA"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="1024" height="768"/>
-                    <connections>
-                        <outlet property="actionBarBautton" destination="yez-Ib-UAS" id="I6L-1N-fAR"/>
-                        <outlet property="addToCart" destination="q2P-iU-4bZ" id="lAI-6J-kCc"/>
-                        <outlet property="authorButton" destination="qrn-Np-xWO" id="RMX-Bb-qOZ"/>
-                        <outlet property="backBarBatton" destination="XW3-J9-AZJ" id="vYz-F0-JTv"/>
-                        <outlet property="backgroundView" destination="xW1-a0-fEv" id="k0F-C1-Nnd"/>
-                        <outlet property="likeButton" destination="YOQ-Be-1xh" id="8BH-dg-dxt"/>
-                        <outlet property="pictureSize" destination="eXf-wm-F97" id="zQy-2r-vrX"/>
-                        <outlet property="pictureView" destination="r32-MU-bQ5" id="eTg-zr-jeE"/>
-                        <outlet property="previewOnWallButton" destination="2LM-eX-n02" id="NPQ-mQ-0DI"/>
-                        <outlet property="price" destination="OsA-0O-P5C" id="SyN-OB-FNG"/>
-                        <outlet property="titleOfSession" destination="rfT-bx-ChY" id="nWT-51-1dg"/>
-                        <outlet property="upToolBar" destination="6JX-xW-fGZ" id="yAh-EN-YtL"/>
-                        <segue destination="KuV-nM-zOl" kind="modal" identifier="ModalToDetail" id="NvS-fn-UQ3"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9Oo-i2-gve" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="OXn-Qf-3uE">
-                    <connections>
-                        <action selector="didViewInCaruselSelected:" destination="fnz-I7-myP" id="GNL-Ew-CSf"/>
-                        <outlet property="delegate" destination="fnz-I7-myP" id="FbW-iO-0Mo"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="2092" y="434"/>
-        </scene>
-        <!--Cart Controller-->
+        <!--Cart View Controller-->
         <scene sceneID="Aur-2i-tEk">
             <objects>
-                <viewController id="MYj-qk-6mf" customClass="AVCartController" sceneMemberID="viewController">
+                <viewController id="MYj-qk-6mf" customClass="CartViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ifz-9q-lwG"/>
                         <viewControllerLayoutGuide type="bottom" id="AV0-mV-8bc"/>
@@ -764,7 +624,7 @@
                                 <rect key="frame" x="0.0" y="44" width="1024" height="680"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Buy Cell" rowHeight="283" id="qBe-ai-tng" customClass="AVCartCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Buy Cell" rowHeight="283" id="qBe-ai-tng" customClass="CartTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qBe-ai-tng" id="bAj-F0-hhj">
@@ -873,7 +733,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HNi-Zy-pHS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2633" y="3377"/>
+            <point key="canvasLocation" x="2313" y="2961"/>
         </scene>
         <!--Share View Controller-->
         <scene sceneID="E1X-o6-JXC">
@@ -936,182 +796,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MMj-4L-mat" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3533" y="1462"/>
+            <point key="canvasLocation" x="3357" y="462"/>
         </scene>
-        <!--Painter View Controller-->
-        <scene sceneID="rvE-lY-PtX">
-            <objects>
-                <viewController id="Tnv-Us-reo" customClass="AVPainterViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eef-FN-Lcg"/>
-                        <viewControllerLayoutGuide type="bottom" id="cJL-uJ-oEi"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleAspectFit" id="GXM-Kd-Mot" customClass="UIImageView">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2V1-re-8Hj">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="reply" id="yhp-CC-51Q">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <action selector="backReturn:" destination="Tnv-Us-reo" id="gwY-1E-JJJ"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="835" style="plain" systemItem="fixedSpace" id="wWG-tz-Dyb"/>
-                                    <barButtonItem systemItem="camera" id="58c-0L-l62">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <action selector="pushPopover:" destination="Tnv-Us-reo" id="geG-SJ-lSh"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem image="shopping-cart-grey-hi.png" id="yZb-Ff-8gb">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <segue destination="MYj-qk-6mf" kind="modal" identifier="Preview On Wall to Cart" id="Bgk-k0-pqb"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem systemItem="action" id="ScX-qN-XmV">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <action selector="SharePressed:" destination="Tnv-Us-reo" id="WFx-Ji-Ch5"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Tnv-Us-reo" id="dc9-Vl-Gkq"/>
-                                </connections>
-                            </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldo-LZ-HYM" userLabel="Picture Image View">
-                                <rect key="frame" x="392" y="320" width="240" height="128"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iem-Dq-gDa" userLabel="PriсeView">
-                                <rect key="frame" x="768" y="700" width="240" height="60"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XsI-qr-bn7">
-                                        <rect key="frame" x="0.0" y="0.0" width="164" height="28"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="buy1.png" translatesAutoresizingMaskIntoConstraints="NO" id="uDT-aW-c71">
-                                        <rect key="frame" x="180" y="0.0" width="60" height="60"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eIU-ak-RG2">
-                                        <rect key="frame" x="0.0" y="32" width="164" height="28"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </label>
-                                </subviews>
-                                <gestureRecognizers/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t5C-ph-x5F" userLabel="AuthorView">
-                                <rect key="frame" x="16" y="700" width="240" height="60"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8UN-Y9-Xsz">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jlk-RX-Cgd">
-                                        <rect key="frame" x="68" y="0.0" width="164" height="28"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4L-hn-sVH">
-                                        <rect key="frame" x="68" y="32" width="164" height="28"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.82352986149999996" green="0.8520507812" blue="0.83330007240000004" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hNQ-Bm-6CY">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                        <state key="normal">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" modalPresentationStyle="formSheet" id="mCU-p1-n0T"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <gestureRecognizers/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Picture Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcT-Ep-zne">
-                                <rect key="frame" x="392" y="0.0" width="240" height="44"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="kRE-9C-eqz" appends="YES" id="yZS-7X-ELv"/>
-                            <outletCollection property="gestureRecognizers" destination="DFl-7n-hWG" appends="YES" id="OqP-mv-hf3"/>
-                            <outletCollection property="gestureRecognizers" destination="MmY-lf-6sn" appends="YES" id="7Uh-3V-RHZ"/>
-                            <outletCollection property="gestureRecognizers" destination="Iq3-fV-EDi" appends="YES" id="gcC-c7-2tY"/>
-                        </connections>
-                    </view>
-                    <navigationItem key="navigationItem" id="8wt-uh-jDb"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="1024" height="768"/>
-                    <connections>
-                        <outlet property="actionBarBautton" destination="ScX-qN-XmV" id="oP4-rn-CJh"/>
-                        <outlet property="authorsImage" destination="8UN-Y9-Xsz" id="VXu-Nv-Mhe"/>
-                        <outlet property="authorsName" destination="jlk-RX-Cgd" id="8ad-gi-aHm"/>
-                        <outlet property="authorsType" destination="d4L-hn-sVH" id="L1e-sb-Xwa"/>
-                        <outlet property="authorsView" destination="t5C-ph-x5F" id="RSr-Bj-27V"/>
-                        <outlet property="backBarBatton" destination="yhp-CC-51Q" id="msD-SW-JnE"/>
-                        <outlet property="cameraBurButton" destination="58c-0L-l62" id="KLR-AW-AsF"/>
-                        <outlet property="leftSwipe" destination="MmY-lf-6sn" id="dSg-ZF-WSE"/>
-                        <outlet property="panGestureRecognizer" destination="DFl-7n-hWG" id="iVK-Sp-dtQ"/>
-                        <outlet property="pictureImage" destination="Ldo-LZ-HYM" id="TsB-8D-jQO"/>
-                        <outlet property="pictureSize" destination="eIU-ak-RG2" id="u0N-bp-i4A"/>
-                        <outlet property="price" destination="XsI-qr-bn7" id="Emf-jU-Kf5"/>
-                        <outlet property="priceView" destination="Iem-Dq-gDa" id="riL-6x-lWY"/>
-                        <outlet property="rightSwipe" destination="kRE-9C-eqz" id="9fc-gm-2l0"/>
-                        <outlet property="roomImage" destination="GXM-Kd-Mot" id="c8t-Lk-enP"/>
-                        <outlet property="titleOfPicture" destination="RcT-Ep-zne" id="aip-Jj-4xS"/>
-                        <outlet property="upToolBar" destination="2V1-re-8Hj" id="fXk-Lj-zAC"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0Mo-Ji-BDj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="kRE-9C-eqz">
-                    <connections>
-                        <action selector="swipePressAction:" destination="Tnv-Us-reo" id="4cb-rc-U3e"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="DFl-7n-hWG">
-                    <connections>
-                        <action selector="pictureGestureRecognizerAction:" destination="Tnv-Us-reo" id="giN-nc-ek2"/>
-                    </connections>
-                </panGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="MmY-lf-6sn">
-                    <connections>
-                        <action selector="swipePressAction:" destination="Tnv-Us-reo" id="NAG-5b-6eE"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="Iq3-fV-EDi">
-                    <connections>
-                        <action selector="logAction:" destination="Tnv-Us-reo" id="MqO-M7-Oj8"/>
-                        <outlet property="delegate" destination="Tnv-Us-reo" id="LIX-GF-KCM"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="3567" y="137"/>
-        </scene>
-        <!--Popover Table View Controller-->
+        <!--Set Wall Popover Table View Controller-->
         <scene sceneID="CNr-xl-bpf">
             <objects>
-                <tableViewController storyboardIdentifier="popover" modalPresentationStyle="currentContext" id="ZUo-aW-AHc" customClass="AVPopoverTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="popover" modalPresentationStyle="currentContext" id="ZUo-aW-AHc" customClass="SetWallPopoverTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="fXv-BN-YbM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1211,12 +901,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sia-Df-Ohg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4808" y="1462"/>
+            <point key="canvasLocation" x="4848" y="2382"/>
         </scene>
-        <!--View Controller Between Popover And Piker View-->
+        <!--Set Distance To Wall View Controller-->
         <scene sceneID="KgP-1f-2ti">
             <objects>
-                <viewController storyboardIdentifier="InputDistance" id="g3m-kA-fZD" customClass="AVViewControllerBetweenPopoverAndPikerView" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InputDistance" id="g3m-kA-fZD" customClass="SetDistanceToWallViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dJh-sp-JXp"/>
                         <viewControllerLayoutGuide type="bottom" id="p60-6x-KF4"/>
@@ -1245,7 +935,7 @@
                                     <action selector="okClick:" destination="g3m-kA-fZD" eventType="touchUpInside" id="2VM-PO-e9t"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="NBk-tZ-adc">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="NBk-tZ-adc">
                                 <rect key="frame" x="14" y="367" width="292" height="31"/>
                                 <connections>
                                     <action selector="valueChanged:" destination="g3m-kA-fZD" eventType="valueChanged" id="zEz-44-cPc"/>
@@ -1276,148 +966,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Jb-ex-FGC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5266" y="1462"/>
+            <point key="canvasLocation" x="5314" y="1998"/>
         </scene>
-        <!--Detail View Controller-->
-        <scene sceneID="wk0-EX-UgV">
-            <objects>
-                <viewController id="KuV-nM-zOl" customClass="AVDetailViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="d5o-K1-xQr"/>
-                        <viewControllerLayoutGuide type="bottom" id="u2n-gn-HPO"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="UJT-gX-lZH">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Deh-y1-8VA">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                                <gestureRecognizers/>
-                            </scrollView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FwC-Ga-mB3">
-                                <rect key="frame" x="0.0" y="0.0" width="410" height="768"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Picture Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BAA-KN-4xK">
-                                        <rect key="frame" x="8" y="8" width="150" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Picture Tag" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8Q-qq-d8q">
-                                        <rect key="frame" x="8" y="46" width="150" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Picture Size" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5TH-dA-xJ9">
-                                        <rect key="frame" x="8" y="84" width="150" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Picture Prize" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6D-C0-Io5">
-                                        <rect key="frame" x="8" y="122" width="150" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" keyboardDismissMode="onDrag" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eoV-og-fED">
-                                        <rect key="frame" x="8" y="160" width="394" height="219"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="wfergrsgweswfdsfgsgdgdsgfsfsdfssdfsfdsdffdsfsfdsfPicture Description">
-                                                <attributes>
-                                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
-                                    </textView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Authors Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SdA-uU-3ex">
-                                        <rect key="frame" x="86" y="387" width="150" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Authors Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6md-s8-omF">
-                                        <rect key="frame" x="86" y="425" width="150" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h6C-ox-9a7">
-                                        <rect key="frame" x="8" y="387" width="70" height="70"/>
-                                    </imageView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" keyboardDismissMode="interactive" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4RM-bK-Pbq">
-                                        <rect key="frame" x="8" y="465" width="394" height="295"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <string key="text">Author Description Винсент Ван Гог родился 30 марта 1853 года в деревушке Грот-Зюндерт (нидерл. Groot Zundert) в провинции Северный Брабант на юге Нидерландов, недалеко от бельгийской границы. Отцом Винсента был Теодор ван Гог (родился 08.02.1822), протестантский пастор, а матерью — Анна Корнелия Карбентус, дочь почтенного переплётчика и продавца книг из Гааги. Винсент был вторым из семи детей Теодора и Анны Корнелии. Своё имя он получил в честь деда по отцовской линии, который также всю свою жизнь посвятил протестантской церкви. Это имя предназначалось для первого ребёнка Теодора и Анны, который родился на год раньше Винсента и умер в первый же день. Так Винсент, хотя и был рождён вторым, стал старшим из детей. Четыре года спустя после рождения Винсента, 1 мая 1857 года, родился его брат Теодорус ван Гог (Тео). Помимо него, у Винсента был брат Кор (Корнелис Винсент, 17 мая 1867) и три сестры — Анна Корнелия (17 февраля 1855), Лиз (Элизабет Губерта, 16 мая 1859) и Вил (Виллемина Якоба, 16 марта 1862). Домашние помнят Винсента как своенравного, трудного и нудного ребёнка со «странными манерами», что было причиной его частых наказаний. По словам гувернантки, было в нём что-то странное, что отличало его от других: из всех детей Винсент был ей менее приятен, и она не верила, что из него может выйти нечто стоящее. Вне семьи, напротив, Винсент показывал обратную сторону своего характера — был тихим, серьёзным и задумчивым. Он почти не играл с другими детьми. В глазах односельчан он был добродушным, дружелюбным, предупредительным, сострадательным, милым и скромным ребёнком. Когда ему исполнилось 7 лет, он пошёл в деревенскую школу, но через год его забрали оттуда, и вместе со своей сестрой Анной он обучался дома, у гувернантки. 1 октября 1864 года он уехал в школу-интернат в Зевенберген, находившийся в 20 км от родного дома. Отъезд из дома причинил много страданий Винсенту, он не мог забыть этого, даже будучи взрослым. 15 сентября 1866 года он начинает обучение в другом интернате — колледже Виллема II в Тилбурге. Винсенту хорошо даются языки — французский, английский, немецкий. Там же он получал уроки рисования. В марте 1868 года, посреди учебного года, Винсент неожиданно бросил школу и возвратился в отчий дом. На этом заканчивается его формальное образование. О своём детстве он вспоминал так: «Моё детство было мрачным, холодным и пустым…».</string>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
-                                    </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vck-Ey-WQc">
-                                        <rect key="frame" x="8" y="387" width="70" height="70"/>
-                                        <state key="normal">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="AqX-hk-yQu" kind="modal" modalPresentationStyle="formSheet" id="fQk-lz-yUq"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcW-dj-rkt">
-                                <rect key="frame" x="948" y="28" width="60" height="30"/>
-                                <state key="normal" title="Close">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="closeController:" destination="KuV-nM-zOl" eventType="touchUpInside" id="eNu-Vh-FFy"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="Lkp-Q2-oay" appends="YES" id="5fY-Mx-9f2"/>
-                        </connections>
-                    </view>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="1024" height="768"/>
-                    <connections>
-                        <outlet property="authorDescription" destination="4RM-bK-Pbq" id="lmY-d5-nQ6"/>
-                        <outlet property="authorsImage" destination="h6C-ox-9a7" id="fO8-L4-Tep"/>
-                        <outlet property="authorsName" destination="SdA-uU-3ex" id="z4G-oF-r0Z"/>
-                        <outlet property="authorsType" destination="6md-s8-omF" id="bHQ-aC-7fU"/>
-                        <outlet property="closeButton" destination="tcW-dj-rkt" id="D25-4z-3Xb"/>
-                        <outlet property="leftView" destination="FwC-Ga-mB3" id="utd-TM-55r"/>
-                        <outlet property="mainView" destination="Deh-y1-8VA" id="RN5-i1-BgC"/>
-                        <outlet property="pictureDescription" destination="eoV-og-fED" id="8cz-y6-5Uq"/>
-                        <outlet property="pictureName" destination="BAA-KN-4xK" id="cpj-wM-I7s"/>
-                        <outlet property="picturePrize" destination="L6D-C0-Io5" id="8HW-lN-jpl"/>
-                        <outlet property="pictureSize" destination="5TH-dA-xJ9" id="Ycb-Ky-Ihm"/>
-                        <outlet property="pictureTag" destination="v8Q-qq-d8q" id="svF-u3-MAh"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uQK-9B-TuZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Lkp-Q2-oay">
-                    <connections>
-                        <action selector="tapAction:" destination="KuV-nM-zOl" id="D3U-5p-orh"/>
-                        <outlet property="delegate" destination="KuV-nM-zOl" id="LOZ-ad-q94"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="4905" y="-377"/>
-        </scene>
-        <!--View Controller Between Popover And Piker View-->
+        <!--Set Distance To Wall View Controller-->
         <scene sceneID="Fda-VE-EH4">
             <objects>
-                <viewController storyboardIdentifier="InputDistanceToCamera" id="o2Y-b9-fXp" customClass="AVViewControllerBetweenPopoverAndPikerView" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InputDistanceToCamera" id="o2Y-b9-fXp" customClass="SetDistanceToWallViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pcH-VU-3bS"/>
                         <viewControllerLayoutGuide type="bottom" id="Byr-Hn-Uyi"/>
@@ -1436,7 +990,7 @@
                                     <action selector="CanselClick:" destination="o2Y-b9-fXp" eventType="touchUpInside" id="CbR-jm-1sh"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="fHX-bZ-aI3">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="fHX-bZ-aI3">
                                 <rect key="frame" x="14" y="568" width="996" height="31"/>
                                 <connections>
                                     <action selector="valueChanged:" destination="o2Y-b9-fXp" eventType="valueChanged" id="63N-zA-iB2"/>
@@ -1478,7 +1032,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6GW-kq-hsL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5004" y="590"/>
+            <point key="canvasLocation" x="4692" y="1134"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Ll1-6W-G0A">
@@ -1636,10 +1190,10 @@
             </objects>
             <point key="canvasLocation" x="-238" y="1724"/>
         </scene>
-        <!--Picture View Controller-->
+        <!--I Carusel View Controller-->
         <scene sceneID="12f-D2-D8c">
             <objects>
-                <viewController id="HLU-mf-ZVQ" customClass="AVPictureViewController" sceneMemberID="viewController">
+                <viewController id="HLU-mf-ZVQ" customClass="iCaruselViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZwY-m6-OqJ"/>
                         <viewControllerLayoutGuide type="bottom" id="4p0-TQ-yrc"/>
@@ -1785,12 +1339,12 @@
                     </connections>
                 </pinchGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1016" y="1806"/>
+            <point key="canvasLocation" x="2552" y="1478"/>
         </scene>
-        <!--Painter View Controller-->
+        <!--Preview On Wall View Controller-->
         <scene sceneID="0hv-YD-aTK">
             <objects>
-                <viewController id="glK-by-361" customClass="AVPainterViewController" sceneMemberID="viewController">
+                <viewController id="glK-by-361" customClass="PreviewOnWallViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NcH-ND-MOR"/>
                         <viewControllerLayoutGuide type="bottom" id="MzJ-Tc-UqV"/>
@@ -1946,12 +1500,12 @@
                     </connections>
                 </pinchGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2755" y="2178"/>
+            <point key="canvasLocation" x="3827" y="2466"/>
         </scene>
-        <!--Detail View Controller-->
+        <!--Full Size Picture View Controller-->
         <scene sceneID="eLl-YR-xKp">
             <objects>
-                <viewController id="Llz-p3-sxk" customClass="AVDetailViewController" sceneMemberID="viewController">
+                <viewController id="Llz-p3-sxk" customClass="FullSizePictureViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dh3-Y0-rfb"/>
                         <viewControllerLayoutGuide type="bottom" id="3Tp-1p-f8P"/>
@@ -2157,12 +1711,11 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2602" y="1023"/>
+            <point key="canvasLocation" x="2330" y="-42"/>
         </scene>
     </scenes>
     <resources>
         <image name="background.jpg" width="1440" height="900"/>
-        <image name="buy1.png" width="256" height="256"/>
         <image name="placeholder.png" width="200" height="200"/>
         <image name="remove.png" width="512" height="512"/>
         <image name="shopping-cart-grey-hi.png" width="30" height="29"/>
@@ -2175,9 +1728,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="QDs-DP-rXf"/>
-        <segue reference="q6B-kz-Vr1"/>
-        <segue reference="XqC-q2-HwM"/>
+        <segue reference="vib-vZ-Kxc"/>
+        <segue reference="MJL-gi-ees"/>
         <segue reference="nay-hd-SZI"/>
     </inferredMetricsTieBreakers>
 </document>
