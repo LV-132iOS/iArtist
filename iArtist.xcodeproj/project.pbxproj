@@ -1502,7 +1502,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5d289efa-7069-405c-aa63-863eda000b99";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
