@@ -26,7 +26,7 @@
 
 @property (strong, nonatomic)AVManager *dataManager;
 
-@property (nonatomic) NSUInteger *index;
+@property (nonatomic) NSUInteger index;
 
 
 @property (nonatomic, strong) NSMutableArray *urls;

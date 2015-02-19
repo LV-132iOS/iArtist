@@ -17,7 +17,7 @@ static NSMutableArray *urls;
 @property (nonatomic, strong) NSMutableArray  *artistdic;
 @property (nonatomic, strong) UIImage       *image;
 - (UIImage*)GetPictureThumbWithID:(NSString*)_id;
-- (UIImage*)GetPictureWithID:(NSString*)_id;
+- (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
 - (void)reloadDB;
 - (void)FetchArtists;
 - (NSMutableArray*)GetLikesForUser:(NSString*)_id;

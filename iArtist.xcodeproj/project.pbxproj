@@ -18,6 +18,7 @@
 		4B4A32231A8D32BD0048078C /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A32181A8D32BD0048078C /* AFURLRequestSerialization.m */; };
 		4B4A32241A8D32BD0048078C /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A321A1A8D32BD0048078C /* AFURLResponseSerialization.m */; };
 		4B4A32251A8D32BD0048078C /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A321C1A8D32BD0048078C /* AFURLSessionManager.m */; };
+		4BBDF0331A9340CC002FA6D4 /* room10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDF0321A9340CC002FA6D4 /* room10.jpg */; };
 		4BC7F8751A8A2D000061CAAA /* AVImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F86E1A8A2D000061CAAA /* AVImagePickerController.m */; };
 		4BC7F8761A8A2D000061CAAA /* AVPainterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F8701A8A2D000061CAAA /* AVPainterViewController.m */; };
 		4BC7F8771A8A2D000061CAAA /* AVPopoverTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F8721A8A2D000061CAAA /* AVPopoverTableViewController.m */; };
@@ -101,7 +102,6 @@
 		6044132C1A83D7F90099B184 /* room7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 604413211A83D7F90099B184 /* room7.jpg */; };
 		6044132D1A83D7F90099B184 /* room8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 604413221A83D7F90099B184 /* room8.jpg */; };
 		6044132E1A83D7F90099B184 /* room9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 604413231A83D7F90099B184 /* room9.jpg */; };
-		6044132F1A83D7F90099B184 /* room10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 604413241A83D7F90099B184 /* room10.jpg */; };
 		604413311A83D9200099B184 /* guy1.png in Resources */ = {isa = PBXBuildFile; fileRef = 604413301A83D9200099B184 /* guy1.png */; };
 		604413331A83D9290099B184 /* buy1.png in Resources */ = {isa = PBXBuildFile; fileRef = 604413321A83D9290099B184 /* buy1.png */; };
 		6048E26D1A8B51C30099D8D3 /* user-icon-0910125612.png in Resources */ = {isa = PBXBuildFile; fileRef = 6048E26C1A8B51C30099D8D3 /* user-icon-0910125612.png */; };
@@ -200,6 +200,7 @@
 		4B4A321A1A8D32BD0048078C /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		4B4A321B1A8D32BD0048078C /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		4B4A321C1A8D32BD0048078C /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		4BBDF0321A9340CC002FA6D4 /* room10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room10.jpg; sourceTree = "<group>"; };
 		4BC7F86D1A8A2D000061CAAA /* AVImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVImagePickerController.h; sourceTree = "<group>"; };
 		4BC7F86E1A8A2D000061CAAA /* AVImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVImagePickerController.m; sourceTree = "<group>"; };
 		4BC7F86F1A8A2D000061CAAA /* AVPainterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVPainterViewController.h; sourceTree = "<group>"; };
@@ -311,7 +312,6 @@
 		604413211A83D7F90099B184 /* room7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room7.jpg; sourceTree = "<group>"; };
 		604413221A83D7F90099B184 /* room8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room8.jpg; sourceTree = "<group>"; };
 		604413231A83D7F90099B184 /* room9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room9.jpg; sourceTree = "<group>"; };
-		604413241A83D7F90099B184 /* room10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room10.jpg; sourceTree = "<group>"; };
 		604413301A83D9200099B184 /* guy1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guy1.png; sourceTree = "<group>"; };
 		604413321A83D9290099B184 /* buy1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buy1.png; sourceTree = "<group>"; };
 		6048E26C1A8B51C30099D8D3 /* user-icon-0910125612.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-icon-0910125612.png"; sourceTree = "<group>"; };
@@ -689,6 +689,7 @@
 				4BF2F3121A926B6500DEF7FB /* Pastel on canvas.jpg */,
 				4BF2F3131A926B6500DEF7FB /* Pastel.jpg */,
 				4BF2F2F91A926B4F00DEF7FB /* artist5.jpg */,
+				4BBDF0321A9340CC002FA6D4 /* room10.jpg */,
 				6044131B1A83D7F90099B184 /* room1.jpg */,
 				6044131C1A83D7F90099B184 /* room2.jpg */,
 				6044131D1A83D7F90099B184 /* room3.jpg */,
@@ -698,7 +699,6 @@
 				604413211A83D7F90099B184 /* room7.jpg */,
 				604413221A83D7F90099B184 /* room8.jpg */,
 				604413231A83D7F90099B184 /* room9.jpg */,
-				604413241A83D7F90099B184 /* room10.jpg */,
 				604413041A83D7E40099B184 /* person.png */,
 				604413051A83D7E40099B184 /* photo1.jpg */,
 				604413061A83D7E40099B184 /* picture1.jpg */,
@@ -1165,7 +1165,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6044132F1A83D7F90099B184 /* room10.jpg in Resources */,
 				4BF2F3341A926B7D00DEF7FB /* Style4.jpg in Resources */,
 				4BF2F2FB1A926B4F00DEF7FB /* artist2.jpg in Resources */,
 				604413191A83D7E40099B184 /* picture9.jpg in Resources */,
@@ -1185,6 +1184,7 @@
 				4BF2F3311A926B7D00DEF7FB /* Style1.jpg in Resources */,
 				6099E2CE1A82928300513668 /* vk_logo.png in Resources */,
 				4BF2F3221A926B6D00DEF7FB /* priceTwo.jpg in Resources */,
+				4BBDF0331A9340CC002FA6D4 /* room10.jpg in Resources */,
 				604413151A83D7E40099B184 /* picture5.jpg in Resources */,
 				4BF2F3361A926B7D00DEF7FB /* Style6.jpg in Resources */,
 				843C96ED1A7E8A610080FCAA /* TwitterKitResources.bundle in Resources */,
@@ -1379,8 +1379,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1427,8 +1427,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

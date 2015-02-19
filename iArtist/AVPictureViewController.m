@@ -243,6 +243,8 @@ UIVisualEffectView *visualEffectView;
         manager.index = self.pictureView.currentItemIndex;
         ((AVDetailViewController *)segue.destinationViewController).paintingData = self.CurrentPainting;
           ((AVDetailViewController *)segue.destinationViewController).artistData = self.CurrentArtist;
+        ((AVDetailViewController *)segue.destinationViewController).ImageThumb = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image;
+
     }
     
     if ([segue.identifier isEqualToString:@"SimpleShare"]) {

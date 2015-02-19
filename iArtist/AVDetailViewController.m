@@ -17,25 +17,29 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 
 @interface AVDetailViewController ()<UIScrollViewDelegate,  UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) IBOutlet UIButton *closeButton;
-@property (strong, nonatomic) IBOutlet UIView *leftView;
-@property (strong, nonatomic) IBOutlet UILabel *pictureName;
-@property (strong, nonatomic) IBOutlet UILabel *pictureTag;
-@property (strong, nonatomic) IBOutlet UILabel *pictureSize;
-@property (strong, nonatomic) IBOutlet UILabel *picturePrize;
-@property (strong, nonatomic) IBOutlet UILabel *authorsName;
-@property (strong, nonatomic) IBOutlet UILabel *authorsType;
-@property (strong, nonatomic) IBOutlet UIImageView *authorsImage;
-@property (strong, nonatomic) IBOutlet UITextView *pictureDescription;
-@property (strong, nonatomic) IBOutlet UITextView *authorDescription;
+@property (strong, nonatomic) IBOutlet UIButton    *closeButton;
+@property (strong, nonatomic) IBOutlet UIView      *leftView;
+@property (strong, nonatomic) IBOutlet UITableView *pictureInfo;
+@property (strong, nonatomic) IBOutlet UITextView  *authorInfo;
+@property (strong, nonatomic) IBOutlet UILabel     *authorsName;
+@property (strong, nonatomic) IBOutlet UILabel     *authorsData;
+@property (strong, nonatomic)          UIImageView *authorsImage;
+@property (strong, nonatomic)          UITextView  *pictureDescription;
+@property (strong, nonatomic) IBOutlet UIButton    *authorButton;
+@property (nonatomic)                  AVLeftView  leftviewindex;
+@property (strong, nonatomic) IBOutlet UILabel     *price;
+@property (strong, nonatomic) IBOutlet UIButton    *like;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *Indicator;
 
 
 
-@property (nonatomic) AVLeftView leftviewindex;
 
 @end
 
 @implementation AVDetailViewController
+
+CGFloat neededScale;
 
 #pragma mark - data initialization
 //getting data from input
@@ -54,11 +58,11 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 
 - (void)inputDataInit{
     
-    self.pictureName.text = [self.paintingData valueForKey:@"title"];
-    self.picturePrize.text = [self.paintingData valueForKey:@"price"];
+    //self.pictureName.text = [self.paintingData valueForKey:@"title"];
+    //self.picturePrize.text = [self.paintingData valueForKey:@"price"];
     self.pictureDescription.text = [self.paintingData valueForKey:@"description"];
-    self.pictureSize.text = [self.paintingData valueForKey:@"realsize"];
-    self.pictureTag.text = [(NSArray*)[self.paintingData valueForKey:@"tags"] componentsJoinedByString:@","];
+    //self.pictureSize.text = [self.paintingData valueForKey:@"realsize"];
+   // self.pictureTag.text = [(NSArray*)[self.paintingData valueForKey:@"tags"] componentsJoinedByString:@","];
      self.authorsName.text = [self.artistData valueForKey:@"name"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.artistData valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *img = [UIImage imageWithData:imageData];
@@ -67,6 +71,16 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
     
 }
 
+- (IBAction)switchData:(id)sender {
+    NSInteger index = ((UISegmentedControl *)sender).selectedSegmentIndex;
+    if (index == 0) {
+        self.pictureInfo.hidden = NO;
+        self.authorInfo.hidden = YES;
+    } else {
+        self.pictureInfo.hidden = YES;
+        self.authorInfo.hidden = NO;
+    }
+}
 
 - (void)viewDidLoad {
  
@@ -74,20 +88,41 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
     [super viewDidLoad];
     [self mainInit];
     [self inputDataInit];
+    NSLog(@"%@",self.paintingData);
  
-    self.imageView = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance] GetPictureWithID:[self.paintingData valueForKey:@"_id"] ]];
+    self.imageView = [[UIImageView alloc]initWithImage:self.ImageThumb];
     self.imageView.frame = self.mainView.frame;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.mainView addSubview:self.imageView];
+    [self.Indicator startAnimating];
+    [self.mainView bringSubviewToFront:self.Indicator];
+    [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.imageView.image = responde;
+            [self.Indicator stopAnimating];
+            [self.Indicator removeFromSuperview];
+            NSLog(@"Ok");
+        });
 
+            }];
 
+}
     
     // Do any additional setup after loading the view.
-}
+
 //metod for scroll view
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     
     return self.imageView;
+}
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView{
+    if(scrollView.pinchGestureRecognizer.state == UIGestureRecognizerStateChanged){
+        neededScale  = scrollView.zoomScale;
+    }
+    if((scrollView.pinchGestureRecognizer.state == UIGestureRecognizerStateEnded)&&(neededScale < 0.8)){
+        [self closeController:nil];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -136,19 +171,39 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 //tap gesture recognizer
 - (IBAction)tapAction:(id)sender {
     
+    CGFloat time = 0.3;
     if (self.leftviewindex == AVLeftViewEnable) {
         self.leftviewindex = AVLeftViewDisable;
-        self.leftView.hidden = YES;
+        [UIView animateWithDuration:time
+                         animations:^{
+                             self.leftView.frame = CGRectMake( - self.leftView.frame.size.width, 0,
+                                                              self.leftView.frame.size.width, self.leftView.frame.size.height);
+                         }
+                         completion:NULL];
     } else {
         self.leftviewindex = AVLeftViewEnable;
-        self.leftView.hidden = NO;
+        [UIView animateWithDuration:time
+                         animations:^{
+                             self.leftView.frame = CGRectMake(0, 0,
+                                                              self.leftView.frame.size.width, self.leftView.frame.size.height);
+                         }
+                         completion:NULL];
     }
 }
 //dismissing current view controller
 - (IBAction)closeController:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
+    CGFloat timeForAnimation = 0.3;
+    [UIView animateWithDuration:timeForAnimation animations:^{
+        self.imageView.frame = CGRectMake(112, 44, 800, 656);
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    } completion:^(BOOL finished) {
+    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((timeForAnimation) * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^{
+                       [self dismissViewControllerAnimated:NO completion:nil];
+                   });
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
