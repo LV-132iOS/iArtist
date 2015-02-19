@@ -376,27 +376,22 @@ static NSString *querystring;
     
 }
 
-- (UIImage*)GetPictureWithID:(NSString*)_id
+- (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback
 {
     __block UIImage *image;
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     manager.responseSerializer = [AFImageResponseSerializer serializer];
     [manager GET:[@"paintings/files/" stringByAppendingString:_id]
       parameters:nil
          success:^(NSURLSessionDataTask *task, id responseObject) {
              image = (UIImage*)responseObject;
-             dispatch_semaphore_signal(semaphore);
-             
+             callback(image);
+             manager.responseSerializer = [AFJSONResponseSerializer serializer];
+
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
-             dispatch_semaphore_signal(semaphore);
              
              
          }];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    return image;
     
     
     

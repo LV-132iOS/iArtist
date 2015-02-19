@@ -31,6 +31,23 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 @property (strong, nonatomic) IBOutlet UIButton    *like;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
 
+<<<<<<< HEAD:iArtist/FullSizePictureViewController.m
+=======
+@property (strong, nonatomic) IBOutlet UIButton    *closeButton;
+@property (strong, nonatomic) IBOutlet UIView      *leftView;
+@property (strong, nonatomic) IBOutlet UITableView *pictureInfo;
+@property (strong, nonatomic) IBOutlet UITextView  *authorInfo;
+@property (strong, nonatomic) IBOutlet UILabel     *authorsName;
+@property (strong, nonatomic) IBOutlet UILabel     *authorsData;
+@property (strong, nonatomic)          UIImageView *authorsImage;
+@property (strong, nonatomic)          UITextView  *pictureDescription;
+@property (strong, nonatomic) IBOutlet UIButton    *authorButton;
+@property (nonatomic)                  AVLeftView  leftviewindex;
+@property (strong, nonatomic) IBOutlet UILabel     *price;
+@property (strong, nonatomic) IBOutlet UIButton    *like;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *Indicator;
+>>>>>>> 8f5d3db6e6b3016ca192fb4a7ee94f7b8b6ec7de:iArtist/AVDetailViewController.m
 
 
 
@@ -38,6 +55,8 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 @end
 
 @implementation FullSizePictureViewController
+
+CGFloat neededScale;
 
 CGFloat neededScale;
 
@@ -102,17 +121,32 @@ CGFloat neededScale;
     [super viewDidLoad];
     [self mainInit];
     [self inputDataInit];
+    NSLog(@"%@",self.paintingData);
  
     self.imageView = [[UIImageView alloc]initWithImage:self.ImageThumb];
+<<<<<<< HEAD:iArtist/FullSizePictureViewController.m
     
+=======
+>>>>>>> 8f5d3db6e6b3016ca192fb4a7ee94f7b8b6ec7de:iArtist/AVDetailViewController.m
     self.imageView.frame = self.mainView.frame;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.mainView addSubview:self.imageView];
+    [self.Indicator startAnimating];
+    [self.mainView bringSubviewToFront:self.Indicator];
+    [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.imageView.image = responde;
+            [self.Indicator stopAnimating];
+            [self.Indicator removeFromSuperview];
+            NSLog(@"Ok");
+        });
 
+            }];
 
+}
     
     // Do any additional setup after loading the view.
-}
+
 //metod for scroll view
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     

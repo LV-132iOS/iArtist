@@ -16,8 +16,13 @@ static NSMutableArray *urls;
 @property (nonatomic, strong) NSDictionary  *Paintingdic;
 @property (nonatomic, strong) NSMutableArray  *artistdic;
 @property (nonatomic, strong) UIImage       *image;
+<<<<<<< HEAD
 - (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
 - (UIImage*)GetPictureWithID:(NSString*)_id;
+=======
+- (UIImage*)GetPictureThumbWithID:(NSString*)_id;
+- (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
+>>>>>>> 8f5d3db6e6b3016ca192fb4a7ee94f7b8b6ec7de
 - (void)reloadDB;
 - (void)FetchArtists;
 - (NSMutableArray*)GetLikesForUser:(NSString*)_id;
