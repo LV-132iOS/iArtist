@@ -66,7 +66,7 @@
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
-    NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",indexPath.row]];
+    NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
 
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
     
@@ -79,7 +79,7 @@
     cell.layer.borderWidth = 4.0f;
     cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
     cell.layer.cornerRadius = 40;
-    self.index = indexPath.row;
+    self.index = (NSUInteger*) indexPath.row;
     return cell;
 }
 
@@ -99,7 +99,7 @@
         dataManager.index = index;
         ((AVPictureViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
         ((AVPictureViewController *)segue.destinationViewController).urls = self.urls;
-        ((AVPictureViewController *)segue.destinationViewController).index = index;
+        ((AVPictureViewController *)segue.destinationViewController).index = (NSUInteger*) index;
 
 
     }

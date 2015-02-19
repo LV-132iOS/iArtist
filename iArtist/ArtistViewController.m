@@ -27,8 +27,8 @@
     self.imageOfArtist.image = self.img;
     self.nameOfArtist.text = [self.CurrentArtist valueForKey:@"name"];
     self.descriptionOfArtist.text = [self.CurrentArtist valueForKey:@"biography"];
-    self.Folowers.text = [[NSString stringWithFormat:@"%lu",[(NSArray*)[self.CurrentArtist valueForKey:@"followers"] count]] stringByAppendingString:@" Followers"];
-    self.tosale.text = [[NSString stringWithFormat:@"%lu",[(NSArray*)[self.CurrentArtist valueForKey:@"paintings"] count]] stringByAppendingString:@" Paintings"];
+    self.Folowers.text = [[NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray*)[self.CurrentArtist valueForKey:@"followers"] count]] stringByAppendingString:@" Followers"];
+    self.tosale.text = [[NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray*)[self.CurrentArtist valueForKey:@"paintings"] count]] stringByAppendingString:@" Paintings"];
 
     self.locationOfArtist.text = [self.CurrentArtist valueForKey:@"location"];
     self.imageOfArtist.layer.backgroundColor = [[UIColor clearColor] CGColor];

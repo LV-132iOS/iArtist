@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<<<<<<< HEAD
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="0ka-ro-dsY">
+=======
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+>>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
@@ -81,7 +85,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KoE-2R-YVp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+<<<<<<< HEAD
             <point key="canvasLocation" x="1081" y="-686"/>
+=======
+            <point key="canvasLocation" x="1975" y="-686"/>
+>>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="llj-a3-DAR">
@@ -99,7 +107,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xYY-eL-0cZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+<<<<<<< HEAD
             <point key="canvasLocation" x="570" y="-12"/>
+=======
+            <point key="canvasLocation" x="1490" y="148"/>
+>>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NcN-hd-fEE">
@@ -554,11 +566,11 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="DPW-eQ-x6F">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="View1" id="DPW-eQ-x6F">
                                     <rect key="frame" x="0.0" y="0.0" width="1024" height="10"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mfD-Jd-i0x">
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="View2" id="mfD-Jd-i0x">
                                     <rect key="frame" x="0.0" y="230" width="1024" height="10"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
@@ -2182,9 +2194,16 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+<<<<<<< HEAD
         <segue reference="Bgk-k0-pqb"/>
         <segue reference="q6B-kz-Vr1"/>
         <segue reference="9Q1-oe-U60"/>
         <segue reference="mCU-p1-n0T"/>
+=======
+        <segue reference="vib-vZ-Kxc"/>
+        <segue reference="lYa-8K-vnO"/>
+        <segue reference="eIb-37-wBW"/>
+        <segue reference="uAH-YQ-HPy"/>
+>>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
     </inferredMetricsTieBreakers>
 </document>

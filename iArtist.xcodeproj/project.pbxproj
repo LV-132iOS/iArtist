@@ -1533,7 +1533,11 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+<<<<<<< HEAD
 				PROVISIONING_PROFILE = "3d88ba95-34ac-4f5a-9aad-b65f1d7fabf4";
+=======
+				PROVISIONING_PROFILE = "";
+>>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -1561,7 +1565,11 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+<<<<<<< HEAD
 				PROVISIONING_PROFILE = "3d88ba95-34ac-4f5a-9aad-b65f1d7fabf4";
+=======
+				PROVISIONING_PROFILE = "";
+>>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;

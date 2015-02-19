@@ -114,7 +114,7 @@ UIVisualEffectView *visualEffectView;
     if (self.urls == nil) {
         self.urls = [[NSMutableArray alloc]initWithArray:[[ServerFetcher sharedInstance] RunQuery]];
     }
-    self.pictureView.currentItemIndex = self.index;
+    self.pictureView.currentItemIndex = (NSInteger) self.index;
     self.authorsImage = [[UIImageView alloc]init];
     self.authorsName = [UILabel new];
     self.ImageArray = [[NSMutableArray alloc]init];
@@ -128,10 +128,6 @@ UIVisualEffectView *visualEffectView;
     self.pictureView.dataSource =self;
     [self mainInit];
     // Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(shareWithTwitter:)
-                                                 name:@"ShareWithTwitter"
-                                               object:nil];
 }
 //view will appear. we need this when we dismiss presented view controller and return here
 
@@ -250,7 +246,11 @@ UIVisualEffectView *visualEffectView;
     if ([segue.identifier isEqualToString:@"SimpleShare"]) {
         //get only picture
         locImageToShare = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image;
+<<<<<<< HEAD
         //set text
+=======
+            //set text
+>>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
         locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@!",
                          [self.CurrentPainting valueForKey:@"title"],
                          [self.CurrentArtist valueForKey:@"name"]];
@@ -258,14 +258,24 @@ UIVisualEffectView *visualEffectView;
         
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
+<<<<<<< HEAD
         locImageUrl =[NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/" stringByAppendingString: [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]]]];
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
         locUrlToPass = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/" stringByAppendingString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]]]];
+=======
+        locImageUrl =[NSURL URLWithString:[@"http://192.168.103.5/paintings/files/" stringByAppendingString: [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]]]];
+        // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
+        locUrlToPass = [NSURL URLWithString:[@"http://192.168.103.5/paintings/files/" stringByAppendingString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]]]];
+>>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
         ((ShareViewController*)segue.destinationViewController).imageUrl =locImageUrl;
         ((ShareViewController*)segue.destinationViewController).headString = locHeadString;
         ((ShareViewController*)segue.destinationViewController).urlToPass =locUrlToPass;
+<<<<<<< HEAD
         
+=======
+      
+>>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
     }
     if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
         ((ArtistViewController*)segue.destinationViewController).CurrentArtist = self.CurrentArtist;
@@ -426,5 +436,11 @@ UIVisualEffectView *visualEffectView;
 }
 
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
 
 @end
