@@ -14,7 +14,7 @@
 #import <VKSdk/VKSdk.h>
 #import "ServerFetcher.h"
 #import "SessionControl.h"
-
+#import "UIKit+AFNetworking.h"
 @interface AppDelegate (){
     VKDelegate* vkDelegate;
 }
@@ -28,6 +28,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES ;
     self.control = [SessionControl sharedManager];
     [self.control beginNotify];
     

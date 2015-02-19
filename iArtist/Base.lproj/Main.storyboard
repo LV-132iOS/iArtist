@@ -1038,7 +1038,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" modalPresentationStyle="formSheet" id="mCU-p1-n0T"/>
+                                            <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" modalPresentationStyle="formSheet" modalTransitionStyle="flipHorizontal" id="mCU-p1-n0T"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2182,9 +2182,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="KUg-sq-ZK0"/>
+        <segue reference="Bgk-k0-pqb"/>
         <segue reference="q6B-kz-Vr1"/>
         <segue reference="9Q1-oe-U60"/>
-        <segue reference="XqC-q2-HwM"/>
+        <segue reference="mCU-p1-n0T"/>
     </inferredMetricsTieBreakers>
 </document>
