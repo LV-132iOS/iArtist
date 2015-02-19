@@ -75,11 +75,7 @@ static NSString *querystring;
 
 
 - (void)GenerateQueryForPrice:(int)min :(int)max{
-#pragma warning (push)
-#pragma warning (disable : unknown escape sequence '\$')
     NSString *querryStr = [NSString stringWithFormat:@"{ \"price\": {\"\$gte\":%d,\"\$lte\":%d} }",min,max];
-#pragma warning (pop)
-
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)querryStr,
                                                                                      NULL,
@@ -174,7 +170,6 @@ static NSString *querystring;
         }
 
     
-<<<<<<< HEAD
 
 - (void)GetNewsForUser:(NSString *)_id
               callback:(void (^)(NSMutableArray* responde))callback
@@ -182,13 +177,6 @@ static NSString *querystring;
     Paintingdic =[[NSMutableDictionary alloc]init];
     Artistdic = [[NSMutableArray alloc]init];
     __block NSMutableArray *ids = [[NSMutableArray alloc]init];
-=======
-    Artistdic = [[NSMutableDictionary alloc]init];
-    NSMutableArray *urls = [[NSMutableArray alloc]init];
-   //  __block NSMutableDictionary *Paintingids =[[NSMutableArray alloc]init];
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
->>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
     NSString *str = [NSString stringWithFormat:@"%@/favorite_artists",_id];
     [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         Artistdic = (NSMutableArray *)responseObject;

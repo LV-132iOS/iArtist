@@ -112,13 +112,8 @@ otherButtonTitles:@"Yes", nil];
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         //current url for request
-<<<<<<< HEAD
         //NSURL* url = [NSURL URLWithString:[@"http://192.168.103.5/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
         NSURL* url = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
-=======
-        NSURL* url = [NSURL URLWithString:[@"http://192.168.103.5/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
-       // NSURL* url = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
->>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
         //creating request to use it with dataTask
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
         //preparing session and request

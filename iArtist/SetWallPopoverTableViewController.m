@@ -96,13 +96,8 @@ NSString *const AVDidSelectWall = @"AVDidSelectWall";
     
     self.wallImage = [info valueForKey:UIImagePickerControllerOriginalImage];
     
-<<<<<<< HEAD:iArtist/AVPopoverTableViewController.m
-    AVViewControllerBetweenPopoverAndPikerView *inputDistanceController;// = [[AVViewControllerBetweenPopoverAndPikerView alloc] init];
-     //   [AVViewControllerBetweenPopoverAndPikerView new];
-=======
     SetDistanceToWallViewController *inputDistanceController =
         [SetDistanceToWallViewController new];
->>>>>>> Clark's:iArtist/SetWallPopoverTableViewController.m
     
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         inputDistanceController = [self.storyboard instantiateViewControllerWithIdentifier:@"InputDistanceToCamera"];

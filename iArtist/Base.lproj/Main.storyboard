@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="0ka-ro-dsY">
-=======
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
->>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
-=======
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="0ka-ro-dsY">
->>>>>>> Clark's
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
@@ -89,11 +81,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KoE-2R-YVp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< HEAD
             <point key="canvasLocation" x="1081" y="-686"/>
-=======
-            <point key="canvasLocation" x="1975" y="-686"/>
->>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="llj-a3-DAR">
@@ -111,11 +99,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xYY-eL-0cZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< HEAD
             <point key="canvasLocation" x="570" y="-12"/>
-=======
-            <point key="canvasLocation" x="1490" y="148"/>
->>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NcN-hd-fEE">
@@ -566,19 +550,11 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
-<<<<<<< HEAD
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="View1" id="DPW-eQ-x6F">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="10"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </collectionReusableView>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="View2" id="mfD-Jd-i0x">
-=======
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="header" id="DPW-eQ-x6F">
                                     <rect key="frame" x="0.0" y="0.0" width="1024" height="10"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="footer" id="mfD-Jd-i0x">
->>>>>>> Clark's
                                     <rect key="frame" x="0.0" y="230" width="1024" height="10"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
@@ -822,181 +798,7 @@
             </objects>
             <point key="canvasLocation" x="3357" y="462"/>
         </scene>
-<<<<<<< HEAD
-        <!--Painter View Controller-->
-        <scene sceneID="rvE-lY-PtX">
-            <objects>
-                <viewController id="Tnv-Us-reo" customClass="AVPainterViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eef-FN-Lcg"/>
-                        <viewControllerLayoutGuide type="bottom" id="cJL-uJ-oEi"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleAspectFit" id="GXM-Kd-Mot" customClass="UIImageView">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2V1-re-8Hj">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="reply" id="yhp-CC-51Q">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <action selector="backReturn:" destination="Tnv-Us-reo" id="gwY-1E-JJJ"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="835" style="plain" systemItem="fixedSpace" id="wWG-tz-Dyb"/>
-                                    <barButtonItem systemItem="camera" id="58c-0L-l62">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <action selector="pushPopover:" destination="Tnv-Us-reo" id="geG-SJ-lSh"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem image="shopping-cart-grey-hi.png" id="yZb-Ff-8gb">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <segue destination="MYj-qk-6mf" kind="modal" identifier="Preview On Wall to Cart" id="Bgk-k0-pqb"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem systemItem="action" id="ScX-qN-XmV">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <action selector="SharePressed:" destination="Tnv-Us-reo" id="WFx-Ji-Ch5"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Tnv-Us-reo" id="dc9-Vl-Gkq"/>
-                                </connections>
-                            </toolbar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ldo-LZ-HYM" userLabel="Picture Image View">
-                                <rect key="frame" x="392" y="320" width="240" height="128"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iem-Dq-gDa" userLabel="PriсeView">
-                                <rect key="frame" x="768" y="700" width="240" height="60"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XsI-qr-bn7">
-                                        <rect key="frame" x="0.0" y="0.0" width="164" height="28"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="buy1.png" translatesAutoresizingMaskIntoConstraints="NO" id="uDT-aW-c71">
-                                        <rect key="frame" x="180" y="0.0" width="60" height="60"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eIU-ak-RG2">
-                                        <rect key="frame" x="0.0" y="32" width="164" height="28"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </label>
-                                </subviews>
-                                <gestureRecognizers/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t5C-ph-x5F" userLabel="AuthorView">
-                                <rect key="frame" x="16" y="700" width="240" height="60"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8UN-Y9-Xsz">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jlk-RX-Cgd">
-                                        <rect key="frame" x="68" y="0.0" width="164" height="28"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4L-hn-sVH">
-                                        <rect key="frame" x="68" y="32" width="164" height="28"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.82352986149999996" green="0.8520507812" blue="0.83330007240000004" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hNQ-Bm-6CY">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                        <state key="normal">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" modalPresentationStyle="formSheet" modalTransitionStyle="flipHorizontal" id="mCU-p1-n0T"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <gestureRecognizers/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Picture Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcT-Ep-zne">
-                                <rect key="frame" x="392" y="0.0" width="240" height="44"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="kRE-9C-eqz" appends="YES" id="yZS-7X-ELv"/>
-                            <outletCollection property="gestureRecognizers" destination="DFl-7n-hWG" appends="YES" id="OqP-mv-hf3"/>
-                            <outletCollection property="gestureRecognizers" destination="MmY-lf-6sn" appends="YES" id="7Uh-3V-RHZ"/>
-                            <outletCollection property="gestureRecognizers" destination="Iq3-fV-EDi" appends="YES" id="gcC-c7-2tY"/>
-                        </connections>
-                    </view>
-                    <navigationItem key="navigationItem" id="8wt-uh-jDb"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="1024" height="768"/>
-                    <connections>
-                        <outlet property="actionBarBautton" destination="ScX-qN-XmV" id="oP4-rn-CJh"/>
-                        <outlet property="authorsImage" destination="8UN-Y9-Xsz" id="VXu-Nv-Mhe"/>
-                        <outlet property="authorsName" destination="jlk-RX-Cgd" id="8ad-gi-aHm"/>
-                        <outlet property="authorsType" destination="d4L-hn-sVH" id="L1e-sb-Xwa"/>
-                        <outlet property="authorsView" destination="t5C-ph-x5F" id="RSr-Bj-27V"/>
-                        <outlet property="backBarBatton" destination="yhp-CC-51Q" id="msD-SW-JnE"/>
-                        <outlet property="cameraBurButton" destination="58c-0L-l62" id="KLR-AW-AsF"/>
-                        <outlet property="leftSwipe" destination="MmY-lf-6sn" id="dSg-ZF-WSE"/>
-                        <outlet property="panGestureRecognizer" destination="DFl-7n-hWG" id="iVK-Sp-dtQ"/>
-                        <outlet property="pictureImage" destination="Ldo-LZ-HYM" id="TsB-8D-jQO"/>
-                        <outlet property="pictureSize" destination="eIU-ak-RG2" id="u0N-bp-i4A"/>
-                        <outlet property="price" destination="XsI-qr-bn7" id="Emf-jU-Kf5"/>
-                        <outlet property="priceView" destination="Iem-Dq-gDa" id="riL-6x-lWY"/>
-                        <outlet property="rightSwipe" destination="kRE-9C-eqz" id="9fc-gm-2l0"/>
-                        <outlet property="roomImage" destination="GXM-Kd-Mot" id="c8t-Lk-enP"/>
-                        <outlet property="titleOfPicture" destination="RcT-Ep-zne" id="aip-Jj-4xS"/>
-                        <outlet property="upToolBar" destination="2V1-re-8Hj" id="fXk-Lj-zAC"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0Mo-Ji-BDj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="kRE-9C-eqz">
-                    <connections>
-                        <action selector="swipePressAction:" destination="Tnv-Us-reo" id="4cb-rc-U3e"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="DFl-7n-hWG">
-                    <connections>
-                        <action selector="pictureGestureRecognizerAction:" destination="Tnv-Us-reo" id="giN-nc-ek2"/>
-                    </connections>
-                </panGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="MmY-lf-6sn">
-                    <connections>
-                        <action selector="swipePressAction:" destination="Tnv-Us-reo" id="NAG-5b-6eE"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="Iq3-fV-EDi">
-                    <connections>
-                        <action selector="logAction:" destination="Tnv-Us-reo" id="MqO-M7-Oj8"/>
-                        <outlet property="delegate" destination="Tnv-Us-reo" id="LIX-GF-KCM"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="3567" y="137"/>
-        </scene>
-        <!--Popover Table View Controller-->
-=======
         <!--Set Wall Popover Table View Controller-->
->>>>>>> Clark's
         <scene sceneID="CNr-xl-bpf">
             <objects>
                 <tableViewController storyboardIdentifier="popover" modalPresentationStyle="currentContext" id="ZUo-aW-AHc" customClass="SetWallPopoverTableViewController" sceneMemberID="viewController">
@@ -1931,22 +1733,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <segue reference="Bgk-k0-pqb"/>
-        <segue reference="q6B-kz-Vr1"/>
-        <segue reference="9Q1-oe-U60"/>
-        <segue reference="mCU-p1-n0T"/>
-=======
-        <segue reference="vib-vZ-Kxc"/>
-        <segue reference="lYa-8K-vnO"/>
-        <segue reference="eIb-37-wBW"/>
-        <segue reference="uAH-YQ-HPy"/>
->>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
-=======
         <segue reference="vib-vZ-Kxc"/>
         <segue reference="MJL-gi-ees"/>
         <segue reference="nay-hd-SZI"/>
->>>>>>> Clark's
     </inferredMetricsTieBreakers>
 </document>

@@ -90,13 +90,7 @@
     author2.pictures = @[picture2, picture4, picture7, picture8];
     author2.authorsType = @"Old style";
     
-<<<<<<< HEAD:iArtist/AVSession.m
-    newSession.arrayOfPictures = [NSMutableArray arrayWithObjects:picture1, picture2, picture3, picture4, picture5, picture6, picture7, picture8, picture9, nil];
-  
-  
-=======
     newSession.arrayOfPictures = [[NSMutableArray alloc] initWithArray: @[picture1, picture2, picture3, picture4, picture5, picture6, picture7, picture8, picture9]];
->>>>>>> Clark's:iArtist/Sesion.m
     newSession.sessionName = @"Session one";
     
     return newSession;

@@ -120,7 +120,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:@"firstRun"] ==nil )
     {
@@ -165,7 +165,7 @@
                                                      otherButtonTitles: nil];
         [locAlertView show];
     } else{
-        [self performSegueWithIdentifier:@"News" sender:nil];
+        [self performSegueWithIdentifier:@"NewsFeed" sender:nil];
     }
 }
 
@@ -224,13 +224,8 @@
                                                              options:0
                                                                error:nil];
         //current url for request
-<<<<<<< HEAD
                 NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
         //NSURL* url = [NSURL URLWithString:@"http://192.168.103.5/users/"];
-=======
-   //     NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
-        NSURL* url = [NSURL URLWithString:@"http://192.168.103.5/users/"];
->>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
         //creating request to use it with dataTask
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
         //preparing session and request
@@ -243,8 +238,7 @@
         //creating data task
         
         NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
-                                                    completionHandler:^(NSData *data,
-                                                                        NSURLResponse *response,                                                                                                  NSError *error) {
+                                                    completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
                                                         //logging received response
                                                         NSLog(@"%@",response);
                                                         
@@ -283,18 +277,10 @@
 - (IBAction)goToProfile:(id)sender {
     SessionControl* control = [SessionControl sharedManager];
     [control refresh];
-<<<<<<< HEAD
    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500000000), dispatch_get_main_queue(), ^{
          NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-=======
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500000000), dispatch_get_main_queue(), ^{
-            NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-       // NSLog(@"%@", [defaults boolForKey:@"loggedIn"]);
->>>>>>> 34f420d4f1c38e59269f0d2c84328f3a378de85c
         if ([defaults boolForKey:@"loggedIn"]) {
-            
             [self performSegueWithIdentifier:@"GoToProfile" sender:nil];
         } else{
             [self performSegueWithIdentifier:@"Login" sender:nil];
