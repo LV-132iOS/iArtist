@@ -785,7 +785,6 @@
 			children = (
 				604412E61A83D7A10099B184 /* iCaruselViewController.h */,
 				604412E71A83D7A10099B184 /* iCaruselViewController.m */,
-				846AB9251A795B910043214F /* Details of painting */,
 			);
 			name = Paintings;
 			sourceTree = "<group>";
@@ -869,6 +868,7 @@
 				846AB92D1A795C630043214F /* Artist Info */,
 				846AB9291A795BC80043214F /* Search Results */,
 				846AB9211A795B380043214F /* Paintings */,
+				846AB9251A795B910043214F /* Details of painting */,
 				846AB91D1A7959400043214F /* Buy Cart */,
 				846AB9151A794C750043214F /* Liked */,
 				846AB9001A793B600043214F /* News Feed */,

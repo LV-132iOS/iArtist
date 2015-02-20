@@ -50,9 +50,12 @@ CGFloat neededScale;
     self.mainView.contentSize = CGSizeMake(1024, 768);
     self.leftviewindex = AVLeftViewEnable;
     self.mainView.delegate = self;
+    
     self.mainView.maximumZoomScale = 2.5;
+    
     self.mainView.minimumZoomScale = 1;
     [self.mainView bringSubviewToFront:self.closeButton];
+    self.authorInfo.hidden = YES;
     
 }
 
@@ -70,13 +73,16 @@ CGFloat neededScale;
     self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
     
     [self.indicator startAnimating];
+    self.indicator.hidesWhenStopped = YES;
     [self.view bringSubviewToFront:self.indicator];
+    
+    self.indicator.transform = CGAffineTransformMakeScale(8, 8);
+    
     
     [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageView.image = responde;
             [self.indicator stopAnimating];
-            [self.indicator removeFromSuperview];
             
             NSLog(@"Ok");
         });

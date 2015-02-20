@@ -1681,7 +1681,7 @@
                                     <action selector="closeController:" destination="Llz-p3-sxk" eventType="touchUpInside" id="m7h-oB-fkU"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Vtd-CN-9nv">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Vtd-CN-9nv">
                                 <rect key="frame" x="502" y="374" width="20" height="20"/>
                                 <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
