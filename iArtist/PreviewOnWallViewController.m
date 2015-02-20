@@ -294,8 +294,9 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 self.pictureIndex++;
             
             if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-                UIImageView *imgv = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]] ]];
-                [self.ImageArray replaceObjectAtIndex:self.pictureIndex  withObject:imgv];
+
+                
+
                 
             }
             
