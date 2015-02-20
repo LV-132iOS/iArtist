@@ -324,7 +324,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 
                 [self setImageWithWall:img
                                       :self.pictureImage.center
-                                      :AVSwipeRightTypeOfPictureChange];
+                                      :AVSwipeLeftTypeOfPictureChange];
                 
                 
                 
