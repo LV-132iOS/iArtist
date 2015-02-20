@@ -121,7 +121,7 @@ UIVisualEffectView *visualEffectView;
         [self.ImageArray addObject:[NSNull null]];
     }
     
-    
+  
     //NSLog(@"%@",_urls);
     self.pictureView.delegate = self;
     self.pictureView.dataSource =self;
