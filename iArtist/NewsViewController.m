@@ -48,7 +48,8 @@
         self.AllArtistData = [[ServerFetcher sharedInstance]artistdic];
         self.AllPaintingData = [[ServerFetcher sharedInstance]Paintingdic];
         for (int i=0; i<self.Ids.count;i++){
-            [self.ImagesArray addObject:([[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[i]])];}
+        //[self.ImagesArray addObject:([[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[i]])];
+        }
         [self.newsTable reloadData];
     };
     
