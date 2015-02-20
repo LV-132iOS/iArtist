@@ -15,21 +15,21 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
     AVLeftViewDisable
 };
 
-@interface FullSizePictureViewController ()<UIScrollViewDelegate,  UITableViewDelegate, UITableViewDataSource>
+@interface FullSizePictureViewController ()<UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) IBOutlet UIButton    *closeButton;
-@property (strong, nonatomic) IBOutlet UIView      *leftView;
-@property (strong, nonatomic) IBOutlet UITableView *pictureInfo;
-@property (strong, nonatomic) IBOutlet UITextView  *authorInfo;
-@property (strong, nonatomic) IBOutlet UILabel     *authorsName;
-@property (strong, nonatomic) IBOutlet UILabel     *authorsData;
-@property (strong, nonatomic)          UIImageView *authorsImage;
-@property (strong, nonatomic)          UITextView  *pictureDescription;
-@property (strong, nonatomic) IBOutlet UIButton    *authorButton;
-@property (nonatomic)                  AVLeftView  leftviewindex;
-@property (strong, nonatomic) IBOutlet UILabel     *price;
-@property (strong, nonatomic) IBOutlet UIButton    *like;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
+@property (strong, nonatomic) IBOutlet UIButton                 *closeButton;
+@property (strong, nonatomic) IBOutlet UIView                   *leftView;
+@property (strong, nonatomic) IBOutlet UITableView              *pictureInfo;
+@property (strong, nonatomic) IBOutlet UITextView               *authorInfo;
+@property (strong, nonatomic) IBOutlet UILabel                  *authorsName;
+@property (strong, nonatomic) IBOutlet UILabel                  *authorsData;
+@property (strong, nonatomic)          UIImageView              *authorsImage;
+@property (strong, nonatomic)          UITextView               *pictureDescription;
+@property (strong, nonatomic) IBOutlet UIButton                 *authorButton;
+@property (nonatomic)                  AVLeftView               leftviewindex;
+@property (strong, nonatomic) IBOutlet UILabel                  *price;
+@property (strong, nonatomic) IBOutlet UIButton                 *like;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView  *indicator;
 
 
 
@@ -50,9 +50,12 @@ CGFloat neededScale;
     self.mainView.contentSize = CGSizeMake(1024, 768);
     self.leftviewindex = AVLeftViewEnable;
     self.mainView.delegate = self;
+    
     self.mainView.maximumZoomScale = 2.5;
+    
     self.mainView.minimumZoomScale = 1;
     [self.mainView bringSubviewToFront:self.closeButton];
+    self.authorInfo.hidden = YES;
     
 }
 
@@ -70,13 +73,16 @@ CGFloat neededScale;
     self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
     
     [self.indicator startAnimating];
+    self.indicator.hidesWhenStopped = YES;
     [self.view bringSubviewToFront:self.indicator];
+    
+    self.indicator.transform = CGAffineTransformMakeScale(4, 4);
+    
     
     [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageView.image = responde;
             [self.indicator stopAnimating];
-            [self.indicator removeFromSuperview];
             
             NSLog(@"Ok");
         });

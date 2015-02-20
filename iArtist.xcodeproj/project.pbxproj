@@ -785,7 +785,6 @@
 			children = (
 				604412E61A83D7A10099B184 /* iCaruselViewController.h */,
 				604412E71A83D7A10099B184 /* iCaruselViewController.m */,
-				846AB9251A795B910043214F /* Details of painting */,
 			);
 			name = Paintings;
 			sourceTree = "<group>";
@@ -869,6 +868,7 @@
 				846AB92D1A795C630043214F /* Artist Info */,
 				846AB9291A795BC80043214F /* Search Results */,
 				846AB9211A795B380043214F /* Paintings */,
+				846AB9251A795B910043214F /* Details of painting */,
 				846AB91D1A7959400043214F /* Buy Cart */,
 				846AB9151A794C750043214F /* Liked */,
 				846AB9001A793B600043214F /* News Feed */,
@@ -1475,7 +1475,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "9d161863-dbf8-4771-a0af-7e1e618e2937";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = NO;
@@ -1516,7 +1516,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "9d161863-dbf8-4771-a0af-7e1e618e2937";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = NO;
@@ -1528,8 +1528,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = iArtist/iArtist.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/iArtist/iArtist",
@@ -1546,7 +1546,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9d161863-dbf8-4771-a0af-7e1e618e2937";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -1556,8 +1556,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = iArtist/iArtist.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/iArtist/iArtist",
@@ -1574,7 +1574,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9d161863-dbf8-4771-a0af-7e1e618e2937";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;

@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     
     Wall *wall1 = [Wall new];
     wall1.wallPicture = [UIImage imageNamed:@"room1.jpg"];
-    wall1.distanceToWall = @1.5;
+    wall1.distanceToWall = @1;
     self.currentWall = wall1;
 }
 
@@ -275,31 +275,18 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 self.pictureIndex--;
             
             if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-#pragma add indicator!
-               [[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]] callback:^(UIImage *responde) {
-                   UIImageView *imgv = [[UIImageView alloc]initWithImage:responde];
-                   [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:imgv];
-                   
-                   [self setImageWithWall:responde
-                                         :self.pictureImage.center
-                                         :AVSwipeRightTypeOfPictureChange];
-                   
-                }];
-            
-         
-            }    else{
-                UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
-                
-                [self setImageWithWall:img
-                                      :self.pictureImage.center
-                                      :AVSwipeRightTypeOfPictureChange];
-
-                
+                UIImageView *imgv = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]]];
+                [self.ImageArray replaceObjectAtIndex:self.pictureIndex  withObject:imgv];
                 
             }
             
             
-                    }
+            UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+            
+            [self setImageWithWall:img
+                                  :self.pictureImage.center
+                                  :AVSwipeRightTypeOfPictureChange];
+        }
         if (sender.direction == UISwipeGestureRecognizerDirectionLeft){
             if (self.pictureIndex == [self.ImageArray count]-1 ){
                 self.pictureIndex = 0;
@@ -307,30 +294,18 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 self.pictureIndex++;
             
             if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-#pragma add indicator!
-                [[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]] callback:^(UIImage *responde) {
-                    UIImageView *imgv = [[UIImageView alloc]initWithImage:responde];
-                    [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:imgv];
-                    
-                    [self setImageWithWall:responde
-                                          :self.pictureImage.center
-                                          :AVSwipeLeftTypeOfPictureChange];
-                    
-                }];
+
                 
-                
-            }    else{
-                UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
-                
-                [self setImageWithWall:img
-                                      :self.pictureImage.center
-                                      :AVSwipeLeftTypeOfPictureChange];
-                
-                
+
                 
             }
             
             
+            UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+            
+            [self setImageWithWall:img
+                                  :self.pictureImage.center
+                                  :AVSwipeLeftTypeOfPictureChange];
         }
     }
     if (sender.state == UIGestureRecognizerStateEnded) {

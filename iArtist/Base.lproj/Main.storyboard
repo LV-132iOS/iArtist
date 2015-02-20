@@ -1278,7 +1278,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="AqX-hk-yQu" kind="modal" modalPresentationStyle="formSheet" modalTransitionStyle="partialCurl" id="XqC-q2-HwM"/>
+                                    <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" id="XqC-q2-HwM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugo-8U-A9p">
@@ -1681,7 +1681,7 @@
                                     <action selector="closeController:" destination="Llz-p3-sxk" eventType="touchUpInside" id="m7h-oB-fkU"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Vtd-CN-9nv">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Vtd-CN-9nv">
                                 <rect key="frame" x="502" y="374" width="20" height="20"/>
                                 <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
@@ -1733,8 +1733,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="vib-vZ-Kxc"/>
-        <segue reference="MJL-gi-ees"/>
+        <segue reference="XqC-q2-HwM"/>
         <segue reference="nay-hd-SZI"/>
+        <segue reference="MJL-gi-ees"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -121,7 +121,7 @@ UIVisualEffectView *visualEffectView;
         [self.ImageArray addObject:[NSNull null]];
     }
     
-    
+  
     //NSLog(@"%@",_urls);
     self.pictureView.delegate = self;
     self.pictureView.dataSource =self;
@@ -192,6 +192,7 @@ UIVisualEffectView *visualEffectView;
     NSURL *url = [[NSURL alloc]initWithString:[self.urls objectAtIndex:index]];
     ((AsyncImageView *)view).imageURL = url;
     view = ((UIImageView*)view);
+    
     [self.ImageArray replaceObjectAtIndex:index withObject:view];
     __block NSString* str = [[NSString alloc] init];
     
@@ -240,6 +241,7 @@ UIVisualEffectView *visualEffectView;
         
         AVManager *manager = [AVManager sharedInstance];
         manager.index = self.pictureView.currentItemIndex;
+        
         ((FullSizePictureViewController *)segue.destinationViewController).paintingData = self.CurrentPainting;
           ((FullSizePictureViewController *)segue.destinationViewController).artistData = self.CurrentArtist;
         
@@ -269,6 +271,7 @@ UIVisualEffectView *visualEffectView;
         
     }
     if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
+        
         ((ArtistViewController*)segue.destinationViewController).CurrentArtist = self.CurrentArtist;
         ((ArtistViewController*)segue.destinationViewController).img = self.authorsImage.image;
     }
