@@ -22,7 +22,6 @@
     
     //set imageOfArtist
    // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults ];
-    
     BOOL isFollowed = [[ServerFetcher sharedInstance]CheckIsFollowing:[self.CurrentArtist valueForKey:@"_id"] ];
     isFollowed?[self.FollowButton setTitle:@"Unfollow-" forState:UIControlStateNormal]:nil;
     self.imageOfArtist.image = self.img;

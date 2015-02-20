@@ -69,13 +69,12 @@
     NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
 
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
-    
-    UIImageView *image =  [[UIImageView alloc]initWithImage: [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]]];
-    image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
-    image.contentMode = UIViewContentModeScaleAspectFit;
+   // UIImageView *image =  [[UIImageView alloc]initWithImage: [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]]];
+    //image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
+    //image.contentMode = UIViewContentModeScaleAspectFit;
     
     cell.contentMode = UIViewContentModeScaleAspectFit;
-    [cell addSubview:image];
+    //[cell addSubview:image];
     cell.layer.borderWidth = 4.0f;
     cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
     cell.layer.cornerRadius = 40;
