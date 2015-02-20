@@ -470,9 +470,9 @@
 				4B4A32151A8D32BD0048078C /* AFURLConnectionOperation.h */,
 				4B4A32161A8D32BD0048078C /* AFURLConnectionOperation.m */,
 				4B4A32171A8D32BD0048078C /* AFURLRequestSerialization.h */,
-				4B4A32181A8D32BD0048078C /* AFURLRequestSerialization.m */,
 				4B4A32191A8D32BD0048078C /* AFURLResponseSerialization.h */,
 				4B4A321A1A8D32BD0048078C /* AFURLResponseSerialization.m */,
+				4B4A32181A8D32BD0048078C /* AFURLRequestSerialization.m */,
 				4B4A321B1A8D32BD0048078C /* AFURLSessionManager.h */,
 				4B4A321C1A8D32BD0048078C /* AFURLSessionManager.m */,
 			);
