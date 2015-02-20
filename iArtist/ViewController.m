@@ -108,7 +108,7 @@
     self.artistsCarousel.currentItemIndex = 2;
     
     
-    self.scroll.contentSize = CGSizeMake(1024, 1069);
+    self.scroll.contentSize = CGSizeMake(1024, 1000);//1024, 1069
     AVManager *dataManager = [AVManager sharedInstance];
     dataManager.index = 0;
     dataManager.wallImage = [Wall new];
