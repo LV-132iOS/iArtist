@@ -18,3 +18,21 @@ DerivedData
 .idea/
 # Pods - for those of you who use CocoaPods
 Pods
+
+iArtist.xcodeproj/project.pbxproj
+
+iArtist/AsyncImageView.m
+
+iArtist/Base.lproj/Main.storyboard
+
+iArtist/Base.lproj/Main.storyboard
+
+iArtist/FullSizePictureViewController.m
+
+iArtist/iCaruselViewController.m
+
+iArtist/ServerFetcher.m
+
+iArtist/LikedViewController.m
+
+iArtist/LikedViewController.m
