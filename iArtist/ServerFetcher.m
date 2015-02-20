@@ -188,8 +188,14 @@ static NSString *querystring;
             
         }
     
+       // NSLog(@"%@",ids);
 
         callback(ids);
+    
+          NSLog(@"%@",Paintingdic);
+            
+       // NSLog(@"%@",ids);
+        
         
         // [Picture CreatePictureWithData:dic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
