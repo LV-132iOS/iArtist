@@ -639,7 +639,7 @@ NSString *const AsyncImageErrorKey = @"error";
         {
             self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:self.activityIndicatorStyle];
             //set size for activity indicator
-            self.activityView.transform = CGAffineTransformMakeScale(16, 16);
+            self.activityView.transform = CGAffineTransformMakeScale(4, 4);
             
             self.activityView.hidesWhenStopped = YES;
             self.activityView.center = CGPointMake(self.bounds.size.width / 2.0f, self.bounds.size.height / 2.0f);
