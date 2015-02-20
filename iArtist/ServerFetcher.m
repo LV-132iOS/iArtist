@@ -234,7 +234,7 @@ static NSString *querystring;
     manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     __block BOOL isFollowed = NO;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *userid = [defaults objectForKey:@"id"];
+    NSString *userid = [NSString stringWithString:[defaults objectForKey:@"id"]];
     userid = [userid stringByAppendingString:@"/favorite_artists/"];
     [manager GET:[userid stringByAppendingString:_id]
       parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {

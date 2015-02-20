@@ -271,6 +271,7 @@ UIVisualEffectView *visualEffectView;
         
     }
     if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
+        
         ((ArtistViewController*)segue.destinationViewController).CurrentArtist = self.CurrentArtist;
         ((ArtistViewController*)segue.destinationViewController).img = self.authorsImage.image;
     }
