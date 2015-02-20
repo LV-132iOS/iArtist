@@ -320,7 +320,7 @@ static NSString *querystring;
 
 
 - (void)FetchArtists {
-    //_artistdic = [[NSMutableDictionary alloc]init];
+    _artistdic = [[NSMutableDictionary alloc]init];
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
@@ -333,7 +333,7 @@ static NSString *querystring;
                  
              }*/
              
-            _artistdic = (NSDictionary*)responseObject;
+             _artistdic = (NSDictionary*)responseObject;
             
              dispatch_semaphore_signal(semaphore);
 
@@ -357,11 +357,11 @@ static NSString *querystring;
 
 - (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback
 {
+    __block UIImage *image;
     manager.responseSerializer = [AFImageResponseSerializer serializer];
     [manager GET:[@"paintings/files/" stringByAppendingString:_id]
       parameters:nil
          success:^(NSURLSessionDataTask *task, id responseObject) {
-             UIImage *image;
              image = (UIImage*)responseObject;
              callback(image);
              manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -376,23 +376,27 @@ static NSString *querystring;
     
 }
 
-- (void)GetPictureThumbWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback
+- (UIImage*)GetPictureWithID:(NSString*)_id
 {
-    
+    __block UIImage *image;
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     manager.responseSerializer = [AFImageResponseSerializer serializer];
-    [manager GET:[NSString stringWithFormat:@"paintings/files/%@?thumb=true", _id]
+    [manager GET:[@"paintings/files/" stringByAppendingString:_id]
       parameters:nil
          success:^(NSURLSessionDataTask *task, id responseObject) {
-             UIImage *image;
              image = (UIImage*)responseObject;
-             callback(image);
+             dispatch_semaphore_signal(semaphore);
              
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
+             dispatch_semaphore_signal(semaphore);
              
              
          }];
-
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    return image;
     
     
     
