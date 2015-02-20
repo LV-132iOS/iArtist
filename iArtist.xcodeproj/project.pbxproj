@@ -864,7 +864,6 @@
 				60E69A661A865DBB007CA1C6 /* Core Data */,
 				604413031A83D7C00099B184 /* Images */,
 				604412CF1A83D7870099B184 /* AV classes */,
-				84A0E82A1A77B688009F6EA5 /* Main.storyboard */,
 				846AB9311A795EF80043214F /* Preview on wall */,
 				846AB92D1A795C630043214F /* Artist Info */,
 				846AB9291A795BC80043214F /* Search Results */,
@@ -882,6 +881,7 @@
 		84A0E8201A77B688009F6EA5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84A0E82A1A77B688009F6EA5 /* Main.storyboard */,
 				6048E26C1A8B51C30099D8D3 /* user-icon-0910125612.png */,
 				6099E2CD1A82928300513668 /* vk_logo.png */,
 				6099E2C51A825D8E00513668 /* iArtist.entitlements */,
