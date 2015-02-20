@@ -155,10 +155,7 @@ static NSString *querystring;
                 [urls addObject:Urlstr];
                 
             }
-            NSLog(@"%@",urls);
-
             
-            // [Picture CreatePictureWithData:dic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
             dispatch_semaphore_signal(semaphore);
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             NSLog(@"%@",error);
