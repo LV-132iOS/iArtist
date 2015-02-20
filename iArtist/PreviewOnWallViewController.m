@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     
     Wall *wall1 = [Wall new];
     wall1.wallPicture = [UIImage imageNamed:@"room1.jpg"];
-    wall1.distanceToWall = @1.5;
+    wall1.distanceToWall = @1.0;
     self.currentWall = wall1;
 }
 
