@@ -12,12 +12,13 @@
 #import <TwitterKit/TwitterKit.h>
 #import <GooglePlus/GPPURLHandler.h>
 #import <VKSdk/VKSdk.h>
+#import "ServerFetcher.h"
 #import "SessionControl.h"
-
 
 @interface AppDelegate (){
     VKDelegate* vkDelegate;
 }
+
 @property (nonatomic, strong) SessionControl* control;
 
 @end
@@ -41,7 +42,6 @@
     vkDelegate = [[VKDelegate alloc] init];
     [VKSdk initializeWithDelegate:vkDelegate andAppId:@"4738060"];
     [VKSdk wakeUpSession];
-    
     return YES;
 }
 

@@ -1,14 +1,17 @@
 //
-//  LikedViewController.h
+//  AVLikedViewController.h
 //  iArtist
 //
-//  Created by Admin on 28.01.15.
+//  Created by Andrii V. on 03.02.15.
 //  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "Sesion.h"
+#import "AVManager.h"
 
 @interface LikedViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UICollectionView *likedCollectionView;
+
+@property (strong, nonatomic)  Sesion  *session;
 
 @end

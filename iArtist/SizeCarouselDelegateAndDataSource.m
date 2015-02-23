@@ -7,6 +7,7 @@
 //
 
 #import "SizeCarouselDelegateAndDataSource.h"
+#import "ServerFetcher.h"
 
 @interface SizeCarouselDelegateAndDataSource () {
     
@@ -41,8 +42,8 @@
     
     //set button label
     if (index == 0) {
-        //button.titleLabel.font = [button.titleLabel.font fontWithSize:20];
         [button setTitle:@"Small" forState:UIControlStateNormal];
+        //button.titleLabel.font = [button.titleLabel.font fontWithSize:20];
     } else if (index == 1){
         //button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
         [button setTitle:@"Medium" forState:UIControlStateNormal];
@@ -51,7 +52,7 @@
         [button setTitle:@"Big" forState:UIControlStateNormal];
     } else if (index == 3){
         //button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
-        [button setTitle:@"Several pictures" forState:UIControlStateNormal];
+        [button setTitle:@"Very Big" forState:UIControlStateNormal];
     }
     
     
@@ -68,6 +69,18 @@
 }
 
 - (void)buttonTapped:(UIButton *)sender{
+    ServerFetcher *DownloadManager;
+      DownloadManager = [ServerFetcher sharedInstance];
+    if ([sender.titleLabel.text isEqualToString:@"Small"]) {
+        [DownloadManager GenerateQueryForSize:@"Small"];
+
+    } else if ([sender.titleLabel.text isEqualToString:@"Medium"]){
+        [DownloadManager GenerateQueryForSize:@"Medium"];
+
+    }else if ([sender.titleLabel.text isEqualToString:@"Big"]){
+        [DownloadManager GenerateQueryForSize:@"Big"];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
 }
 

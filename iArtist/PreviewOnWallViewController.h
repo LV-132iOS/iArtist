@@ -1,13 +1,36 @@
 //
-//  PreviewOnWallViewController.h
-//  iArtist
+//  AVPainterViewController.h
+//  MyPartOfFirstProject1
 //
-//  Created by Admin on 28.01.15.
-//  Copyright (c) 2015 SS projects. All rights reserved.
+//  Created by Andrii V. on 26.01.15.
+//  Copyright (c) 2015 Andrii V. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "SetWallPopoverTableViewController.h"
+#import "AVPicture.h"
+#import "Wall.h"
+#import "Sesion.h"
+#import "iCaruselViewController.h"
+#import "AVManager.h"
 
-@interface PreviewOnWallViewController : UIViewController
+@interface PreviewOnWallViewController : UIViewController <UIGestureRecognizerDelegate, UIPopoverControllerDelegate>
+
+@property (strong, nonatomic) IBOutlet UIImageView *roomImage;
+@property (strong, nonatomic) IBOutlet UIImageView *pictureImage;
+@property (strong, nonatomic) Sesion *session;
+@property (strong, nonatomic) AVPicture *currentPicture;
+@property (strong, nonatomic) Wall *currentWall;
+@property (strong, nonatomic) AVManager *dataManager;
+@property (nonatomic) NSInteger pictureIndex;
+@property (nonatomic, strong) NSDictionary *AllPaintingData;
+@property (strong,nonatomic) NSMutableArray *ImageArray;
+@property (nonatomic, strong) NSDictionary *CurrentPainting;
+@property (nonatomic, strong) NSDictionary *CurrentArtist;
+
+
+
+- (void) hideViews;
+- (void) pushVies;
 
 @end

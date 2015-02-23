@@ -13,9 +13,10 @@
 
 -(void)beginNotify;
 -(BOOL)checkInternetConnection;
--(BOOL)checkSession:(NSString*)sessionName;
+-(NSString*)checkSession:(NSString*)sessionName;
 -(NSString*)currentSocialNetwork;
 -(void)refresh;
+-(void)reset;
 
 +(id)sharedManager;
 

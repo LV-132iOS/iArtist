@@ -50,7 +50,7 @@
         isOK = NO;
         isOKSocial = NO;
         currentSocial = @"none";
-        Reachable = [Reachability reachabilityWithHostname:@"www.google.com"];
+        Reachable = [Reachability reachabilityWithHostname:@"ec2-54-93-36-107.eu-central-1.compute.amazonaws.com"];
         // Internet is reachable
         Reachable.reachableBlock = ^(Reachability*reach)
         {
@@ -93,10 +93,10 @@
     return [Reachable isReachable];
 }
 //check if social network session is active
--(BOOL)checkSession:(NSString *)sessionName {
+-(NSString*)checkSession:(NSString *)sessionName {
     if ([currentSocial isEqualToString:sessionName]) {
-        return isOKSocial;
-    } else return nil;
+        return isOKSocial? @"yes" : @"no";
+    } else return @"nil";
 }
 //update info
 -(void)updateSessionInfo:(NSNotification*)notification {
@@ -164,7 +164,8 @@
         //check if session is valid be sending a request that needs authorization
         
         GPPSignIn *signIn = [GPPSignIn sharedInstance];
-        GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
+        signIn.keychainName = @"123";
+        GTLServicePlus* plusService = [signIn plusService];
         plusService.retryEnabled = YES;
         [plusService setAuthorizer: signIn.authentication];
         
@@ -207,6 +208,13 @@
                                                               userInfo:locDictionary];
         }];
     }
+}
+
+
+-(void)reset{
+    isOK = NO;
+    isOKSocial = NO;
+    currentSocial = @"none";
 }
 
 @end

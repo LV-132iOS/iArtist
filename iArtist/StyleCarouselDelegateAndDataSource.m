@@ -7,6 +7,7 @@
 //
 
 #import "StyleCarouselDelegateAndDataSource.h"
+#import "ServerFetcher.h"
 
 
 @interface StyleCarouselDelegateAndDataSource (){
@@ -17,7 +18,7 @@
 @end
 
 @implementation StyleCarouselDelegateAndDataSource
-
+UILabel * title;
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
     
@@ -29,22 +30,32 @@
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
     
-   	UIButton *button = (UIButton *)view;
+    UIButton *button = (UIButton *)view;
     if (button == nil)
     {
         //no button available to recycle, so create new one
         button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(0.0f, 0.0f, 220.0f, 110.0f); //button.frame = CGRectMake(0.0f, 0.0f, 300.0f, 180.0f);
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(160, 10, 5, 10)];
-        [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:20]];
+        button.frame = CGRectMake(0.0f, 0.0f, 290.0f, 175.0f);
         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        //set button label and images
+        title = [[UILabel alloc] initWithFrame:(CGRect){.origin.x = button.frame.origin.x,
+            .origin.y = button.frame.size.height - 25,
+            .size.width = button.frame.size.width,
+            .size.height = 25}];
+        
+        title.text = arrayOfStyles[index];
+        [title setFont:[UIFont fontWithName:@"Helvetica" size:20]];
+        title.textAlignment = NSTextAlignmentCenter;
+        
+        [button addSubview:title];
+        [button.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 25, 0);
+        [button setImage:[UIImage imageNamed:arrayOfPictures[index]] forState:UIControlStateNormal];
+        
     }
     
-    //set button label and images
-    [button setTitle:arrayOfStyles[index] forState:UIControlStateNormal];
-    [button setBackgroundImage: [UIImage imageNamed:arrayOfPictures[index]] forState:UIControlStateNormal];
-    button.contentMode = UIViewContentModeScaleAspectFit;
     return button;
 }
 
@@ -54,13 +65,33 @@
         return 1.0f;
     }
     if (option == iCarouselOptionSpacing) {
-        return 0.7f;
+        return 1.7f;
     }
     
     return value;
 }
 
 - (void)buttonTapped:(UIButton *)sender{
+    ServerFetcher *DownloadManager;
+      DownloadManager = [ServerFetcher sharedInstance];
+    if ([sender.titleLabel.text isEqualToString:@"History"]) {
+        [DownloadManager GenerateQueryForTag:@"History"];
+        
+    } else if ([sender.titleLabel.text isEqualToString:@"Nature"]){
+        [DownloadManager GenerateQueryForTag:@"Nature"];
+        
+    }else if ([sender.titleLabel.text isEqualToString:@"Military"]){
+        [DownloadManager GenerateQueryForTag:@"Military"];
+    }
+    if ([sender.titleLabel.text isEqualToString:@"Portrait"]) {
+        [DownloadManager GenerateQueryForTag:@"Portrait"];
+        
+    }else if ([sender.titleLabel.text isEqualToString:@"Still life"]){
+        [DownloadManager GenerateQueryForTag:@"Still life"];
+    }  if ([sender.titleLabel.text isEqualToString:@"Vanitas"]) {
+        [DownloadManager  GenerateQueryForTag:@"Vanitas"];
+    
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
 }
 

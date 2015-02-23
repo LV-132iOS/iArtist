@@ -10,185 +10,398 @@
 #import "AFNetworking.h"
 #import "Picture+Create.h"
 #import "AppDelegate.h"
-static NSString * const BaseURLString = @"http://192.168.103.5:8080";
-static  NSMutableDictionary *Paintingdic;
+
+//static NSString * const BaseURLString = @"http://192.168.103.5/";
+static NSString * const BaseURLString = @"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/";
+static  AFHTTPSessionManager *manager;
+static NSString *querystring;
+
 
 
 @interface ServerFetcher ()
-@property (nonatomic,strong)  NSURLSessionConfiguration *config;
-@property (nonatomic,strong)    NSURL *baseURL;
-@property (nonatomic,strong)    AFHTTPSessionManager *manager;
-@property (nonatomic, strong) NSMutableArray *Images;
+
 @end
 
 @implementation ServerFetcher
 
-
-
-
-- (NSString*)GenerateQueryForTag:(NSString*)querry{
-    NSString *querryStr = [NSString stringWithFormat:@"{ \"tags\": \"%@\" }",querry];
-    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                                            (CFStringRef)querryStr,
-                                                                                            NULL,
-                                                                                            (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
-
-    return querryStr;
+-(NSDictionary *)Paintingdic{
+    @synchronized(self){return Paintingdic;}
 }
 
-- (NSString*)GenerateQueryForPrice:(NSString*)querry{
-    NSString *querryStr = [NSString stringWithFormat:@"{ \"price\": {\"\$lt\":%@} }",querry];
+-(NSMutableArray *)artistdic{
+    @synchronized(self){return Artistdic;}
+}
+
+- (void)GenerateQueryForTag:(NSString*)querry{
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"tags\": \"%@\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)querryStr,
                                                                                      NULL,
                                                                                      (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
     
-    return querryStr;
+    querystring = querryStr;
 }
 
-- (NSString*)GenerateQueryForSize:(NSString*)querry{
+- (void)GenerateQueryForMaterial:(NSString*)querry{
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"materials\": \"%@\" }",querry];
+    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                     (CFStringRef)querryStr,
+                                                                                     NULL,
+                                                                                     (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
+    
+    querystring = querryStr;
+}
+
+- (void)GenerateQueryForArtist:(NSString*)querry{
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"Artist\": \"%@\" }",querry];
+    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                     (CFStringRef)querryStr,
+                                                                                     NULL,
+                                                                                     (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
+    
+    querystring = querryStr;
+}
+- (void)GenerateQueryForColor:(NSString*)querry{
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"Color\": \"%@\" }",querry];
+    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                            (CFStringRef)querryStr,
+                                                                                            NULL,
+                                                                                            (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
+
+    querystring = querryStr;
+}
+
+
+
+
+- (void)GenerateQueryForPrice:(int)min :(int)max{
+    NSString *querryStr = [NSString stringWithFormat:@"{ \"price\": {\"\$gte\":%d,\"\$lte\":%d} }",min,max];
+    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                     (CFStringRef)querryStr,
+                                                                                     NULL,
+                                                                                     (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
+    
+    querystring = querryStr;
+}
+
+
+
+- (void)GenerateQueryForSize:(NSString*)querry{
     NSString *querryStr = [NSString stringWithFormat:@"{ \"size\": \"%@\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)querryStr,
                                                                                      NULL,
                                                                                      (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
     
-    return querryStr;
+    querystring = querryStr;
 }
 
-- (NSMutableDictionary*)RunQuery:(NSString*)queryString
+
+
+
+
+- (NSMutableArray*)RunQuery
 {
-    NSMutableDictionary* dic;
-    dic = [[NSMutableDictionary alloc]init];
-    NSString *str = [@"paintings/db?query=" stringByAppendingString:queryString];
-    [self.manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        
+    if (querystring == nil) {
+        return nil;
+    }
+    else{
+    Paintingdic = [[NSMutableDictionary alloc]init];
+    NSMutableArray *urls = [[NSMutableArray alloc]init];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    NSString *str = [@"paintings/db?query=" stringByAppendingString:querystring] ;
+    [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             for (int i = 0; i<((NSArray*)responseObject).count; i++)
             {
+                NSString *str = [BaseURLString stringByAppendingString:@"paintings/files/%@"];
                 [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
-              
+                NSString *Urlstr = [NSString stringWithFormat:str,[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
+                Urlstr = [Urlstr stringByAppendingString:@"?thumb=true"];
+                NSLog(@"%@",Urlstr);
+                [urls addObject:Urlstr];
                 
             }
-        for (int i = 0; i<((NSArray*)responseObject).count; i++)
-        {
-            [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
+        
+       // [Picture CreatePictureWithData:dic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
+       dispatch_semaphore_signal(semaphore);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@",error);
+       dispatch_semaphore_signal(semaphore);
+
+    }];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return urls;
+  
+    }
+}
+
+- (NSMutableArray*)GetLikesForUser:(NSString *)_id
+{
+    
+        Paintingdic = [[NSMutableDictionary alloc]init];
+        NSMutableArray *urls = [[NSMutableArray alloc]init];
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        NSString *str = [NSString stringWithFormat:@"%@/favorite_paintings",_id];
+        [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+            for (int i = 0; i<((NSArray*)responseObject).count; i++)
+            {
+                NSString *str = [BaseURLString stringByAppendingString:@"paintings/files/%@"];
+                [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
+                NSString *Urlstr = [NSString stringWithFormat:str,[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
+                Urlstr = [Urlstr stringByAppendingString:@"?thumb=true"];
+                NSLog(@"%@",Urlstr);
+                [urls addObject:Urlstr];
+                
+            }
+            NSLog(@"%@",urls);
+
+            
+            // [Picture CreatePictureWithData:dic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
+            dispatch_semaphore_signal(semaphore);
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"%@",error);
+            dispatch_semaphore_signal(semaphore);
+            
+        }];
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        return urls;
+        }
+
+    
+
+- (void)GetNewsForUser:(NSString *)_id
+              callback:(void (^)(NSMutableArray* responde))callback
+{
+    Paintingdic =[[NSMutableDictionary alloc]init];
+    Artistdic = [[NSMutableArray alloc]init];
+    __block NSMutableArray *ids = [[NSMutableArray alloc]init];
+    NSString *str = [NSString stringWithFormat:@"%@/favorite_artists",_id];
+    [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        Artistdic = (NSMutableArray *)responseObject;
+        for (int i=0; i<Artistdic.count; i++) {
+            for (int j=0; j<[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) count]; j++) {
+                [ids addObject: [[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) objectAtIndex:j] valueForKey:@"_id" ]];
+                [Paintingdic setObject:[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) objectAtIndex:j]forKey:[NSString stringWithFormat:@"%d",j]];
+            }
             
         }
+    
+       // NSLog(@"%@",ids);
+
+        callback(ids);
+    
+          NSLog(@"%@",Paintingdic);
+            
+       // NSLog(@"%@",ids);
         
-        NSLog(@"%@",Paintingdic);
-        [Picture CreatePictureWithData:Paintingdic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
         
+        // [Picture CreatePictureWithData:dic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
+
+        
     }];
-    return dic;
-   
 }
 
-- (void)PutLikes{
-[self.manager PUT:@"/tw719461997/favorite_paintings/54d0de6cf12ad4516e497ea8" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-    NSLog(@"%@",responseObject);
+
+- (BOOL)BecomeAFollower:(NSString *)_id{
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    __block BOOL isFollowed = NO;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [defaults objectForKey:@"id"];
+    userid = [userid stringByAppendingString:@"/favorite_artists/"];
+    [manager PUT:[userid stringByAppendingString:_id]
+      parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+          if ([[responseObject valueForKey:@"result"] isEqualToString:@"true"] ) {
+              isFollowed = YES;
+          }
+          dispatch_semaphore_signal(semaphore);
+          
+      } failure:^(NSURLSessionDataTask *task, NSError *error) {
+          NSLog(@"%@",error);
+          dispatch_semaphore_signal(semaphore);
+          
+      }];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return isFollowed;
+}
+
+- (BOOL)CheckIsFollowing:(NSString *)_id{
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    __block BOOL isFollowed = NO;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [NSString stringWithString:[defaults objectForKey:@"id"]];
+    userid = [userid stringByAppendingString:@"/favorite_artists/"];
+    [manager GET:[userid stringByAppendingString:_id]
+      parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+          if ([[responseObject valueForKey:@"result"] isEqualToString:@"true"] ) {
+              isFollowed = YES;
+          }
+          dispatch_semaphore_signal(semaphore);
+          
+      } failure:^(NSURLSessionDataTask *task, NSError *error) {
+          NSLog(@"%@",error);
+          dispatch_semaphore_signal(semaphore);
+          
+      }];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return isFollowed;
+}
+
+
+
+
+- (NSString*)PutLikes:(NSString*)_id{
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [defaults objectForKey:@"id"];
+    __block NSString *responde;
+    userid = [userid stringByAppendingString:@"/favorite_paintings/"];
+    [manager PUT:[userid stringByAppendingString:_id]
+  parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+      responde = [responseObject valueForKey:@"count"];
+      dispatch_semaphore_signal(semaphore);
+
 } failure:^(NSURLSessionDataTask *task, NSError *error) {
     NSLog(@"%@",error);
+    dispatch_semaphore_signal(semaphore);
+
 }];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return responde;
 }
 
--(void)GetLikes{
-    [self.manager GET:@"/tw719461997/favorite_paintings" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@",responseObject);
+- (NSString*)GetLikesCount:(NSString *)_id{
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    __block NSString *count = [[NSString alloc]init];
+    [manager GET:[NSString stringWithFormat:@"paintings/db/%@?likes=true",_id] parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        //NSLog(@"%@",responseObject);
+        count = [(NSDictionary *)responseObject objectForKey:@"count"];
+        dispatch_semaphore_signal(semaphore);
+
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
+        dispatch_semaphore_signal(semaphore);
+
     }];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+
+    return count;
 }
 
--(instancetype)init{
-    self = [super init];
-    _config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-    _baseURL = [NSURL URLWithString:BaseURLString];
-    _manager = [[AFHTTPSessionManager alloc] initWithBaseURL:_baseURL sessionConfiguration:_config];
-    _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
-    //_manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    //_manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+-(id)init{
+   
+       return self;
     
-    return self;
+}
+
+
++ (ServerFetcher *)sharedInstance{
+    static ServerFetcher *singleton = nil;
+    static dispatch_once_t predicate;
+    dispatch_once( &predicate, ^{
+        singleton = [[ServerFetcher alloc]init];
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        NSURL *urllstr = [[NSURL alloc]initWithString:BaseURLString];
+        manager = [[AFHTTPSessionManager alloc] initWithBaseURL:urllstr sessionConfiguration:config];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+    } );
+
+
+   
+    return singleton;
 }
 
 
 - (void)FetchArtists {
-    Artistdic = [[NSMutableDictionary alloc]init];
-    [self.manager GET:@"/arstists"
+    _artistdic = [[NSMutableDictionary alloc]init];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    [manager GET:@"/artists/db/54d8e80de3ad4c9f15f3a653"
       parameters:nil
          success:^(NSURLSessionDataTask *task, id responseObject) {
-             for (int i = 0; i<((NSArray*)responseObject).count; i++)
+             /*for (int i = 0; i<((NSArray*)responseObject).count; i++)
              {
                  [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
                  
-             }
+             }*/
              
-             NSLog(@"%@",Paintingdic);
+             _artistdic = (NSDictionary*)responseObject;
+            
+             dispatch_semaphore_signal(semaphore);
+
              
-             
-             
-             [Picture CreatePictureWithData:Paintingdic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
+             //[Picture CreatePictureWithData:Paintingdic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
              
              
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
+             dispatch_semaphore_signal(semaphore);
+
              
              
          }];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+
     
         
 }
 
-/*- (void)Fetch {
-    Paintingdic = [[NSMutableDictionary alloc]init];
-    [self FetchArtists];
 
-    [self.manager GET:@"/paintings/db"
-           parameters:nil
-              success:^(NSURLSessionDataTask *task, id responseObject) {          
-                  for (int i = 0; i<((NSArray*)responseObject).count; i++)
-                  {
-                      [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
-           
-                  }
-                  
-                  NSLog(@"%@",Paintingdic);
-                 
-                  
-                  
-                  [Picture CreatePictureWithData:Paintingdic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
-                  //[self reloadDB];
-               
-                  
-              } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                  NSLog(@"Error: %@", error);
-                  
-              }];
-}*/
-- (UIImage*)GetPictureWithID:(NSString*)_id toView:(UIView*)view;
+- (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback
 {
     __block UIImage *image;
-    self.manager.requestSerializer = [AFJSONRequestSerializer serializer];
-   self.manager.responseSerializer = [AFImageResponseSerializer serializer];
-    [self.manager GET:[@"paintings/files/" stringByAppendingString:_id]
+    manager.responseSerializer = [AFImageResponseSerializer serializer];
+    [manager GET:[@"paintings/files/" stringByAppendingString:_id]
       parameters:nil
          success:^(NSURLSessionDataTask *task, id responseObject) {
              image = (UIImage*)responseObject;
-           
+             callback(image);
+             manager.responseSerializer = [AFJSONResponseSerializer serializer];
              
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
              
+             
          }];
     
- 
+    
+    
+}
+
+- (UIImage*)GetPictureWithID:(NSString*)_id
+{
+    __block UIImage *image;
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    manager.responseSerializer = [AFImageResponseSerializer serializer];
+    [manager GET:[@"paintings/files/" stringByAppendingString:_id]
+      parameters:nil
+         success:^(NSURLSessionDataTask *task, id responseObject) {
+             image = (UIImage*)responseObject;
+             dispatch_semaphore_signal(semaphore);
+             
+         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+             NSLog(@"Error: %@", error);
+             dispatch_semaphore_signal(semaphore);
+             
+             
+         }];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     return image;
     
-
+    
+    
 }
+
 
 - (void)reloadDB
 {

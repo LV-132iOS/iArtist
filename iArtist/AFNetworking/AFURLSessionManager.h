@@ -1,6 +1,6 @@
 // AFURLSessionManager.h
 //
-// Copyright (c) 2013-2014 AFNetworking (http://afnetworking.com)
+// Copyright (c) 2013-2015 AFNetworking (http://afnetworking.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -94,7 +94,7 @@
 /**
  The operation queue on which delegate callbacks are run.
  */
-@property (nonatomic, strong) NSOperationQueue *operationQueue;
+@property (readonly, nonatomic, strong) NSOperationQueue *operationQueue;
 
 /**
  Responses sent from the server in data tasks created with `dataTaskWithRequest:success:failure:` and run using the `GET` / `POST` / et al. convenience methods are automatically validated and serialized by the response serializer. By default, this property is set to an instance of `AFJSONResponseSerializer`.
