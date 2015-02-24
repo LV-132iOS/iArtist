@@ -66,16 +66,15 @@
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
-    NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
+    //NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
 
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
-    
-    UIImageView *image =  [[UIImageView alloc]initWithImage: [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]]];
-    image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
-    image.contentMode = UIViewContentModeScaleAspectFit;
+   // UIImageView *image =  [[UIImageView alloc]initWithImage: [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]]];
+    //image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
+    //image.contentMode = UIViewContentModeScaleAspectFit;
     
     cell.contentMode = UIViewContentModeScaleAspectFit;
-    [cell addSubview:image];
+    //[cell addSubview:image];
     cell.layer.borderWidth = 4.0f;
     cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
     cell.layer.cornerRadius = 40;
@@ -93,7 +92,7 @@
     dataManager.session = session;
 
     
-    if ([segue.identifier isEqualToString:@"LikedToPicture"]) {
+    if ([segue.identifier isEqualToString:IAlikeToPicture]) {
         NSInteger index =  [((UICollectionView *)(((UICollectionViewCell *)sender).superview))
                             indexPathForCell:(UICollectionViewCell *)sender].row;
         dataManager.index = index;
@@ -103,7 +102,7 @@
 
 
     }
-    if ([segue.identifier isEqualToString:@"Liked Cart"]) {
+    if ([segue.identifier isEqualToString:IAlikeCart]) {
         
         
         

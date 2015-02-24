@@ -19,15 +19,15 @@
     //if we here - then there is no errors
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     //prevent from multiple throws
-    if ([defaults boolForKey:@"informationSent"] == NO ) {
+    if ([defaults boolForKey:IAinformationSent] == NO ) {
         //creactig info for user
         NSString* locString = [@"fb" stringByAppendingString:[user objectForKey:@"id"]];
         [defaults setObject:locString forKey:@"id"];
-        [defaults setObject:[user objectForKey:@"name"] forKey:@"username"];
-        [defaults setObject:[user objectForKey:@"email"] forKey:@"useremail"];
+        [defaults setObject:[user objectForKey:@"name"] forKey:IAusername];
+        [defaults setObject:[user objectForKey:@"email"] forKey:IAuseremail];
         //send info to server
         NSDictionary* info = @{ @"with": @"Facebook" };
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil userInfo:info];
+        [[NSNotificationCenter defaultCenter] postNotificationName:IAsendInfo object:nil userInfo:info];
 
     }
  }

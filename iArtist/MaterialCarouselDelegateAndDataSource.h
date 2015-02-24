@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "iCarousel.h"
 #import "ServerFetcher.h"
-
+#import "Constants.h"
 
 @interface MaterialCarouselDelegateAndDataSource : NSObject <iCarouselDelegate, iCarouselDataSource>
 

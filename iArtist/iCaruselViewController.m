@@ -121,16 +121,12 @@ UIVisualEffectView *visualEffectView;
         [self.ImageArray addObject:[NSNull null]];
     }
     
-  
+    
     //NSLog(@"%@",_urls);
     self.pictureView.delegate = self;
     self.pictureView.dataSource =self;
     [self mainInit];
     // Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(shareWithTwitter:)
-                                                 name:@"ShareWithTwitter"
-                                               object:nil];
 }
 //view will appear. we need this when we dismiss presented view controller and return here
 
@@ -140,7 +136,7 @@ UIVisualEffectView *visualEffectView;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    
+    [super viewWillAppear:animated];
     self.pictureView.hidden = NO;
     [self.backgroundView sendSubviewToBack:visualEffectView];
     //self.intputPictureIndex = self.dataManager.index;
@@ -192,7 +188,6 @@ UIVisualEffectView *visualEffectView;
     NSURL *url = [[NSURL alloc]initWithString:[self.urls objectAtIndex:index]];
     ((AsyncImageView *)view).imageURL = url;
     view = ((UIImageView*)view);
-    
     [self.ImageArray replaceObjectAtIndex:index withObject:view];
     __block NSString* str = [[NSString alloc] init];
     
@@ -221,7 +216,7 @@ UIVisualEffectView *visualEffectView;
 #pragma mark - seque
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([segue.identifier isEqualToString: @"ModalToPreviewOnWall"]) {
+    if ([segue.identifier isEqualToString:IAmodalToPreviewOnWall]) {
         
         ((PreviewOnWallViewController *)segue.destinationViewController).session = self.session;
         ((PreviewOnWallViewController *)segue.destinationViewController).pictureIndex = self.pictureView.currentItemIndex;
@@ -237,11 +232,10 @@ UIVisualEffectView *visualEffectView;
     
     }
 
-    if ([segue.identifier isEqualToString: @"ModalToDetail"]) {
+    if ([segue.identifier isEqualToString:IAmodalToDetail]) {
         
         AVManager *manager = [AVManager sharedInstance];
         manager.index = self.pictureView.currentItemIndex;
-        
         ((FullSizePictureViewController *)segue.destinationViewController).paintingData = self.CurrentPainting;
           ((FullSizePictureViewController *)segue.destinationViewController).artistData = self.CurrentArtist;
         
@@ -250,7 +244,7 @@ UIVisualEffectView *visualEffectView;
         
     }
     
-    if ([segue.identifier isEqualToString:@"SimpleShare"]) {
+    if ([segue.identifier isEqualToString:IAsimpleShare]) {
         //get only picture
         locImageToShare = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image;
         //set text
@@ -261,17 +255,16 @@ UIVisualEffectView *visualEffectView;
         
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
-        locImageUrl =[NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/" stringByAppendingString: [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]]]];
+        locImageUrl =[NSURL URLWithString:[[IAamazonServer stringByAppendingString:@"/paintings/files/" ] stringByAppendingString: [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]]]];
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/" stringByAppendingString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]]]];
+        locUrlToPass = [NSURL URLWithString:[[IAamazonServer stringByAppendingString:@"/paintings/files/"] stringByAppendingString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureView.currentItemIndex]]]];
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
         ((ShareViewController*)segue.destinationViewController).imageUrl =locImageUrl;
         ((ShareViewController*)segue.destinationViewController).headString = locHeadString;
         ((ShareViewController*)segue.destinationViewController).urlToPass =locUrlToPass;
         
     }
-    if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
-        
+    if ([segue.identifier isEqualToString:IAartistInfo]) {
         ((ArtistViewController*)segue.destinationViewController).CurrentArtist = self.CurrentArtist;
         ((ArtistViewController*)segue.destinationViewController).img = self.authorsImage.image;
     }
@@ -309,7 +302,7 @@ UIVisualEffectView *visualEffectView;
         
         CGFloat timeForAnimation = 0.3;
         
-        [self animate:timeForAnimation whithSeque:@"ModalToDetail"];
+        [self animate:timeForAnimation whithSeque:IAmodalToDetail];
     }
 }
 
@@ -321,10 +314,10 @@ UIVisualEffectView *visualEffectView;
         
         if (((UIPinchGestureRecognizer *)sender).scale < 1) {
             
-            [self animate:timeForAnimation whithSeque:@"ModalToPreviewOnWall"];
+            [self animate:timeForAnimation whithSeque:IAmodalToPreviewOnWall];
             
         } else if (((UIPinchGestureRecognizer *)sender).scale > 1) {
-            [self animate:timeForAnimation whithSeque:@"ModalToDetail"];
+            [self animate:timeForAnimation whithSeque:IAmodalToDetail];
             
         }
     }
@@ -346,7 +339,7 @@ UIVisualEffectView *visualEffectView;
     [self.backgroundView bringSubviewToFront:self.likeButton];
     self.pictureView.hidden = YES;
     CGRect rect;
-    if ([identifier isEqualToString: @"ModalToPreviewOnWall"]) {
+    if ([identifier isEqualToString:IAmodalToPreviewOnWall]) {
         
         
         NSNumber *number = [NSNumber numberWithDouble:(3 * [AVManager sharedInstance].wallImage.distanceToWall.doubleValue)];
@@ -358,16 +351,16 @@ UIVisualEffectView *visualEffectView;
         
         rect = (CGRect){.origin.x = 512 - sizeOfNewPicture.x / 2, .origin.y = 384 - sizeOfNewPicture.y / 2,
             .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
-    } else if ([identifier isEqualToString:@"ModalToDetail"]){
+    } else if ([identifier isEqualToString:IAmodalToDetail]){
         rect = CGRectMake(0, 0, 1024, 768);
     }
     [UIView animateWithDuration:time
                      animations:^{
                          imageView.frame = rect;
                          imageView.contentMode = UIViewContentModeScaleAspectFit;
-                         if ([identifier isEqualToString: @"ModalToPreviewOnWall"]) {
+                         if ([identifier isEqualToString:IAmodalToPreviewOnWall]) {
                              visualEffectView.alpha = 0;
-                         } else if ([identifier isEqualToString:@"ModalToDetail"]){
+                         } else if ([identifier isEqualToString:IAmodalToDetail]){
                              visualEffectView.backgroundColor = [UIColor blackColor];
                          }
                      }
@@ -387,7 +380,7 @@ UIVisualEffectView *visualEffectView;
 - (IBAction)goToPreviewOnWall:(id)sender {
     CGFloat timeForAnimation = 0.3;
     
-    [self animate:timeForAnimation whithSeque:@"ModalToPreviewOnWall"];
+    [self animate:timeForAnimation whithSeque:IAmodalToPreviewOnWall];
 }
 
 //add to cart button clicked

@@ -7,6 +7,7 @@
 //
 
 #import "Picture.h"
+#import "Constants.h"
 
 @interface Picture (Create)
 +(Picture *)CreatePictureWithData:(NSDictionary *)data inManagedobjectcontext:(NSManagedObjectContext *)context;

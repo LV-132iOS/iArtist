@@ -46,17 +46,17 @@
          //creating id for user
          NSString* localString = @"vk";
          localString = [localString stringByAppendingString:newToken.userId];
-         [defaults setObject:localString forKey:@"id"];
+         [defaults setObject:localString forKey:IAid];
          //creating name for user
          localString = [[response.json[0][@"first_name"]
                          stringByAppendingString:@" " ]
                         stringByAppendingString:response.json[0][@"last_name"]];
-         [defaults setObject:localString forKey:@"username"];
+         [defaults setObject:localString forKey:IAusername];
          //writing email to defaults
-         [defaults setObject:newToken.email forKey:@"useremail"];
+         [defaults setObject:newToken.email forKey:IAuseremail];
            //send info to server
          NSDictionary* info = @{ @"with": @"Vkontakte" };
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil userInfo:info];
+         [[NSNotificationCenter defaultCenter] postNotificationName:IAsendInfo object:nil userInfo:info];
      } errorBlock:^(NSError *error) {
          //something went wrong, do nothing
          NSLog(@"Error with getting user info from VK: %@", [error localizedDescription]);

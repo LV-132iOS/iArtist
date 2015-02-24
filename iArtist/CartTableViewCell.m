@@ -23,7 +23,7 @@
 
 - (IBAction)sendAMailClicked:(id)sender {
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"send mail" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:IAsendMail object:nil userInfo:nil];
     
 }
 

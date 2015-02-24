@@ -13,6 +13,7 @@
 #import "Sesion.h"
 #import "iCaruselViewController.h"
 #import "AVManager.h"
+#import "Constants.h"
 
 @interface PreviewOnWallViewController : UIViewController <UIGestureRecognizerDelegate, UIPopoverControllerDelegate>
 

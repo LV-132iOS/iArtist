@@ -38,12 +38,12 @@
     //notification for sending info to server
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(sendInfo:)
-                                                 name:@"SendInfo"
+                                                 name:IAsendInfo
                                                object:nil];
     //notification to perform segue to pictures (notif posted from carousels)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(goToPictures)
-                                                 name:@"GoToPictures"
+                                                 name:IAgoToPictures
                                                object:nil];
     
     //Style Carousel
@@ -120,19 +120,19 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    
+    [super viewDidAppear:animated];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if([defaults objectForKey:@"firstRun"] ==nil )
+    if([defaults objectForKey:IAfirstRun] ==nil )
     {
-        [defaults setObject:[NSDate date] forKey:@"firstRun"];
-        [defaults setBool:NO forKey:@"loggedIn"];
-        [defaults setBool:NO forKey:@"loggedInWithFacebook"];
-        [defaults setBool:NO forKey:@"loggedInWithTwitter"];
-        [defaults setBool:NO forKey:@"loggedInWithGoogle"];
-        [defaults setBool:NO forKey:@"loggedInWithVkontakte"];
-        [defaults setBool:NO forKey:@"informationSent"];
+        [defaults setObject:[NSDate date] forKey:IAfirstRun];
+        [defaults setBool:NO forKey:IAloggedIn];
+        [defaults setBool:NO forKey:IAloggedInWithFacebook];
+        [defaults setBool:NO forKey:IAloggedInWithTwitter];
+        [defaults setBool:NO forKey:IAloggedInWithGoogle];
+        [defaults setBool:NO forKey:IAloggedInWithVkontakte];
+        [defaults setBool:NO forKey:IAinformationSent];
         [defaults synchronize];
-        [self performSegueWithIdentifier:@"FirstRunSegue" sender:nil];
+        [self performSegueWithIdentifier:IAfirstRunSegue sender:nil];
     }
 }
 
@@ -142,22 +142,12 @@
 }
 
 - (IBAction)HelpButtonAction:(id)sender {
-    [self performSegueWithIdentifier:@"FirstRunSegue" sender:nil];
-}
-
-
-- (IBAction)loginButtonAction:(id)sender {
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:@"loggedIn"]) {
-        [self performSegueWithIdentifier:@"Profile" sender:nil];
-    } else{
-        [self performSegueWithIdentifier:@"Login" sender:nil];
-    }
+    [self performSegueWithIdentifier:IAfirstRunSegue sender:nil];
 }
 
 - (IBAction)myNewsButtonAction:(id)sender {
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if (![defaults boolForKey:@"loggedIn"]) {
+    if (![defaults boolForKey:IAloggedIn]) {
         UIAlertView* locAlertView = [[UIAlertView alloc] initWithTitle:@"Unavailable to proceed"
                                                                message:@"Please, log-in or register first."
                                                               delegate:nil
@@ -165,7 +155,7 @@
                                                      otherButtonTitles: nil];
         [locAlertView show];
     } else{
-        [self performSegueWithIdentifier:@"NewsFeed" sender:nil];
+        [self performSegueWithIdentifier:IAnews sender:nil];
     }
 }
 
@@ -173,13 +163,13 @@
     SessionControl* control = [SessionControl sharedManager];
     [control refresh];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500000000), dispatch_get_main_queue(), ^{
-        [self performSegueWithIdentifier:@"pushToLiked" sender:nil];
+        [self performSegueWithIdentifier:IAlike sender:nil];
     });
 }
 
 -(void)goToPictures{
     //method used by notification to go to pictures
-    [self performSegueWithIdentifier:@"PictureView" sender:nil];
+    [self performSegueWithIdentifier:IApictures sender:nil];
 }
 
 
@@ -191,14 +181,14 @@
     dataManager.session = session;
     dataManager.index = 0;
     dataManager.wallImage.wallPicture = [UIImage imageNamed:@"room1.jpg"];
-    if ([segue.identifier isEqualToString:@"PictureView"]) {
+    if ([segue.identifier isEqualToString:IApictures]) {
         ((iCaruselViewController *)segue.destinationViewController).session = session;
     }
-    if ([segue.identifier isEqualToString:@"News"]) {
+    if ([segue.identifier isEqualToString:IAnews]) {
         ((NewsViewController *)segue.destinationViewController).session = session;
         
     }
-    if ([segue.identifier isEqualToString:@"pushToLiked"]) {
+    if ([segue.identifier isEqualToString:IAlike]) {
         ((LikedViewController *)segue.destinationViewController).session = session;
         
     }
@@ -209,23 +199,19 @@
     //here we need to send info to server
     //check if info is already sent. if no - then send. if yes - do nothing and log that out
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:@"informationSent"] == NO) {
+    if ([defaults boolForKey:IAinformationSent] == NO) {
         //creating dictionary for data to pass with dataTask
-        NSLog(@"%@", [defaults objectForKey:@"id"]);
-        NSLog(@"%@", [defaults objectForKey:@"username"]);
-        NSLog(@"%@", [defaults objectForKey:@"useremail"]);
         NSDictionary* dataToPassDic = @{
-                                        @"_id" : [defaults objectForKey:@"id"],
-                                        @"username" : [defaults objectForKey:@"username"],
-                                        @"useremail": [defaults objectForKey:@"useremail"],
+                                        @"_id" : [defaults objectForKey:IAid],
+                                        @"username" : [defaults objectForKey:IAusername],
+                                        @"useremail": [defaults objectForKey:IAuseremail],
                                         };
         //and convert dictionary to proper type
         NSData* dataToPass = [NSJSONSerialization dataWithJSONObject:dataToPassDic
                                                              options:0
                                                                error:nil];
         //current url for request
-                NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
-        //NSURL* url = [NSURL URLWithString:@"http://192.168.103.5/users/"];
+        NSURL* url = [NSURL URLWithString: [IAamazonServer stringByAppendingString:@"/users/"]];
         //creating request to use it with dataTask
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
         //preparing session and request
@@ -245,13 +231,13 @@
                                                         if (!error) {
                                                             NSString* locString = [NSString stringWithFormat:@"loggedInWith%@",
                                                                                    [notification.userInfo objectForKey:@"with"]];
-                                                            [defaults setBool:YES forKey:@"loggedIn"];
+                                                            [defaults setBool:YES forKey:IAloggedIn];
                                                             [defaults setBool:YES forKey:locString];
-                                                            [defaults setBool:YES forKey:@"informationSent"];
+                                                            [defaults setBool:YES forKey:IAinformationSent];
                                                             [defaults synchronize];
                                                             //when information succesfully sent it is needed
                                                             //need to close login view
-                                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"NeedCloseLoginView"
+                                                            [[NSNotificationCenter defaultCenter] postNotificationName:IAcloseLoginView
                                                                                                                 object:nil];
                                                             //to change button name from login to profile
                                                             
@@ -280,10 +266,10 @@
    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500000000), dispatch_get_main_queue(), ^{
          NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-        if ([defaults boolForKey:@"loggedIn"]) {
-            [self performSegueWithIdentifier:@"GoToProfile" sender:nil];
+        if ([defaults boolForKey:IAloggedIn]) {
+            [self performSegueWithIdentifier:IAprofile sender:nil];
         } else{
-            [self performSegueWithIdentifier:@"Login" sender:nil];
+            [self performSegueWithIdentifier:IAlogin sender:nil];
         }
     });
 }

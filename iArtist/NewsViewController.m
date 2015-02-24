@@ -48,11 +48,12 @@
         self.AllArtistData = [[ServerFetcher sharedInstance]artistdic];
         self.AllPaintingData = [[ServerFetcher sharedInstance]Paintingdic];
         for (int i=0; i<self.Ids.count;i++){
-            [self.ImagesArray addObject:([[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[i]])];}
+        //[self.ImagesArray addObject:([[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[i]])];
+        }
         [self.newsTable reloadData];
     };
     
-    [[ServerFetcher sharedInstance]GetNewsForUser:[defaults valueForKey:@"id"] callback:callback];
+    [[ServerFetcher sharedInstance]GetNewsForUser:[defaults valueForKey:IAid] callback:callback];
     
     // NSLog(@"%@",self.AllArtistData);
     //  NSLog(@"%@",self.AllPaintingData);
@@ -110,8 +111,7 @@
     //cell.authorName.text = []
 
     
-    UIImage *img = [UIImage new];
-    img = cell.pictureImage.image ;
+    //UIImage *img = cell.pictureImage.image ;
   
     
        // NSLog(@"row %ld",indexPath.row);
@@ -154,7 +154,7 @@
     AVManager *dataManager = [AVManager sharedInstance];
     dataManager.session = self.session;
     
-    if ([segue.identifier isEqualToString:@"FromNewsToPicture"]) {
+    if ([segue.identifier isEqualToString:IAnewsToPicture]) {
         ((iCaruselViewController *)segue.destinationViewController).urls = self.urls;
         ((iCaruselViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
         
@@ -162,7 +162,7 @@
         dataManager.index = ((NewsTableViewCell *)sender).tag;
         
     }
-    if ([segue.identifier isEqualToString:@"News Cart"]) {
+    if ([segue.identifier isEqualToString:IAnewsCart]) {
         
         
         

@@ -42,17 +42,13 @@
     
     //set button label
     if (index == 0) {
-        [button setTitle:@"Small" forState:UIControlStateNormal];
-        //button.titleLabel.font = [button.titleLabel.font fontWithSize:20];
+        [button setTitle:IAsizeSmall forState:UIControlStateNormal];
     } else if (index == 1){
-        //button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
-        [button setTitle:@"Medium" forState:UIControlStateNormal];
+        [button setTitle:IAsizeMedium forState:UIControlStateNormal];
     } else if (index == 2){
-        //button.titleLabel.font = [button.titleLabel.font fontWithSize:30];
-        [button setTitle:@"Big" forState:UIControlStateNormal];
+        [button setTitle:IAsizeBig forState:UIControlStateNormal];
     } else if (index == 3){
-        //button.titleLabel.font = [button.titleLabel.font fontWithSize:25];
-        [button setTitle:@"Very Big" forState:UIControlStateNormal];
+        [button setTitle:IAsizeVeryBig  forState:UIControlStateNormal];
     }
     
     
@@ -71,17 +67,19 @@
 - (void)buttonTapped:(UIButton *)sender{
     ServerFetcher *DownloadManager;
       DownloadManager = [ServerFetcher sharedInstance];
-    if ([sender.titleLabel.text isEqualToString:@"Small"]) {
-        [DownloadManager GenerateQueryForSize:@"Small"];
+    if ([sender.titleLabel.text isEqualToString:IAsizeSmall]) {
+        [DownloadManager GenerateQueryForSize:IAsizeSmall];
 
-    } else if ([sender.titleLabel.text isEqualToString:@"Medium"]){
-        [DownloadManager GenerateQueryForSize:@"Medium"];
+    } else if ([sender.titleLabel.text isEqualToString:IAsizeMedium]){
+        [DownloadManager GenerateQueryForSize:IAsizeMedium];
 
-    }else if ([sender.titleLabel.text isEqualToString:@"Big"]){
-        [DownloadManager GenerateQueryForSize:@"Big"];
+    } else if ([sender.titleLabel.text isEqualToString:IAsizeBig]){
+        [DownloadManager GenerateQueryForSize:IAsizeBig];
+    } else if ([sender.titleLabel.text isEqualToString:IAsizeVeryBig]){
+        [DownloadManager GenerateQueryForSize:IAsizeVeryBig];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAgoToPictures object:nil userInfo:nil];
 }
 
 @end

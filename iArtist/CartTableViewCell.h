@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+#import "Constants.h"
 
 @interface CartTableViewCell : UITableViewCell <MFMailComposeViewControllerDelegate>
 

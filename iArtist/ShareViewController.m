@@ -16,8 +16,6 @@
 
 @end
 
-static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501k8u.apps.googleusercontent.com";
-
 
 @implementation ShareViewController{
 }
@@ -25,7 +23,7 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GoogleShare) name:@"GoogleShare" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GoogleShare) name:IAgoogleShare object:nil];
     
 }
 
@@ -114,7 +112,7 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
 
 - (IBAction)shareWithGooglePlus:(id)sender {
     signIn = [GPPSignIn sharedInstance];
-    signIn.clientID = kClientId;
+    signIn.clientID = IAgoogleAppID;
     signIn.scopes = [NSArray arrayWithObjects:
                      kGTLAuthScopePlusLogin,
                      kGTLAuthScopePlusUserinfoEmail,
@@ -170,7 +168,7 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
     signIn = [GPPSignIn sharedInstance];
-    signIn.clientID = kClientId;
+    signIn.clientID = IAgoogleAppID;
     signIn.scopes = [NSArray arrayWithObjects:
                      kGTLAuthScopePlusLogin,
                      kGTLAuthScopePlusUserinfoEmail,

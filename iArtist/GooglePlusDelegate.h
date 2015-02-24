@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <GooglePlus/GooglePlus.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
+#import "Constants.h"
 
 
 @interface GooglePlusDelegate : NSObject <GPPSignInDelegate>

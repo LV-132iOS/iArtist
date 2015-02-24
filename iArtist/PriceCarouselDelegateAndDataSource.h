@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "iCarousel.h"
+#import "Constants.h"
 
 @interface PriceCarouselDelegateAndDataSource : NSObject <iCarouselDelegate, iCarouselDataSource>
 

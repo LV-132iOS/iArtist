@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <VKSdk/VKSdk.h>
+#import "Constants.h"
 
 @interface VKDelegate : NSObject <VKSdkDelegate>
 

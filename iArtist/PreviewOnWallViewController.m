@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     
     Wall *wall1 = [Wall new];
     wall1.wallPicture = [UIImage imageNamed:@"room1.jpg"];
-    wall1.distanceToWall = @1;
+    wall1.distanceToWall = @1.5;
     self.currentWall = wall1;
 }
 
@@ -275,18 +275,31 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 self.pictureIndex--;
             
             if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-                UIImageView *imgv = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]]];
-                [self.ImageArray replaceObjectAtIndex:self.pictureIndex  withObject:imgv];
+#pragma add indicator!
+               [[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]] callback:^(UIImage *responde) {
+                   UIImageView *imgv = [[UIImageView alloc]initWithImage:responde];
+                   [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:imgv];
+                   
+                   [self setImageWithWall:responde
+                                         :self.pictureImage.center
+                                         :AVSwipeRightTypeOfPictureChange];
+                   
+                }];
+            
+         
+            }    else{
+                UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+                
+                [self setImageWithWall:img
+                                      :self.pictureImage.center
+                                      :AVSwipeRightTypeOfPictureChange];
+
+                
                 
             }
             
             
-            UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
-            
-            [self setImageWithWall:img
-                                  :self.pictureImage.center
-                                  :AVSwipeRightTypeOfPictureChange];
-        }
+                    }
         if (sender.direction == UISwipeGestureRecognizerDirectionLeft){
             if (self.pictureIndex == [self.ImageArray count]-1 ){
                 self.pictureIndex = 0;
@@ -294,18 +307,30 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 self.pictureIndex++;
             
             if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-
+#pragma add indicator!
+                [[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]] callback:^(UIImage *responde) {
+                    UIImageView *imgv = [[UIImageView alloc]initWithImage:responde];
+                    [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:imgv];
+                    
+                    [self setImageWithWall:responde
+                                          :self.pictureImage.center
+                                          :AVSwipeLeftTypeOfPictureChange];
+                    
+                }];
                 
-
+                
+            }    else{
+                UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+                
+                [self setImageWithWall:img
+                                      :self.pictureImage.center
+                                      :AVSwipeLeftTypeOfPictureChange];
+                
+                
                 
             }
             
             
-            UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
-            
-            [self setImageWithWall:img
-                                  :self.pictureImage.center
-                                  :AVSwipeLeftTypeOfPictureChange];
         }
     }
     if (sender.state == UIGestureRecognizerStateEnded) {
@@ -496,6 +521,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 }
 //input data into manager when we disappear view controller
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     self.dataManager = [AVManager sharedInstance];
     self.dataManager.index = self.pictureIndex;
     //self.dataManager.wallImage = self.currentWall.wallPicture;
@@ -503,7 +529,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    if ([segue.identifier isEqualToString:@"Share"]) {
+    if ([segue.identifier isEqualToString:IAshare]) {
         if ([kindOfSharing isEqualToString:@"PictureOnWall"]) {
             //get screenshot of view
             [self hideViews];
@@ -529,11 +555,11 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         //pass picture to server and get its url (for PictureOnWall only)
         //if  OnlyPicture - then pass picture url
         
-        locImageUrl = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/"
+        locImageUrl = [NSURL URLWithString:[[IAamazonServer stringByAppendingString:@"/paintings/files/"]
                                             stringByAppendingString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]]];
         
         // also need to pass a link to original picture - its the same link as a imageUrl in OnlyPicture case
-        locUrlToPass = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/"
+        locUrlToPass = [NSURL URLWithString:[[IAamazonServer stringByAppendingString:@"/paintings/files/"]
                                              stringByAppendingString:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]]];
         
         ((ShareViewController*)segue.destinationViewController).imageToShare = locImageToShare;
@@ -541,7 +567,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         ((ShareViewController*)segue.destinationViewController).headString = locHeadString;
         ((ShareViewController*)segue.destinationViewController).urlToPass = locUrlToPass;
     }
-    if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
+    if ([segue.identifier isEqualToString:IAartistInfo]) {
         ((ArtistViewController*)segue.destinationViewController).CurrentArtist = self.CurrentArtist;
 
         ((ArtistViewController*)segue.destinationViewController).img = self.img;
@@ -569,12 +595,12 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     if (buttonIndex == 1) {
         //only picture
         kindOfSharing = @"OnlyPicture";
-        [self performSegueWithIdentifier:@"Share" sender:nil];
+        [self performSegueWithIdentifier:IAshare sender:nil];
         
     } else if (buttonIndex == 2) {
         //picture with wall
         kindOfSharing = @"PictureOnWall";
-        [self performSegueWithIdentifier:@"Share" sender:nil];
+        [self performSegueWithIdentifier:IAshare sender:nil];
     } else if (buttonIndex == 0) {
         //do nothing
     }

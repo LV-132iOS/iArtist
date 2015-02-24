@@ -34,12 +34,11 @@
         sharedMyManager = [[self alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:sharedMyManager
                                                  selector:@selector(updateSessionInfo:)
-                                                     name:@"UpdateSessionInfo"
+                                                     name:IAupdateSessioninfo
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:sharedMyManager
                                                  selector:@selector(updateSocialNetworkSessionInfo:)
-                                                     name:@"UpdateSocialNetworkSessionInfo"
-                                                   object:nil];
+                                                     name:IAupdateSocialNetworkSessionInfo                                                   object:nil];
     });
     [sharedMyManager refresh];
     return sharedMyManager;
@@ -50,7 +49,7 @@
         isOK = NO;
         isOKSocial = NO;
         currentSocial = @"none";
-        Reachable = [Reachability reachabilityWithHostname:@"ec2-54-93-36-107.eu-central-1.compute.amazonaws.com"];
+        Reachable = [Reachability reachabilityWithHostname:IAamazonServerHostname];
         // Internet is reachable
         Reachable.reachableBlock = ^(Reachability*reach)
         {
@@ -58,7 +57,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"Server OK");
                 NSDictionary* locDic  = @{ @"OK" : @"1" };
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSessionInfo" object:nil userInfo:locDic];
+                [[NSNotificationCenter defaultCenter] postNotificationName:IAupdateSessioninfo object:nil userInfo:locDic];
             });
         };
         
@@ -69,10 +68,10 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"Server not OK");
                 NSDictionary* locDic  = @{ @"OK" : @"0" };
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSessionInfo" object:nil userInfo:locDic];
+                [[NSNotificationCenter defaultCenter] postNotificationName:IAupdateSessioninfo object:nil userInfo:locDic];
                 NSDictionary* locDictionary;
                 locDictionary = @{ @"OK" : @"0" };
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSocialNetworkSessionInfo"
+                [[NSNotificationCenter defaultCenter] postNotificationName:IAupdateSocialNetworkSessionInfo
                                                                     object:nil
                                                                   userInfo:locDictionary];
             });
@@ -124,7 +123,7 @@
 
 -(void)refresh{
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:@"loggedInWithFacebook"]) {
+    if ([defaults boolForKey:IAloggedInWithFacebook]) {
         
         FBSession* session = [FBSession activeSession];
         
@@ -138,12 +137,12 @@
                 locDictionary = @{ @"OK" : @"1",
                                    @"social" : @"Facebook" };
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSocialNetworkSessionInfo"
+            [[NSNotificationCenter defaultCenter] postNotificationName:IAupdateSocialNetworkSessionInfo
                                                                 object:nil
                                                               userInfo:locDictionary];
         }];
     }
-    if ([defaults boolForKey:@"loggedInWithTwitter"]){
+    if ([defaults boolForKey:IAloggedInWithTwitter]){
         //there is no simple way to check if session is active, so I need to send smth to Twitter to get some response
         [[[Twitter sharedInstance] APIClient] loadUserWithID:[[Twitter sharedInstance] session].userID
                                                   completion:^(TWTRUser *user, NSError *error) {
@@ -155,12 +154,12 @@
                                                           locDictionary = @{ @"OK" : @"1",
                                                                              @"social" : @"Twitter"};
                                                       }
-                                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSocialNetworkSessionInfo"
+                                                      [[NSNotificationCenter defaultCenter] postNotificationName:IAupdateSocialNetworkSessionInfo
                                                                                                           object:nil
                                                                                                         userInfo:locDictionary];
                                                   }];
     }
-    if ([defaults boolForKey:@"loggedInWithGoogle"]){
+    if ([defaults boolForKey:IAloggedInWithGoogle]){
         //check if session is valid be sending a request that needs authorization
         
         GPPSignIn *signIn = [GPPSignIn sharedInstance];
@@ -183,19 +182,19 @@
                         locDictionary = @{ @"OK" : @"1",
                                            @"social" : @"Google"};
                     }
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSocialNetworkSessionInfo"
+                    [[NSNotificationCenter defaultCenter] postNotificationName:IAupdateSocialNetworkSessionInfo
                                                                         object:nil
                                                                       userInfo:locDictionary];
                 }];
     }
-    if ([defaults boolForKey:@"loggedInWithVkontakte"]){
+    if ([defaults boolForKey:IAloggedInWithVkontakte]){
         [VKSdk wakeUpSession];
         VKRequest * audioReq = [[VKApi users] get];
         [audioReq executeWithResultBlock:^(VKResponse * response) {
             NSDictionary* locDictionary;
             locDictionary = @{ @"OK" : @"1",
                                @"social" : @"Vkontakte"};
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSocialNetworkSessionInfo"
+            [[NSNotificationCenter defaultCenter] postNotificationName:IAupdateSocialNetworkSessionInfo
                                                                 object:nil
                                                               userInfo:locDictionary];
             
@@ -203,7 +202,7 @@
             NSDictionary* locDictionary;
             locDictionary = @{ @"OK" : @"0",
                                @"social" : @"Vkontakte"};
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSocialNetworkSessionInfo"
+            [[NSNotificationCenter defaultCenter] postNotificationName:IAupdateSocialNetworkSessionInfo
                                                                 object:nil
                                                               userInfo:locDictionary];
         }];

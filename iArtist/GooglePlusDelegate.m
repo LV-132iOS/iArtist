@@ -15,19 +15,19 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     
     if ([[defaults objectForKey:@"flagForGoogleShare"] isEqualToString:@"yes"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GoogleShare" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:IAgoogleShare object:nil];
     } else {
         if (!error) {
             //getting singleton object
             GPPSignIn* signIn = [GPPSignIn sharedInstance];
             //creating info for user
             NSString* localString = [@"g+" stringByAppendingString:signIn.userID];
-            [defaults setObject:localString forKey:@"id"];
-            [defaults setObject:signIn.googlePlusUser.displayName forKey:@"username"];
-            [defaults setObject:signIn.userEmail forKey:@"useremail"];
+            [defaults setObject:localString forKey:IAid];
+            [defaults setObject:signIn.googlePlusUser.displayName forKey:IAusername];
+            [defaults setObject:signIn.userEmail forKey:IAuseremail];
             //send info to server
             NSDictionary* info = @{ @"with": @"Google" };
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil userInfo:info];
+            [[NSNotificationCenter defaultCenter] postNotificationName:IAsendInfo object:nil userInfo:info];
         } else{
             NSLog(@"Error wih Google %@", [error localizedDescription]);
         }

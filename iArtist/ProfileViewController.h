@@ -12,6 +12,7 @@
 #import <GooglePlus/GooglePlus.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <VKSdk/VKSdk.h>
+#import "Constants.h"
 
 @interface ProfileViewController : UIViewController <UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

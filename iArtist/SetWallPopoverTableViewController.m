@@ -96,8 +96,7 @@ NSString *const AVDidSelectWall = @"AVDidSelectWall";
     
     self.wallImage = [info valueForKey:UIImagePickerControllerOriginalImage];
     
-    SetDistanceToWallViewController *inputDistanceController =
-        [SetDistanceToWallViewController new];
+    SetDistanceToWallViewController *inputDistanceController;
     
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         inputDistanceController = [self.storyboard instantiateViewControllerWithIdentifier:@"InputDistanceToCamera"];

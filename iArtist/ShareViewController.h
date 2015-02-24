@@ -12,6 +12,7 @@
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <TwitterKit/TwitterKit.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "Constants.h"
 
 
 @interface ShareViewController : UIViewController <UIAlertViewDelegate>

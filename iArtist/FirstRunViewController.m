@@ -62,7 +62,7 @@
         
         // To recipients
         
-        NSArray *toResipients = [[NSArray alloc] initWithObjects:@"iArtistGreatTeam@gmail.com", nil];
+        NSArray *toResipients = [[NSArray alloc] initWithObjects:IAteamEmail, nil];
         
         [self.myMail setToRecipients:toResipients];
         
@@ -99,19 +99,7 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     switch (result) {
-            
-        case MFMailComposeResultCancelled:
-            // Do something
-            break;
-            
-        case MFMailComposeResultFailed:
-            // Do something
-            break;
-            
-        case MFMailComposeResultSaved:
-            // Do something
-            break;
-            
+                       
         case MFMailComposeResultSent:
         {
             

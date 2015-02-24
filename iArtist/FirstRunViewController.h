@@ -10,6 +10,7 @@
 #import "iCarousel.h"
 #import "FirstRunCarouselDelegateAndDataSource.h"
 #import <MessageUI/MessageUI.h>
+#import "Constants.h"
 
 @interface FirstRunViewController : UIViewController <MFMailComposeViewControllerDelegate>
 

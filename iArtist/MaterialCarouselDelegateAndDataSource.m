@@ -43,19 +43,19 @@
     
     //set button label
     if (index == 0){
-        [button setTitle:@"Pastel" forState:UIControlStateNormal];
+        [button setTitle:IAmaterialPastel forState:UIControlStateNormal];
     } else if (index == 1){
-        [button setTitle:@"Oil on canvas" forState:UIControlStateNormal];
+        [button setTitle:IAmaterialOil forState:UIControlStateNormal];
     } else if (index == 2){
-        [button setTitle:@"Enamel" forState:UIControlStateNormal];
+        [button setTitle:IAmaterialEnamel forState:UIControlStateNormal];
     } else if (index == 3){
-        [button setTitle:@"Acrylic on canvas" forState:UIControlStateNormal];
+        [button setTitle:IAmaterialAcrylicOnCanvas forState:UIControlStateNormal];
     } else if (index == 4){
-        [button setTitle:@"Colored pencil" forState:UIControlStateNormal];
+        [button setTitle:IAmaterialPencil forState:UIControlStateNormal];
     } else if (index == 5){
-        [button setTitle:@"Acrylic & Enamel" forState:UIControlStateNormal];
+        [button setTitle:IAmaterialAcrylicAndEnamel forState:UIControlStateNormal];
     } else if (index == 6){
-        [button setTitle:@"Pastel on canvas" forState:UIControlStateNormal];
+        [button setTitle:IAmaterialPastelOnCanvas forState:UIControlStateNormal];
     }
     
     
@@ -77,27 +77,28 @@
 - (void)buttonTapped:(UIButton *)sender{
     ServerFetcher *DownloadManager;
     DownloadManager = [ServerFetcher sharedInstance];
-    if ([sender.titleLabel.text isEqualToString:@"Pastel"]) {
-        [DownloadManager GenerateQueryForMaterial:@"Pastel"];
+    if ([sender.titleLabel.text isEqualToString:IAmaterialPastel]) {
+        [DownloadManager GenerateQueryForMaterial:IAmaterialPastel];
         
-    } else if ([sender.titleLabel.text isEqualToString:@"Oil on canvas"]){
-        [DownloadManager GenerateQueryForMaterial:@"Oil on canvas"];
+    } else if ([sender.titleLabel.text isEqualToString:IAmaterialOil]){
+        [DownloadManager GenerateQueryForMaterial:IAmaterialOil];
         
-    }else if ([sender.titleLabel.text isEqualToString:@"Enamel"]){
-        [DownloadManager GenerateQueryForMaterial:@"Enamel"];
+    } else if ([sender.titleLabel.text isEqualToString:IAmaterialEnamel]){
+        [DownloadManager GenerateQueryForMaterial:IAmaterialEnamel];
         
-    }else if ([sender.titleLabel.text isEqualToString:@"Acrylic on canvas"]){
-        [DownloadManager GenerateQueryForMaterial:@"Acrylic on canvas"];
-    } else if ([sender.titleLabel.text isEqualToString:@"Acrylic & Enamel"]){
-        [DownloadManager GenerateQueryForMaterial:@"Acrylic & Enamel"];
-    }
-    else if ([sender.titleLabel.text isEqualToString:@"Pastel on canvas"]){
-        [DownloadManager GenerateQueryForMaterial:@"Pastel on canvas"];
+    } else if ([sender.titleLabel.text isEqualToString:IAmaterialAcrylicOnCanvas]){
+        [DownloadManager GenerateQueryForMaterial:IAmaterialAcrylicOnCanvas];
+    } else if ([sender.titleLabel.text isEqualToString:IAmaterialPencil]){
+        [DownloadManager GenerateQueryForMaterial:IAmaterialPencil];
+    } else if ([sender.titleLabel.text isEqualToString:IAmaterialAcrylicAndEnamel]){
+        [DownloadManager GenerateQueryForMaterial:IAmaterialAcrylicAndEnamel];
+    } else if ([sender.titleLabel.text isEqualToString:IAmaterialPastelOnCanvas]){
+        [DownloadManager GenerateQueryForMaterial:IAmaterialPastelOnCanvas];
     }
     
 
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAgoToPictures object:nil userInfo:nil];
 }
 
 @end

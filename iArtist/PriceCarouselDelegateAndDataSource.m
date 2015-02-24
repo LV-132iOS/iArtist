@@ -21,7 +21,15 @@
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
     
-    arrayOfPrice = [[NSArray alloc] initWithObjects:@"priceTwo.jpg",@"priceThree.jpg",@"priceFour.jpg",@"priceTwo.jpg",@"priceThree.jpg",@"priceFour.jpg",@"priceThree.jpg", nil];
+    arrayOfPrice = [[NSArray alloc] initWithObjects:
+                    @"priceTwo.jpg",
+                    @"priceThree.jpg",
+                    @"priceFour.jpg",
+                    @"priceTwo.jpg",
+                    @"priceThree.jpg",
+                    @"priceFour.jpg",
+                    @"priceThree.jpg",
+                    nil];
     
     return [arrayOfPrice count];
 }
@@ -44,25 +52,25 @@
     //set button label
     if (index == 0) {
         
-        [button setTitle:@"<750" forState:UIControlStateNormal];
+        [button setTitle:IApriceVeryLow forState:UIControlStateNormal];
     } else if (index == 1){
         
-        [button setTitle:@"750-1500" forState:UIControlStateNormal];
+        [button setTitle:IApriceLow forState:UIControlStateNormal];
     } else if (index == 2){
         
-        [button setTitle:@"1500-3000" forState:UIControlStateNormal];
+        [button setTitle:IApriceMiddleLow forState:UIControlStateNormal];
     } else if (index == 3){
         
-        [button setTitle:@"3000-4000" forState:UIControlStateNormal];
+        [button setTitle:IApriceMiddleLevel forState:UIControlStateNormal];
     } else if (index == 4){
         
-        [button setTitle:@"4000-5000" forState:UIControlStateNormal];
+        [button setTitle:IApriceMiddleHigh forState:UIControlStateNormal];
     } else if (index == 5){
         
-        [button setTitle:@"5000-6000" forState:UIControlStateNormal];
+        [button setTitle:IApriceHigh forState:UIControlStateNormal];
     } else if (index == 6){
         
-        [button setTitle:@">6000" forState:UIControlStateNormal];
+        [button setTitle:IApriceVeryHigh forState:UIControlStateNormal];
     }
     
     
@@ -86,30 +94,30 @@
 - (void)buttonTapped:(UIButton *)sender{
     ServerFetcher *DownloadManager;
     DownloadManager = [ServerFetcher sharedInstance];
-    if ([sender.titleLabel.text isEqualToString:@"<750"]) {
+    if ([sender.titleLabel.text isEqualToString:IApriceVeryLow]) {
         [DownloadManager GenerateQueryForPrice:0 :750];
         
-    } else if ([sender.titleLabel.text isEqualToString:@"750-1500"]){
+    } else if ([sender.titleLabel.text isEqualToString:IApriceLow]){
         [DownloadManager GenerateQueryForPrice:750 :1500];
         
-    }else if ([sender.titleLabel.text isEqualToString:@"1500-3000"]){
+    }else if ([sender.titleLabel.text isEqualToString:IApriceMiddleLow]){
         [DownloadManager GenerateQueryForPrice:1500 :3000];
         
-    }else if ([sender.titleLabel.text isEqualToString:@"3000-4000"]){
+    }else if ([sender.titleLabel.text isEqualToString:IApriceMiddleLevel]){
         [DownloadManager GenerateQueryForPrice:3000 :4000];
-    } else if ([sender.titleLabel.text isEqualToString:@"4000-5000"]){
+    } else if ([sender.titleLabel.text isEqualToString:IApriceMiddleHigh]){
         [DownloadManager GenerateQueryForPrice:4000 :5000];
     }
-    else if ([sender.titleLabel.text isEqualToString:@"5000-6000"]){
+    else if ([sender.titleLabel.text isEqualToString:IApriceHigh]){
         [DownloadManager GenerateQueryForPrice:5000 :6000];
     }
-    else if ([sender.titleLabel.text isEqualToString:@">6000"]){
+    else if ([sender.titleLabel.text isEqualToString:IApriceVeryHigh]){
         [DownloadManager GenerateQueryForPrice:6000 :10000];
     }
 
 
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAgoToPictures object:nil];
 }
 
 @end

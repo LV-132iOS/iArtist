@@ -10,6 +10,7 @@
 #import "AVManager.h"
 #import "Sesion.h"
 #import "NewsTableViewCell.h"
+#import "Constants.h"
 
 @interface NewsViewController : UIViewController
 

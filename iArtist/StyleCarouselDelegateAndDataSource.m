@@ -23,7 +23,14 @@ UILabel * title;
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
     
     arrayOfPictures = [[NSArray alloc] initWithObjects:@"Style1.jpg",@"Style2.jpg",@"Style3.jpg",@"Style4.jpg",@"Style5.jpg",@"Style6.jpg", nil];
-    arrayOfStyles = [[NSArray alloc] initWithObjects:@"History",@"Nature",@"Military",@"Portrait",@"Still life",@"Vanitas", nil];
+    arrayOfStyles = [[NSArray alloc] initWithObjects:
+                     IAhistory,
+                     IAnature,
+                     IAmilitary,
+                     IAportrait,
+                     IAstillLife,
+                     IAvanitas,
+                     nil];
     return arrayOfStyles.count;
     
 }
@@ -74,25 +81,25 @@ UILabel * title;
 - (void)buttonTapped:(UIButton *)sender{
     ServerFetcher *DownloadManager;
       DownloadManager = [ServerFetcher sharedInstance];
-    if ([sender.titleLabel.text isEqualToString:@"History"]) {
-        [DownloadManager GenerateQueryForTag:@"History"];
+    if ([sender.titleLabel.text isEqualToString:IAhistory]) {
+        [DownloadManager GenerateQueryForTag:IAhistory];
         
-    } else if ([sender.titleLabel.text isEqualToString:@"Nature"]){
-        [DownloadManager GenerateQueryForTag:@"Nature"];
+    } else if ([sender.titleLabel.text isEqualToString:IAnature]){
+        [DownloadManager GenerateQueryForTag:IAnature];
         
-    }else if ([sender.titleLabel.text isEqualToString:@"Military"]){
-        [DownloadManager GenerateQueryForTag:@"Military"];
+    }else if ([sender.titleLabel.text isEqualToString:IAmilitary]){
+        [DownloadManager GenerateQueryForTag:IAmilitary];
     }
-    if ([sender.titleLabel.text isEqualToString:@"Portrait"]) {
-        [DownloadManager GenerateQueryForTag:@"Portrait"];
+    if ([sender.titleLabel.text isEqualToString:IAportrait]) {
+        [DownloadManager GenerateQueryForTag:IAportrait];
         
-    }else if ([sender.titleLabel.text isEqualToString:@"Still life"]){
-        [DownloadManager GenerateQueryForTag:@"Still life"];
-    }  if ([sender.titleLabel.text isEqualToString:@"Vanitas"]) {
-        [DownloadManager  GenerateQueryForTag:@"Vanitas"];
+    }else if ([sender.titleLabel.text isEqualToString:IAstillLife]){
+        [DownloadManager GenerateQueryForTag:IAstillLife];
+    }  if ([sender.titleLabel.text isEqualToString:IAvanitas]) {
+        [DownloadManager  GenerateQueryForTag:IAvanitas];
     
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAgoToPictures object:nil userInfo:nil];
 }
 
 

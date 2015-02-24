@@ -43,19 +43,19 @@
     
     //set button label
     if (index == 0){
-        [button setTitle:@"Red" forState:UIControlStateNormal];
+        [button setTitle:IAcolorRed forState:UIControlStateNormal];
     } else if (index == 1){
-        [button setTitle:@"Blue" forState:UIControlStateNormal];
+        [button setTitle:IAcolorBlue forState:UIControlStateNormal];
     } else if (index == 2){
-        [button setTitle:@"Orange" forState:UIControlStateNormal];
+        [button setTitle:IAcolorOrange forState:UIControlStateNormal];
     } else if (index == 3){
-        [button setTitle:@"Green" forState:UIControlStateNormal];
+        [button setTitle:IAcolorGreen forState:UIControlStateNormal];
     } else if (index == 4){
-        [button setTitle:@"Yellow" forState:UIControlStateNormal];
+        [button setTitle:IAcolorYellow forState:UIControlStateNormal];
     } else if (index == 5){
-        [button setTitle:@"Grey" forState:UIControlStateNormal];
+        [button setTitle:IAcolorGrey forState:UIControlStateNormal];
     } else if (index == 6){
-        [button setTitle:@"Brown" forState:UIControlStateNormal];
+        [button setTitle:IAcolorBrown forState:UIControlStateNormal];
     }
 
     return button;
@@ -76,28 +76,28 @@
 - (void)buttonTapped:(UIButton *)sender{
     ServerFetcher *DownloadManager;
     DownloadManager = [ServerFetcher sharedInstance];
-    if ([sender.titleLabel.text isEqualToString:@"Red"]) {
-        [DownloadManager GenerateQueryForTag:@"Red"];
+    if ([sender.titleLabel.text isEqualToString:IAcolorRed]) {
+        [DownloadManager GenerateQueryForTag:IAcolorRed];
         
-    } if ([sender.titleLabel.text isEqualToString:@"Blue"]) {
-        [DownloadManager GenerateQueryForTag:@"Blue"];
+    } if ([sender.titleLabel.text isEqualToString:IAcolorBlue]) {
+        [DownloadManager GenerateQueryForTag:IAcolorBlue];
         
-    }else if ([sender.titleLabel.text isEqualToString:@"Orange"]) {
-        [DownloadManager GenerateQueryForTag:@"Orange"];
+    }else if ([sender.titleLabel.text isEqualToString:IAcolorOrange]) {
+        [DownloadManager GenerateQueryForTag:IAcolorOrange];
         
-    }else if ([sender.titleLabel.text isEqualToString:@"Green"]) {
-        [DownloadManager GenerateQueryForTag:@"Green"];
-    } else  if ([sender.titleLabel.text isEqualToString:@"Yellow"]) {
-        [DownloadManager GenerateQueryForTag:@"Yellow"];
+    }else if ([sender.titleLabel.text isEqualToString:IAcolorGreen]) {
+        [DownloadManager GenerateQueryForTag:IAcolorGreen];
+    } else  if ([sender.titleLabel.text isEqualToString:IAcolorYellow]) {
+        [DownloadManager GenerateQueryForTag:IAcolorYellow];
     }
-    else  if ([sender.titleLabel.text isEqualToString:@"Grey"]) {
-        [DownloadManager GenerateQueryForTag:@"Grey"];
+    else  if ([sender.titleLabel.text isEqualToString:IAcolorGrey]) {
+        [DownloadManager GenerateQueryForTag:IAcolorGrey];
     }
-    else  if ([sender.titleLabel.text isEqualToString:@"Brown"]) {
-        [DownloadManager GenerateQueryForTag:@"Brown"];
+    else  if ([sender.titleLabel.text isEqualToString:IAcolorBrown]) {
+        [DownloadManager GenerateQueryForTag:IAcolorBrown];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAgoToPictures object:nil userInfo:nil];
 }
 
 @end

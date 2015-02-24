@@ -35,7 +35,7 @@
     //notification to close this view controller (used by social networks delegates)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(CloseView:)
-                                                 name:@"NeedCloseLoginView"
+                                                 name:IAcloseLoginView
                                                object:nil];
     
     //setting Twitter
@@ -44,16 +44,16 @@
         if (!error) {
             //write user info to user defaults
             NSString*  localString = @"unavailable";
-            [defaults setObject:session.userName forKey:@"username"];
-            [defaults setObject:localString forKey:@"useremail"];
+            [defaults setObject:session.userName forKey:IAusername];
+            [defaults setObject:localString forKey:IAuseremail];
             //creating unique user id and write it to user defaults
             localString = @"tw";
             localString = [localString stringByAppendingString:session.userID];
-            [defaults setObject:localString forKey:@"id"];
+            [defaults setObject:localString forKey:IAid];
             [defaults synchronize];
             //if logged in successfully - then send info to server
             NSDictionary* info = @{ @"with": @"Twitter" };
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendInfo" object:nil userInfo:info];
+            [[NSNotificationCenter defaultCenter] postNotificationName:IAsendInfo object:nil userInfo:info];
         } else {
             //something went wrong with twitter log in, log error and do nothing
             NSLog(@"error: %@", [error localizedDescription]);
@@ -65,7 +65,7 @@
     //setting Google+
     GDelegate = [[GooglePlusDelegate alloc] init];
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
-    signIn.clientID = kClientId;
+    signIn.clientID = IAgoogleAppID;
     signIn.scopes = [NSArray arrayWithObjects:
                      kGTLAuthScopePlusLogin,
                      kGTLAuthScopePlusUserinfoEmail,

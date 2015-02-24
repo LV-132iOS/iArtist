@@ -77,7 +77,7 @@
 
 - (void)buttonTapped:(UIButton *)sender{
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToPictures" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:IAgoToPictures object:nil userInfo:nil];
 }
 
 @end

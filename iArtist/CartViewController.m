@@ -58,7 +58,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(SendAMail:)
-                                                 name:@"send mail"
+                                                 name:IAsendMail
                                                object:nil];
     // Do any additional setup after loading the view.
 }
@@ -113,7 +113,7 @@
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"You clicked on delete"
                                                     message:@"Do you want to remove picture from cart?"
                                                    delegate:nil
-                                          cancelButtonTitle:@"Cansel"
+                                          cancelButtonTitle:@"Cancel"
                                           otherButtonTitles:@"Ok",nil];
     alert.delegate = self;
     [alert show];
@@ -142,7 +142,7 @@
         
         // To recipients
         
-        NSArray *toResipients = [[NSArray alloc] initWithObjects:@"iArtistGreatTeam@gmail.com", nil];
+        NSArray *toResipients = [[NSArray alloc] initWithObjects:IAteamEmail, nil];
         
         [self.myMail setToRecipients:toResipients];
         
@@ -192,18 +192,6 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     switch (result) {
-            
-        case MFMailComposeResultCancelled:
-            // Do something
-            break;
-            
-        case MFMailComposeResultFailed:
-            // Do something
-            break;
-            
-        case MFMailComposeResultSaved:
-            // Do something
-            break;
             
         case MFMailComposeResultSent:
         {

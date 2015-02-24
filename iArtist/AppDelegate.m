@@ -33,14 +33,14 @@
     
     [FBLoginView class];
     
-    [[Twitter sharedInstance] startWithConsumerKey:@"y8DNDO0szLitsLoo4tsVJWnwm"
-                                    consumerSecret:@"2APu9hHFWBuUI7YlFIYG9JJOYuaKTEAtDWeAvnAwmvrmhM7Ict"];
+    [[Twitter sharedInstance] startWithConsumerKey:IAtwitterAppKey
+                                    consumerSecret:IAtwitterAppSecret];
     [Fabric with:@[[Twitter sharedInstance]]];
     
     [GPPSignIn sharedInstance];
     
     vkDelegate = [[VKDelegate alloc] init];
-    [VKSdk initializeWithDelegate:vkDelegate andAppId:@"4738060"];
+    [VKSdk initializeWithDelegate:vkDelegate andAppId:IAvkontakteAppID];
     [VKSdk wakeUpSession];
     return YES;
 }
@@ -74,10 +74,9 @@
     NSLog(@"Trying to handle URL");
     
     // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
-    [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-    [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
-    
-    [VKSdk processOpenURL:url fromApplication:sourceApplication];
+    BOOL wasHandled =  [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    if (!wasHandled)  [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
+    if (!wasHandled)  [VKSdk processOpenURL:url fromApplication:sourceApplication];
     // You can add your app-specific url handling code here if needed
     
     return YES;
@@ -100,7 +99,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"DArt" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:IAdart withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }

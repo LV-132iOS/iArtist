@@ -11,8 +11,8 @@
 #import <TwitterKit/TwitterKit.h>
 #import <GooglePlus/GooglePlus.h>
 #import <VKSdk/VKSdk.h>
+#import "Constants.h"
 
-static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501k8u.apps.googleusercontent.com";
 
 @interface LoginViewController : UIViewController
 @property (weak, nonatomic) IBOutlet FBLoginView *loginView;

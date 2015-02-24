@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <GooglePlus/GooglePlus.h>
 #import "VKDelegate.h"
+#import "Constants.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

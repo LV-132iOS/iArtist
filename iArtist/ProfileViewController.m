@@ -32,8 +32,8 @@
     [super viewWillAppear:animated];
     
     defaults = [NSUserDefaults standardUserDefaults];
-    self.nameLabel.text = [defaults objectForKey:@"username"];
-    self.emailLabel.text = [[defaults objectForKey:@"useremail"] stringByRemovingPercentEncoding];
+    self.nameLabel.text = [defaults objectForKey:IAusername];
+    self.emailLabel.text = [[defaults objectForKey:IAuseremail] stringByRemovingPercentEncoding];
     self.loggedinLabel.text = [control currentSocialNetwork];
     
 
@@ -62,21 +62,21 @@
 
 - (IBAction)logoutButtonAction:(id)sender {
     //logout clears access token and user info
-    if ([defaults boolForKey:@"loggedInWithFacebook"]) {
+    if ([defaults boolForKey:IAloggedInWithFacebook]) {
         FBSession* session = [FBSession activeSession];
         [session closeAndClearTokenInformation];
         session = nil;
         [self performLogoutWith:@"Facebook"];
     }
-    if ([defaults boolForKey:@"loggedInWithTwitter"]) {
+    if ([defaults boolForKey:IAloggedInWithTwitter]) {
         [[Twitter sharedInstance] logOut];
         [self performLogoutWith:@"Twitter"];
     }
-    if ([defaults boolForKey:@"loggedInWithGoogle"]){
+    if ([defaults boolForKey:IAloggedInWithGoogle]){
         [[GPPSignIn sharedInstance] signOut];
         [self performLogoutWith:@"Google"];
     }
-    if ([defaults boolForKey:@"loggedInWithVkontakte"]){
+    if ([defaults boolForKey:IAloggedInWithVkontakte]){
         [VKSdk forceLogout];
         [self performLogoutWith:@"Vkontakte"];
     }
@@ -84,12 +84,12 @@
 
 -(void)performLogoutWith:(NSString*)socialNetwork {
     //rewrite user defaults
-    [defaults setBool:NO forKey:@"loggedIn"];
+    [defaults setBool:NO forKey:IAloggedIn];
     [defaults setBool:NO forKey:[NSString stringWithFormat:@"loggedInWith%@", socialNetwork]];
-    [defaults setObject:@"null" forKey:@"id"];
-    [defaults setObject:@"null" forKey:@"username"];
-    [defaults setObject:@"null" forKey:@"useremail"];
-    [defaults setBool:NO forKey:@"informationSent"];
+    [defaults setObject:@"null" forKey:IAid];
+    [defaults setObject:@"null" forKey:IAusername];
+    [defaults setObject:@"null" forKey:IAuseremail];
+    [defaults setBool:NO forKey:IAinformationSent];
     [defaults synchronize];
     //rewrite session
     SessionControl* control = [SessionControl sharedManager];
@@ -113,7 +113,7 @@ otherButtonTitles:@"Yes", nil];
     if (buttonIndex == 1) {
         //current url for request
         //NSURL* url = [NSURL URLWithString:[@"http://192.168.103.5/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
-        NSURL* url = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
+        NSURL* url = [NSURL URLWithString:[[IAamazonServer stringByAppendingString:@"/" ] stringByAppendingString:[defaults objectForKey:IAid]] ];
         //creating request to use it with dataTask
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
         //preparing session and request
