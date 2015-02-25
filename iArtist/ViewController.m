@@ -165,7 +165,6 @@
                                                      otherButtonTitles: nil];
         [locAlertView show];
     } else{
-        [self performSegueWithIdentifier:@"NewsFeed" sender:nil];
     }
 }
 

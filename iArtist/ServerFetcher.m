@@ -139,6 +139,7 @@ static NSString *querystring;
                 NSString *str = [BaseURLString stringByAppendingString:@"paintings/files/%@"];
                 [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
                 NSString *Urlstr = [NSString stringWithFormat:str,[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
+
                 Urlstr = [Urlstr stringByAppendingString:@"?thumb=preview"];
                 NSLog(@"%@",Urlstr);
                 [urls addObject:Urlstr];
@@ -160,6 +161,7 @@ static NSString *querystring;
 - (NSMutableArray*)GetLikesForUser:(NSString *)_id
 {
     
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
         Paintingdic = [[NSMutableDictionary alloc]init];
         NSMutableArray *urls = [[NSMutableArray alloc]init];
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -187,7 +189,6 @@ static NSString *querystring;
         return urls;
         }
 
-    
 
 - (void)GetNewsForUser:(NSString *)_id
               callback:(void (^)(NSMutableArray* responde))callback
@@ -280,6 +281,7 @@ static NSString *querystring;
     NSString *userid = [defaults objectForKey:@"id"];
     __block NSString *responde;
     userid = [userid stringByAppendingString:@"/favorite_paintings/"];
+    
     [manager PUT:[userid stringByAppendingString:_id]
   parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
       responde = [responseObject valueForKey:@"count"];
@@ -291,6 +293,7 @@ static NSString *querystring;
 
 }];
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
     return responde;
 }
 
@@ -414,8 +417,27 @@ static NSString *querystring;
     
     
 }
-
-
+//
+- (void)getPictureThumbWithSizeAndID:(NSString*)_id size:(NSNumber *)size callback:(void (^)(UIImage* responde))callback
+{
+    
+    manager.responseSerializer = [AFImageResponseSerializer serializer];
+    [manager GET:[NSString stringWithFormat:@"paintings/files/%@?thumb=%@", _id ,size]
+      parameters:nil
+         success:^(NSURLSessionDataTask *task, id responseObject) {
+             UIImage *image;
+             image = (UIImage*)responseObject;
+             callback(image);
+         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+             NSLog(@"Error: %@", error);
+             
+             
+         }];
+    manager.responseSerializer = [AFImageResponseSerializer serializer];
+    
+   
+}
+//
 - (void)reloadDB
 {
     int k = 0;

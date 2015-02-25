@@ -57,6 +57,8 @@
 @implementation iCaruselViewController
 
 UIVisualEffectView *visualEffectView;
+//BOOL postNotificationForGettigPictureIndex;
+
 
 #pragma mark - initialization in view didload
 //main init
@@ -83,8 +85,14 @@ UIVisualEffectView *visualEffectView;
     self.likeCounterLabel.textAlignment = NSTextAlignmentCenter;
     self.likeCounterLabel.textColor = [UIColor whiteColor];
     [self.likeButton addSubview:self.likeCounterLabel];
-    self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.dataManager.index];
+    self.currentPicture = [AVPicture new];//[self.session.arrayOfPictures objectAtIndex:self.dataManager.index];
     self.authorsImage.frame = (CGRect){ .origin.x = 0, .origin.y = 0, .size.width = 60.0, .size.height = 60.0 };
+    self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
+    self.authorsImage.layer.backgroundColor = [[UIColor clearColor] CGColor];
+    self.authorsImage.layer.cornerRadius = self.authorsImage.frame.size.height / 2;
+    self.authorsImage.layer.borderWidth = 2.0;
+    self.authorsImage.layer.masksToBounds = YES;
+    self.authorsImage.layer.borderColor = [[UIColor blackColor] CGColor];
     [self.authorButton addSubview:self.authorsImage];
     //self.authorsName = [UILabel new];
     self.authorsName.frame = (CGRect){.origin.x = 60.0, .origin.y = 0, .size.width = 180.0, .size.height = 30.0 };
@@ -140,6 +148,7 @@ UIVisualEffectView *visualEffectView;
     self.pictureView.dataSource =self;
     [self mainInit];
     // Do any additional setup after loading the view.
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(shareWithTwitter:)
                                                  name:@"ShareWithTwitter"
@@ -154,9 +163,21 @@ UIVisualEffectView *visualEffectView;
 
 - (void)viewWillAppear:(BOOL)animated{
     
+  
     self.pictureView.hidden = NO;
     [self.backgroundView sendSubviewToBack:visualEffectView];
     //self.intputPictureIndex = self.dataManager.index;
+    
+}
+
+- (void)returnFromPicturePreview:(NSNotification *)notification{
+    
+   // NSDictionary dictionaty = notification.userInfo;
+    
+    self.pictureView.currentItemIndex = ((NSNumber *)[notification.userInfo valueForKey:@"index"]).intValue;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:BackToiCaruselViewController object:nil];
+    
     
 }
 
@@ -228,7 +249,14 @@ UIVisualEffectView *visualEffectView;
     
     if ([segue.identifier isEqualToString: @"ModalToPreviewOnWall"]) {
         
-        ((PreviewOnWallViewController *)segue.destinationViewController).session = self.session;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(returnFromPicturePreview:)
+                                                     name:BackToiCaruselViewController
+                                                   object:nil];
+        
+        
+
         ((PreviewOnWallViewController *)segue.destinationViewController).pictureIndex = self.pictureView.currentItemIndex;
         
         
@@ -290,7 +318,7 @@ UIVisualEffectView *visualEffectView;
 //select view in carusel
 - (IBAction)didViewInCaruselSelected:(id)sender {
     CGRect currentViewRect = { .origin.x = 0., .origin.y = 0., .size.width = 800, .size.height = 656 };
-    UIImage * currentImage = ((AVPicture *)[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex]).pictureImage;
+    UIImage * currentImage = [UIImage new];//((AVPicture *)[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex]).pictureImage;
     CGRect newPictureRect;
     newPictureRect.origin.x = 0.;
     newPictureRect.origin.y = 0.;
@@ -395,7 +423,7 @@ UIVisualEffectView *visualEffectView;
 
 //add to cart button clicked
 - (IBAction)addPictureToCart:(id)sender {
-    AVPicture *inputPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex];
+    AVPicture *inputPicture = [AVPicture new];//[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex];
     BOOL isCart = NO;
     for (int i = 0; i < inputPicture.pictureTags.count; i++) {
         if ([@"Cart" isEqualToString:(NSString *)[inputPicture.pictureTags objectAtIndex:i]]) {
@@ -432,6 +460,7 @@ UIVisualEffectView *visualEffectView;
     self.likeCounterLabel.text = likescount;
     [[SDImageCache sharedImageCache]storeImage:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image forKey:[self.urls objectAtIndex:self.pictureView.currentItemIndex]];
     [Picture CreatePictureWithData:self.CurrentPainting inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext];
+
     
 }
 

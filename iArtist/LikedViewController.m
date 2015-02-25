@@ -23,7 +23,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     AVManager *manager = [AVManager sharedInstance];
+    
     self.session = manager.session;
+    
     UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:manager.wallImage.wallPicture];
     self.view.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:backgroundImage];
@@ -35,6 +37,7 @@
     self.AllPaintingData = [[NSDictionary alloc]init];
     self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:[defaults valueForKey:@"id"]];
     self.AllPaintingData = Paintingdic;
+
 }
 
 -(void)blurImage
@@ -59,21 +62,44 @@
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
     self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
+    
     NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
 
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
-    __block UIImageView *image = [[UIImageView alloc]init];
-  
-        [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]callback:^(UIImage *responde) {
-            image.image = responde;
-        
-                    }];
-    image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
-    image.contentMode = UIViewContentModeScaleAspectFit;
+
     
-    cell.contentMode = UIViewContentModeScaleAspectFit;
-    [cell addSubview:image];
+    NSLog(@"%d",indexPath.row);
+    
+    __block UIImageView *image;
+    //=  [[UIImageView alloc]initWithImage: [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]]];
+    
+    
+    //[[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting valueForKey:@"_id"] callback:^(UIImage *responde) {
+    [[ServerFetcher sharedInstance]getPictureThumbWithSizeAndID:[CurrentPainting valueForKey:@"_id"]size:@200 callback:^(UIImage *responde) {
+        
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+            //self.imageView.image = responde;
+            //[self.indicator stopAnimating];
+            
+            
+            image = [[UIImageView alloc]initWithImage: responde];
+            
+            image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
+            image.contentMode = UIViewContentModeScaleAspectFit;
+            
+            cell.contentMode = UIViewContentModeScaleAspectFit;
+            [cell addSubview:image];
+            
+            NSLog(@"%d Ok", indexPath.row);
+        });
+        
+    }];
+
+    
     cell.layer.borderWidth = 4.0f;
     cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
     cell.layer.cornerRadius = 40;

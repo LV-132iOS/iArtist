@@ -43,7 +43,12 @@
         // play with Twitter session
         if (!error) {
             //write user info to user defaults
+            
+            
+            ///
             NSString*  localString = @"unavailable";
+            ///
+            
             [defaults setObject:session.userName forKey:@"username"];
             [defaults setObject:localString forKey:@"useremail"];
             //creating unique user id and write it to user defaults
