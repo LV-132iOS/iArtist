@@ -122,20 +122,21 @@ UIVisualEffectView *visualEffectView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.ImageArray = [[NSMutableArray alloc]init];
     if (self.urls == nil) {
         [self.Indicator startAnimating];
         [[ServerFetcher sharedInstance] RunQueryWithcallback:^(NSMutableArray *responde) {
             self.urls = responde;
+            for (int i=0;i<self.urls.count;i++) {
+                [self.ImageArray addObject:[NSNull null]];
+            }
+
             [self.pictureView reloadData];
-            self.ImageArray = [[NSMutableArray alloc]init];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.Indicator stopAnimating];
                 [self.Indicator removeFromSuperview];
             });
-            for (int i=0;i<self.urls.count;i++) {
-                [self.ImageArray addObject:[NSNull null]];
-            }
-        }];
+                    }];
     }
     self.pictureView.currentItemIndex = self.index;
     self.authorsImage = [[UIImageView alloc]init];

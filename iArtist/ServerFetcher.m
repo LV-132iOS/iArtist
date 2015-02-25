@@ -124,6 +124,7 @@ static NSString *querystring;
 
 - (void)RunQueryWithcallback:(void (^)(NSMutableArray* responde))callback;
 {
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     Paintingdic = [[NSMutableDictionary alloc]init];
     NSMutableArray *urls = [[NSMutableArray alloc]init];
     if (querystring == nil) {

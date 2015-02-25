@@ -394,8 +394,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                 
                     [self setImageWithWall:img
                                           :self.pictureImage.center
-                                          :pictureChange];
->>>>>>> UIwork
+                                          :nil];
         }
         
     }
