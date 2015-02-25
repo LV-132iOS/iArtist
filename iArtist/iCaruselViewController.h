@@ -22,7 +22,7 @@
 
 @property (strong, nonatomic) AVPicture *currentPicture;
 
-//@property (strong, nonatomic) Sesion *session;
+@property (strong, nonatomic) Sesion *session;
 
 @property (strong, nonatomic)AVManager *dataManager;
 
