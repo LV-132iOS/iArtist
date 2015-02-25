@@ -145,6 +145,7 @@ static NSString *querystring;
 - (NSMutableArray*)GetLikesForUser:(NSString *)_id
 {
     
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
         Paintingdic = [[NSMutableDictionary alloc]init];
         NSMutableArray *urls = [[NSMutableArray alloc]init];
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -424,6 +425,7 @@ static NSString *querystring;
              
              
          }];
+    manager.responseSerializer = [AFImageResponseSerializer serializer];
     
    
 }

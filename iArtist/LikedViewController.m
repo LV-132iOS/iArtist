@@ -80,7 +80,7 @@
     [[ServerFetcher sharedInstance]getPictureThumbWithSizeAndID:[CurrentPainting valueForKey:@"_id"]size:@200 callback:^(UIImage *responde) {
         
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             
             //self.imageView.image = responde;
             //[self.indicator stopAnimating];

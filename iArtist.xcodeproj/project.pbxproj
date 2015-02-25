@@ -783,6 +783,7 @@
 		846AB9211A795B380043214F /* Paintings */ = {
 			isa = PBXGroup;
 			children = (
+				846AB9291A795BC80043214F /* Search Results */,
 				604412E61A83D7A10099B184 /* iCaruselViewController.h */,
 				604412E71A83D7A10099B184 /* iCaruselViewController.m */,
 			);
@@ -866,7 +867,6 @@
 				84A0E82A1A77B688009F6EA5 /* Main.storyboard */,
 				846AB9311A795EF80043214F /* Preview on wall */,
 				846AB92D1A795C630043214F /* Artist Info */,
-				846AB9291A795BC80043214F /* Search Results */,
 				846AB9211A795B380043214F /* Paintings */,
 				846AB9251A795B910043214F /* Details of painting */,
 				846AB91D1A7959400043214F /* Buy Cart */,
