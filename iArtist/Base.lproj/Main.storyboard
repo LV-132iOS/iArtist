@@ -1294,6 +1294,11 @@
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FiS-Fa-IY3" customClass="iCarousel">
                                 <rect key="frame" x="-6" y="44" width="1024" height="656"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dZN-kU-aP3">
+                                        <rect key="frame" x="494" y="309" width="37" height="37"/>
+                                    </activityIndicatorView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -1308,6 +1313,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="1024" height="768"/>
                     <connections>
+                        <outlet property="Indicator" destination="dZN-kU-aP3" id="icR-P9-4H1"/>
                         <outlet property="actionBarBautton" destination="xbc-1K-amS" id="GNh-Ad-7SJ"/>
                         <outlet property="addToCart" destination="Ugo-8U-A9p" id="3C9-1f-sHO"/>
                         <outlet property="authorButton" destination="OsS-e0-Vtf" id="MTV-pD-HVU"/>
@@ -1733,8 +1739,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="vib-vZ-Kxc"/>
+        <segue reference="9Q1-oe-U60"/>
+        <segue reference="XqC-q2-HwM"/>
         <segue reference="MJL-gi-ees"/>
-        <segue reference="nay-hd-SZI"/>
     </inferredMetricsTieBreakers>
 </document>

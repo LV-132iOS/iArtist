@@ -24,7 +24,7 @@ static NSMutableArray *urls;
 - (void)GetNewsForUser:(NSString *)_id
               callback:(void (^)(NSMutableArray* responde))callback;
 - (void)GenerateQueryForTag:(NSString*)querry;
-- (NSMutableArray*)RunQuery;
+- (void)RunQueryWithcallback:(void (^)(NSMutableArray* responde))callback;
 - (void)GenerateQueryForPrice:(int)min :(int)max;
 - (void)GenerateQueryForSize:(NSString*)querry;
 - (NSDictionary *)Paintingdic;
@@ -35,7 +35,6 @@ static NSMutableArray *urls;
 - (void)GenerateQueryForMaterial:(NSString*)querry;
 - (void)GenerateQueryForArtist:(NSString*)querry;
 - (void)GenerateQueryForColor:(NSString*)querry;
-
 
 
 + (ServerFetcher *)sharedInstance;

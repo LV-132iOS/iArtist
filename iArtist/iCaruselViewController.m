@@ -15,6 +15,9 @@
 #import "CartViewController.h"
 #import "ArtistViewController.h"
 #import "Wall.h"
+#import "SDImageCache.h"
+#import "Picture+Create.h"
+#import "AppDelegate.h"
 
 @interface iCaruselViewController (){
     NSString* kindOfSharing;
@@ -45,6 +48,7 @@
 @property (nonatomic, strong) NSDictionary *CurrentPainting;
 @property (nonatomic, strong) NSDictionary *CurrentArtist;
 @property (nonatomic,strong) NSMutableArray *ImageArray;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *Indicator;
 
 @property (strong, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
 
@@ -111,15 +115,24 @@ UIVisualEffectView *visualEffectView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (self.urls == nil) {
-        self.urls = [[NSMutableArray alloc]initWithArray:[[ServerFetcher sharedInstance] RunQuery]];
+        [self.Indicator startAnimating];
+        [[ServerFetcher sharedInstance] RunQueryWithcallback:^(NSMutableArray *responde) {
+            self.urls = responde;
+            [self.pictureView reloadData];
+            self.ImageArray = [[NSMutableArray alloc]init];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.Indicator stopAnimating];
+                [self.Indicator removeFromSuperview];
+            });
+            for (int i=0;i<self.urls.count;i++) {
+                [self.ImageArray addObject:[NSNull null]];
+            }
+        }];
     }
     self.pictureView.currentItemIndex = self.index;
     self.authorsImage = [[UIImageView alloc]init];
     self.authorsName = [UILabel new];
-    self.ImageArray = [[NSMutableArray alloc]init];
-    for (int i=0;i<self.urls.count;i++) {
-        [self.ImageArray addObject:[NSNull null]];
-    }
+   
     
     
     //NSLog(@"%@",_urls);
@@ -194,10 +207,8 @@ UIVisualEffectView *visualEffectView;
     view = ((UIImageView*)view);
     [self.ImageArray replaceObjectAtIndex:index withObject:view];
     __block NSString* str = [[NSString alloc] init];
-    
     dispatch_group_t group =  dispatch_group_create();
     dispatch_queue_t my_queue = dispatch_queue_create("myqueue", DISPATCH_QUEUE_CONCURRENT);
-    
     dispatch_group_async(group, my_queue, ^{
          str = [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]];
     });
@@ -208,13 +219,8 @@ UIVisualEffectView *visualEffectView;
     self.pictureSize.text = [self.CurrentPainting valueForKey:@"realsize"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *img = [UIImage imageWithData:imageData];
-    
     self.authorsImage.image = img;
     self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
-
-    
-    
-    
     return view;
 }
 #pragma mark - seque
@@ -424,8 +430,10 @@ UIVisualEffectView *visualEffectView;
     
     NSString *likescount = [[ServerFetcher sharedInstance] PutLikes:[self.CurrentPainting valueForKey:@"_id"]];
     self.likeCounterLabel.text = likescount;
+    [[SDImageCache sharedImageCache]storeImage:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image forKey:[self.urls objectAtIndex:self.pictureView.currentItemIndex]];
+    [Picture CreatePictureWithData:self.CurrentPainting inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext];
+    
 }
-
 
 
 @end

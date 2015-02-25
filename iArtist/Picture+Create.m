@@ -20,8 +20,8 @@
     for (int i=0; i<data.count; i++){
         
     
-    NSString *_id = [data valueForKeyPath:[NSString stringWithFormat:@"%d._id",i ]];
-        NSLog(@"%@",_id);
+        NSString *_id = [data valueForKeyPath: @"_id"];
+                     NSLog(@"%@",_id);
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Picture"];
     request.predicate = [NSPredicate predicateWithFormat:@"id_=%@", _id];
     NSError *error;
@@ -41,11 +41,11 @@
         picture.descript = [data valueForKeyPath:[NSString stringWithFormat:@"%d.description",i ]];
         picture.size = [data valueForKeyPath:[NSString stringWithFormat:@"%d.size",i ]];
         picture.realsize = [data valueForKeyPath:[NSString stringWithFormat:@"%d.realsize",i ]];
-        //picture.thumbnailURL = [data valueForKeyPath:[NSString stringWithFormat:@"%d.title",i ]];
+        picture.thumbnailURL = [data valueForKeyPath:[NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/%@?thumb=true",_id]];
         picture.orginURL = [data valueForKeyPath:[NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/%@",_id]];
         picture.price = [data valueForKeyPath:[NSString stringWithFormat:@"%d.price",i ]];
         
-       // picture.owner = [Artist CreateArtistinWithId:[data valueForKeyPath:[NSString stringWithFormat:@"%d.artistId",i ]] inManagedobjectcontext:context];
+        picture.owner = [Artist CreateArtistinWithId:[data valueForKeyPath:[NSString stringWithFormat:@"artistId" ]] inManagedobjectcontext:context];
       //  NSLog(@"%@",picture.title);
         //NSString *apple = @"Apple";
        // NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Picture"];

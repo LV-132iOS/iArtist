@@ -13,13 +13,11 @@
 
 //static NSString * const BaseURLString = @"http://192.168.103.5/";
 static NSString * const BaseURLString = @"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/";
+static dispatch_group_t downloadGroup;
 static  AFHTTPSessionManager *manager;
 static NSString *querystring;
-
-
-
 @interface ServerFetcher ()
-
+@property (nonatomic,assign) dispatch_group_t downloadGroup;
 @end
 
 @implementation ServerFetcher
@@ -33,16 +31,21 @@ static NSString *querystring;
 }
 
 - (void)GenerateQueryForTag:(NSString*)querry{
-    NSString *querryStr = [NSString stringWithFormat:@"{ \"tags\": \"%@\" }",querry];
-    querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                                     (CFStringRef)querryStr,
-                                                                                     NULL,
-                                                                                     (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
-    
-    querystring = querryStr;
-}
+        dispatch_group_enter(downloadGroup);
+        NSString *querryStr = [NSString stringWithFormat:@"{ \"tags\": \"%@\" }",querry];
+        querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                         (CFStringRef)querryStr,
+                                                                                         NULL,
+                                                                                         (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
+        
+        querystring = querryStr;
+           dispatch_group_leave(downloadGroup);
+
+   
+   }
 
 - (void)GenerateQueryForMaterial:(NSString*)querry{
+    dispatch_group_enter(downloadGroup);
     NSString *querryStr = [NSString stringWithFormat:@"{ \"materials\": \"%@\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)querryStr,
@@ -50,9 +53,13 @@ static NSString *querystring;
                                                                                      (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
     
     querystring = querryStr;
+    dispatch_group_leave(downloadGroup);
+
 }
 
 - (void)GenerateQueryForArtist:(NSString*)querry{
+    dispatch_group_enter(downloadGroup);
+
     NSString *querryStr = [NSString stringWithFormat:@"{ \"Artist\": \"%@\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)querryStr,
@@ -60,8 +67,12 @@ static NSString *querystring;
                                                                                      (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
     
     querystring = querryStr;
+    dispatch_group_leave(downloadGroup);
+
 }
 - (void)GenerateQueryForColor:(NSString*)querry{
+    dispatch_group_enter(downloadGroup);
+
     NSString *querryStr = [NSString stringWithFormat:@"{ \"Color\": \"%@\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                             (CFStringRef)querryStr,
@@ -69,12 +80,16 @@ static NSString *querystring;
                                                                                             (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
 
     querystring = querryStr;
+    dispatch_group_leave(downloadGroup);
+
 }
 
 
 
 
 - (void)GenerateQueryForPrice:(int)min :(int)max{
+    dispatch_group_enter(downloadGroup);
+
     NSString *querryStr = [NSString stringWithFormat:@"{ \"price\": {\"\$gte\":%d,\"\$lte\":%d} }",min,max];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)querryStr,
@@ -82,11 +97,15 @@ static NSString *querystring;
                                                                                      (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
     
     querystring = querryStr;
+    dispatch_group_leave(downloadGroup);
+
 }
 
 
 
 - (void)GenerateQueryForSize:(NSString*)querry{
+    dispatch_group_enter(downloadGroup);
+
     NSString *querryStr = [NSString stringWithFormat:@"{ \"size\": \"%@\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)querryStr,
@@ -94,22 +113,25 @@ static NSString *querystring;
                                                                                      (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
     
     querystring = querryStr;
+    dispatch_group_leave(downloadGroup);
+
+    
 }
 
 
 
 
 
-- (NSMutableArray*)RunQuery
+- (void)RunQueryWithcallback:(void (^)(NSMutableArray* responde))callback;
 {
-    if (querystring == nil) {
-        return nil;
-    }
-    else{
     Paintingdic = [[NSMutableDictionary alloc]init];
     NSMutableArray *urls = [[NSMutableArray alloc]init];
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    if (querystring == nil) {
+        dispatch_group_wait(downloadGroup, DISPATCH_TIME_FOREVER);
+
+    }
+    else{
+  
     NSString *str = [@"paintings/db?query=" stringByAppendingString:querystring] ;
     [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             for (int i = 0; i<((NSArray*)responseObject).count; i++)
@@ -117,21 +139,20 @@ static NSString *querystring;
                 NSString *str = [BaseURLString stringByAppendingString:@"paintings/files/%@"];
                 [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
                 NSString *Urlstr = [NSString stringWithFormat:str,[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
-                Urlstr = [Urlstr stringByAppendingString:@"?thumb=true"];
+                Urlstr = [Urlstr stringByAppendingString:@"?thumb=preview"];
                 NSLog(@"%@",Urlstr);
                 [urls addObject:Urlstr];
                 
             }
+      
+            callback(urls);
+   
         
        // [Picture CreatePictureWithData:dic inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext ];
-       dispatch_semaphore_signal(semaphore);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
-       dispatch_semaphore_signal(semaphore);
 
     }];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    return urls;
   
     }
 }
@@ -278,7 +299,6 @@ static NSString *querystring;
     manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     __block NSString *count = [[NSString alloc]init];
     [manager GET:[NSString stringWithFormat:@"paintings/db/%@?likes=true",_id] parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        //NSLog(@"%@",responseObject);
         count = [(NSDictionary *)responseObject objectForKey:@"count"];
         dispatch_semaphore_signal(semaphore);
 
@@ -292,18 +312,16 @@ static NSString *querystring;
     return count;
 }
 
--(id)init{
-   
-       return self;
-    
-}
+
 
 
 + (ServerFetcher *)sharedInstance{
     static ServerFetcher *singleton = nil;
     static dispatch_once_t predicate;
+
     dispatch_once( &predicate, ^{
         singleton = [[ServerFetcher alloc]init];
+        downloadGroup = dispatch_group_create();
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         NSURL *urllstr = [[NSURL alloc]initWithString:BaseURLString];
         manager = [[AFHTTPSessionManager alloc] initWithBaseURL:urllstr sessionConfiguration:config];
@@ -377,12 +395,14 @@ static NSString *querystring;
 {
     
     manager.responseSerializer = [AFImageResponseSerializer serializer];
-    [manager GET:[NSString stringWithFormat:@"paintings/files/%@?thumb=true", _id]
+    [manager GET:[NSString stringWithFormat:@"paintings/files/%@?thumb=preview", _id]
       parameters:nil
          success:^(NSURLSessionDataTask *task, id responseObject) {
              UIImage *image;
              image = (UIImage*)responseObject;
-             callback(image);
+             dispatch_sync(dispatch_get_main_queue(), ^{
+                  callback(image);
+             });
              
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              NSLog(@"Error: %@", error);

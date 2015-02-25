@@ -35,12 +35,6 @@
     self.AllPaintingData = [[NSDictionary alloc]init];
     self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:[defaults valueForKey:@"id"]];
     self.AllPaintingData = Paintingdic;
-
-
-    
-    
-    
-    
 }
 
 -(void)blurImage
@@ -69,16 +63,22 @@
     NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
 
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
-   // UIImageView *image =  [[UIImageView alloc]initWithImage: [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]]];
-    //image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
-    //image.contentMode = UIViewContentModeScaleAspectFit;
+    __block UIImageView *image = [[UIImageView alloc]init];
+  
+        [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]callback:^(UIImage *responde) {
+            image.image = responde;
+        
+                    }];
+    image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
+    image.contentMode = UIViewContentModeScaleAspectFit;
     
     cell.contentMode = UIViewContentModeScaleAspectFit;
-    //[cell addSubview:image];
+    [cell addSubview:image];
     cell.layer.borderWidth = 4.0f;
     cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
     cell.layer.cornerRadius = 40;
     self.index = indexPath.row;
+
     return cell;
 }
 
