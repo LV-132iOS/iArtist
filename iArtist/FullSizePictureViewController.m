@@ -8,7 +8,7 @@
 
 #import "FullSizePictureViewController.h"
 #import "ServerFetcher.h"
-
+#import "ArtistViewController.h"
 
 typedef NS_ENUM(NSInteger, AVLeftView) {
     AVLeftViewEnable,
@@ -23,16 +23,13 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 @property (strong, nonatomic) IBOutlet UITextView               *authorInfo;
 @property (strong, nonatomic) IBOutlet UILabel                  *authorsName;
 @property (strong, nonatomic) IBOutlet UILabel                  *authorsData;
-@property (strong, nonatomic)          UIImageView              *authorsImage;
+@property (strong, nonatomic) IBOutlet UIImageView              *authorsImage;
 @property (strong, nonatomic)          UITextView               *pictureDescription;
-@property (strong, nonatomic) IBOutlet UIButton                 *authorButton;
+
 @property (nonatomic)                  AVLeftView               leftviewindex;
 @property (strong, nonatomic) IBOutlet UILabel                  *price;
 @property (strong, nonatomic) IBOutlet UIButton                 *like;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView  *indicator;
-
-
-
 
 
 @end
@@ -68,9 +65,17 @@ CGFloat neededScale;
    // self.pictureTag.text = [(NSArray*)[self.paintingData valueForKey:@"tags"] componentsJoinedByString:@","];
      self.authorsName.text = [self.artistData valueForKey:@"name"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.artistData valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    
+    
     UIImage *img = [UIImage imageWithData:imageData];
+    
     self.authorsImage.image = img;
     self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
+    self.authorsImage.layer.backgroundColor = [[UIColor clearColor] CGColor];
+    self.authorsImage.layer.cornerRadius = 35;
+    self.authorsImage.layer.borderWidth = 2.0;
+    self.authorsImage.layer.masksToBounds = YES;
+    self.authorsImage.layer.borderColor = [[UIColor blackColor] CGColor];
     
     [self.indicator startAnimating];
     self.indicator.hidesWhenStopped = YES;
@@ -79,6 +84,7 @@ CGFloat neededScale;
     self.indicator.transform = CGAffineTransformMakeScale(4, 4);
     
     
+    //[[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
     [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageView.image = responde;
@@ -180,6 +186,17 @@ CGFloat neededScale;
 //tap gesture recognizer
 - (IBAction)tapAction:(id)sender {
     
+    
+   
+    if (([(UIGestureRecognizer *)sender locationInView:self.leftView].x > 0)&&
+        ([(UIGestureRecognizer *)sender locationInView:self.leftView].x < 410)&&
+        ([(UIGestureRecognizer *)sender locationInView:self.leftView].y < 80)) {
+        [self performSegueWithIdentifier:@"ArtistInfo" sender:self];
+        return;
+    }
+    
+
+    
     CGFloat time = 0.3;
     if (self.leftviewindex == AVLeftViewEnable) {
         self.leftviewindex = AVLeftViewDisable;
@@ -199,6 +216,17 @@ CGFloat neededScale;
                          completion:NULL];
     }
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
+        
+        ((ArtistViewController*)segue.destinationViewController).CurrentArtist = self.artistData;
+        ((ArtistViewController*)segue.destinationViewController).img = self.authorsImage.image;
+    }
+    
+}
+
 //dismissing current view controller
 - (IBAction)closeController:(id)sender {
     CGFloat timeForAnimation = 0.3;
@@ -219,14 +247,5 @@ CGFloat neededScale;
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

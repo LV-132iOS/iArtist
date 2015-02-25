@@ -17,6 +17,13 @@ static NSMutableArray *urls;
 @property (nonatomic, strong) NSMutableArray  *artistdic;
 @property (nonatomic, strong) UIImage       *image;
 - (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
+
+//- (void)GetPictureThumbWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
+
+//get likes. coment by AV
+- (void)getPictureThumbWithSizeAndID:(NSString*)_id size:(NSNumber *)size callback:(void (^)(UIImage* responde))callback;
+//
+
 - (UIImage*)GetPictureWithID:(NSString*)_id;
 - (void)reloadDB;
 - (void)FetchArtists;
@@ -35,9 +42,6 @@ static NSMutableArray *urls;
 - (void)GenerateQueryForMaterial:(NSString*)querry;
 - (void)GenerateQueryForArtist:(NSString*)querry;
 - (void)GenerateQueryForColor:(NSString*)querry;
-
-- (UIImage*)GetPictureThumbWithID:(NSString*)_id;
-
 
 + (ServerFetcher *)sharedInstance;
 

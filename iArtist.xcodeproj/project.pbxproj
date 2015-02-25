@@ -857,10 +857,10 @@
 		84A0E81F1A77B688009F6EA5 /* iArtist */ = {
 			isa = PBXGroup;
 			children = (
+				60E69A661A865DBB007CA1C6 /* Core Data */,
 				4BCBCBA41A932D1F00DA9C62 /* Social Networks */,
 				4B4A32091A8D32BC0048078C /* AFNetworking */,
 				60E69AAE1A865E3C007CA1C6 /* Download Manager */,
-				60E69A661A865DBB007CA1C6 /* Core Data */,
 				604413031A83D7C00099B184 /* Images */,
 				604412CF1A83D7870099B184 /* AV classes */,
 				84A0E82A1A77B688009F6EA5 /* Main.storyboard */,

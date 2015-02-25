@@ -23,4 +23,6 @@
 @property (strong, nonatomic) UIImage *ImageThumb;
 
 
+//@property (nonatomic, strong) UIImage *img;
+
 @end

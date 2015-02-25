@@ -165,7 +165,7 @@
                                                      otherButtonTitles: nil];
         [locAlertView show];
     } else{
-        [self performSegueWithIdentifier:@"NewsFeed" sender:nil];
+        [self performSegueWithIdentifier:@"News" sender:nil];
     }
 }
 
@@ -192,7 +192,7 @@
     dataManager.index = 0;
     dataManager.wallImage.wallPicture = [UIImage imageNamed:@"room1.jpg"];
     if ([segue.identifier isEqualToString:@"PictureView"]) {
-        ((iCaruselViewController *)segue.destinationViewController).session = session;
+        //((iCaruselViewController *)segue.destinationViewController).session = session;
     }
     if ([segue.identifier isEqualToString:@"News"]) {
         ((NewsViewController *)segue.destinationViewController).session = session;
@@ -217,14 +217,19 @@
         NSDictionary* dataToPassDic = @{
                                         @"_id" : [defaults objectForKey:@"id"],
                                         @"username" : [defaults objectForKey:@"username"],
-                                        @"useremail": [defaults objectForKey:@"useremail"],
+                                        
+                                        
+                                        //AV Coment
+                                        //@"useremail": [defaults objectForKey:@"useremail"],
+                                        
                                         };
+        
         //and convert dictionary to proper type
         NSData* dataToPass = [NSJSONSerialization dataWithJSONObject:dataToPassDic
                                                              options:0
                                                                error:nil];
         //current url for request
-                NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
+        NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
         //NSURL* url = [NSURL URLWithString:@"http://192.168.103.5/users/"];
         //creating request to use it with dataTask
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
@@ -239,10 +244,12 @@
         
         NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
                                                     completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
+                                                        
                                                         //logging received response
                                                         NSLog(@"%@",response);
                                                         
                                                         if (!error) {
+                                                            
                                                             NSString* locString = [NSString stringWithFormat:@"loggedInWith%@",
                                                                                    [notification.userInfo objectForKey:@"with"]];
                                                             [defaults setBool:YES forKey:@"loggedIn"];
@@ -258,6 +265,7 @@
                                                             //
                                                             
                                                         } else {
+                                                            
                                                             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Failed to send info"
                                                                                                             message:@"Please, re-login later"
                                                                                                            delegate:nil
