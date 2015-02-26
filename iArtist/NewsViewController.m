@@ -22,6 +22,8 @@
 
 @implementation NewsViewController
 
+NSInteger indexDelete;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -47,6 +49,7 @@
         [self setIds:array];
         self.AllArtistData = [[ServerFetcher sharedInstance]artistdic];
         self.AllPaintingData = [[ServerFetcher sharedInstance]Paintingdic];
+        
         for (int i=0; i<self.Ids.count;i++){
             
             //[self.ImagesArray addObject:([[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[i]])];
@@ -88,67 +91,47 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return self.AllArtistData.count;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-        return self.Ids.count ;
+    return [self.Ids count];
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AVTableViewCell" forIndexPath:indexPath];
+    __block NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AVTableViewCell" forIndexPath:indexPath];
+    
+    self.CurrentPainting = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
+    
+    for (NSDictionary *artist  in self.AllArtistData) {
+        if ([[artist valueForKey:@"_id"]isEqual:[self.CurrentPainting valueForKey:@"artistId"]]) {
+            self.CurrentArtist = artist;
+        }
+    }
 
-     self.CurrentPainting = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
-    // NSLog(@"%@",[self.CurrentPainting valueForKey:@"_id"]);
-    // NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKeyPath:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    // UIImage *img = [UIImage imageWithData:imageData];
     cell.pictureName.text = [self.CurrentPainting valueForKey:@"title"];
     cell.newsDescription.text = [self.CurrentPainting valueForKey:@"description"];
     cell.pictureTag.text = [(NSArray*)[self.CurrentPainting valueForKey:@"tags"] componentsJoinedByString:@"," ];
     cell.date.text = [self.CurrentPainting valueForKey:@"created_at"];
-    //cell.authorName.text = []
-
     
-    UIImage *img = [UIImage new];
-    img = cell.pictureImage.image ;
-  
-    
-       // NSLog(@"row %ld",indexPath.row);
-       // NSLog(@"section %ld",indexPath.section);
-    //if(cell.pictureImage.image == nil){
-       //cell.pictureImage = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[indexPath.row] ]];
-
-    UIImage * im = self.ImagesArray[indexPath.row];
-        UIImageView *imm = [[UIImageView alloc] initWithImage:im];
-        imm.frame = CGRectMake(10, 10, 290, 290);
-        [cell addSubview:imm];
- /*
-         cell.pictureImage.image = [[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[0][indexPath.section][indexPath.row]];
-          cell.pictureName.text = [self.AllArtistData[i] valueForKeyPath:[(NSArray*)[NSString stringWithFormat:@"paintings.%ld",indexPath.row]objectAtIndex:indexPath.row]];
-         cell.authorName.text = [self.AllArtistData[indexPath.section] valueForKey:@"name"];
-         NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.AllArtistData[indexPath.section] valueForKeyPath:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
-         UIImage *img = [UIImage imageWithData:imageData];
-         cell.authorImage.image = img;     [[AVNewsTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AVTableViewCell"];
-         
-         */
-        cell.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
-    
-        //cell.authorImage.image = img;
+    [[ServerFetcher sharedInstance]getPictureThumbWithSizeAndID:[self.CurrentPainting valueForKey:@"_id"]size:@200 callback:^(UIImage *responde) {
         
-        
-        //cell.authorName.text = [self.CurrentArtist valueForKey:@"name"];
-        
+            cell.pictureImage.image = responde;
 
-  
-    
-    
-    
-    // Configure the cell...
-    
+            cell.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
+            
+            NSLog(@"%d Ok", indexPath.row);
+       
+    }];
+ 
+    cell.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
+    cell.tag = indexPath.row;
+    cell.authorName.text = [self.CurrentArtist valueForKey:@"name"];
+        
+    NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    UIImage *img = [UIImage imageWithData:imageData];
+    cell.authorImage.image = img;
     return cell;
 }
 
@@ -169,10 +152,67 @@
         
         
         
-        
     }
     
 }
+////////
+- (IBAction)shouldUnfolowAutor:(id)sender {
+    
+    NewsTableViewCell *currentCell =  (NewsTableViewCell *)((((UIButton *)sender).superview).superview);
+    indexDelete = currentCell.tag;
+    
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"You clicked on unfollow Author"
+                                                    message:@"Do you realy want to unfollow Author?"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Ok",nil];
+    alert.delegate = self;
+    [alert show];
+    
+}
+
+
+- (void)reload{
+    self.CurrentPainting = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld",(long)indexDelete]];
+    
+    for (NSDictionary *artist  in self.AllArtistData) {
+        
+        if ([[artist valueForKey:@"_id"]isEqual:[self.CurrentPainting valueForKey:@"artistId"]]) {
+            self.CurrentArtist = artist;
+        }
+    }
+    
+    [[ServerFetcher sharedInstance]BecomeAFollower:[self.CurrentArtist valueForKey:@"_id"]];
+    
+    
+    void (^callback)(NSMutableArray*) = ^(NSMutableArray* array){
+        [self setIds:array];
+        self.AllArtistData = [[ServerFetcher sharedInstance]artistdic];
+        self.AllPaintingData = [[ServerFetcher sharedInstance]Paintingdic];
+        
+        NSLog(@"callback");
+        for (int i=0; i<self.Ids.count;i++){
+            
+            //[self.ImagesArray addObject:([[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[i]])];
+        }
+        
+        [self.newsTable reloadData];
+    };
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [[ServerFetcher sharedInstance]GetNewsForUser:[defaults valueForKey:@"id"] callback:callback];
+    
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 1)[self reload];
+    
+}
+///////
+
+
 
 - (IBAction)backReturn:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];

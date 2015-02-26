@@ -73,6 +73,7 @@
     NSLog(@"%d",indexPath.row);
     
     __block UIImageView *image;
+    
     //=  [[UIImageView alloc]initWithImage: [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]]];
     
     
@@ -85,8 +86,10 @@
             //self.imageView.image = responde;
             //[self.indicator stopAnimating];
             
+            //((UIImageView *)cell).image = responde;
             
             image = [[UIImageView alloc]initWithImage: responde];
+            //image.image = responde;
             
             image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
             image.contentMode = UIViewContentModeScaleAspectFit;
@@ -98,6 +101,7 @@
         });
         
     }];
+
     
     cell.layer.borderWidth = 4.0f;
     cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
@@ -105,6 +109,7 @@
     self.index = indexPath.row;
     
     return cell;
+    
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -138,14 +143,5 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

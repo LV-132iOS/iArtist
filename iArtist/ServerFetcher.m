@@ -180,16 +180,25 @@ static NSString *querystring;
 - (void)GetNewsForUser:(NSString *)_id
               callback:(void (^)(NSMutableArray* responde))callback
 {
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     Paintingdic =[[NSMutableDictionary alloc]init];
+    
     Artistdic = [[NSMutableArray alloc]init];
     __block NSMutableArray *ids = [[NSMutableArray alloc]init];
     NSString *str = [NSString stringWithFormat:@"%@/favorite_artists",_id];
     [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        //comment fixing method
+        NSInteger pictureIndex = 0;
+        //
         Artistdic = (NSMutableArray *)responseObject;
-        for (int i=0; i<Artistdic.count; i++) {
+        for (int i=0; i<[Artistdic count]; i++) {
             for (int j=0; j<[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) count]; j++) {
                 [ids addObject: [[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) objectAtIndex:j] valueForKey:@"_id" ]];
-                [Paintingdic setObject:[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) objectAtIndex:j]forKey:[NSString stringWithFormat:@"%d",j]];
+                [Paintingdic setObject:[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) objectAtIndex:j]forKey:
+                 //
+                [NSString stringWithFormat:@"%d",pictureIndex]];
+                pictureIndex ++;
+                //
             }
             
         }
@@ -419,7 +428,10 @@ static NSString *querystring;
          success:^(NSURLSessionDataTask *task, id responseObject) {
              UIImage *image;
              image = (UIImage*)responseObject;
-             callback(image);
+             //dispatch_sync(dispatch_get_main_queue(), ^{
+                   callback(image);
+             //});
+           
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
              

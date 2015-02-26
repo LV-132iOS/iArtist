@@ -77,7 +77,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 
 - (void) setImageWithWall :(UIImage *)image :(CGPoint)pictureCenter :(AVTypeOfPictureChange)typeOfPictureChange{
     
-    
      self.CurrentArtist = [[NSDictionary alloc]init];
      self.CurrentPainting = [[NSDictionary alloc]init];
     
@@ -89,7 +88,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                                            image.size.height );
     
     CGRect frame = {.origin.x = 0.0, .origin.y = 0.0, .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
-    
     
     self.price.text = [self.CurrentPainting valueForKey:@"price"];
     self.pictureSize.text = [self.CurrentPainting valueForKey:@"size"];
@@ -253,7 +251,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     locUrlToPass = [[NSURL alloc] init];
     locHeadString = [[NSString alloc] init];
     
-
 }
 
 - (void)viewDidLoad {
@@ -532,7 +529,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     self.currentWall = [notification.userInfo valueForKey:@"wall"];
     self.roomImage.image = self.currentWall.wallPicture;
     
-    [self setImageWithWall:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image//self.currentPicture.pictureImage
+    [self setImageWithWall:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image
                           :self.pictureImage.center
                           :AVInitTypeOfPictureChange];
     

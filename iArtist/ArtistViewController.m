@@ -23,9 +23,10 @@
     //set imageOfArtist
    // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults ];
     //AV coment Becouse without that crash
-   // BOOL isFollowed = [[ServerFetcher sharedInstance]CheckIsFollowing:[self.CurrentArtist valueForKey:@"_id"] ];
     
-   // isFollowed?[self.FollowButton setTitle:@"Unfollow-" forState:UIControlStateNormal]:nil;
+    BOOL isFollowed = [[ServerFetcher sharedInstance]CheckIsFollowing:[self.CurrentArtist valueForKey:@"_id"] ];
+    
+    isFollowed?[self.FollowButton setTitle:@"Unfollow-" forState:UIControlStateNormal]:nil;
     
     
     self.imageOfArtist.image = self.img;
@@ -48,7 +49,7 @@
 }
 - (IBAction)FollowArtist:(UIButton*)sender {
     [sender setTitle:@"Unfollow-" forState:UIControlStateNormal];
-     BOOL isFollowed = [[ServerFetcher sharedInstance]BecomeAFollower:[self.CurrentArtist valueForKey:@"_id"]];
+    BOOL isFollowed = [[ServerFetcher sharedInstance]BecomeAFollower:[self.CurrentArtist valueForKey:@"_id"]];
     int n = self.Folowers.text.intValue;
     if(isFollowed){
         n++;
