@@ -22,6 +22,8 @@ static NSString *querystring;
 
 @implementation ServerFetcher
 
+
+
 -(NSDictionary *)Paintingdic{
     @synchronized(self){return Paintingdic;}
 }
@@ -30,6 +32,26 @@ static NSString *querystring;
     @synchronized(self){return Artistdic;}
 }
 
+
+ - (void)getPictureThumbWithSizeAndID:(NSString*)_id size:(NSNumber *)size callback:(void (^)(UIImage* responde))callback
+{
+    
+    manager.responseSerializer = [AFImageResponseSerializer serializer];
+    [manager GET:[NSString stringWithFormat:@"paintings/files/%@?thumb=%@", _id ,size]
+      parameters:nil
+         success:^(NSURLSessionDataTask *task, id responseObject) {
+             UIImage *image;
+             image = (UIImage*)responseObject;
+             callback(image);
+         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+             NSLog(@"Error: %@", error);
+             
+             
+         }];
+    manager.responseSerializer = [AFImageResponseSerializer serializer];
+    
+    
+}
 - (void)GenerateQueryForTag:(NSString*)querry{
         dispatch_group_enter(downloadGroup);
         NSString *querryStr = [NSString stringWithFormat:@"{ \"tags\": \"%@\" }",querry];

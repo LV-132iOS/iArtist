@@ -268,77 +268,68 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         [self hideViews];
     }
     if (![self ifPointInsidePicture: currentPoint]){
+        AVTypeOfPictureChange pictureChange = AVSwipeLeftTypeOfPictureChange;
         if (sender.direction == UISwipeGestureRecognizerDirectionRight){
+            pictureChange = AVSwipeRightTypeOfPictureChange;
             if (self.pictureIndex == 0){
                 self.pictureIndex = [self.ImageArray count] - 1;
             } else
                 self.pictureIndex--;
             
-            if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-#pragma add indicator!
-               [[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]] callback:^(UIImage *responde) {
-                   UIImageView *imgv = [[UIImageView alloc]initWithImage:responde];
-                   [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:imgv];
-                   
-                   [self setImageWithWall:responde
-                                         :self.pictureImage.center
-                                         :AVSwipeRightTypeOfPictureChange];
-                   
-                }];
-            
-         
-            }    else{
-                UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
-                
-                [self setImageWithWall:img
-                                      :self.pictureImage.center
-                                      :AVSwipeRightTypeOfPictureChange];
-
-                
-                
-            }
-            
-            
-                    }
+        }
         if (sender.direction == UISwipeGestureRecognizerDirectionLeft){
+            pictureChange = AVSwipeLeftTypeOfPictureChange;
             if (self.pictureIndex == [self.ImageArray count]-1 ){
                 self.pictureIndex = 0;
             } else
                 self.pictureIndex++;
-            
-            if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
-#pragma add indicator!
-                [[ServerFetcher sharedInstance] GetPictureThumbWithID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]] callback:^(UIImage *responde) {
-                    UIImageView *imgv = [[UIImageView alloc]initWithImage:responde];
-                    [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:imgv];
-                    
-                    [self setImageWithWall:responde
-                                          :self.pictureImage.center
-                                          :AVSwipeLeftTypeOfPictureChange];
-                    
-                }];
-                
-                
-            }    else{
-                UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
-                
-                [self setImageWithWall:img
-                                      :self.pictureImage.center
-                                      :AVSwipeLeftTypeOfPictureChange];
-                
-                
-                
-            }
-            
-            
         }
+        
+        //
+        ///[self setImageWithWall:self.pictureImage.center
+        //                     :pictureChange];
+        //
+        
+        NSNumber *size = [NSNumber new];
+        NSString *realsize = [NSString stringWithString:
+                              [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.realsize",(long)self.pictureIndex]]];
+        NSInteger indexOfX;
+        for (indexOfX = 0; indexOfX < realsize.length; indexOfX ++) {
+            if ([realsize characterAtIndex:indexOfX] == 'x') {
+                
+                size = @(MAX([realsize substringToIndex:indexOfX].doubleValue, [realsize substringFromIndex:(indexOfX + 1)].doubleValue));
+            }
+        }
+        
+        size = @(size.intValue / (3 * self.currentWall.distanceToWall.doubleValue ));
+        
+        if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
+            
+            [[ServerFetcher sharedInstance] getPictureThumbWithSizeAndID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]size:size callback:^(UIImage *responde) {
+                UIImageView *imgv = [[UIImageView alloc]initWithImage:responde];
+                [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:imgv];
+                
+                [self setImageWithWall:responde
+                                      :self.pictureImage.center
+                                      :AVSwipeRightTypeOfPictureChange];
+            }];
+            
+        } else {
+            UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+            
+            
+            //img.size.height = [realsize substringToIndex:indexOfX].doubleValue / (3 * self.currentWall.distanceToWall.doubleValue);
+            
+            [self setImageWithWall:img
+                                  :self.pictureImage.center
+                                  :pictureChange];
+        }
+        
     }
     if (sender.state == UIGestureRecognizerStateEnded) {
         [self pushVies];
     }
-}
-
-//we check is point into our picture or not
+}//we check is point into our picture or not
 - (BOOL) ifPointInsidePicture:(CGPoint)point{
     
     if ((point.x > self.pictureImage.frame.origin.x)&&

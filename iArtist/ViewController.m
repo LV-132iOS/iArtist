@@ -192,7 +192,7 @@
     dataManager.index = 0;
     dataManager.wallImage.wallPicture = [UIImage imageNamed:@"room1.jpg"];
     if ([segue.identifier isEqualToString:@"PictureView"]) {
-        ((iCaruselViewController *)segue.destinationViewController).session = session;
+        //((iCaruselViewController *)segue.destinationViewController).session = session;
     }
     if ([segue.identifier isEqualToString:@"News"]) {
         ((NewsViewController *)segue.destinationViewController).session = session;

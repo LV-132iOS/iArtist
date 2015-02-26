@@ -35,8 +35,7 @@ static NSMutableArray *urls;
 - (void)GenerateQueryForMaterial:(NSString*)querry;
 - (void)GenerateQueryForArtist:(NSString*)querry;
 - (void)GenerateQueryForColor:(NSString*)querry;
-
-
+- (void)getPictureThumbWithSizeAndID:(NSString*)_id size:(NSNumber *)size callback:(void (^)(UIImage* responde))callback;
 + (ServerFetcher *)sharedInstance;
 
 
