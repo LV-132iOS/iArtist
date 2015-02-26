@@ -124,6 +124,7 @@ static NSString *querystring;
 
 - (void)RunQueryWithcallback:(void (^)(NSMutableArray* responde))callback;
 {
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     Paintingdic = [[NSMutableDictionary alloc]init];
     NSMutableArray *urls = [[NSMutableArray alloc]init];
     if (querystring == nil) {
@@ -159,19 +160,20 @@ static NSString *querystring;
 
 - (NSMutableArray*)GetLikesForUser:(NSString *)_id
 {
-    
-        Paintingdic = [[NSMutableDictionary alloc]init];
-        NSMutableArray *urls = [[NSMutableArray alloc]init];
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-        manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        NSString *str = [NSString stringWithFormat:@"%@/favorite_paintings",_id];
-        [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+   
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    Paintingdic = [[NSMutableDictionary alloc]init];
+    NSMutableArray *urls = [[NSMutableArray alloc]init];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    NSString *str = [NSString stringWithFormat:@"%@/favorite_paintings",_id];
+    [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             for (int i = 0; i<((NSArray*)responseObject).count; i++)
             {
                 NSString *str = [BaseURLString stringByAppendingString:@"paintings/files/%@"];
                 [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
                 NSString *Urlstr = [NSString stringWithFormat:str,[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
-                Urlstr = [Urlstr stringByAppendingString:@"?thumb=true"];
+                Urlstr = [Urlstr stringByAppendingString:@"?thumb=preview"];
                 NSLog(@"%@",Urlstr);
                 [urls addObject:Urlstr];
                 
@@ -318,7 +320,7 @@ static NSString *querystring;
 + (ServerFetcher *)sharedInstance{
     static ServerFetcher *singleton = nil;
     static dispatch_once_t predicate;
-
+    
     dispatch_once( &predicate, ^{
         singleton = [[ServerFetcher alloc]init];
         downloadGroup = dispatch_group_create();
@@ -327,6 +329,7 @@ static NSString *querystring;
         manager = [[AFHTTPSessionManager alloc] initWithBaseURL:urllstr sessionConfiguration:config];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
     } );
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
 
 
    

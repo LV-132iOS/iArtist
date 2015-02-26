@@ -1278,7 +1278,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="AqX-hk-yQu" kind="modal" modalPresentationStyle="formSheet" modalTransitionStyle="partialCurl" id="XqC-q2-HwM"/>
+                                    <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" modalPresentationStyle="formSheet" modalTransitionStyle="coverVertical" id="XqC-q2-HwM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugo-8U-A9p">

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		45E298E51A8CD6E8003CC0D6 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */; };
 		4B1FE8881A87838C00897D7B /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1FE8871A87838C00897D7B /* AsyncImageView.m */; };
+		4B2C3D611A9F4AD300EFF863 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2C3D601A9F4AD300EFF863 /* CoreData.framework */; };
 		4B4A321D1A8D32BD0048078C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A320B1A8D32BC0048078C /* AFHTTPRequestOperation.m */; };
 		4B4A321E1A8D32BD0048078C /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A320D1A8D32BC0048078C /* AFHTTPRequestOperationManager.m */; };
 		4B4A321F1A8D32BD0048078C /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A320F1A8D32BC0048078C /* AFHTTPSessionManager.m */; };
@@ -206,6 +207,7 @@
 		45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
 		4B1FE8861A87838C00897D7B /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		4B1FE8871A87838C00897D7B /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		4B2C3D601A9F4AD300EFF863 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4B4A320A1A8D32BC0048078C /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		4B4A320B1A8D32BC0048078C /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		4B4A320C1A8D32BC0048078C /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B2C3D611A9F4AD300EFF863 /* CoreData.framework in Frameworks */,
 				45E298E51A8CD6E8003CC0D6 /* GoogleOpenSource.framework in Frameworks */,
 				609813021A7F5A5D00C8017B /* GooglePlus.framework in Frameworks */,
 				843C97061A7EC09E0080FCAA /* AddressBook.framework in Frameworks */,
@@ -929,6 +932,7 @@
 		84A0E8141A77B688009F6EA5 = {
 			isa = PBXGroup;
 			children = (
+				4B2C3D601A9F4AD300EFF863 /* CoreData.framework */,
 				45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */,
 				84A0E81F1A77B688009F6EA5 /* iArtist */,
 				84A0E8391A77B688009F6EA5 /* iArtistTests */,
