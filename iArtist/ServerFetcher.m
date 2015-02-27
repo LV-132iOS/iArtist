@@ -32,6 +32,12 @@ static NSString *querystring;
     @synchronized(self){return Artistdic;}
 }
 
+//
+-(NSMutableArray *)paitingDic{
+    @synchronized(self){return paintinDic;}
+}
+//
+
 - (void)GenerateQueryForTag:(NSString*)querry{
     NSString *querryStr = [NSString stringWithFormat:@"{ \"tags\": \"%@\" }",querry];
     querryStr = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
@@ -107,6 +113,10 @@ static NSString *querystring;
     }
     else{
     Paintingdic = [[NSMutableDictionary alloc]init];
+    
+    //
+        paintinDic = [NSMutableArray new];
+    //
     NSMutableArray *urls = [[NSMutableArray alloc]init];
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -115,6 +125,11 @@ static NSString *querystring;
             for (int i = 0; i<((NSArray*)responseObject).count; i++)
             {
                 NSString *str = [BaseURLString stringByAppendingString:@"paintings/files/%@"];
+                
+                //
+                [paintinDic addObject:(((NSArray*)responseObject)[i])];
+                //
+                
                 [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
                 NSString *Urlstr = [NSString stringWithFormat:str,[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
                 
@@ -147,6 +162,11 @@ static NSString *querystring;
     
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
         Paintingdic = [[NSMutableDictionary alloc]init];
+    
+    //
+    paintinDic = [NSMutableArray new];
+    //
+    
         NSMutableArray *urls = [[NSMutableArray alloc]init];
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
         manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -156,6 +176,11 @@ static NSString *querystring;
             {
                 NSString *str = [BaseURLString stringByAppendingString:@"paintings/files/%@"];
                 [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
+                
+                //
+                [paintinDic addObject:(((NSArray*)responseObject)[i])];
+                //
+                
                 NSString *Urlstr = [NSString stringWithFormat:str,[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
                 Urlstr = [Urlstr stringByAppendingString:@"?thumb=true"];
                 NSLog(@"%@",Urlstr);
@@ -180,8 +205,13 @@ static NSString *querystring;
 - (void)GetNewsForUser:(NSString *)_id
               callback:(void (^)(NSMutableArray* responde))callback
 {
+    
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     Paintingdic =[[NSMutableDictionary alloc]init];
+    
+    //
+    paintinDic = [NSMutableArray new];
+    //
     
     Artistdic = [[NSMutableArray alloc]init];
     __block NSMutableArray *ids = [[NSMutableArray alloc]init];
@@ -194,6 +224,11 @@ static NSString *querystring;
         for (int i=0; i<[Artistdic count]; i++) {
             for (int j=0; j<[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) count]; j++) {
                 [ids addObject: [[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) objectAtIndex:j] valueForKey:@"_id" ]];
+                
+                //
+                [paintinDic addObject:[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) objectAtIndex:j]];
+                //
+                
                 [Paintingdic setObject:[((NSArray*)[Artistdic[i] valueForKey:@"paintings"]) objectAtIndex:j]forKey:
                  //
                 [NSString stringWithFormat:@"%d",pictureIndex]];
@@ -337,6 +372,8 @@ static NSString *querystring;
 
 
 - (void)FetchArtists {
+    
+    ////????? array to dicrionary ???
     _artistdic = [[NSMutableDictionary alloc]init];
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);

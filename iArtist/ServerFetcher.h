@@ -11,11 +11,21 @@
 static  NSMutableDictionary *Paintingdic;
 static  NSMutableArray *Artistdic;
 
+//
+static NSMutableArray *paintinDic;
+//
+
 static NSMutableArray *urls;
 @interface ServerFetcher : NSObject
 @property (nonatomic, strong) NSDictionary  *Paintingdic;
 @property (nonatomic, strong) NSMutableArray  *artistdic;
 @property (nonatomic, strong) UIImage       *image;
+
+//
+@property (nonatomic, strong) NSMutableArray *paitingDic;
+//
+
+
 - (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
 
 //- (void)GetPictureThumbWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;

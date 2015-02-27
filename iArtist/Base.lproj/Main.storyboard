@@ -439,7 +439,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Picture Tag" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faO-23-aAh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Picture Tag" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faO-23-aAh">
                                                     <rect key="frame" x="583" y="8" width="200" height="40"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -470,12 +470,6 @@
                                                         <action selector="shouldUnfolowAutor:" destination="h88-e1-SN3" eventType="touchUpInside" id="LCb-aE-j8b"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GHI-Oe-bBI">
-                                                    <rect key="frame" x="807" y="13" width="120" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfc-Xf-C5s">
                                                     <rect key="frame" x="375" y="58" width="60" height="60"/>
                                                     <state key="normal">
@@ -485,6 +479,16 @@
                                                         <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" modalPresentationStyle="formSheet" id="vib-vZ-Kxc"/>
                                                     </connections>
                                                 </button>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uS7-tc-ASa">
+                                                    <rect key="frame" x="169" y="141" width="37" height="37"/>
+                                                    <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </activityIndicatorView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GHI-Oe-bBI">
+                                                    <rect key="frame" x="735" y="56" width="281" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -492,6 +496,7 @@
                                             <outlet property="authorImage" destination="EUv-5l-niW" id="6R2-VB-k4t"/>
                                             <outlet property="authorName" destination="vEs-P6-vYg" id="KDJ-1s-CtC"/>
                                             <outlet property="date" destination="GHI-Oe-bBI" id="ug0-77-hFI"/>
+                                            <outlet property="loadPictureIndicator" destination="uS7-tc-ASa" id="0GM-Yh-wmc"/>
                                             <outlet property="newsDescription" destination="UcO-kr-vST" id="D9i-Fa-YWp"/>
                                             <outlet property="pictureImage" destination="ILj-fk-fAN" id="GwB-AP-TpY"/>
                                             <outlet property="pictureName" destination="QrN-4c-4t6" id="YvZ-yM-V44"/>
