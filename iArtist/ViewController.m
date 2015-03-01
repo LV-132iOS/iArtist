@@ -182,7 +182,9 @@
     [self performSegueWithIdentifier:@"PictureView" sender:nil];
 }
 
-
+- (BOOL)prefersStatusBarHidden{
+    return YES;
+}
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     //preparing other view controllers with background images and so on

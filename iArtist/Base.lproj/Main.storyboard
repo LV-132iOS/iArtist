@@ -548,6 +548,9 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <segue destination="HLU-mf-ZVQ" kind="modal" identifier="LikedToPictures" id="Rg6-9f-bnQ"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="header" id="DPW-eQ-x6F">
@@ -595,7 +598,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tct-wY-YSZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="364" y="2941"/>
+            <point key="canvasLocation" x="284" y="3033"/>
         </scene>
         <!--Cart View Controller-->
         <scene sceneID="Aur-2i-tEk">
@@ -1740,7 +1743,8 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="9Q1-oe-U60"/>
-        <segue reference="XqC-q2-HwM"/>
+        <segue reference="Rg6-9f-bnQ"/>
         <segue reference="MJL-gi-ees"/>
+        <segue reference="XqC-q2-HwM"/>
     </inferredMetricsTieBreakers>
 </document>

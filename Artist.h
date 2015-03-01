@@ -1,9 +1,9 @@
 //
 //  Artist.h
-//  DArt
+//  iArtist
 //
-//  Created by Clark on 2/6/15.
-//  Copyright (c) 2015 System Administrator. All rights reserved.
+//  Created by Clark on 3/1/15.
+//  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -15,9 +15,10 @@
 
 @property (nonatomic, retain) NSString * biography;
 @property (nonatomic, retain) NSString * email;
+@property (nonatomic, retain) NSString * id_;
 @property (nonatomic, retain) NSString * location;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * id_;
+@property (nonatomic, retain) NSData * thumbnail;
 @property (nonatomic, retain) NSSet *picturesbyartist;
 @end
 

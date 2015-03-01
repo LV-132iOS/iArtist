@@ -6,6 +6,7 @@
         <attribute name="id_" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Binary" syncable="YES"/>
         <relationship name="picturesbyartist" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Picture" inverseName="owner" inverseEntity="Picture" syncable="YES"/>
     </entity>
     <entity name="Picture" representedClassName="Picture" syncable="YES">
@@ -23,7 +24,7 @@
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Artist" inverseName="picturesbyartist" inverseEntity="Artist" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Artist" positionX="-164" positionY="-1044" width="128" height="135"/>
+        <element name="Artist" positionX="-164" positionY="-1044" width="128" height="150"/>
         <element name="Picture" positionX="79" positionY="-1063" width="128" height="225"/>
     </elements>
 </model>

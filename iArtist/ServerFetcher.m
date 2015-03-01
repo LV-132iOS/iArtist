@@ -318,22 +318,22 @@ static NSString *querystring;
     return responde;
 }
 
-- (NSString*)GetLikesCount:(NSString *)_id{
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+- (void)GetLikesCount:(NSString *)_id callback:(void (^)(NSString *responde))callback;
+{
+    
     __block NSString *count = [[NSString alloc]init];
     [manager GET:[NSString stringWithFormat:@"paintings/db/%@?likes=true",_id] parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         count = [(NSDictionary *)responseObject objectForKey:@"count"];
-        dispatch_semaphore_signal(semaphore);
+        dispatch_async(dispatch_get_main_queue(), ^{
+             callback(count);
+        });
+       
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
-        dispatch_semaphore_signal(semaphore);
 
     }];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 
-    return count;
 }
 
 

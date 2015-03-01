@@ -20,6 +20,7 @@
 @property (nonatomic,strong) NSMutableArray *urls;
 @property (nonatomic) NSUInteger index;
 @property (nonatomic, strong) NSArray *CachedPaintings;
+@property (nonatomic, strong) NSMutableArray *ImageArray;
 
 @end
 
@@ -39,6 +40,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
     request.predicate = nil;
     NSArray *results = [context executeFetchRequest:request error:NULL];
+    self.ImageArray = [[NSMutableArray alloc]init];
     if (results.count == 0) {
         self.urls = [[NSMutableArray alloc]init];
         self.AllPaintingData = [[NSDictionary alloc]init];
@@ -75,6 +77,7 @@
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
+    NSLog(@"%@",((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_);
     if([[SDImageCache sharedImageCache]imageFromDiskCacheForKey:((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_] == nil)
     {__block UIImageView *image = [[UIImageView alloc]init];
         self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
@@ -96,6 +99,7 @@
     } else {
         UIImageView *image = [[UIImageView alloc]init];
         image.image = [[SDImageCache sharedImageCache]imageFromDiskCacheForKey:((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_];
+        [self.ImageArray addObject:image.image];
         image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
         image.contentMode = UIViewContentModeScaleAspectFit;
         
@@ -120,12 +124,11 @@
     dataManager.session = session;
 
     
-    if ([segue.identifier isEqualToString:@"LikedToPicture"]) {
+    if ([segue.identifier isEqualToString:@"LikedToPictures"]) {
         NSInteger index =  [((UICollectionView *)(((UICollectionViewCell *)sender).superview))
                             indexPathForCell:(UICollectionViewCell *)sender].row;
         dataManager.index = index;
-        ((iCaruselViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
-        ((iCaruselViewController *)segue.destinationViewController).urls = self.urls;
+        ((iCaruselViewController *)segue.destinationViewController).CachedImageArray = self.ImageArray;
         ((iCaruselViewController *)segue.destinationViewController).index = index;
 
 

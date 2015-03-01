@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		45E298E51A8CD6E8003CC0D6 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */; };
 		4B1FE8881A87838C00897D7B /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1FE8871A87838C00897D7B /* AsyncImageView.m */; };
+		4B2BC53F1AA369F300CFEF8A /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2BC53E1AA369F300CFEF8A /* Artist.m */; };
 		4B2C3D611A9F4AD300EFF863 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2C3D601A9F4AD300EFF863 /* CoreData.framework */; };
 		4B4A321D1A8D32BD0048078C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A320B1A8D32BC0048078C /* AFHTTPRequestOperation.m */; };
 		4B4A321E1A8D32BD0048078C /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A320D1A8D32BC0048078C /* AFHTTPRequestOperationManager.m */; };
@@ -135,7 +136,6 @@
 		6099E2C91A82822700513668 /* VKSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6099E2C71A82822700513668 /* VKSdk.framework */; };
 		6099E2CA1A82822700513668 /* VKSdkResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6099E2C81A82822700513668 /* VKSdkResources.bundle */; };
 		6099E2CE1A82928300513668 /* vk_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6099E2CD1A82928300513668 /* vk_logo.png */; };
-		60E69A6B1A865DE4007CA1C6 /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E69A681A865DE4007CA1C6 /* Artist.m */; };
 		60E69A6C1A865DE4007CA1C6 /* Artist+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E69A6A1A865DE4007CA1C6 /* Artist+Create.m */; };
 		60E69A721A865DF3007CA1C6 /* Picture+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E69A701A865DF3007CA1C6 /* Picture+Create.m */; };
 		60E69AAD1A865E2E007CA1C6 /* DArt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60E69AAB1A865E2E007CA1C6 /* DArt.xcdatamodeld */; };
@@ -207,6 +207,8 @@
 		45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
 		4B1FE8861A87838C00897D7B /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		4B1FE8871A87838C00897D7B /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		4B2BC53D1AA369F300CFEF8A /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Artist.h; path = ../Artist.h; sourceTree = "<group>"; };
+		4B2BC53E1AA369F300CFEF8A /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Artist.m; path = ../Artist.m; sourceTree = "<group>"; };
 		4B2C3D601A9F4AD300EFF863 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4B4A320A1A8D32BC0048078C /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		4B4A320B1A8D32BC0048078C /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
@@ -394,8 +396,6 @@
 		6099E2C71A82822700513668 /* VKSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VKSdk.framework; sourceTree = "<group>"; };
 		6099E2C81A82822700513668 /* VKSdkResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = VKSdkResources.bundle; sourceTree = "<group>"; };
 		6099E2CD1A82928300513668 /* vk_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vk_logo.png; path = Images.xcassets/vk_logo.png; sourceTree = "<group>"; };
-		60E69A671A865DE4007CA1C6 /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Artist.h; sourceTree = "<group>"; };
-		60E69A681A865DE4007CA1C6 /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Artist.m; sourceTree = "<group>"; };
 		60E69A691A865DE4007CA1C6 /* Artist+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Artist+Create.h"; sourceTree = "<group>"; };
 		60E69A6A1A865DE4007CA1C6 /* Artist+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Artist+Create.m"; sourceTree = "<group>"; };
 		60E69A6F1A865DF3007CA1C6 /* Picture+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Picture+Create.h"; sourceTree = "<group>"; };
@@ -765,13 +765,13 @@
 		60E69A661A865DBB007CA1C6 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				4B2BC53D1AA369F300CFEF8A /* Artist.h */,
+				4B2BC53E1AA369F300CFEF8A /* Artist.m */,
 				4BDFAF561A9E021D00CE9F35 /* Picture.h */,
 				4BDFAF571A9E021D00CE9F35 /* Picture.m */,
 				60E69AAB1A865E2E007CA1C6 /* DArt.xcdatamodeld */,
 				60E69A6F1A865DF3007CA1C6 /* Picture+Create.h */,
 				60E69A701A865DF3007CA1C6 /* Picture+Create.m */,
-				60E69A671A865DE4007CA1C6 /* Artist.h */,
-				60E69A681A865DE4007CA1C6 /* Artist.m */,
 				60E69A691A865DE4007CA1C6 /* Artist+Create.h */,
 				60E69A6A1A865DE4007CA1C6 /* Artist+Create.m */,
 			);
@@ -1466,6 +1466,7 @@
 				4BDFAF481A9DFA6B00CE9F35 /* SDWebImageDownloader.m in Sources */,
 				4BCF631D1A8CB58E002A365F /* FullSizePictureViewController.m in Sources */,
 				4BCBCBB31A932D9F00DA9C62 /* SessionControl.m in Sources */,
+				4B2BC53F1AA369F300CFEF8A /* Artist.m in Sources */,
 				4BDFAF4F1A9DFA6B00CE9F35 /* UIImage+WebP.m in Sources */,
 				60E69A721A865DF3007CA1C6 /* Picture+Create.m in Sources */,
 				846AB92C1A795BDA0043214F /* SearchResultsViewController.m in Sources */,
@@ -1486,7 +1487,6 @@
 				4BDFAF471A9DFA6B00CE9F35 /* SDWebImageDecoder.m in Sources */,
 				4BDFAF521A9DFA6B00CE9F35 /* UIView+WebCacheOperation.m in Sources */,
 				4B4A32221A8D32BD0048078C /* AFURLConnectionOperation.m in Sources */,
-				60E69A6B1A865DE4007CA1C6 /* Artist.m in Sources */,
 				4BCF61A01A8CB4E4002A365F /* ServerFetcher.m in Sources */,
 				4BF2F2EE1A92621200DEF7FB /* MaterialCarouselDelegateAndDataSource.m in Sources */,
 				4BF2F2F11A92622300DEF7FB /* ColorCarouselDelegateAndDataSource.m in Sources */,

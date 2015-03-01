@@ -28,6 +28,11 @@
 
 @property (nonatomic) NSUInteger index;
 
+@property (nonatomic,strong) NSMutableArray *ImageArray;
+
+@property (nonatomic,strong) NSMutableArray *CachedImageArray;
+
+@property (nonatomic, assign) BOOL RootViewControllerCheck;
 
 @property (nonatomic, strong) NSMutableArray *urls;
 

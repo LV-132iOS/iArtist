@@ -76,53 +76,81 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 
 
 - (void) setImageWithWall :(UIImage *)image :(CGPoint)pictureCenter :(AVTypeOfPictureChange)typeOfPictureChange{
-     self.CurrentArtist = [[NSDictionary alloc]init];
-     self.CurrentPainting = [[NSDictionary alloc]init];
     
+    self.CurrentArtist = [[NSDictionary alloc]init];
+    self.CurrentPainting = [[NSDictionary alloc]init];
+    NSLog(@"%@",self.AllPaintingData);
     self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureIndex]];
     self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureIndex]];
-    NSNumber *alpha = @1;
+    
     CGPoint sizeOfNewPicture = CGPointMake(
-                                           image.size.width / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue),
-                                           image.size.height / (3 * self.currentWall.distanceToWall.doubleValue * alpha.doubleValue));
+                                           image.size.width ,
+                                           image.size.height );
+    
     CGRect frame = {.origin.x = 0.0, .origin.y = 0.0, .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
     
-    //self.pictureImage.hidden = YES;
-    //self.pictureImage.image = image;
     self.price.text = [self.CurrentPainting valueForKey:@"price"];
     self.pictureSize.text = [self.CurrentPainting valueForKey:@"size"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *img = [UIImage imageWithData:imageData];
     self.authorsImage.image = img;
+    self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
+    self.authorsImage.layer.backgroundColor = [[UIColor clearColor] CGColor];
+    self.authorsImage.layer.cornerRadius = self.authorsImage.frame.size.height / 2;
+    self.authorsImage.layer.borderWidth = 2.0;
+    self.authorsImage.layer.masksToBounds = YES;
+    self.authorsImage.layer.borderColor = [[UIColor blackColor] CGColor];
     self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
     self.img = img;
     
+    NSString *realsize = [NSString stringWithString:
+                          [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.realsize",(long)self.pictureIndex]]];
+    NSLog(@"%@",realsize);
+    NSInteger indexOfX;
+    for (indexOfX = 0; indexOfX < realsize.length; indexOfX ++) {
+        if ([realsize characterAtIndex:indexOfX] == 'x') {
+            
+            frame.size.height = [realsize substringToIndex:indexOfX].doubleValue * 7.6 /
+            (self.currentWall.distanceToWall.doubleValue);
+            frame.size.width = [realsize substringFromIndex:(indexOfX + 1)].doubleValue * 7.6 /
+            (self.currentWall.distanceToWall.doubleValue);
+        }
+    }
+    
     if (typeOfPictureChange == AVInitTypeOfPictureChange) {
+        
         [self.pictureImage removeFromSuperview];
         self.pictureImage = [[UIImageView alloc] initWithFrame:frame];
+        
         self.pictureImage.image = image;
+        
         self.pictureImage.center = self.view.center;
         [self.roomImage addSubview:self.pictureImage];
+        [self.roomImage bringSubviewToFront:self.titleOfPicture];
+        [self.roomImage bringSubviewToFront:self.upToolBar];
+        [self.roomImage bringSubviewToFront:self.authorsView];
+        [self.roomImage bringSubviewToFront:self.price];
+        [self.roomImage bringSubviewToFront:self.pictureSize];
     }
+    
     if (typeOfPictureChange == AVDoubleTapOfPictureChange) {
         
         self.pictureImage.hidden = YES;
-        self.pictureImage.frame = frame;
-        self.pictureImage.image = image;
-        self.pictureImage.center = self.view.center;
-        if (pictureCenter.x - self.pictureImage.frame.size.width / 2 < 0)
+        
+        ///should fix bug
+        if (pictureCenter.x - self.pictureImage.frame.size.width / 2 < self.roomImage.frame.origin.x)
             pictureCenter.x = self.pictureImage.frame.size.width / 2;
-        if (pictureCenter.x + self.pictureImage.frame.size.width / 2 > 1024)
+        if (pictureCenter.x + self.pictureImage.frame.size.width / 2 > self.roomImage.frame.origin.x + self.roomImage.frame.size.width)
             pictureCenter.x = 1024 - self.pictureImage.frame.size.width / 2;
-        if (pictureCenter.y - self.pictureImage.frame.size.height / 2 < 0)
+        if (pictureCenter.y - self.pictureImage.frame.size.height / 2 < self.roomImage.frame.origin.y)
             pictureCenter.y = self.pictureImage.frame.size.height / 2;
-        if (pictureCenter.y + self.pictureImage.frame.size.height / 2 > 768)
+        if (pictureCenter.y + self.pictureImage.frame.size.height / 2 > self.roomImage.frame.origin.y + self.roomImage.frame.size.height)
             pictureCenter.y = 768 - self.pictureImage.frame.size.height / 2;
         self.pictureImage.center = pictureCenter;
         self.pictureImage.hidden = NO;
         
     }
-    if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChange == AVSwipeLeftTypeOfPictureChange)) {
+if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChange == AVSwipeLeftTypeOfPictureChange)) {
         CGFloat left = 0;
         CGFloat right = 1024;
         CGFloat up = 0;
@@ -169,7 +197,9 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                            self.pictureImage.hidden = YES;
                            self.pictureImage.frame = frame;
                            self.pictureImage.center = pictureCenter;
+                           
                            self.pictureImage.image = image;
+                           
                            [self.pictureImage.layer removeAnimationForKey:@"pictureAnimation"];
                        });
         [pictureMoveAnimation setFromValue:[NSValue valueWithCGPoint:(CGPoint){.x = xLocation, .y = self.pictureImage.center.y}]];
@@ -180,7 +210,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                            [self.pictureImage.layer addAnimation:pictureMoveAnimation forKey:@"pictureAnimation"];
                        });
     }
-
+    
 }
 - (void) mainInit{
     //AVManager *manager = [AVManager sharedInstance];
@@ -492,7 +522,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 - (void) changeWall:(NSNotification *)notification{
     self.currentWall = [notification.userInfo valueForKey:@"wall"];
     self.roomImage.image = self.currentWall.wallPicture;
-    [self setImageWithWall:self.currentPicture.pictureImage
+    [self setImageWithWall:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image
                           :self.pictureImage.center
                           :AVInitTypeOfPictureChange];
     [self.popover dismissPopoverAnimated:YES];

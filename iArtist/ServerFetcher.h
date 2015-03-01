@@ -29,7 +29,7 @@ static NSMutableArray *urls;
 - (void)GenerateQueryForSize:(NSString*)querry;
 - (NSDictionary *)Paintingdic;
 - (NSString*)PutLikes:(NSString*)_id;
-- (NSString*)GetLikesCount:(NSString*)_id;
+- (void)GetLikesCount:(NSString *)_id callback:(void (^)(NSString *responde))callback;
 - (BOOL)BecomeAFollower:(NSString *)Artist;
 - (BOOL)CheckIsFollowing:(NSString *)_id;
 - (void)GenerateQueryForMaterial:(NSString*)querry;
