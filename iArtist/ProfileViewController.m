@@ -82,22 +82,6 @@
         [VKSdk forceLogout];
         [self performLogoutWith:@"Vkontakte"];
     }
-    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    NSFetchRequest *CDPicturerequest = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
-    CDPicturerequest.predicate = nil;
-    NSArray *Pictureresults = [context executeFetchRequest:CDPicturerequest error:NULL];
-    for (NSManagedObject * picture in Pictureresults) {
-        [context deleteObject:picture];
-    }
-    NSError *saveError = nil;
-    NSFetchRequest *CDArtistrequest = [[NSFetchRequest alloc]initWithEntityName:@"Artist"];
-    CDArtistrequest.predicate = nil;
-    NSArray *Artistresults = [context executeFetchRequest:CDArtistrequest error:NULL];
-    for (NSManagedObject * artist in Artistresults) {
-        [context deleteObject:artist];
-    }
-    [context save:&saveError];
-    [[SDImageCache sharedImageCache]clearDisk];
 }
 
 -(void)performLogoutWith:(NSString*)socialNetwork {
@@ -130,6 +114,7 @@ otherButtonTitles:@"Yes", nil];
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         
+        NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         //current url for request
         //NSURL* url = [NSURL URLWithString:[@"http://192.168.103.5/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
         NSURL* url = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
@@ -139,7 +124,6 @@ otherButtonTitles:@"Yes", nil];
         NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
         NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
         request.HTTPMethod = @"DELETE";
-        NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         NSFetchRequest *CDPicturerequest = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
         CDPicturerequest.predicate = nil;
         NSArray *Pictureresults = [context executeFetchRequest:CDPicturerequest error:NULL];

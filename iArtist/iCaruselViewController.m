@@ -20,7 +20,7 @@
 #import "AppDelegate.h"
 #import "SessionControl.h"
 #import "Artist.h"
-#import "SessionControl.h"
+
 static dispatch_group_t downloadGroup;
 @interface iCaruselViewController (){
     NSString* kindOfSharing;
@@ -29,6 +29,8 @@ static dispatch_group_t downloadGroup;
     NSString* locHeadString;
     NSURL* locUrlToPass;
 }
+
+
 @property (nonatomic) NSInteger likeCounter;
 @property (strong, nonatomic) UILabel *likeCounterLabel;
 @property (strong, nonatomic) IBOutlet UIButton *addToCart;
@@ -49,7 +51,7 @@ static dispatch_group_t downloadGroup;
 @property (nonatomic, strong) NSDictionary *CurrentPainting;
 @property (nonatomic, strong) NSDictionary *CurrentArtist;
 @property (nonatomic, strong) NSMutableDictionary *AllPaintingsCached;
-@property (nonatomic, strong) NSMutableArray *CDresults;
+@property (nonatomic, strong) NSArray *CDresults;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *Indicator;
 @property (strong, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
 @property (assign,nonatomic) int *counter;
@@ -74,9 +76,12 @@ UIVisualEffectView *visualEffectView;
     [self.backgroundView bringSubviewToFront:self.titleOfSession];
     [self.backgroundView bringSubviewToFront:self.previewOnWallButton];
     [self.backgroundView bringSubviewToFront:self.likeButton];
+
     self.likeCounterLabel = [[UILabel alloc] initWithFrame:
                              (CGRect){.origin.x = 5, .origin.y = 10, .size.width = 50, .size.height = 30 }];
+    
     self.likeCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray*)[self.CurrentPainting valueForKeyPath:@"liked_by"] count]];
+    
     self.likeCounterLabel.textAlignment = NSTextAlignmentCenter;
     self.likeCounterLabel.textColor = [UIColor whiteColor];
     [self.likeButton addSubview:self.likeCounterLabel];
@@ -111,30 +116,38 @@ UIVisualEffectView *visualEffectView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (self.ImageArray != nil) {
-        self.pictureView.currentItemIndex = self.index;
-        [self initPaintingsData];
+    if (self.CachedImageArray != nil) {
+        self.ImageArray = [[NSMutableArray alloc]init];
+        NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
+        request.predicate = nil;
+        self.CurrentPainting = [[NSDictionary alloc]init];
+        self.CurrentArtist = [[NSDictionary alloc]init];
+        self.AllPaintingsCached = [[NSMutableDictionary alloc]init];
+        self.CDresults = [context executeFetchRequest:request error:NULL];
+        for (int i=0;i<self.CDresults.count;i++) {
+            [self.ImageArray addObject:[NSNull null]];
+        }
 
     } else{
+    self.ImageArray = [[NSMutableArray alloc]init];
     if (self.urls == nil) {
         [self.Indicator startAnimating];
         [[ServerFetcher sharedInstance] RunQueryWithcallback:^(NSMutableArray *responde) {
             self.urls = responde;
-            self.AllPaintingData = [[NSMutableDictionary alloc]initWithDictionary:[[ServerFetcher sharedInstance] Paintingdic]];
-            [self.pictureView reloadData];
+            for (int i=0;i<self.urls.count;i++) {
+                [self.ImageArray addObject:[NSNull null]];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.Indicator stopAnimating];
                 [self.Indicator removeFromSuperview];
-                self.ImageArray = [[NSMutableArray alloc]init];
-                for (int i=0;i<self.urls.count;i++) {
-                    [self.ImageArray addObject:[NSNull null]];
-                }
 
+            [self.pictureView reloadData];
            
             });
                     }];
     }};
-    //self.pictureView.currentItemIndex = self.index;
+    self.pictureView.currentItemIndex = self.index;
     self.authorsImage = [[UIImageView alloc]init];
     self.authorsName = [UILabel new];
     self.pictureView.delegate = self;
@@ -154,7 +167,7 @@ UIVisualEffectView *visualEffectView;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-   // self.pictureView.currentItemIndex = self.index;
+    
     self.pictureView.hidden = NO;
     [self.backgroundView sendSubviewToBack:visualEffectView];
     //self.intputPictureIndex = self.dataManager.index;
@@ -165,7 +178,7 @@ UIVisualEffectView *visualEffectView;
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
     //return the total number of items in the carousel
     if (self.urls == nil) {
-        return self.ImageArray.count;
+        return self.CDresults.count;
     }else
     return self.urls.count;
 
@@ -192,23 +205,18 @@ UIVisualEffectView *visualEffectView;
     }
 }
 - (void)initPaintingsData{
-    NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
-    request.predicate = nil;
-    self.CDresults = [NSMutableArray arrayWithArray:[context executeFetchRequest:request error:NULL]];
-    self.AllPaintingData = [[NSMutableDictionary alloc]init];
-    for (int i=0; i<self.ImageArray.count; i++) {
-    NSMutableDictionary *paintingdic= [[NSMutableDictionary alloc]init];
-    [ paintingdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).id_ forKey:@"_id"];
-    [ paintingdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).title forKey:@"title"];
-    [ paintingdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).genre forKey:@"genre"];
-    [ paintingdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).size forKey:@"size"];
-    [ paintingdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).realsize forKey:@"realsize"];
-    [ paintingdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).descript forKey:@"description"];
-    [ paintingdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).materials forKey:@"materials"];
-    [ paintingdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).price forKey:@"price"];
-    [ paintingdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).orginURL forKey:@"orginURL"];
-    [ paintingdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).thumbnailURL forKey:@"ThumbURL"];
+    for (int i=0; i<self.CDresults.count; i++) {
+    NSMutableDictionary *paintdic = [[NSMutableDictionary alloc]init];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).id_ forKey:@"_id"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).title forKey:@"title"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).genre forKey:@"genre"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).size forKey:@"size"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).realsize forKey:@"realsize"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).descript forKey:@"description"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).materials forKey:@"materials"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).price forKey:@"price"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).orginURL forKey:@"orginURL"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).thumbnailURL forKey:@"ThumbURL"];
     NSMutableDictionary *artistdic = [[NSMutableDictionary alloc]init];
     Artist *artist = ((Picture*)[self.CDresults objectAtIndex:i]).owner;
     [artistdic setObject:artist.name forKey:@"name"];
@@ -218,33 +226,38 @@ UIVisualEffectView *visualEffectView;
     [artistdic setObject:artist.biography  forKey:@"biography"];
     NSString *base64String = [artist.thumbnail base64EncodedStringWithOptions:0];
     [artistdic setObject:base64String forKey:@"thumbnail"];
-    [ paintingdic setObject:artistdic forKey:@"artistId"];
-    [self.AllPaintingData setObject:paintingdic forKey:[NSString stringWithFormat:@"%d",i]];
+    [paintdic setObject:artistdic forKey:@"artistId"];
+    [self.AllPaintingsCached setObject:paintdic forKey:[NSString stringWithFormat:@"%d",i]];
+    self.AllPaintingData = [[NSDictionary alloc]initWithDictionary:self.AllPaintingsCached];
+
     }
 }
 //load view in icarusel
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
-    if (self.CDresults != nil) {
+    if ([self.CDresults objectAtIndex:(long)self.pictureView.currentItemIndex] != nil) {
+        if (index == 1&&self.counter ==nil) {
+            index = self.index;
+            self.counter++;
+        };
         view = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];//?
         view.contentMode = UIViewContentModeScaleAspectFit;
-        ((UIImageView*)view).image = [self.ImageArray objectAtIndex:index];
-        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%d",self.pictureView.currentItemIndex]];
-        self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%d.artistId",self.pictureView.currentItemIndex]];
+        ((UIImageView*)view).image = [self.CachedImageArray objectAtIndex:index];
+        [self.ImageArray replaceObjectAtIndex:index withObject:view];
+        [self initPaintingsData];
+        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureView.currentItemIndex]];
+        self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureView.currentItemIndex]];
+        self.price.text = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.price",self.pictureView.currentItemIndex]];
+        self.pictureSize.text = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.size",self.pictureView.currentItemIndex]];
+        
         NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
         UIImage *img = [UIImage imageWithData:imageData];
         self.authorsImage.image = img;
         self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
-        
-            [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]callback:^(NSString *responde) {
-                self.likeCounterLabel.text = responde;
-            }];
-        self.price.text = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%d.price",index]];
-        self.pictureSize.text = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%d.size",index]];
         return view;
     } else {
-
-    self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%d",self.pictureView.currentItemIndex]];
-    self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%d.artistId",self.pictureView.currentItemIndex]];
+    self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
+    self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureView.currentItemIndex]];
+    self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureView.currentItemIndex]];
     if (view == nil)
     {
         view = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];//?
@@ -260,10 +273,8 @@ UIVisualEffectView *visualEffectView;
     
         [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]callback:^(NSString *responde) {
             self.likeCounterLabel.text = responde;
-            NSLog(@"%@",[self.CurrentPainting valueForKey:@"_id"]);
 
         }];
-        NSLog(@"%@",[self.CurrentPainting valueForKey:@"_id"]);
     self.price.text = [self.CurrentPainting valueForKey:@"price"];
     self.pictureSize.text = [self.CurrentPainting valueForKey:@"realsize"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -277,7 +288,7 @@ UIVisualEffectView *visualEffectView;
 #pragma mark - seque
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString: @"ModalToPreviewOnWall"]) {
-        //NSLog(@"%@",self.AllPaintingData);
+        NSLog(@"%@",self.AllPaintingData);
         ((PreviewOnWallViewController *)segue.destinationViewController).session = self.session;
         ((PreviewOnWallViewController *)segue.destinationViewController).pictureIndex = self.pictureView.currentItemIndex;
         
@@ -285,7 +296,11 @@ UIVisualEffectView *visualEffectView;
         self.dataManager = [AVManager sharedInstance];
         self.dataManager.index = self.pictureView.currentItemIndex;
         ((PreviewOnWallViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
+        
         ((PreviewOnWallViewController *)segue.destinationViewController).ImageArray = self.ImageArray;
+        
+    
+    
     }
 
     if ([segue.identifier isEqualToString: @"ModalToDetail"]) {
@@ -473,16 +488,14 @@ UIVisualEffectView *visualEffectView;
 
 //like button clicked
 - (IBAction)likeClicked:(id)sender {
-     NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    NSString *likescount = [[ServerFetcher sharedInstance] PutLikes:[self.CurrentPainting valueForKey:@"_id"]];
+    
+    NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+    NSLog(@"%@",[self.CurrentPainting valueForKey:@"_id"]);
+        NSString *likescount = [[ServerFetcher sharedInstance] PutLikes:[self.CurrentPainting valueForKey:@"_id"]];
     if([likescount intValue]>[self.likeCounterLabel.text intValue]){
         [[SDImageCache sharedImageCache]storeImage:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image forKey:[self.CurrentPainting valueForKey:@"_id"]];
         [Picture CreatePictureWithData:self.CurrentPainting inManagedobjectcontext:context];
-        self.likeCounterLabel.text = likescount;
-        NSLog(@"%@",likescount);
-        //self.likeCounterLabel.textColor = [UIColor blueColor];
-
-    }
+        self.likeCounterLabel.text = likescount;}
         else{
             NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
             request.predicate = [NSPredicate predicateWithFormat:@"id_=%@",[self.CurrentPainting valueForKey:@"_id"]];
@@ -491,13 +504,9 @@ UIVisualEffectView *visualEffectView;
             [[SDImageCache sharedImageCache]removeImageForKey:[self.CurrentPainting valueForKey:@"id" ]fromDisk:YES];
             [((AppDelegate *)[UIApplication sharedApplication].delegate) saveContext ];
             self.likeCounterLabel.text = likescount;
-                      // self.likeCounterLabel.textColor = [UIColor whiteColor];
-
-
         }
-    };
   
-
+}
 
 
 @end

@@ -272,9 +272,7 @@ static NSString *querystring;
 }
 
 - (BOOL)CheckIsFollowing:(NSString *)_id{
-    
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-   // manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     __block BOOL isFollowed = NO;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -282,9 +280,6 @@ static NSString *querystring;
     userid = [userid stringByAppendingString:@"/favorite_artists/"];
     [manager GET:[userid stringByAppendingString:_id]
       parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-          /*NSData * data = responseObject;
-          NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-          NSLog(@"%@",str);*/
           if ([[responseObject valueForKey:@"result"] isEqualToString:@"true"] ) {
               isFollowed = YES;
           }
@@ -312,7 +307,6 @@ static NSString *querystring;
     [manager PUT:[userid stringByAppendingString:_id]
   parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
       responde = [responseObject valueForKey:@"count"];
-      NSLog(@"%@",responde);
       dispatch_semaphore_signal(semaphore);
 
 } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -355,7 +349,7 @@ static NSString *querystring;
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         NSURL *urllstr = [[NSURL alloc]initWithString:BaseURLString];
         manager = [[AFHTTPSessionManager alloc] initWithBaseURL:urllstr sessionConfiguration:config];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/html",nil];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
     } );
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
 

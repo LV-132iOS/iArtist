@@ -36,7 +36,7 @@
 
 @property (nonatomic, strong) NSMutableArray *urls;
 
-@property (nonatomic, strong) NSMutableDictionary *AllPaintingData;
+@property (nonatomic, strong) NSDictionary *AllPaintingData;
 
 
 
