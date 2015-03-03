@@ -13,7 +13,7 @@
 #import "SDImageCache.h"
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
-#import "Picture.h"
+#import "Picture+Create.h"
 
 @interface LikedViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic,strong) NSDictionary *AllPaintingData;
@@ -21,10 +21,12 @@
 @property (nonatomic) NSUInteger index;
 @property (nonatomic, strong) NSArray *CachedPaintings;
 @property (nonatomic, strong) NSMutableArray *ImageArray;
+@property (weak, nonatomic) IBOutlet UICollectionView *LikedView;
 
 @end
 
 @implementation LikedViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,21 +37,32 @@
     [self.view addSubview:backgroundImage];
     [self blurImage];
     [self.view sendSubviewToBack:backgroundImage];
+    [self CDcheck];
+    if (self.CachedPaintings .count == 0) {
+        self.urls = [[NSMutableArray alloc]init];
+        self.AllPaintingData = [[NSDictionary alloc]init];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:[defaults valueForKey:@"id"]];
+        self.AllPaintingData = Paintingdic;
+    }
+
+}
+
+- (void)CDcheck{
     NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
     request.predicate = nil;
     NSArray *results = [context executeFetchRequest:request error:NULL];
     self.ImageArray = [[NSMutableArray alloc]init];
-    if (results.count == 0) {
-        self.urls = [[NSMutableArray alloc]init];
-        self.AllPaintingData = [[NSDictionary alloc]init];
-        self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:[defaults valueForKey:@"id"]];
-        self.AllPaintingData = Paintingdic;
-    } else
-        self.CachedPaintings = [NSArray arrayWithArray:results];
+    self.CachedPaintings = [NSArray arrayWithArray:results];
+
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [self CDcheck];
+    [self.LikedView reloadData];
+
+}
 -(void)blurImage
 {
     UIVisualEffect *blurEffect;
@@ -68,7 +81,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (self.CachedPaintings == nil) {
-        return [self.urls count];
+        //return [self.urls count];
 
     }
     return [self.CachedPaintings count];
@@ -77,7 +90,6 @@
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
-    NSLog(@"%@",((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_);
     if([[SDImageCache sharedImageCache]imageFromDiskCacheForKey:((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_] == nil)
     {__block UIImageView *image = [[UIImageView alloc]init];
         self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
@@ -85,8 +97,11 @@
   
         [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]callback:^(UIImage *responde) {
             image.image = responde;
-        
+            NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+            [[SDImageCache sharedImageCache]storeImage:image.image forKey:[CurrentPainting valueForKey:@"_id"]];
+            [Picture CreatePictureWithData:CurrentPainting inManagedobjectcontext:context];        
         }];
+        
     image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
     image.contentMode = UIViewContentModeScaleAspectFit;
     
@@ -128,7 +143,9 @@
         NSInteger index =  [((UICollectionView *)(((UICollectionViewCell *)sender).superview))
                             indexPathForCell:(UICollectionViewCell *)sender].row;
         dataManager.index = index;
-        ((iCaruselViewController *)segue.destinationViewController).CachedImageArray = self.ImageArray;
+        if (self.ImageArray != nil) {
+            ((iCaruselViewController *)segue.destinationViewController).ImageArray = self.ImageArray;
+        };
         ((iCaruselViewController *)segue.destinationViewController).index = index;
 
 
