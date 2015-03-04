@@ -144,8 +144,7 @@ UIVisualEffectView *visualEffectView;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.Indicator stopAnimating];
                 [self.Indicator removeFromSuperview];
-
-            [self.pictureView reloadData];
+                [self.pictureView reloadData];
            
             });
                     }];
@@ -495,26 +494,32 @@ UIVisualEffectView *visualEffectView;
 - (IBAction)likeClicked:(id)sender {
     if ([[SessionControl sharedManager]checkInternetConnection]){
     NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-        NSString *likescount = [[ServerFetcher sharedInstance] PutLikes:[self.CurrentPainting valueForKey:@"_id"]];
-    NSLog(@"%@",[self.CurrentPainting valueForKey:@"_id"]);
-    if([likescount intValue]>[self.likeCounterLabel.text intValue]){  
-        [[SDImageCache sharedImageCache]storeImage:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image forKey:[self.CurrentPainting valueForKey:@"_id"]];
-        [Picture CreatePictureWithData:self.CurrentPainting inManagedobjectcontext:context];
-        self.likeCounterLabel.text = likescount;}
-        else{
-            NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
-            request.predicate = [NSPredicate predicateWithFormat:@"id_=%@",[self.CurrentPainting valueForKey:@"_id"]];
-            NSArray *results = [context executeFetchRequest:request error:NULL];
-           [context deleteObject:[results firstObject]];
-            [[SDImageCache sharedImageCache]removeImageForKey:[self.CurrentPainting valueForKey:@"id" ]fromDisk:YES];
-            [((AppDelegate *)[UIApplication sharedApplication].delegate) saveContext ];
-            if(self.CDresults != nil){
-                //[self.deletedIndexes addObject:self.pictureView.currentItemIndex];
-            }
-            self.likeCounterLabel.text = likescount;
-        }
+   //     [self.CurrentPainting valueForKey:@"_id"]
+      [[ServerFetcher sharedInstance]PutLikes:[self.CurrentPainting valueForKey:@"_id"] callback:^(NSString *responde) {
+          NSString *likescount = responde;
+          if([likescount intValue]>[self.likeCounterLabel.text intValue]){
+              [[SDImageCache sharedImageCache]storeImage:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image forKey:[self.CurrentPainting valueForKey:@"_id"]];
+              [Picture CreatePictureWithData:self.CurrentPainting inManagedobjectcontext:context];
+              self.likeCounterLabel.text = likescount;}
+          else{
+              NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
+              request.predicate = [NSPredicate predicateWithFormat:@"id_=%@",[self.CurrentPainting valueForKey:@"_id"]];
+              NSArray *results = [context executeFetchRequest:request error:NULL];
+              [context deleteObject:[results firstObject]];
+              [[SDImageCache sharedImageCache]removeImageForKey:[self.CurrentPainting valueForKey:@"id" ]fromDisk:YES];
+              [((AppDelegate *)[UIApplication sharedApplication].delegate) saveContext ];
+              if(self.CDresults != nil){
+                  //[self.deletedIndexes addObject:self.pictureView.currentItemIndex];
+              }
+              self.likeCounterLabel.text = likescount;
+          }
+
+      }];
+        
+    }
   
-    }}
+    
+}
 
 
 @end

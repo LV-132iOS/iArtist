@@ -28,7 +28,7 @@ static NSMutableArray *urls;
 - (void)GenerateQueryForPrice:(int)min :(int)max;
 - (void)GenerateQueryForSize:(NSString*)querry;
 - (NSDictionary *)Paintingdic;
-- (NSString*)PutLikes:(NSString*)_id;
+- (void)PutLikes:(NSString*)_id callback:(void (^)(NSString *responde))callback;
 - (void)GetLikesCount:(NSString *)_id callback:(void (^)(NSString *responde))callback;
 - (BOOL)BecomeAFollower:(NSString *)Artist;
 - (BOOL)CheckIsFollowing:(NSString *)_id;

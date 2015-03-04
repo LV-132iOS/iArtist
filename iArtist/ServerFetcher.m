@@ -297,9 +297,9 @@ static NSString *querystring;
 
 
 
-- (NSString*)PutLikes:(NSString*)_id{
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+- (void)PutLikes:(NSString*)_id callback:(void (^)(NSString *responde))callback
+{
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *userid = [defaults objectForKey:@"id"];
     __block NSString *responde;
@@ -307,18 +307,17 @@ static NSString *querystring;
     [manager PUT:[userid stringByAppendingString:_id]
   parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
       responde = [responseObject valueForKey:@"count"];
-      dispatch_semaphore_signal(semaphore);
+      dispatch_async(dispatch_get_main_queue(), ^{
+          callback(responde);
+      });
 
 } failure:^(NSURLSessionDataTask *task, NSError *error) {
     NSLog(@"%@",error);
-    dispatch_semaphore_signal(semaphore);
 
 }];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    return responde;
 }
 
-- (void)GetLikesCount:(NSString *)_id callback:(void (^)(NSString *responde))callback;
+- (void)GetLikesCount:(NSString *)_id callback:(void (^)(NSString *responde))callback
 {
     
     __block NSString *count = [[NSString alloc]init];
@@ -440,32 +439,6 @@ static NSString *querystring;
     
 }
 
-
-- (void)reloadDB
-{
-    int k = 0;
-    NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Picture"];
-    request.predicate = nil;
-    NSError *error;
-    NSArray *matches = [context executeFetchRequest:request error:&error];
-    for (int i = 0;i <matches.count;i++)
-    {
-        for (int j = 0; j<Paintingdic.count; j++) {
-            if([((Picture*)matches[i]).id_ isEqual:[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",j]]]){
-                k++;
-            }
-        }
-        if (k) {
-             NSLog(@"OK");
-        }
-        else{
-            [context deleteObject:matches[i]];
-        }
-    
-    }
-
-}
 
 
 
