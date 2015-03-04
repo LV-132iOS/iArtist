@@ -15,7 +15,13 @@
 #import "CartViewController.h"
 #import "ArtistViewController.h"
 #import "Wall.h"
+#import "SDImageCache.h"
+#import "Picture+Create.h"
+#import "AppDelegate.h"
+#import "SessionControl.h"
+#import "Artist.h"
 
+static dispatch_group_t downloadGroup;
 @interface iCaruselViewController (){
     NSString* kindOfSharing;
     UIImage* locImageToShare;
@@ -27,7 +33,7 @@
 
 @property (nonatomic) NSInteger likeCounter;
 @property (strong, nonatomic) UILabel *likeCounterLabel;
-//@property (strong, nonatomic) IBOutlet UIButton *addToCart;
+@property (strong, nonatomic) IBOutlet UIButton *addToCart;
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundView;
 @property (strong, nonatomic) IBOutlet iCarousel *pictureView;
 @property (strong, nonatomic) IBOutlet UIToolbar *upToolBar;
@@ -44,22 +50,21 @@
 @property (strong, nonatomic) IBOutlet UIButton *likeButton;
 @property (nonatomic, strong) NSDictionary *CurrentPainting;
 @property (nonatomic, strong) NSDictionary *CurrentArtist;
-@property (nonatomic,strong) NSMutableArray *ImageArray;
-
+@property (nonatomic, strong) NSMutableDictionary *AllPaintingsCached;
+@property (nonatomic, strong) NSArray *CDresults;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *Indicator;
 @property (strong, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
-
+@property (assign,nonatomic) int *counter;
+@property (nonatomic, strong) NSMutableArray *deletedIndexes;
 @end
 
 @implementation iCaruselViewController
 
 UIVisualEffectView *visualEffectView;
-//BOOL postNotificationForGettigPictureIndex;
-
 
 #pragma mark - initialization in view didload
 //main init
 - (void) mainInit{
- 
     self.pictureView.dataSource = self;
     self.pictureView.contentOffset = (CGSize) {.width = 0, .height = 0};
     self.backgroundView.image = [UIImage imageNamed:@"room1.jpg"];
@@ -81,14 +86,8 @@ UIVisualEffectView *visualEffectView;
     self.likeCounterLabel.textAlignment = NSTextAlignmentCenter;
     self.likeCounterLabel.textColor = [UIColor whiteColor];
     [self.likeButton addSubview:self.likeCounterLabel];
-    self.currentPicture = [AVPicture new];//[self.session.arrayOfPictures objectAtIndex:self.dataManager.index];
+    self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.dataManager.index];
     self.authorsImage.frame = (CGRect){ .origin.x = 0, .origin.y = 0, .size.width = 60.0, .size.height = 60.0 };
-    self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
-    self.authorsImage.layer.backgroundColor = [[UIColor clearColor] CGColor];
-    self.authorsImage.layer.cornerRadius = self.authorsImage.frame.size.height / 2;
-    self.authorsImage.layer.borderWidth = 2.0;
-    self.authorsImage.layer.masksToBounds = YES;
-    self.authorsImage.layer.borderColor = [[UIColor blackColor] CGColor];
     [self.authorButton addSubview:self.authorsImage];
     //self.authorsName = [UILabel new];
     self.authorsName.frame = (CGRect){.origin.x = 60.0, .origin.y = 0, .size.width = 180.0, .size.height = 30.0 };
@@ -102,7 +101,7 @@ UIVisualEffectView *visualEffectView;
     [self.backgroundView bringSubviewToFront:self.authorButton];
     [self.backgroundView bringSubviewToFront:self.price];
     [self.backgroundView bringSubviewToFront:self.pictureSize];
-    //[self.backgroundView bringSubviewToFront:self.addToCart];
+    [self.backgroundView bringSubviewToFront:self.addToCart];
 }
 //to add blure efect
 -(void)blurImage
@@ -118,35 +117,50 @@ UIVisualEffectView *visualEffectView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.CachedImageArray != nil) {
+        self.ImageArray = [[NSMutableArray alloc]init];
+        NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
+        request.predicate = nil;
+        self.CurrentPainting = [[NSDictionary alloc]init];
+        self.CurrentArtist = [[NSDictionary alloc]init];
+        self.AllPaintingsCached = [[NSMutableDictionary alloc]init];
+        self.CDresults = [context executeFetchRequest:request error:NULL];
+        for (int i=0;i<self.CDresults.count;i++) {
+            [self.ImageArray addObject:[NSNull null]];
+        }
+        [self initPaintingsData];
+
+
+    } else{
+    self.ImageArray = [[NSMutableArray alloc]init];
     if (self.urls == nil) {
-        self.urls = [[NSMutableArray alloc]initWithArray:[[ServerFetcher sharedInstance] RunQuery]];
-    }
+        [self.Indicator startAnimating];
+        [[ServerFetcher sharedInstance] RunQueryWithcallback:^(NSMutableArray *responde) {
+            self.urls = responde;
+            for (int i=0;i<self.urls.count;i++) {
+                [self.ImageArray addObject:[NSNull null]];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.Indicator stopAnimating];
+                [self.Indicator removeFromSuperview];
+                [self.pictureView reloadData];
+           
+            });
+                    }];
+    }};
     self.pictureView.currentItemIndex = self.index;
     self.authorsImage = [[UIImageView alloc]init];
     self.authorsName = [UILabel new];
-    self.ImageArray = [[NSMutableArray alloc]init];
-    for (int i=0;i<self.urls.count;i++) {
-        [self.ImageArray addObject:[NSNull null]];
-    }
-    
-  
-    //NSLog(@"%@",_urls);
     self.pictureView.delegate = self;
     self.pictureView.dataSource =self;
+    self.deletedIndexes = [[NSMutableArray alloc]init];
     [self mainInit];
     // Do any additional setup after loading the view.
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(shareWithTwitter:)
                                                  name:@"ShareWithTwitter"
                                                object:nil];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(SendAMail:)
-                                                 name:@"send mail"
-                                               object:nil];
-    
 }
 //view will appear. we need this when we dismiss presented view controller and return here
 
@@ -157,27 +171,19 @@ UIVisualEffectView *visualEffectView;
 
 - (void)viewWillAppear:(BOOL)animated{
     
-  
     self.pictureView.hidden = NO;
     [self.backgroundView sendSubviewToBack:visualEffectView];
+    self.pictureView.currentItemIndex = self.index;
     //self.intputPictureIndex = self.dataManager.index;
-    
-}
-
-- (void)returnFromPicturePreview:(NSNotification *)notification{
-    
-   // NSDictionary dictionaty = notification.userInfo;
-    
-    self.pictureView.currentItemIndex = ((NSNumber *)[notification.userInfo valueForKey:@"index"]).intValue;
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:BackToiCaruselViewController object:nil];
-    
     
 }
 
 #pragma mark - icarusel data source
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
     //return the total number of items in the carousel
+    if (self.urls == nil) {
+        return self.CDresults.count;
+    }else
     return self.urls.count;
 
 }
@@ -202,13 +208,66 @@ UIVisualEffectView *visualEffectView;
         }
     }
 }
+- (void)initPaintingsData{
+    for (int i=0; i<self.CDresults.count; i++) {
+    NSMutableDictionary *paintdic = [[NSMutableDictionary alloc]init];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).id_ forKey:@"_id"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).title forKey:@"title"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).genre forKey:@"genre"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).size forKey:@"size"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).realsize forKey:@"realsize"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).descript forKey:@"description"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).materials forKey:@"materials"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).price forKey:@"price"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).orginURL forKey:@"orginURL"];
+    [paintdic setObject:((Picture*)[self.CDresults objectAtIndex:i]).thumbnailURL forKey:@"ThumbURL"];
+    NSMutableDictionary *artistdic = [[NSMutableDictionary alloc]init];
+    Artist *artist = ((Picture*)[self.CDresults objectAtIndex:i]).owner;
+    [artistdic setObject:artist.name forKey:@"name"];
+    [artistdic setObject:artist.location forKey:@"location"];
+    [artistdic setObject:artist.email forKey:@"email"];
+    [artistdic setObject:artist.id_ forKey:@"_id"];
+    [artistdic setObject:artist.biography  forKey:@"biography"];
+    NSString *base64String = [artist.thumbnail base64EncodedStringWithOptions:0];
+    [artistdic setObject:base64String forKey:@"thumbnail"];
+    [paintdic setObject:artistdic forKey:@"artistId"];
+    [self.AllPaintingsCached setObject:paintdic forKey:[NSString stringWithFormat:@"%d",i]];
+    self.AllPaintingData = [[NSDictionary alloc]initWithDictionary:self.AllPaintingsCached];
+
+    }
+}
 //load view in icarusel
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
+    if ([self.CDresults objectAtIndex:(long)self.pictureView.currentItemIndex] != nil) {
+        view = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];//?
+        view.contentMode = UIViewContentModeScaleAspectFit;
+        ((UIImageView*)view).image = [self.CachedImageArray objectAtIndex:index];
+        view = ((UIImageView*)view);
+        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
+        self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureView.currentItemIndex]];
+        if ([[SessionControl sharedManager]checkInternetConnection]) {
+            [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]callback:^(NSString *responde) {
+                self.likeCounterLabel.text = responde;
+                
+            }];
+        }
+        self.price.text = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.price",self.pictureView.currentItemIndex]];
+        self.pictureSize.text = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.size",self.pictureView.currentItemIndex]];
+        view = ((UIImageView*)view);
+        [self.ImageArray replaceObjectAtIndex:index withObject:view];
+        [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]callback:^(NSString *responde) {
+            self.likeCounterLabel.text = responde;
+            
+        }];
+        NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        UIImage *img = [UIImage imageWithData:imageData];
+        self.authorsImage.image = img;
+        self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
+        return view;
+    } else {
     self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
     self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureView.currentItemIndex]];
     self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureView.currentItemIndex]];
-    
-    
     if (view == nil)
     {
         view = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];//?
@@ -220,45 +279,27 @@ UIVisualEffectView *visualEffectView;
     NSURL *url = [[NSURL alloc]initWithString:[self.urls objectAtIndex:index]];
     ((AsyncImageView *)view).imageURL = url;
     view = ((UIImageView*)view);
-    
     [self.ImageArray replaceObjectAtIndex:index withObject:view];
-    __block NSString* str = [[NSString alloc] init];
     
-    dispatch_group_t group =  dispatch_group_create();
-    dispatch_queue_t my_queue = dispatch_queue_create("myqueue", DISPATCH_QUEUE_CONCURRENT);
-    
-    dispatch_group_async(group, my_queue, ^{
-         str = [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]];
-    });
-    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-       self.likeCounterLabel.text = str;    });
-    
+        [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]callback:^(NSString *responde) {
+            self.likeCounterLabel.text = responde;
+
+        }];
     self.price.text = [self.CurrentPainting valueForKey:@"price"];
     self.pictureSize.text = [self.CurrentPainting valueForKey:@"realsize"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *img = [UIImage imageWithData:imageData];
-    
     self.authorsImage.image = img;
     self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
-
-    
-    
-    
     return view;
+    }
+
 }
 #pragma mark - seque
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
     if ([segue.identifier isEqualToString: @"ModalToPreviewOnWall"]) {
-        
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(returnFromPicturePreview:)
-                                                     name:BackToiCaruselViewController
-                                                   object:nil];
-        
-        
-
+        NSLog(@"%@",self.AllPaintingData);
+        ((PreviewOnWallViewController *)segue.destinationViewController).session = self.session;
         ((PreviewOnWallViewController *)segue.destinationViewController).pictureIndex = self.pictureView.currentItemIndex;
         
         
@@ -276,7 +317,6 @@ UIVisualEffectView *visualEffectView;
         
         AVManager *manager = [AVManager sharedInstance];
         manager.index = self.pictureView.currentItemIndex;
-        
         ((FullSizePictureViewController *)segue.destinationViewController).paintingData = self.CurrentPainting;
           ((FullSizePictureViewController *)segue.destinationViewController).artistData = self.CurrentArtist;
         
@@ -306,7 +346,6 @@ UIVisualEffectView *visualEffectView;
         
     }
     if ([segue.identifier isEqualToString:@"ArtistInfo"]) {
-        
         ((ArtistViewController*)segue.destinationViewController).CurrentArtist = self.CurrentArtist;
         ((ArtistViewController*)segue.destinationViewController).img = self.authorsImage.image;
     }
@@ -322,7 +361,7 @@ UIVisualEffectView *visualEffectView;
 //select view in carusel
 - (IBAction)didViewInCaruselSelected:(id)sender {
     CGRect currentViewRect = { .origin.x = 0., .origin.y = 0., .size.width = 800, .size.height = 656 };
-    UIImage * currentImage = [UIImage new];//((AVPicture *)[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex]).pictureImage;
+    UIImage * currentImage = ((AVPicture *)[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex]).pictureImage;
     CGRect newPictureRect;
     newPictureRect.origin.x = 0.;
     newPictureRect.origin.y = 0.;
@@ -374,7 +413,7 @@ UIVisualEffectView *visualEffectView;
     [self.backgroundView bringSubviewToFront:self.authorButton];
     [self.backgroundView bringSubviewToFront:self.price];
     [self.backgroundView bringSubviewToFront:self.pictureSize];
-    //[self.backgroundView bringSubviewToFront:self.addToCart];
+    [self.backgroundView bringSubviewToFront:self.addToCart];
     [self.backgroundView bringSubviewToFront:self.upToolBar];
     [self.backgroundView bringSubviewToFront:self.titleOfSession];
     [self.backgroundView bringSubviewToFront:self.previewOnWallButton];
@@ -427,9 +466,7 @@ UIVisualEffectView *visualEffectView;
 
 //add to cart button clicked
 - (IBAction)addPictureToCart:(id)sender {
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"send mail" object:nil userInfo:nil];
-    /*
-    AVPicture *inputPicture = [AVPicture new];//[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex];
+    AVPicture *inputPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex];
     BOOL isCart = NO;
     for (int i = 0; i < inputPicture.pictureTags.count; i++) {
         if ([@"Cart" isEqualToString:(NSString *)[inputPicture.pictureTags objectAtIndex:i]]) {
@@ -445,132 +482,44 @@ UIVisualEffectView *visualEffectView;
         alert.delegate = self;
         [alert show];
     }
-     */
 }
 //if you want to add picture to cart
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (PurchuasedImageArray == nil || PurchuasedPaintingData == nil) {
-        PurchuasedImageArray = [[NSMutableArray alloc]init];
-        PurchuasedPaintingData = [[NSMutableArray alloc]init];
 
-    }
-    [PurchuasedImageArray addObject:[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]];
-    [PurchuasedPaintingData addObject:self.CurrentPainting];
 
     
 }
 
 //like button clicked
 - (IBAction)likeClicked:(id)sender {
-    
-    
-    //NSString *likescount = /*[NSString stringWithString:*/[//];
-    
-    self.likeCounterLabel.text = [[[ServerFetcher sharedInstance] PutLikes:[self.CurrentPainting valueForKey:@"_id"]] copy];
+    if ([[SessionControl sharedManager]checkInternetConnection]){
+    NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+   //     [self.CurrentPainting valueForKey:@"_id"]
+      [[ServerFetcher sharedInstance]PutLikes:[self.CurrentPainting valueForKey:@"_id"] callback:^(NSString *responde) {
+          NSString *likescount = responde;
+          if([likescount intValue]>[self.likeCounterLabel.text intValue]){
+              [[SDImageCache sharedImageCache]storeImage:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image forKey:[self.CurrentPainting valueForKey:@"_id"]];
+              [Picture CreatePictureWithData:self.CurrentPainting inManagedobjectcontext:context];
+              self.likeCounterLabel.text = likescount;}
+          else{
+              NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
+              request.predicate = [NSPredicate predicateWithFormat:@"id_=%@",[self.CurrentPainting valueForKey:@"_id"]];
+              NSArray *results = [context executeFetchRequest:request error:NULL];
+              [context deleteObject:[results firstObject]];
+              [[SDImageCache sharedImageCache]removeImageForKey:[self.CurrentPainting valueForKey:@"id" ]fromDisk:YES];
+              [((AppDelegate *)[UIApplication sharedApplication].delegate) saveContext ];
+              if(self.CDresults != nil){
+                  //[self.deletedIndexes addObject:self.pictureView.currentItemIndex];
+              }
+              self.likeCounterLabel.text = likescount;
+          }
+
+      }];
+        
+    }
+  
     
 }
 
-
-- (void) SendAMail:(NSNotification *)notification{
-    
-    if ([MFMailComposeViewController canSendMail] == YES)
-        
-    {
-        // Set up
-        self.myMail = [[MFMailComposeViewController alloc] init];
-        
-        self.myMail.mailComposeDelegate = self;
-        
-        
-        // Set the subject
-        
-        [self.myMail setSubject:@"My app feedback"];
-        
-        // To recipients
-        
-        NSArray *toResipients = [[NSArray alloc] initWithObjects:@"iArtistGreatTeam@gmail.com", nil];
-        
-        [self.myMail setToRecipients:toResipients];
-        
-        // Add some text to message body
-        
-        NSString *sentFrom = @"Email sent from my app";
-        
-        [self.myMail setMessageBody:sentFrom
-                             isHTML:YES];
-        
-        // Include an attachment
-        
-        UIImage *tagImage = [UIImage imageNamed:@"background.jpg"];
-        
-        NSData *imageData = UIImageJPEGRepresentation(tagImage, 1.0);
-        
-        [self.myMail addAttachmentData:imageData
-                              mimeType:@"image/jpeg"
-                              fileName:@"tag"];
-        
-        // Display the view controller
-        
-        [self presentViewController:self.myMail
-                           animated:YES
-                         completion:nil];
-        
-    }
-    
-    else
-        
-    {
-        
-        UIAlertView *errorAlter = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                             message:@"Your device can not send email"
-                                                            delegate:self
-                                                   cancelButtonTitle:@"OK"
-                                                   otherButtonTitles: nil];
-        
-        [errorAlter show];
-        
-    }
-    
-    
-}
-
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
-{
-    switch (result) {
-            
-        case MFMailComposeResultCancelled:
-            // Do something
-            break;
-            
-        case MFMailComposeResultFailed:
-            // Do something
-            break;
-            
-        case MFMailComposeResultSaved:
-            // Do something
-            break;
-            
-        case MFMailComposeResultSent:
-        {
-            
-            UIAlertView *thankYouAlter = [[UIAlertView alloc] initWithTitle:@"Thank You"
-                                                                    message:@"Thank you for your email"
-                                                                   delegate:self cancelButtonTitle:@"OK"
-                                                          otherButtonTitles: nil];
-            
-            [thankYouAlter show];
-            
-        }
-            break;
-            
-        default:
-            break;
-    }
-    
-    [self dismissViewControllerAnimated:YES
-                             completion:nil];
-    
-}
 
 @end

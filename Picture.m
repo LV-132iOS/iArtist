@@ -1,9 +1,9 @@
 //
 //  Picture.m
-//  DArt
+//  iArtist
 //
-//  Created by Clark on 2/6/15.
-//  Copyright (c) 2015 System Administrator. All rights reserved.
+//  Created by Clark on 2/25/15.
+//  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
 #import "Picture.h"
@@ -20,8 +20,9 @@
 @dynamic size;
 @dynamic thumbnailURL;
 @dynamic title;
-@dynamic type;
-@dynamic data;
+@dynamic materials;
+@dynamic tags;
+@dynamic genre;
 @dynamic owner;
 
 @end

@@ -8,6 +8,8 @@
 
 #import "ProfileViewController.h"
 #import "SessionControl.h"
+#import "AppDelegate.h"
+#import "SDImageCache.h"
 
 @interface ProfileViewController () {
     NSUserDefaults* defaults;
@@ -91,6 +93,27 @@
     [defaults setObject:@"null" forKey:@"useremail"];
     [defaults setBool:NO forKey:@"informationSent"];
     [defaults synchronize];
+    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    //current url for request
+    //NSURL* url = [NSURL URLWithString:[@"http://192.168.103.5/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
+    //creating request to use it with dataTask
+    //preparing session and request
+    NSFetchRequest *CDPicturerequest = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
+    CDPicturerequest.predicate = nil;
+    NSArray *Pictureresults = [context executeFetchRequest:CDPicturerequest error:NULL];
+    for (NSManagedObject * picture in Pictureresults) {
+        [context deleteObject:picture];
+    }
+    NSError *saveError = nil;
+    NSFetchRequest *CDArtistrequest = [[NSFetchRequest alloc]initWithEntityName:@"Artist"];
+    CDArtistrequest.predicate = nil;
+    NSArray *Artistresults = [context executeFetchRequest:CDArtistrequest error:NULL];
+    for (NSManagedObject * artist in Artistresults) {
+        [context deleteObject:artist];
+    }
+    [context save:&saveError];
+    [[SDImageCache sharedImageCache]clearDisk];
+
     //rewrite session
     SessionControl* control = [SessionControl sharedManager];
     [control reset];
@@ -111,6 +134,8 @@ otherButtonTitles:@"Yes", nil];
 #pragma mark UIAlertView
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
+        
+        NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         //current url for request
         //NSURL* url = [NSURL URLWithString:[@"http://192.168.103.5/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
         NSURL* url = [NSURL URLWithString:[@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
@@ -120,6 +145,22 @@ otherButtonTitles:@"Yes", nil];
         NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
         NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
         request.HTTPMethod = @"DELETE";
+        NSFetchRequest *CDPicturerequest = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
+        CDPicturerequest.predicate = nil;
+        NSArray *Pictureresults = [context executeFetchRequest:CDPicturerequest error:NULL];
+        for (NSManagedObject * picture in Pictureresults) {
+            [context deleteObject:picture];
+        }
+        NSError *saveError = nil;
+        NSFetchRequest *CDArtistrequest = [[NSFetchRequest alloc]initWithEntityName:@"Artist"];
+        CDArtistrequest.predicate = nil;
+        NSArray *Artistresults = [context executeFetchRequest:CDArtistrequest error:NULL];
+        for (NSManagedObject * artist in Artistresults) {
+            [context deleteObject:artist];
+        }
+        [context save:&saveError];
+        [[SDImageCache sharedImageCache]clearDisk];
+        
         //request.timeoutInterval = 20;
         //creating data task
         

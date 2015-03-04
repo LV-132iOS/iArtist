@@ -11,48 +11,31 @@
 static  NSMutableDictionary *Paintingdic;
 static  NSMutableArray *Artistdic;
 
-//
-static NSMutableArray *paintinDic;
-//
-
 static NSMutableArray *urls;
 @interface ServerFetcher : NSObject
 @property (nonatomic, strong) NSDictionary  *Paintingdic;
 @property (nonatomic, strong) NSMutableArray  *artistdic;
 @property (nonatomic, strong) UIImage       *image;
-
-//
-@property (nonatomic, strong) NSMutableArray *paitingDic;
-//
-
-
+- (void)GetPictureThumbWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
 - (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
-
-//- (void)GetPictureThumbWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
-
-//get likes. coment by AV
-- (void)getPictureThumbWithSizeAndID:(NSString*)_id size:(NSNumber *)size callback:(void (^)(UIImage* responde))callback;
-//
-
-- (UIImage*)GetPictureWithID:(NSString*)_id;
 - (void)reloadDB;
 - (void)FetchArtists;
 - (NSMutableArray*)GetLikesForUser:(NSString*)_id;
 - (void)GetNewsForUser:(NSString *)_id
               callback:(void (^)(NSMutableArray* responde))callback;
 - (void)GenerateQueryForTag:(NSString*)querry;
-- (NSMutableArray*)RunQuery;
+- (void)RunQueryWithcallback:(void (^)(NSMutableArray* responde))callback;
 - (void)GenerateQueryForPrice:(int)min :(int)max;
 - (void)GenerateQueryForSize:(NSString*)querry;
 - (NSDictionary *)Paintingdic;
-- (NSString*)PutLikes:(NSString*)_id;
-- (NSString*)GetLikesCount:(NSString*)_id;
+- (void)PutLikes:(NSString*)_id callback:(void (^)(NSString *responde))callback;
+- (void)GetLikesCount:(NSString *)_id callback:(void (^)(NSString *responde))callback;
 - (BOOL)BecomeAFollower:(NSString *)Artist;
 - (BOOL)CheckIsFollowing:(NSString *)_id;
 - (void)GenerateQueryForMaterial:(NSString*)querry;
 - (void)GenerateQueryForArtist:(NSString*)querry;
 - (void)GenerateQueryForColor:(NSString*)querry;
-
+- (void)getPictureThumbWithSizeAndID:(NSString*)_id size:(NSNumber *)size callback:(void (^)(UIImage* responde))callback;
 + (ServerFetcher *)sharedInstance;
 
 

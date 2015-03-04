@@ -1,9 +1,9 @@
 //
 //  Artist.m
-//  DArt
+//  iArtist
 //
-//  Created by Clark on 2/6/15.
-//  Copyright (c) 2015 System Administrator. All rights reserved.
+//  Created by Clark on 3/1/15.
+//  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
 #import "Artist.h"
@@ -14,9 +14,10 @@
 
 @dynamic biography;
 @dynamic email;
+@dynamic id_;
 @dynamic location;
 @dynamic name;
-@dynamic id_;
+@dynamic thumbnail;
 @dynamic picturesbyartist;
 
 @end

@@ -8,20 +8,15 @@
 
 #import "Picture+Create.h"
 #import "Artist+Create.h"
+#import "AppDelegate.h"
 
 
 @implementation Picture (Create)
 +(Picture *)CreatePictureWithData:(NSDictionary *)data inManagedobjectcontext:(NSManagedObjectContext *)context
 {
-    //NSLog(@"%@",  [data valueForKeyPath:@"1_id"]  );
-    
-
     Picture *picture = nil;
-    for (int i=0; i<data.count; i++){
-        
-    
-    NSString *_id = [data valueForKeyPath:[NSString stringWithFormat:@"%d._id",i ]];
-        NSLog(@"%@",_id);
+    NSString *_id = [data valueForKeyPath: @"_id"];
+   // NSLog(@"%@",data);
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Picture"];
     request.predicate = [NSPredicate predicateWithFormat:@"id_=%@", _id];
     NSError *error;
@@ -34,28 +29,21 @@
         picture = [matches firstObject];
     else
     {
-
         picture = [NSEntityDescription insertNewObjectForEntityForName:@"Picture" inManagedObjectContext:context];
-        picture.id_ = [data valueForKeyPath:[NSString stringWithFormat:@"%d._id",i ]];
-        picture.title = [data valueForKeyPath:[NSString stringWithFormat:@"%d.title",i ]];
-        picture.descript = [data valueForKeyPath:[NSString stringWithFormat:@"%d.description",i ]];
-        picture.size = [data valueForKeyPath:[NSString stringWithFormat:@"%d.size",i ]];
-        picture.realsize = [data valueForKeyPath:[NSString stringWithFormat:@"%d.realsize",i ]];
-        //picture.thumbnailURL = [data valueForKeyPath:[NSString stringWithFormat:@"%d.title",i ]];
-        picture.orginURL = [data valueForKeyPath:[NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/%@",_id]];
-        picture.price = [data valueForKeyPath:[NSString stringWithFormat:@"%d.price",i ]];
-        
-       // picture.owner = [Artist CreateArtistinWithId:[data valueForKeyPath:[NSString stringWithFormat:@"%d.artistId",i ]] inManagedobjectcontext:context];
-      //  NSLog(@"%@",picture.title);
-        //NSString *apple = @"Apple";
-       // NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Picture"];
-        //request.predicate = [NSPredicate predicateWithFormat:@"title = %@",apple];
-        //NSError *error;
-       // NSArray *matches = [context executeFetchRequest:request error:&error];
-        //NSLog(@"%lu",(unsigned long)matches.count);
-
-        
-    }
+        picture.id_ = [data valueForKeyPath:[NSString stringWithFormat:@"_id" ]];
+        picture.title = [data valueForKeyPath:[NSString stringWithFormat:@"title"]];
+        picture.descript = [data valueForKeyPath:[NSString stringWithFormat:@"description" ]];
+        picture.size = [data valueForKeyPath:[NSString stringWithFormat:@"size" ]];
+        picture.realsize = [data valueForKeyPath:[NSString stringWithFormat:@"realsize"]];
+        picture.thumbnailURL = [NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/%@?thumb=preview",_id];
+        picture.orginURL = [NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/%@",_id];
+        picture.price = [data valueForKeyPath:[NSString stringWithFormat:@"price" ]];
+        picture.materials = [data valueForKey:@"materials"];
+        picture.genre = [data valueForKey:@"genre"];
+        picture.tags = [[data valueForKey:@"tags"]componentsJoinedByString:@","];
+        picture.owner = [Artist CreateArtistinWithId:[data valueForKeyPath:[NSString stringWithFormat:@"artistId" ]] inManagedobjectcontext:context];
+        NSLog(@"%@",picture);
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] saveContext];
     }
 
     return picture;

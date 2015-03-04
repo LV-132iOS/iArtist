@@ -28,7 +28,7 @@
 @property (nonatomic, strong) NSDictionary *CurrentPainting;
 @property (nonatomic, strong) NSDictionary *CurrentArtist;
 
-extern NSString *const BackToiCaruselViewController;
+
 
 - (void) hideViews;
 - (void) pushVies;

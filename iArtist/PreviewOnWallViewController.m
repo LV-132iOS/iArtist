@@ -12,9 +12,6 @@
 #import "ArtistViewController.h"
 #import "CartViewController.h"
 #import "AVManager.h"
-#import "iCaruselViewController.h"
-
-NSString *const BackToiCaruselViewController = @"BackToiCaruselViewController";
 
 @interface PreviewOnWallViewController (){
     NSString* kindOfSharing;
@@ -24,21 +21,24 @@ NSString *const BackToiCaruselViewController = @"BackToiCaruselViewController";
     NSURL* locUrlToPass;
 }
 
-@property (strong, nonatomic) UIPopoverController               *popover;
+@property (strong, nonatomic) UIPopoverController *popover;
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *rightSwipe;
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *leftSwipe;
-@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer   *panGestureRecognizer;
-@property (strong, nonatomic) IBOutlet UIToolbar                *upToolBar;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem          *backBarBatton;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem          *cameraBurButton;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem          *actionBarBautton;
-@property (strong, nonatomic) IBOutlet UILabel                  *titleOfPicture;
-@property (strong, nonatomic) IBOutlet UIView                   *authorsView;
-@property (strong, nonatomic) IBOutlet UILabel                  *authorsName;
-@property (strong, nonatomic) IBOutlet UIImageView              *authorsImage;
-@property (strong, nonatomic) IBOutlet UILabel                  *price;
-@property (strong, nonatomic) IBOutlet UILabel                  *pictureSize;
-@property (nonatomic, strong)          UIImage                  *img;
+@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
+@property (strong, nonatomic) IBOutlet UIToolbar *upToolBar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *backBarBatton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *cameraBurButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *actionBarBautton;
+@property (strong, nonatomic) IBOutlet UILabel *titleOfPicture;
+@property (strong, nonatomic) IBOutlet UIView *authorsView;
+@property (strong, nonatomic) IBOutlet UILabel *authorsName;
+@property (strong, nonatomic) IBOutlet UILabel *authorsType;
+@property (strong, nonatomic) IBOutlet UIImageView *authorsImage;
+@property (strong, nonatomic) IBOutlet UIView *priceView;
+@property (strong, nonatomic) IBOutlet UILabel *price;
+@property (strong, nonatomic) IBOutlet UILabel *pictureSize;
+@property (nonatomic, strong) UIImage *img;
+
 @property (strong, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
 
 @end
@@ -70,16 +70,16 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     
     Wall *wall1 = [Wall new];
     wall1.wallPicture = [UIImage imageNamed:@"room1.jpg"];
-    wall1.distanceToWall = @1;
+    wall1.distanceToWall = @1.5;
     self.currentWall = wall1;
 }
 
 
 - (void) setImageWithWall :(UIImage *)image :(CGPoint)pictureCenter :(AVTypeOfPictureChange)typeOfPictureChange{
     
-     self.CurrentArtist = [[NSDictionary alloc]init];
-     self.CurrentPainting = [[NSDictionary alloc]init];
-    
+    self.CurrentArtist = [[NSDictionary alloc]init];
+    self.CurrentPainting = [[NSDictionary alloc]init];
+    NSLog(@"%@",self.AllPaintingData);
     self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureIndex]];
     self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureIndex]];
     
@@ -137,7 +137,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         
         self.pictureImage.hidden = YES;
         
-///should fix bug
+        ///should fix bug
         if (pictureCenter.x - self.pictureImage.frame.size.width / 2 < self.roomImage.frame.origin.x)
             pictureCenter.x = self.pictureImage.frame.size.width / 2;
         if (pictureCenter.x + self.pictureImage.frame.size.width / 2 > self.roomImage.frame.origin.x + self.roomImage.frame.size.width)
@@ -150,7 +150,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         self.pictureImage.hidden = NO;
         
     }
-    if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChange == AVSwipeLeftTypeOfPictureChange)) {
+if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChange == AVSwipeLeftTypeOfPictureChange)) {
         CGFloat left = 0;
         CGFloat right = 1024;
         CGFloat up = 0;
@@ -210,7 +210,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
                            [self.pictureImage.layer addAnimation:pictureMoveAnimation forKey:@"pictureAnimation"];
                        });
     }
-
+    
 }
 - (void) mainInit{
     //AVManager *manager = [AVManager sharedInstance];
@@ -232,8 +232,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
      [self setImageWithWall:picture
                            :self.roomImage.center
                            :AVInitTypeOfPictureChange];
-    
-    
      self.rightSwipe = [UISwipeGestureRecognizer new];
      self.rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
      self.rightSwipe.delegate = self;
@@ -251,6 +249,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     locUrlToPass = [[NSURL alloc] init];
     locHeadString = [[NSString alloc] init];
     
+
 }
 
 - (void)viewDidLoad {
@@ -258,8 +257,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self mainInit];
-    
-    
     
 }
 
@@ -320,7 +317,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         
         //
         ///[self setImageWithWall:self.pictureImage.center
-         //                     :pictureChange];
+        //                     :pictureChange];
         //
         
         NSNumber *size = [NSNumber new];
@@ -339,32 +336,30 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
             
             [[ServerFetcher sharedInstance] getPictureThumbWithSizeAndID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]size:size callback:^(UIImage *responde) {
-                    UIImageView *imgv = [[UIImageView alloc]initWithImage:responde];
-                    [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:imgv];
-                    
-                    [self setImageWithWall:responde
-                                          :self.pictureImage.center
-                                          :AVSwipeRightTypeOfPictureChange];
-                }];
+                UIImageView *imgv = [[UIImageView alloc]initWithImage:responde];
+                [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:imgv];
                 
-            } else {
-                    UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
-                
-                
-                //img.size.height = [realsize substringToIndex:indexOfX].doubleValue / (3 * self.currentWall.distanceToWall.doubleValue);
-                
-                    [self setImageWithWall:img
-                                          :self.pictureImage.center
-                                          :pictureChange];
+                [self setImageWithWall:responde
+                                      :self.pictureImage.center
+                                      :AVSwipeRightTypeOfPictureChange];
+            }];
+            
+        } else {
+            UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+            
+            
+            //img.size.height = [realsize substringToIndex:indexOfX].doubleValue / (3 * self.currentWall.distanceToWall.doubleValue);
+            
+            [self setImageWithWall:img
+                                  :self.pictureImage.center
+                                  :pictureChange];
         }
         
     }
     if (sender.state == UIGestureRecognizerStateEnded) {
         [self pushVies];
     }
-}
-
-//we check is point into our picture or not
+}//we check is point into our picture or not
 - (BOOL) ifPointInsidePicture:(CGPoint)point{
     
     if ((point.x > self.pictureImage.frame.origin.x)&&
@@ -448,7 +443,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     if ([self ifPointInsidePicture: [(UIGestureRecognizer *)sender locationInView:self.roomImage]]) {
         [self backReturn:sender];
     } else {
-        
         [self setImageWithWall:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image
                               :[(UIGestureRecognizer *)sender locationInView: self.roomImage]
                               :AVDoubleTapOfPictureChange];
@@ -475,13 +469,11 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     [self.roomImage sendSubviewToBack:visualEffectView];
     
     CGFloat timeForAnimation = 0.3;
-    [UIView animateWithDuration:timeForAnimation
-                     animations:^{
+    [UIView animateWithDuration:timeForAnimation animations:^{
         self.pictureImage.frame = CGRectMake(112, 44, 800, 656);
         self.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
         visualEffectView.alpha = 0.31;
-    }
-                     completion:NULL];
+    } completion:NULL];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((timeForAnimation) * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        [self dismissViewControllerAnimated:NO completion:nil];
@@ -530,33 +522,26 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
 - (void) changeWall:(NSNotification *)notification{
     self.currentWall = [notification.userInfo valueForKey:@"wall"];
     self.roomImage.image = self.currentWall.wallPicture;
-    
     [self setImageWithWall:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image
                           :self.pictureImage.center
                           :AVInitTypeOfPictureChange];
-    
     [self.popover dismissPopoverAnimated:YES];
 }
 
 // we remove our notification as soon as we don't need it
 - (void) popoverControllerDidDismissPopover:(UIPopoverController *)popoverController{
     self.popover = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVDidSelectWall object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 #pragma mark - desappearing controller
 
 //dismiss viewconroller on click back button
 - (IBAction)backReturn:(id)sender {
-    [self pinchAnimation];
-    //[self dismissViewControllerAnimated:NO completion:nil];
+    
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 //input data into manager when we disappear view controller
 - (void)viewWillDisappear:(BOOL)animated{
-    
-    //post a notification
-    NSDictionary *newDictionary = @{@"index" :@(self.pictureIndex)};
-    [[NSNotificationCenter defaultCenter]postNotificationName:BackToiCaruselViewController object:nil userInfo:newDictionary];
-    
     self.dataManager = [AVManager sharedInstance];
     self.dataManager.index = self.pictureIndex;
     //self.dataManager.wallImage = self.currentWall.wallPicture;
@@ -621,6 +606,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     [alertView show];
     
 }
+
 
 #pragma mark UIAlertViewDelegate
 

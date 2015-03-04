@@ -12,16 +12,17 @@
 
 @interface NewsTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UIImageView  *pictureImage;
-@property (strong, nonatomic) IBOutlet UIImageView  *authorImage;
-@property (strong, nonatomic) IBOutlet UILabel      *pictureName;
-@property (strong, nonatomic) IBOutlet UILabel      *pictureTag;
-@property (strong, nonatomic) IBOutlet UILabel      *authorName;
-@property (strong, nonatomic) IBOutlet UITextView   *newsDescription;
-@property (weak, nonatomic)   IBOutlet UILabel      *date;
-@property (strong, nonatomic)          NSDictionary *picture;
-@property (strong, nonatomic)          NSDictionary *author;
+@property (strong, nonatomic) IBOutlet UIImageView *pictureImage;
 
-- (void) reloadCell;
+@property (strong, nonatomic) IBOutlet UIImageView *authorImage;
+
+@property (strong, nonatomic) IBOutlet UILabel *pictureName;
+
+@property (strong, nonatomic) IBOutlet UILabel *pictureTag;
+
+@property (strong, nonatomic) IBOutlet UILabel *authorName;
+
+@property (strong, nonatomic) IBOutlet UITextView *newsDescription;
+@property (weak, nonatomic) IBOutlet UILabel *date;
 
 @end

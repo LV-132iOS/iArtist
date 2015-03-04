@@ -165,7 +165,7 @@
                                                      otherButtonTitles: nil];
         [locAlertView show];
     } else{
-        [self performSegueWithIdentifier:@"News" sender:nil];
+        [self performSegueWithIdentifier:@"NewsFeed" sender:nil];
     }
 }
 
@@ -182,7 +182,9 @@
     [self performSegueWithIdentifier:@"PictureView" sender:nil];
 }
 
-
+- (BOOL)prefersStatusBarHidden{
+    return YES;
+}
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     //preparing other view controllers with background images and so on
@@ -217,19 +219,14 @@
         NSDictionary* dataToPassDic = @{
                                         @"_id" : [defaults objectForKey:@"id"],
                                         @"username" : [defaults objectForKey:@"username"],
-                                        
-                                        
-                                        //AV Coment
-                                        //@"useremail": [defaults objectForKey:@"useremail"],
-                                        
+                                        @"useremail": [defaults objectForKey:@"useremail"],
                                         };
-        
         //and convert dictionary to proper type
         NSData* dataToPass = [NSJSONSerialization dataWithJSONObject:dataToPassDic
                                                              options:0
                                                                error:nil];
         //current url for request
-        NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
+                NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
         //NSURL* url = [NSURL URLWithString:@"http://192.168.103.5/users/"];
         //creating request to use it with dataTask
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
@@ -244,12 +241,10 @@
         
         NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
                                                     completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
-                                                        
                                                         //logging received response
                                                         NSLog(@"%@",response);
                                                         
                                                         if (!error) {
-                                                            
                                                             NSString* locString = [NSString stringWithFormat:@"loggedInWith%@",
                                                                                    [notification.userInfo objectForKey:@"with"]];
                                                             [defaults setBool:YES forKey:@"loggedIn"];
@@ -265,7 +260,6 @@
                                                             //
                                                             
                                                         } else {
-                                                            
                                                             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Failed to send info"
                                                                                                             message:@"Please, re-login later"
                                                                                                            delegate:nil

@@ -10,11 +10,18 @@
 #import "AVPicture.h"
 #import "iCaruselViewController.h"
 #import "ServerFetcher.h"
+#import "SDImageCache.h"
+#import <CoreData/CoreData.h>
+#import "AppDelegate.h"
+#import "Picture+Create.h"
 
 @interface LikedViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic,strong) NSDictionary *AllPaintingData;
 @property (nonatomic,strong) NSMutableArray *urls;
 @property (nonatomic) NSUInteger index;
+@property (nonatomic, strong) NSArray *CachedPaintings;
+@property (nonatomic, strong) NSMutableArray *ImageArray;
+@property (weak, nonatomic) IBOutlet UICollectionView *LikedCollectionView;
 
 @end
 
@@ -22,23 +29,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self CDRequest];
+
+}
+
+- (void)CDRequest{
     AVManager *manager = [AVManager sharedInstance];
-    
     self.session = manager.session;
-    
     UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:manager.wallImage.wallPicture];
     self.view.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:backgroundImage];
     [self blurImage];
     [self.view sendSubviewToBack:backgroundImage];
-    
+    NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    self.urls = [[NSMutableArray alloc]init];
-    self.AllPaintingData = [[NSDictionary alloc]init];
-    self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:[defaults valueForKey:@"id"]];
-    self.AllPaintingData = Paintingdic;
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
+    request.predicate = nil;
+    NSArray *results = [context executeFetchRequest:request error:NULL];
+    self.ImageArray = [[NSMutableArray alloc]init];
+    if (results.count == 0) {
+        self.urls = [[NSMutableArray alloc]init];
+        self.AllPaintingData = [[NSDictionary alloc]init];
+        self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:[defaults valueForKey:@"id"]];
+        self.AllPaintingData = Paintingdic;
+    } else
+        self.CachedPaintings = [NSArray arrayWithArray:results];
 
-    
 }
 
 -(void)blurImage
@@ -58,58 +75,67 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return [self.urls count];
+    if (self.CachedPaintings == nil) {
+        return [self.urls count];
+
+    }
+    return [self.CachedPaintings count];
 }
+
+- (void)viewWillAppear:(BOOL)animated{
+
+    [self CDRequest];
+    [self.LikedCollectionView reloadData];
+}
+
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
-    
-    NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
-
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
-    
-    NSLog(@"%d",indexPath.row);
-    
-    __block UIImageView *image;
-    
-    //=  [[UIImageView alloc]initWithImage: [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]]];
-    
-    
-    //[[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting valueForKey:@"_id"] callback:^(UIImage *responde) {
-    [[ServerFetcher sharedInstance]getPictureThumbWithSizeAndID:[CurrentPainting valueForKey:@"_id"]size:@200 callback:^(UIImage *responde) {
+    NSLog(@"%@",((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_);
+    if([[SDImageCache sharedImageCache]imageFromDiskCacheForKey:((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_] == nil)
+    {__block UIImageView *image = [[UIImageView alloc]init];
+        self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
+        NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
+        [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]callback:^(UIImage *responde) {
+            image.image = responde;
+            [[SDImageCache sharedImageCache]storeImage:image.image forKey:[CurrentPainting valueForKey:@"_id"]];
+            [Picture CreatePictureWithData:CurrentPainting inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext];
+            [self.ImageArray addObject:image.image];
         
-        
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            
-            //self.imageView.image = responde;
-            //[self.indicator stopAnimating];
-            
-            //((UIImageView *)cell).image = responde;
-            
-            image = [[UIImageView alloc]initWithImage: responde];
-            //image.image = responde;
-            
-            image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
-            image.contentMode = UIViewContentModeScaleAspectFit;
-            
-            cell.contentMode = UIViewContentModeScaleAspectFit;
-            [cell addSubview:image];
-            
-            NSLog(@"%d Ok", indexPath.row);
-        });
-        
-    }];
-
+        }];
+    image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
+    image.contentMode = UIViewContentModeScaleAspectFit;
     
+    cell.contentMode = UIViewContentModeScaleAspectFit;
+        if (cell.subviews != nil){
+            [[cell.subviews firstObject] removeFromSuperview];
+        }
+    [cell addSubview:image];
     cell.layer.borderWidth = 4.0f;
     cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
     cell.layer.cornerRadius = 40;
+        
     self.index = indexPath.row;
+    } else {
+        UIImageView *image = [[UIImageView alloc]init];
+        image.image = [[SDImageCache sharedImageCache]imageFromDiskCacheForKey:((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_];
+        [self.ImageArray addObject:image.image];
+        image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
+        image.contentMode = UIViewContentModeScaleAspectFit;
     
+        cell.contentMode = UIViewContentModeScaleAspectFit;
+        if (cell.subviews != nil){
+            [[cell.subviews firstObject] removeFromSuperview];
+        }
+        [cell addSubview:image];
+        cell.layer.borderWidth = 4.0f;
+        cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
+        cell.layer.cornerRadius = 40;
+        self.index = indexPath.row;
+    }
+
     return cell;
-    
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -122,12 +148,11 @@
     dataManager.session = session;
 
     
-    if ([segue.identifier isEqualToString:@"LikedToPicture"]) {
+    if ([segue.identifier isEqualToString:@"LikedToPictures"]) {
         NSInteger index =  [((UICollectionView *)(((UICollectionViewCell *)sender).superview))
                             indexPathForCell:(UICollectionViewCell *)sender].row;
         dataManager.index = index;
-        ((iCaruselViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
-        ((iCaruselViewController *)segue.destinationViewController).urls = self.urls;
+        ((iCaruselViewController *)segue.destinationViewController).CachedImageArray = self.ImageArray;
         ((iCaruselViewController *)segue.destinationViewController).index = index;
 
 
@@ -143,5 +168,14 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

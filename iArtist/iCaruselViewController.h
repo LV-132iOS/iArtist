@@ -17,24 +17,28 @@
 #import "FullSizePictureViewController.h"
 #import "ServerFetcher.h"
 
-#import <MessageUI/MessageUI.h>
 
-@interface iCaruselViewController : UIViewController <iCarouselDelegate, iCarouselDataSource, MFMailComposeViewControllerDelegate>
+@interface iCaruselViewController : UIViewController <iCarouselDelegate, iCarouselDataSource >
 
 @property (strong, nonatomic) AVPicture *currentPicture;
 
-//@property (strong, nonatomic) Sesion *session;
+@property (strong, nonatomic) Sesion *session;
 
 @property (strong, nonatomic)AVManager *dataManager;
 
 @property (nonatomic) NSUInteger index;
 
+@property (nonatomic,strong) NSMutableArray *ImageArray;
+
+@property (nonatomic,strong) NSMutableArray *CachedImageArray;
+
+@property (nonatomic, assign) BOOL RootViewControllerCheck;
 
 @property (nonatomic, strong) NSMutableArray *urls;
 
 @property (nonatomic, strong) NSDictionary *AllPaintingData;
 
-@property(strong, nonatomic) MFMailComposeViewController *myMail;
+
 
 
 

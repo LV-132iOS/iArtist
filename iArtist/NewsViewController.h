@@ -13,16 +13,13 @@
 
 @interface NewsViewController : UIViewController
 
-@property (strong, nonatomic) AVManager           *dataManger;
-@property (strong, nonatomic) Sesion              *session;
-//
-@property (nonatomic, strong) NSMutableDictionary *AllPaintingData;
-//
-@property (nonatomic, strong) NSMutableArray      *paintingData;
+@property (strong, nonatomic) AVManager *dataManger;
+@property (strong, nonatomic) Sesion *session;
+@property (nonatomic, strong) NSDictionary *AllPaintingData;
+@property (strong,nonatomic) NSMutableArray *ImageArray;
+@property (nonatomic, strong) NSDictionary *CurrentPainting;
+@property (nonatomic, strong) NSDictionary *CurrentArtist;
+@property (nonatomic, strong) NSMutableArray *urls;
 
-@property (strong,nonatomic)  NSMutableArray      *ImageArray;
-@property (nonatomic, strong) NSDictionary        *CurrentPainting;
-@property (nonatomic, strong) NSDictionary        *CurrentArtist;
-@property (nonatomic, strong) NSMutableArray      *urls;
 
 @end

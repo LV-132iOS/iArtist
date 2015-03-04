@@ -16,7 +16,7 @@
 {
   
     Artist *artist = nil;
-   
+    NSLog(@"%@",artid);
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Artist"];
     request.predicate = [NSPredicate predicateWithFormat:@"id_=%@", artid];
     NSError *error;
@@ -29,15 +29,14 @@
         artist = [matches firstObject];
     else
     {
+            NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[artid valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
         artist = [NSEntityDescription insertNewObjectForEntityForName:@"Artist" inManagedObjectContext:context];
-       // artist.id_ = artid;
-        
         artist.name = [artid valueForKeyPath:@"name"];
-        artist.biography = [artid valueForKeyPath:@"bipgraphy"];
+        artist.biography = [artid valueForKeyPath:@"biography"];
         artist.location = [artid valueForKeyPath:@"location"];
         artist.email = [artid valueForKeyPath:@"email"];
-        NSLog(@"%@",artist);
-
+        artist.thumbnail = imageData;
+        artist.id_ = [artid valueForKey:@"_id"];
             }
     return artist;
     
