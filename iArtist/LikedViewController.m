@@ -14,6 +14,7 @@
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
 #import "Picture+Create.h"
+#import "SessionControl.h"
 
 @interface LikedViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic,strong) NSDictionary *AllPaintingData;
@@ -43,15 +44,17 @@
     [self blurImage];
     [self.view sendSubviewToBack:backgroundImage];
     NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([[SessionControl sharedManager]checkInternetConnection]) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        self.urls = [[NSMutableArray alloc]init];
+        self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:[defaults valueForKey:@"id"]];
+    };
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
     request.predicate = nil;
     NSArray *results = [context executeFetchRequest:request error:NULL];
     self.ImageArray = [[NSMutableArray alloc]init];
     if (results.count == 0) {
-        self.urls = [[NSMutableArray alloc]init];
         self.AllPaintingData = [[NSDictionary alloc]init];
-        self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:[defaults valueForKey:@"id"]];
         self.AllPaintingData = Paintingdic;
     } else
         self.CachedPaintings = [NSArray arrayWithArray:results];
@@ -75,11 +78,12 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    if (self.CachedPaintings == nil) {
+    if ([[SessionControl sharedManager]checkInternetConnection]) {
         return [self.urls count];
-
     }
-    return [self.CachedPaintings count];
+    else
+        return self.CachedPaintings.count;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{

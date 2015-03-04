@@ -1095,6 +1095,11 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </searchBar>
+                                        <connections>
+                                            <segue destination="LmL-hT-0P2" kind="popover" identifier="SearchrRsults" popoverAnchorBarButtonItem="J8y-uq-qV9" id="sPG-xK-f0N">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
                                     </barButtonItem>
                                     <barButtonItem image="shopping-cart-grey-hi.png" id="5XZ-8b-gcm">
                                         <connections>
@@ -1187,7 +1192,6 @@
                         <outlet property="styleCarousel" destination="vUk-oa-YHj" id="xyo-CP-4Xw"/>
                         <segue destination="LDj-qJ-gC6" kind="modal" identifier="GoToProfile" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="5WJ-1P-ot0"/>
                         <segue destination="aVD-sd-ueB" kind="modal" identifier="Login" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="duq-qo-J8G"/>
-                        <segue destination="LmL-hT-0P2" kind="modal" identifier="Search" id="pQI-Cp-QqQ"/>
                         <segue destination="8c7-Hf-k4L" kind="modal" identifier="FirstRunSegue" id="TQJ-pO-fDV"/>
                         <segue destination="HLU-mf-ZVQ" kind="modal" identifier="PictureView" id="Jgj-hT-4sq"/>
                     </connections>
@@ -1745,9 +1749,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="9Q1-oe-U60"/>
-        <segue reference="Rg6-9f-bnQ"/>
-        <segue reference="MJL-gi-ees"/>
+        <segue reference="QDs-DP-rXf"/>
+        <segue reference="Jgj-hT-4sq"/>
         <segue reference="XqC-q2-HwM"/>
+        <segue reference="9Q1-oe-U60"/>
     </inferredMetricsTieBreakers>
 </document>
