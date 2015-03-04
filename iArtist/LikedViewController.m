@@ -13,7 +13,7 @@
 #import "SDImageCache.h"
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
-#import "Picture.h"
+#import "Picture+Create.h"
 
 @interface LikedViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic,strong) NSDictionary *AllPaintingData;
@@ -21,6 +21,7 @@
 @property (nonatomic) NSUInteger index;
 @property (nonatomic, strong) NSArray *CachedPaintings;
 @property (nonatomic, strong) NSMutableArray *ImageArray;
+@property (weak, nonatomic) IBOutlet UICollectionView *LikedCollectionView;
 
 @end
 
@@ -28,6 +29,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self CDRequest];
+
+}
+
+- (void)CDRequest{
     AVManager *manager = [AVManager sharedInstance];
     self.session = manager.session;
     UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:manager.wallImage.wallPicture];
@@ -48,6 +55,7 @@
         self.AllPaintingData = Paintingdic;
     } else
         self.CachedPaintings = [NSArray arrayWithArray:results];
+
 }
 
 -(void)blurImage
@@ -74,6 +82,13 @@
     return [self.CachedPaintings count];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+
+    [self CDRequest];
+    [self.LikedCollectionView reloadData];
+}
+
+
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
@@ -82,19 +97,25 @@
     {__block UIImageView *image = [[UIImageView alloc]init];
         self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
         NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
-  
         [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]callback:^(UIImage *responde) {
             image.image = responde;
+            [[SDImageCache sharedImageCache]storeImage:image.image forKey:[CurrentPainting valueForKey:@"_id"]];
+            [Picture CreatePictureWithData:CurrentPainting inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext];
+            [self.ImageArray addObject:image.image];
         
         }];
     image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
     image.contentMode = UIViewContentModeScaleAspectFit;
     
     cell.contentMode = UIViewContentModeScaleAspectFit;
+        if (cell.subviews != nil){
+            [[cell.subviews firstObject] removeFromSuperview];
+        }
     [cell addSubview:image];
     cell.layer.borderWidth = 4.0f;
     cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
     cell.layer.cornerRadius = 40;
+        
     self.index = indexPath.row;
     } else {
         UIImageView *image = [[UIImageView alloc]init];
@@ -102,8 +123,11 @@
         [self.ImageArray addObject:image.image];
         image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
         image.contentMode = UIViewContentModeScaleAspectFit;
-        
+    
         cell.contentMode = UIViewContentModeScaleAspectFit;
+        if (cell.subviews != nil){
+            [[cell.subviews firstObject] removeFromSuperview];
+        }
         [cell addSubview:image];
         cell.layer.borderWidth = 4.0f;
         cell.layer.borderColor = ([UIColor whiteColor]).CGColor;

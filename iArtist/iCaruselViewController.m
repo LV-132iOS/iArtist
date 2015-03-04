@@ -55,6 +55,7 @@ static dispatch_group_t downloadGroup;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *Indicator;
 @property (strong, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
 @property (assign,nonatomic) int *counter;
+@property (nonatomic, strong) NSMutableArray *deletedIndexes;
 @end
 
 @implementation iCaruselViewController
@@ -128,6 +129,8 @@ UIVisualEffectView *visualEffectView;
         for (int i=0;i<self.CDresults.count;i++) {
             [self.ImageArray addObject:[NSNull null]];
         }
+        [self initPaintingsData];
+
 
     } else{
     self.ImageArray = [[NSMutableArray alloc]init];
@@ -152,6 +155,7 @@ UIVisualEffectView *visualEffectView;
     self.authorsName = [UILabel new];
     self.pictureView.delegate = self;
     self.pictureView.dataSource =self;
+    self.deletedIndexes = [[NSMutableArray alloc]init];
     [self mainInit];
     // Do any additional setup after loading the view.
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -170,6 +174,7 @@ UIVisualEffectView *visualEffectView;
     
     self.pictureView.hidden = NO;
     [self.backgroundView sendSubviewToBack:visualEffectView];
+    self.pictureView.currentItemIndex = self.index;
     //self.intputPictureIndex = self.dataManager.index;
     
 }
@@ -235,20 +240,26 @@ UIVisualEffectView *visualEffectView;
 //load view in icarusel
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view{
     if ([self.CDresults objectAtIndex:(long)self.pictureView.currentItemIndex] != nil) {
-        if (index == 1&&self.counter ==nil) {
-            index = self.index;
-            self.counter++;
-        };
         view = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];//?
         view.contentMode = UIViewContentModeScaleAspectFit;
         ((UIImageView*)view).image = [self.CachedImageArray objectAtIndex:index];
-        [self.ImageArray replaceObjectAtIndex:index withObject:view];
-        [self initPaintingsData];
-        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureView.currentItemIndex]];
+        view = ((UIImageView*)view);
+        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
         self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureView.currentItemIndex]];
+        if ([[SessionControl sharedManager]checkInternetConnection]) {
+            [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]callback:^(NSString *responde) {
+                self.likeCounterLabel.text = responde;
+                
+            }];
+        }
         self.price.text = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.price",self.pictureView.currentItemIndex]];
         self.pictureSize.text = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.size",self.pictureView.currentItemIndex]];
-        
+        view = ((UIImageView*)view);
+        [self.ImageArray replaceObjectAtIndex:index withObject:view];
+        [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]callback:^(NSString *responde) {
+            self.likeCounterLabel.text = responde;
+            
+        }];
         NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
         UIImage *img = [UIImage imageWithData:imageData];
         self.authorsImage.image = img;
@@ -475,24 +486,18 @@ UIVisualEffectView *visualEffectView;
 }
 //if you want to add picture to cart
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (PurchuasedImageArray == nil || PurchuasedPaintingData == nil) {
-        PurchuasedImageArray = [[NSMutableArray alloc]init];
-        PurchuasedPaintingData = [[NSMutableArray alloc]init];
 
-    }
-    [PurchuasedImageArray addObject:[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]];
-    [PurchuasedPaintingData addObject:self.CurrentPainting];
 
     
 }
 
 //like button clicked
 - (IBAction)likeClicked:(id)sender {
-    
+    if ([[SessionControl sharedManager]checkInternetConnection]){
     NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    NSLog(@"%@",[self.CurrentPainting valueForKey:@"_id"]);
         NSString *likescount = [[ServerFetcher sharedInstance] PutLikes:[self.CurrentPainting valueForKey:@"_id"]];
-    if([likescount intValue]>[self.likeCounterLabel.text intValue]){
+    NSLog(@"%@",[self.CurrentPainting valueForKey:@"_id"]);
+    if([likescount intValue]>[self.likeCounterLabel.text intValue]){  
         [[SDImageCache sharedImageCache]storeImage:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).image forKey:[self.CurrentPainting valueForKey:@"_id"]];
         [Picture CreatePictureWithData:self.CurrentPainting inManagedobjectcontext:context];
         self.likeCounterLabel.text = likescount;}
@@ -503,10 +508,13 @@ UIVisualEffectView *visualEffectView;
            [context deleteObject:[results firstObject]];
             [[SDImageCache sharedImageCache]removeImageForKey:[self.CurrentPainting valueForKey:@"id" ]fromDisk:YES];
             [((AppDelegate *)[UIApplication sharedApplication].delegate) saveContext ];
+            if(self.CDresults != nil){
+                //[self.deletedIndexes addObject:self.pictureView.currentItemIndex];
+            }
             self.likeCounterLabel.text = likescount;
         }
   
-}
+    }}
 
 
 @end

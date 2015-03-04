@@ -93,6 +93,27 @@
     [defaults setObject:@"null" forKey:@"useremail"];
     [defaults setBool:NO forKey:@"informationSent"];
     [defaults synchronize];
+    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    //current url for request
+    //NSURL* url = [NSURL URLWithString:[@"http://192.168.103.5/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
+    //creating request to use it with dataTask
+    //preparing session and request
+    NSFetchRequest *CDPicturerequest = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
+    CDPicturerequest.predicate = nil;
+    NSArray *Pictureresults = [context executeFetchRequest:CDPicturerequest error:NULL];
+    for (NSManagedObject * picture in Pictureresults) {
+        [context deleteObject:picture];
+    }
+    NSError *saveError = nil;
+    NSFetchRequest *CDArtistrequest = [[NSFetchRequest alloc]initWithEntityName:@"Artist"];
+    CDArtistrequest.predicate = nil;
+    NSArray *Artistresults = [context executeFetchRequest:CDArtistrequest error:NULL];
+    for (NSManagedObject * artist in Artistresults) {
+        [context deleteObject:artist];
+    }
+    [context save:&saveError];
+    [[SDImageCache sharedImageCache]clearDisk];
+
     //rewrite session
     SessionControl* control = [SessionControl sharedManager];
     [control reset];
