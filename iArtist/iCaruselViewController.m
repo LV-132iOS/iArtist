@@ -27,7 +27,7 @@
 
 @property (nonatomic) NSInteger likeCounter;
 @property (strong, nonatomic) UILabel *likeCounterLabel;
-@property (strong, nonatomic) IBOutlet UIButton *addToCart;
+//@property (strong, nonatomic) IBOutlet UIButton *addToCart;
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundView;
 @property (strong, nonatomic) IBOutlet iCarousel *pictureView;
 @property (strong, nonatomic) IBOutlet UIToolbar *upToolBar;
@@ -102,7 +102,7 @@ UIVisualEffectView *visualEffectView;
     [self.backgroundView bringSubviewToFront:self.authorButton];
     [self.backgroundView bringSubviewToFront:self.price];
     [self.backgroundView bringSubviewToFront:self.pictureSize];
-    [self.backgroundView bringSubviewToFront:self.addToCart];
+    //[self.backgroundView bringSubviewToFront:self.addToCart];
 }
 //to add blure efect
 -(void)blurImage
@@ -140,6 +140,13 @@ UIVisualEffectView *visualEffectView;
                                              selector:@selector(shareWithTwitter:)
                                                  name:@"ShareWithTwitter"
                                                object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(SendAMail:)
+                                                 name:@"send mail"
+                                               object:nil];
+    
 }
 //view will appear. we need this when we dismiss presented view controller and return here
 
@@ -367,7 +374,7 @@ UIVisualEffectView *visualEffectView;
     [self.backgroundView bringSubviewToFront:self.authorButton];
     [self.backgroundView bringSubviewToFront:self.price];
     [self.backgroundView bringSubviewToFront:self.pictureSize];
-    [self.backgroundView bringSubviewToFront:self.addToCart];
+    //[self.backgroundView bringSubviewToFront:self.addToCart];
     [self.backgroundView bringSubviewToFront:self.upToolBar];
     [self.backgroundView bringSubviewToFront:self.titleOfSession];
     [self.backgroundView bringSubviewToFront:self.previewOnWallButton];
@@ -420,6 +427,8 @@ UIVisualEffectView *visualEffectView;
 
 //add to cart button clicked
 - (IBAction)addPictureToCart:(id)sender {
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"send mail" object:nil userInfo:nil];
+    /*
     AVPicture *inputPicture = [AVPicture new];//[self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex];
     BOOL isCart = NO;
     for (int i = 0; i < inputPicture.pictureTags.count; i++) {
@@ -436,6 +445,7 @@ UIVisualEffectView *visualEffectView;
         alert.delegate = self;
         [alert show];
     }
+     */
 }
 //if you want to add picture to cart
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -461,5 +471,106 @@ UIVisualEffectView *visualEffectView;
 }
 
 
+- (void) SendAMail:(NSNotification *)notification{
+    
+    if ([MFMailComposeViewController canSendMail] == YES)
+        
+    {
+        // Set up
+        self.myMail = [[MFMailComposeViewController alloc] init];
+        
+        self.myMail.mailComposeDelegate = self;
+        
+        
+        // Set the subject
+        
+        [self.myMail setSubject:@"My app feedback"];
+        
+        // To recipients
+        
+        NSArray *toResipients = [[NSArray alloc] initWithObjects:@"iArtistGreatTeam@gmail.com", nil];
+        
+        [self.myMail setToRecipients:toResipients];
+        
+        // Add some text to message body
+        
+        NSString *sentFrom = @"Email sent from my app";
+        
+        [self.myMail setMessageBody:sentFrom
+                             isHTML:YES];
+        
+        // Include an attachment
+        
+        UIImage *tagImage = [UIImage imageNamed:@"background.jpg"];
+        
+        NSData *imageData = UIImageJPEGRepresentation(tagImage, 1.0);
+        
+        [self.myMail addAttachmentData:imageData
+                              mimeType:@"image/jpeg"
+                              fileName:@"tag"];
+        
+        // Display the view controller
+        
+        [self presentViewController:self.myMail
+                           animated:YES
+                         completion:nil];
+        
+    }
+    
+    else
+        
+    {
+        
+        UIAlertView *errorAlter = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message:@"Your device can not send email"
+                                                            delegate:self
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles: nil];
+        
+        [errorAlter show];
+        
+    }
+    
+    
+}
+
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result) {
+            
+        case MFMailComposeResultCancelled:
+            // Do something
+            break;
+            
+        case MFMailComposeResultFailed:
+            // Do something
+            break;
+            
+        case MFMailComposeResultSaved:
+            // Do something
+            break;
+            
+        case MFMailComposeResultSent:
+        {
+            
+            UIAlertView *thankYouAlter = [[UIAlertView alloc] initWithTitle:@"Thank You"
+                                                                    message:@"Thank you for your email"
+                                                                   delegate:self cancelButtonTitle:@"OK"
+                                                          otherButtonTitles: nil];
+            
+            [thankYouAlter show];
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
+    
+}
 
 @end

@@ -10,6 +10,10 @@
 #import "ServerFetcher.h"
 #import "ArtistViewController.h"
 
+
+#import "ActivityIndicator.h"
+
+
 typedef NS_ENUM(NSInteger, AVLeftView) {
     AVLeftViewEnable,
     AVLeftViewDisable
@@ -29,7 +33,11 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 @property (nonatomic)                  AVLeftView               leftviewindex;
 @property (strong, nonatomic) IBOutlet UILabel                  *price;
 @property (strong, nonatomic) IBOutlet UIButton                 *like;
+
+//
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView  *indicator;
+
+@property (strong, nonatomic) IBOutlet ActivityIndicator *activityIndicator;
 
 
 @end
@@ -76,19 +84,23 @@ CGFloat neededScale;
     self.authorsImage.layer.borderWidth = 2.0;
     self.authorsImage.layer.masksToBounds = YES;
     self.authorsImage.layer.borderColor = [[UIColor blackColor] CGColor];
-    
-    [self.indicator startAnimating];
+
     self.indicator.hidesWhenStopped = YES;
     [self.view bringSubviewToFront:self.indicator];
     
     self.indicator.transform = CGAffineTransformMakeScale(4, 4);
+
+    [self.activityIndicator megaInit];
     
     
-    //[[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
+    [self.activityIndicator start];
+
     [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageView.image = responde;
-            [self.indicator stopAnimating];
+           
+            
+            [self.activityIndicator stop];
             
             NSLog(@"Ok");
         });
@@ -112,18 +124,20 @@ CGFloat neededScale;
  
     
     [super viewDidLoad];
-    [self mainInit];
-    [self inputDataInit];
- 
+    
     self.imageView = [[UIImageView alloc]initWithImage:self.ImageThumb];
     
     self.imageView.frame = self.mainView.frame;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.mainView addSubview:self.imageView];
-
-
     
-    // Do any additional setup after loading the view.
+    
+    
+    [self mainInit];
+    [self inputDataInit];
+ 
+    [self.view bringSubviewToFront:self.activityIndicator];
+
 }
 //metod for scroll view
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{

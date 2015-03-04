@@ -475,11 +475,13 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     [self.roomImage sendSubviewToBack:visualEffectView];
     
     CGFloat timeForAnimation = 0.3;
-    [UIView animateWithDuration:timeForAnimation animations:^{
+    [UIView animateWithDuration:timeForAnimation
+                     animations:^{
         self.pictureImage.frame = CGRectMake(112, 44, 800, 656);
         self.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
         visualEffectView.alpha = 0.31;
-    } completion:NULL];
+    }
+                     completion:NULL];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((timeForAnimation) * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
                        [self dismissViewControllerAnimated:NO completion:nil];

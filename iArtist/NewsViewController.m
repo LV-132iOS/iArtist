@@ -14,7 +14,11 @@
 @property (strong, nonatomic) IBOutlet UITableView    *newsTable;
 @property (strong, nonatomic)          NSMutableArray *AllArtistData;
 @property (strong, nonatomic) __block  NSMutableArray *Ids;
-@property (strong,nonatomic)           NSMutableArray *ImagesArray;
+@property (strong, nonatomic)          NSMutableArray *ImagesArray;
+
+//
+@property (strong, nonatomic)          NSMutableArray *dataArray;
+//
 
 @end
 
@@ -24,6 +28,9 @@ NSInteger indexDelete;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.dataArray = [NSMutableArray new];
+    
     [self blurImage];
     UILabel *tableHeader = [[UILabel alloc] initWithFrame:(CGRect)
                             {.origin.x = 482,.origin.y = 0,.size.height = 60,.size.width = 60}];
@@ -69,18 +76,30 @@ NSInteger indexDelete;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     __block NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AVTableViewCell" forIndexPath:indexPath];
     NSLog(@"%d",indexPath.row);
-    self.CurrentPainting = [self.paintingData objectAtIndex:indexPath.row];
-    for (NSDictionary *artist  in self.AllArtistData) {
-        if ([[artist valueForKey:@"_id"]isEqual:[self.CurrentPainting valueForKey:@"artistId"]]) {
-            self.CurrentArtist = artist;
+    
+   // if ([self.dataArray count] <= indexPath.row) {
+        
+        
+        self.CurrentPainting = [self.paintingData objectAtIndex:indexPath.row];
+        for (NSDictionary *artist  in self.AllArtistData) {
+            if ([[artist valueForKey:@"_id"]isEqual:[self.CurrentPainting valueForKey:@"artistId"]]) {
+                self.CurrentArtist = artist;
+            }
         }
-    }
-    cell.picture = self.CurrentPainting;
-    cell.author = self.CurrentArtist;
-    [cell reloadCell];
-    cell.tag = indexPath.row;
+        cell.picture = self.CurrentPainting;
+        cell.author = self.CurrentArtist;
+        [cell reloadCell];
+        cell.tag = indexPath.row;
+        
+        [self.dataArray addObject:cell.pictureImage];
+        
+   // } else {
+        //cell = ;
+    //}
+    
     return cell;
 }
 

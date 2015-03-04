@@ -155,6 +155,18 @@
 		84A4FBDC1A782CF00041BF50 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A4FBDB1A782CF00041BF50 /* placeholder.png */; };
 		84A4FBF51A7837190041BF50 /* shopping-cart-grey-hi.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A4FBF41A7837190041BF50 /* shopping-cart-grey-hi.png */; };
 		A1D147F81A7A44D200DFF5E8 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1D147F71A7A44D200DFF5E8 /* Entitlements.plist */; };
+		F000F7491AA73B210009937A /* ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = F000F7481AA73B210009937A /* ActivityIndicator.m */; };
+		F000F77F1AA764330009937A /* Indicator1.png in Resources */ = {isa = PBXBuildFile; fileRef = F000F7751AA764330009937A /* Indicator1.png */; };
+		F000F7801AA764330009937A /* Indicator2.png in Resources */ = {isa = PBXBuildFile; fileRef = F000F7761AA764330009937A /* Indicator2.png */; };
+		F000F7811AA764330009937A /* Indicator3.png in Resources */ = {isa = PBXBuildFile; fileRef = F000F7771AA764330009937A /* Indicator3.png */; };
+		F000F7821AA764330009937A /* Indicator4.png in Resources */ = {isa = PBXBuildFile; fileRef = F000F7781AA764330009937A /* Indicator4.png */; };
+		F000F7831AA764330009937A /* Indicator5.png in Resources */ = {isa = PBXBuildFile; fileRef = F000F7791AA764330009937A /* Indicator5.png */; };
+		F000F7841AA764330009937A /* Indicator6.png in Resources */ = {isa = PBXBuildFile; fileRef = F000F77A1AA764330009937A /* Indicator6.png */; };
+		F000F7851AA764330009937A /* Indicator7.png in Resources */ = {isa = PBXBuildFile; fileRef = F000F77B1AA764330009937A /* Indicator7.png */; };
+		F000F7861AA764330009937A /* Indicator8.png in Resources */ = {isa = PBXBuildFile; fileRef = F000F77C1AA764330009937A /* Indicator8.png */; };
+		F000F7871AA764330009937A /* Indicator9.png in Resources */ = {isa = PBXBuildFile; fileRef = F000F77D1AA764330009937A /* Indicator9.png */; };
+		F000F7881AA764330009937A /* Indicator10.png in Resources */ = {isa = PBXBuildFile; fileRef = F000F77E1AA764330009937A /* Indicator10.png */; };
+		F00B24601AA46AED00220A29 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F00B245F1AA46AED00220A29 /* QuartzCore.framework */; };
 		F059C3011A94E4FC00F3A99D /* room11.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F059C2EE1A94E4FC00F3A99D /* room11.jpg */; };
 		F059C3021A94E4FC00F3A99D /* room12.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F059C2EF1A94E4FC00F3A99D /* room12.jpg */; };
 		F059C3031A94E4FC00F3A99D /* room13.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F059C2F01A94E4FC00F3A99D /* room13.jpg */; };
@@ -396,6 +408,19 @@
 		84A4FBDB1A782CF00041BF50 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeholder.png; path = Images.xcassets/placeholder.png; sourceTree = "<group>"; };
 		84A4FBF41A7837190041BF50 /* shopping-cart-grey-hi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shopping-cart-grey-hi.png"; path = "Images.xcassets/shopping-cart-grey-hi.png"; sourceTree = "<group>"; };
 		A1D147F71A7A44D200DFF5E8 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		F000F7471AA73B210009937A /* ActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityIndicator.h; sourceTree = "<group>"; };
+		F000F7481AA73B210009937A /* ActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityIndicator.m; sourceTree = "<group>"; };
+		F000F7751AA764330009937A /* Indicator1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Indicator1.png; sourceTree = "<group>"; };
+		F000F7761AA764330009937A /* Indicator2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Indicator2.png; sourceTree = "<group>"; };
+		F000F7771AA764330009937A /* Indicator3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Indicator3.png; sourceTree = "<group>"; };
+		F000F7781AA764330009937A /* Indicator4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Indicator4.png; sourceTree = "<group>"; };
+		F000F7791AA764330009937A /* Indicator5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Indicator5.png; sourceTree = "<group>"; };
+		F000F77A1AA764330009937A /* Indicator6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Indicator6.png; sourceTree = "<group>"; };
+		F000F77B1AA764330009937A /* Indicator7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Indicator7.png; sourceTree = "<group>"; };
+		F000F77C1AA764330009937A /* Indicator8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Indicator8.png; sourceTree = "<group>"; };
+		F000F77D1AA764330009937A /* Indicator9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Indicator9.png; sourceTree = "<group>"; };
+		F000F77E1AA764330009937A /* Indicator10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Indicator10.png; sourceTree = "<group>"; };
+		F00B245F1AA46AED00220A29 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F059C2EE1A94E4FC00F3A99D /* room11.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room11.jpg; sourceTree = "<group>"; };
 		F059C2EF1A94E4FC00F3A99D /* room12.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room12.jpg; sourceTree = "<group>"; };
 		F059C2F01A94E4FC00F3A99D /* room13.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room13.jpg; sourceTree = "<group>"; };
@@ -422,6 +447,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F00B24601AA46AED00220A29 /* QuartzCore.framework in Frameworks */,
 				45E298E51A8CD6E8003CC0D6 /* GoogleOpenSource.framework in Frameworks */,
 				609813021A7F5A5D00C8017B /* GooglePlus.framework in Frameworks */,
 				843C97061A7EC09E0080FCAA /* AddressBook.framework in Frameworks */,
@@ -839,6 +865,7 @@
 		84A0E8141A77B688009F6EA5 = {
 			isa = PBXGroup;
 			children = (
+				F00B245F1AA46AED00220A29 /* QuartzCore.framework */,
 				45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */,
 				84A0E81F1A77B688009F6EA5 /* iArtist */,
 				84A0E8391A77B688009F6EA5 /* iArtistTests */,
@@ -858,6 +885,7 @@
 		84A0E81F1A77B688009F6EA5 /* iArtist */ = {
 			isa = PBXGroup;
 			children = (
+				F00B24611AA46AFF00220A29 /* Activity Indicator */,
 				60E69A661A865DBB007CA1C6 /* Core Data */,
 				4BCBCBA41A932D1F00DA9C62 /* Social Networks */,
 				4B4A32091A8D32BC0048078C /* AFNetworking */,
@@ -947,6 +975,33 @@
 				84A4FBD81A782ACF0041BF50 /* UIImage+FX.m */,
 			);
 			path = FXImageView;
+			sourceTree = "<group>";
+		};
+		F000F74A1AA73C760009937A /* ActivityIndicatorPictures */ = {
+			isa = PBXGroup;
+			children = (
+				F000F7751AA764330009937A /* Indicator1.png */,
+				F000F7761AA764330009937A /* Indicator2.png */,
+				F000F7771AA764330009937A /* Indicator3.png */,
+				F000F7781AA764330009937A /* Indicator4.png */,
+				F000F7791AA764330009937A /* Indicator5.png */,
+				F000F77A1AA764330009937A /* Indicator6.png */,
+				F000F77B1AA764330009937A /* Indicator7.png */,
+				F000F77C1AA764330009937A /* Indicator8.png */,
+				F000F77D1AA764330009937A /* Indicator9.png */,
+				F000F77E1AA764330009937A /* Indicator10.png */,
+			);
+			name = ActivityIndicatorPictures;
+			sourceTree = "<group>";
+		};
+		F00B24611AA46AFF00220A29 /* Activity Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				F000F74A1AA73C760009937A /* ActivityIndicatorPictures */,
+				F000F7471AA73B210009937A /* ActivityIndicator.h */,
+				F000F7481AA73B210009937A /* ActivityIndicator.m */,
+			);
+			name = "Activity Indicator";
 			sourceTree = "<group>";
 		};
 		F059C2E21A94E1F800F3A99D /* Popower */ = {
@@ -1244,8 +1299,10 @@
 				F059C3131A94E4FC00F3A99D /* room29.jpg in Resources */,
 				604413121A83D7E40099B184 /* picture2.jpg in Resources */,
 				4BF2F30C1A926B5D00DEF7FB /* yellow.jpg in Resources */,
+				F000F7881AA764330009937A /* Indicator10.png in Resources */,
 				6044132A1A83D7F90099B184 /* room5.jpg in Resources */,
 				4BF2F3171A926B6500DEF7FB /* Enamel.jpg in Resources */,
+				F000F7821AA764330009937A /* Indicator4.png in Resources */,
 				F059C3091A94E4FC00F3A99D /* room19.jpg in Resources */,
 				604413261A83D7F90099B184 /* room1.jpg in Resources */,
 				606E20941A84E74D00121589 /* background.jpg in Resources */,
@@ -1253,6 +1310,7 @@
 				6099E2CE1A82928300513668 /* vk_logo.png in Resources */,
 				4BF2F3221A926B6D00DEF7FB /* priceTwo.jpg in Resources */,
 				4BBDF0331A9340CC002FA6D4 /* room10.jpg in Resources */,
+				F000F7861AA764330009937A /* Indicator8.png in Resources */,
 				604413151A83D7E40099B184 /* picture5.jpg in Resources */,
 				4BF2F3361A926B7D00DEF7FB /* Style6.jpg in Resources */,
 				843C96ED1A7E8A610080FCAA /* TwitterKitResources.bundle in Resources */,
@@ -1271,6 +1329,7 @@
 				604413101A83D7E40099B184 /* photo1.jpg in Resources */,
 				84A4FBF51A7837190041BF50 /* shopping-cart-grey-hi.png in Resources */,
 				4BF2F32A1A926B7500DEF7FB /* Size4.jpg in Resources */,
+				F000F7841AA764330009937A /* Indicator6.png in Resources */,
 				6044132E1A83D7F90099B184 /* room9.jpg in Resources */,
 				6044130F1A83D7E40099B184 /* person.png in Resources */,
 				4BF2F3151A926B6500DEF7FB /* Acrylic on canvas.jpg in Resources */,
@@ -1282,10 +1341,12 @@
 				606E20661A84E5F400121589 /* ArtistImg.png in Resources */,
 				4BF2F2FD1A926B4F00DEF7FB /* artist4.jpg in Resources */,
 				4BF2F3191A926B6500DEF7FB /* Pastel on canvas.jpg in Resources */,
+				F000F7831AA764330009937A /* Indicator5.png in Resources */,
 				4BF2F3321A926B7D00DEF7FB /* Style2.jpg in Resources */,
 				F059C3021A94E4FC00F3A99D /* room12.jpg in Resources */,
 				4BF2F3201A926B6D00DEF7FB /* priceOne.jpg in Resources */,
 				4BF2F3161A926B6500DEF7FB /* Colored pencil.jpg in Resources */,
+				F000F7801AA764330009937A /* Indicator2.png in Resources */,
 				84663EF91A7915DB0038A5B1 /* Abstract-Art-masterpiece.jpg in Resources */,
 				4BF2F3071A926B5D00DEF7FB /* brown.jpg in Resources */,
 				F059C30C1A94E4FC00F3A99D /* room22.jpg in Resources */,
@@ -1293,13 +1354,17 @@
 				6048E26D1A8B51C30099D8D3 /* user-icon-0910125612.png in Resources */,
 				4BF2F3081A926B5D00DEF7FB /* green.jpeg in Resources */,
 				604413131A83D7E40099B184 /* picture3.jpg in Resources */,
+				F000F7851AA764330009937A /* Indicator7.png in Resources */,
 				4BF2F30A1A926B5D00DEF7FB /* orange.jpg in Resources */,
 				604413171A83D7E40099B184 /* picture7.jpg in Resources */,
 				604413161A83D7E40099B184 /* picture6.jpg in Resources */,
 				4BF2F2FA1A926B4F00DEF7FB /* artist1.jpg in Resources */,
 				4BCC5FE91A8660690086B14C /* GooglePlus.bundle in Resources */,
+				F000F7811AA764330009937A /* Indicator3.png in Resources */,
 				F059C30A1A94E4FC00F3A99D /* room20.jpg in Resources */,
 				4BF2F3091A926B5D00DEF7FB /* grey.jpg in Resources */,
+				F000F77F1AA764330009937A /* Indicator1.png in Resources */,
+				F000F7871AA764330009937A /* Indicator9.png in Resources */,
 				4BF2F3181A926B6500DEF7FB /* Oil on canvas.jpg in Resources */,
 				4BF2F2FC1A926B4F00DEF7FB /* artist3.jpg in Resources */,
 				F059C3031A94E4FC00F3A99D /* room13.jpg in Resources */,
@@ -1351,6 +1416,7 @@
 				4B4A32211A8D32BD0048078C /* AFSecurityPolicy.m in Sources */,
 				604412F91A83D7A10099B184 /* NewsViewController.m in Sources */,
 				4B4A32241A8D32BD0048078C /* AFURLResponseSerialization.m in Sources */,
+				F000F7491AA73B210009937A /* ActivityIndicator.m in Sources */,
 				4B4A321E1A8D32BD0048078C /* AFHTTPRequestOperationManager.m in Sources */,
 				4BCBCBC51A93320A00DA9C62 /* LoginViewController.m in Sources */,
 				84A0E8291A77B688009F6EA5 /* ViewController.m in Sources */,

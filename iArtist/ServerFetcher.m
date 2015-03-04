@@ -378,7 +378,7 @@ static NSString *querystring;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
-    [manager GET:@"/artists/db/54d8e80de3ad4c9f15f3a653"
+    [manager GET:@"/artists/db/"
       parameters:nil
          success:^(NSURLSessionDataTask *task, id responseObject) {
              /*for (int i = 0; i<((NSArray*)responseObject).count; i++)
