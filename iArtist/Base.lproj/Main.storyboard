@@ -909,6 +909,64 @@
             </objects>
             <point key="canvasLocation" x="4848" y="2382"/>
         </scene>
+        <!--Search Results View Controller-->
+        <scene sceneID="mbM-bf-10i">
+            <objects>
+                <viewController storyboardIdentifier="SearchPopover" id="W8C-Fb-coL" customClass="SearchResultsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cBG-js-L9Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="cOy-l7-hOb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jFo-I6-vFn">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="300"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KYd-5Q-Uwk">
+                                <rect key="frame" x="0.0" y="0.0" width="512" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Artists" id="zlE-1e-47B">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zlE-1e-47B" id="La0-Pd-5WU">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="W8C-Fb-coL" id="qLZ-5L-s73"/>
+                                    <outlet property="delegate" destination="W8C-Fb-coL" id="NFX-Yv-cHZ"/>
+                                </connections>
+                            </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sry-lC-MvU">
+                                <rect key="frame" x="512" y="0.0" width="512" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Paintings" id="vFB-xB-2Ib">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vFB-xB-2Ib" id="d3O-P7-Bfa">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="W8C-Fb-coL" id="MJ7-Xp-tDF"/>
+                                    <outlet property="delegate" destination="W8C-Fb-coL" id="eCo-TG-Fxw"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="1024" height="300"/>
+                    <connections>
+                        <outlet property="ArtistsTV" destination="KYd-5Q-Uwk" id="DD9-zj-HOi"/>
+                        <outlet property="PaintingsTV" destination="sry-lC-MvU" id="9GM-Pi-WRu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EZ3-MG-6v7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5314" y="3701"/>
+        </scene>
         <!--Set Distance To Wall View Controller-->
         <scene sceneID="KgP-1f-2ti">
             <objects>
@@ -1183,11 +1241,13 @@
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="SearchBar" destination="rRo-ja-5Aw" id="NON-Mz-DVu"/>
                         <outlet property="artistsCarousel" destination="6wM-9P-i7m" id="2Ho-fe-CAX"/>
                         <outlet property="colorCarousel" destination="rjk-O6-9Db" id="otz-YK-aBp"/>
                         <outlet property="materialCarousel" destination="aNX-Yg-8TD" id="is7-9b-Upi"/>
                         <outlet property="priceCarousel" destination="W6y-Rb-dSE" id="x6Y-uK-9Ss"/>
                         <outlet property="scroll" destination="2eR-zT-k38" id="Ma4-Y2-pT3"/>
+                        <outlet property="searchBarButtonItem" destination="J8y-uq-qV9" id="fbl-jp-ak5"/>
                         <outlet property="sizeCarousel" destination="Nou-Jh-eRa" id="pnF-Jh-ttf"/>
                         <outlet property="styleCarousel" destination="vUk-oa-YHj" id="xyo-CP-4Xw"/>
                         <segue destination="LDj-qJ-gC6" kind="modal" identifier="GoToProfile" modalPresentationStyle="formSheet" modalTransitionStyle="crossDissolve" id="5WJ-1P-ot0"/>
@@ -1749,9 +1809,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="QDs-DP-rXf"/>
         <segue reference="Jgj-hT-4sq"/>
+        <segue reference="QDs-DP-rXf"/>
         <segue reference="XqC-q2-HwM"/>
-        <segue reference="9Q1-oe-U60"/>
+        <segue reference="nay-hd-SZI"/>
     </inferredMetricsTieBreakers>
 </document>

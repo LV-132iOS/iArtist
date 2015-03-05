@@ -30,7 +30,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.urls = [[NSMutableArray alloc]init];
+    [[ServerFetcher sharedInstance]GetLikesForUser:@"" callback:^(NSMutableArray *responde) {
+        self.urls = responde;
+    }];
     [self CDRequest];
 
 }
@@ -38,26 +41,17 @@
 - (void)CDRequest{
     AVManager *manager = [AVManager sharedInstance];
     self.session = manager.session;
+    NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
     UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:manager.wallImage.wallPicture];
     self.view.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:backgroundImage];
     [self blurImage];
     [self.view sendSubviewToBack:backgroundImage];
-    NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-    if ([[SessionControl sharedManager]checkInternetConnection]) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        self.urls = [[NSMutableArray alloc]init];
-        self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:[defaults valueForKey:@"id"]];
-    };
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
     request.predicate = nil;
-    NSArray *results = [context executeFetchRequest:request error:NULL];
-    self.ImageArray = [[NSMutableArray alloc]init];
-    if (results.count == 0) {
-        self.AllPaintingData = [[NSDictionary alloc]init];
-        self.AllPaintingData = Paintingdic;
-    } else
-        self.CachedPaintings = [NSArray arrayWithArray:results];
+    self.CachedPaintings = [context executeFetchRequest:request error:NULL];
+
+    
 
 }
 
@@ -78,10 +72,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    if ([[SessionControl sharedManager]checkInternetConnection]) {
-        return [self.urls count];
-    }
-    else
+  
         return self.CachedPaintings.count;
 
 }
@@ -96,32 +87,7 @@
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
-    NSLog(@"%@",((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_);
-    if([[SDImageCache sharedImageCache]imageFromDiskCacheForKey:((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_] == nil)
-    {__block UIImageView *image = [[UIImageView alloc]init];
-        self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
-        NSDictionary *CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
-        [[ServerFetcher sharedInstance]GetPictureThumbWithID:[CurrentPainting  valueForKey:@"_id" ]callback:^(UIImage *responde) {
-            image.image = responde;
-            [[SDImageCache sharedImageCache]storeImage:image.image forKey:[CurrentPainting valueForKey:@"_id"]];
-            [Picture CreatePictureWithData:CurrentPainting inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext];
-            [self.ImageArray addObject:image.image];
-        
-        }];
-    image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
-    image.contentMode = UIViewContentModeScaleAspectFit;
-    
-    cell.contentMode = UIViewContentModeScaleAspectFit;
-        if (cell.subviews != nil){
-            [[cell.subviews firstObject] removeFromSuperview];
-        }
-    [cell addSubview:image];
-    cell.layer.borderWidth = 4.0f;
-    cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
-    cell.layer.cornerRadius = 40;
-        
-    self.index = indexPath.row;
-    } else {
+{
         UIImageView *image = [[UIImageView alloc]init];
         image.image = [[SDImageCache sharedImageCache]imageFromDiskCacheForKey:((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_];
         [self.ImageArray addObject:image.image];
@@ -145,9 +111,6 @@
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     Sesion *session = [Sesion sessionInit];
-    
-
-
     AVManager *dataManager = [AVManager sharedInstance];
     dataManager.session = session;
 
@@ -156,7 +119,7 @@
         NSInteger index =  [((UICollectionView *)(((UICollectionViewCell *)sender).superview))
                             indexPathForCell:(UICollectionViewCell *)sender].row;
         dataManager.index = index;
-        ((iCaruselViewController *)segue.destinationViewController).CachedImageArray = self.ImageArray;
+     //   ((iCaruselViewController *)segue.destinationViewController).CachedImageArray = self.ImageArray;
         ((iCaruselViewController *)segue.destinationViewController).index = index;
 
 

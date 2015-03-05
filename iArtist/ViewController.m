@@ -15,6 +15,11 @@
 #import "ArtistsCarouselDelegateAndDataSource.h"
 #import "iCaruselViewController.h"
 #import "SessionControl.h"
+#import "ServerFetcher.h"
+#import "SDImageCache.h"
+#import "Picture+Create.h"
+#import "AppDelegate.h"
+#import  "SearchResultsViewController.h"
 
 @interface ViewController (){
     StyleCarouselDelegateAndDataSource* styleCarouselDAndDS;
@@ -27,11 +32,14 @@
 
 @end
 
-@implementation ViewController
+@implementation ViewController 
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.urls = [[NSMutableArray alloc]init];
+    self.SearchBar.delegate = self;
+    self.popoverSearchController.delegate = self;
     //allocating user defaults for the whole file
     //not sure if this needed
     _signIn = [GPPSignIn sharedInstance];
@@ -255,11 +263,18 @@
                                                             //need to close login view
                                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"NeedCloseLoginView"
                                                                                                                 object:nil];
-                                                            //to change button name from login to profile
-                                                            
-                                                            //
-                                                            
-                                                        } else {
+                                                            //self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:@""];
+                                                            for (int i=0; i<self.urls.count; i++) {
+                                                                [[ServerFetcher sharedInstance]GetPictureThumbWithID:self.urls[i] callback:^(UIImage *responde) {
+                                                                NSDictionary *CurrentPainting = [[[ServerFetcher sharedInstance]Paintingdic] valueForKey:[NSString stringWithFormat:@"%d",i]];
+                                                                    [[SDImageCache sharedImageCache]storeImage:responde forKey:[CurrentPainting valueForKey:@"_id"]];
+                                                                    [Picture CreatePictureWithData:CurrentPainting inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext];
+
+
+                                                                }];
+
+                                                            };
+                                                                                                               } else {
                                                             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Failed to send info"
                                                                                                             message:@"Please, re-login later"
                                                                                                            delegate:nil
@@ -295,40 +310,50 @@
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
     NSLog(@"started editing text");
     [UIView animateWithDuration:0.3 animations:^{
-        [[self searchBar]setFrame:CGRectMake(self.searchBar.frame.origin.x - 100,
-                                             self.searchBar.frame.origin.y,
-                                             self.searchBar.frame.size.width + 100,
-                                             self.searchBar.frame.size.height )];
-        [self.searchBar layoutSubviews];
+        [[self SearchBar]setFrame:CGRectMake(self.SearchBar.frame.origin.x - 100,
+                                             self.SearchBar.frame.origin.y,
+                                             self.SearchBar.frame.size.width + 100,
+                                             self.SearchBar.frame.size.height )];
+        [self.SearchBar layoutSubviews];
     }];
 }
 // called when text ends editing
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     NSLog(@"finished editing text");
     [UIView animateWithDuration:0.3 animations:^{
-        [[self searchBar]setFrame:CGRectMake(self.searchBar.frame.origin.x + 100,
-                                             self.searchBar.frame.origin.y,
-                                             self.searchBar.frame.size.width - 100,
-                                             self.searchBar.frame.size.height )];
-        [self.searchBar layoutSubviews];
+        [[self SearchBar]setFrame:CGRectMake(self.SearchBar.frame.origin.x + 100,
+                                             self.SearchBar.frame.origin.y,
+                                             self.SearchBar.frame.size.width - 100,
+                                             self.SearchBar.frame.size.height )];
+        [self.SearchBar layoutSubviews];
+        self.popoverSearchController = nil;
     }];
 }
 
 
+
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     NSLog(@"Text changed search");
-    dispatch_group_t group = dispatch_group_create();
-    dispatch_queue_t queue = dispatch_queue_create("312qweq", DISPATCH_QUEUE_SERIAL);
+    SearchResultsViewController *tableController = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchPopover"];
+    if (!self.popoverSearchController) {
+        self.popoverSearchController = [[UIPopoverController alloc] initWithContentViewController:tableController];
+         [self.popoverSearchController presentPopoverFromBarButtonItem:self.searchBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
+        tableController.searchString = searchText;
     
     
     
-    
-    dispatch_group_async(group, queue, ^{
-        NSLog(@"fetching json");
-    });
-    dispatch_group_async(group, queue, ^{
-        NSLog(@"getting json,");
-    });
+
+   // dispatch_group_t group = dispatch_group_create();
+   //dispatch_queue_t queue = dispatch_queue_create("312qweq", DISPATCH_QUEUE_SERIAL);
+//
+//    dispatch_group_async(group, queue, ^{
+//       NSLog(@"fetching json");
+//    });
+//    dispatch_group_async(group, queue, ^{
+//        NSLog(@"getting json,");
+//    });
 }
 
 // called when keyboard search button pressed

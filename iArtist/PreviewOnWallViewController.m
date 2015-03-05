@@ -218,7 +218,7 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
     
     [self initWals];
     self.roomImage.image = self.currentWall.wallPicture;
-    UIImage *picture = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+    UIImage *picture = [self.ImageArray objectAtIndex:self.pictureIndex];
     //self.roomImage.backgroundColor = [UIColor colorWithPatternImage:picture];
     
     AVManager *manager = [AVManager sharedInstance];
@@ -336,8 +336,7 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
         if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
             
             [[ServerFetcher sharedInstance] getPictureThumbWithSizeAndID:[self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld._id",(long)self.pictureIndex]]size:size callback:^(UIImage *responde) {
-                UIImageView *imgv = [[UIImageView alloc]initWithImage:responde];
-                [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:imgv];
+                [self.ImageArray replaceObjectAtIndex:self.pictureIndex withObject:responde];
                 
                 [self setImageWithWall:responde
                                       :self.pictureImage.center
@@ -345,7 +344,7 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
             }];
             
         } else {
-            UIImage *img = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+            UIImage *img = [self.ImageArray objectAtIndex:self.pictureIndex];
             
             
             //img.size.height = [realsize substringToIndex:indexOfX].doubleValue / (3 * self.currentWall.distanceToWall.doubleValue);
@@ -443,7 +442,7 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
     if ([self ifPointInsidePicture: [(UIGestureRecognizer *)sender locationInView:self.roomImage]]) {
         [self backReturn:sender];
     } else {
-        [self setImageWithWall:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image
+        [self setImageWithWall:[self.ImageArray objectAtIndex:self.pictureIndex]
                               :[(UIGestureRecognizer *)sender locationInView: self.roomImage]
                               :AVDoubleTapOfPictureChange];
     }
@@ -522,7 +521,7 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
 - (void) changeWall:(NSNotification *)notification{
     self.currentWall = [notification.userInfo valueForKey:@"wall"];
     self.roomImage.image = self.currentWall.wallPicture;
-    [self setImageWithWall:((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image
+    [self setImageWithWall:[self.ImageArray objectAtIndex:self.pictureIndex]
                           :self.pictureImage.center
                           :AVInitTypeOfPictureChange];
     [self.popover dismissPopoverAnimated:YES];
@@ -565,7 +564,7 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
             //
         } else if ([kindOfSharing isEqualToString:@"OnlyPicture"]){
             //get only picture
-            locImageToShare = ((UIImageView*)[self.ImageArray objectAtIndex:self.pictureIndex]).image;
+            locImageToShare = [self.ImageArray objectAtIndex:self.pictureIndex];
             //set text
             locHeadString = [NSString stringWithFormat:@"What a great art ""%@"" by %@!",
                              [self.CurrentPainting valueForKey:@"title"],

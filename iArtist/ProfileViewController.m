@@ -94,10 +94,6 @@
     [defaults setBool:NO forKey:@"informationSent"];
     [defaults synchronize];
     NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    //current url for request
-    //NSURL* url = [NSURL URLWithString:[@"http://192.168.103.5/" stringByAppendingString:[defaults objectForKey:@"id"]] ];
-    //creating request to use it with dataTask
-    //preparing session and request
     NSFetchRequest *CDPicturerequest = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
     CDPicturerequest.predicate = nil;
     NSArray *Pictureresults = [context executeFetchRequest:CDPicturerequest error:NULL];

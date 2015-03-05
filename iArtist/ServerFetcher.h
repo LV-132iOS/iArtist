@@ -19,7 +19,8 @@ static NSMutableArray *urls;
 - (void)GetPictureThumbWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
 - (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
 - (void)FetchArtists;
-- (NSMutableArray*)GetLikesForUser:(NSString*)_id;
+- (void)GetLikesForUser:(NSString *)_id
+              callback:(void (^)(NSMutableArray* responde))callback;
 - (void)GetNewsForUser:(NSString *)_id
               callback:(void (^)(NSMutableArray* responde))callback;
 - (void)GenerateQueryForTag:(NSString*)querry;
@@ -36,7 +37,7 @@ static NSMutableArray *urls;
 - (void)GenerateQueryForColor:(NSString*)querry;
 - (void)getPictureThumbWithSizeAndID:(NSString*)_id size:(NSNumber *)size callback:(void (^)(UIImage* responde))callback;
 + (ServerFetcher *)sharedInstance;
-
+- (void)search:(NSString*)searchString callback:(void (^)(NSDictionary *responde))callback;
 
 @end
 

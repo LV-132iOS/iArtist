@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "Picture+Create.h"
 #import "AppDelegate.h"
+#import <objc/objc.h>
 
 //static NSString * const BaseURLString = @"http://10.4.48.126/";
 static NSString * const BaseURLString = @"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/";
@@ -24,7 +25,7 @@ static NSString *querystring;
 
 
 - (NSString *)appedAcceseTockenToString:(NSString*)string {
-    NSString *token = @"NLG4XMFE70L6U6UHkF/EGQToMVisckAIXBXwNmiOvWs=";
+    NSString *token = @"qKo0fb1VRZEfHU8VJ0f76gNRy0m25D+UJbP0WrzNh28=";
     token = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
                                                                                      (CFStringRef)token,
                                                                                      NULL,
@@ -46,7 +47,7 @@ static NSString *querystring;
  - (void)getPictureThumbWithSizeAndID:(NSString*)_id size:(NSNumber *)size callback:(void (^)(UIImage* responde))callback
 {
     
-    manager.responseSerializer = [AFImageResponseSerializer serializer];
+    //manager.responseSerializer = [AFImageResponseSerializer serializer];
     [manager GET:[NSString stringWithFormat:@"paintings/files/%@?thumb=%@", _id ,size]
       parameters:nil
          success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -135,6 +136,8 @@ static NSString *querystring;
 
 
 
+
+
 - (void)GenerateQueryForSize:(NSString*)querry{
     dispatch_group_enter(downloadGroup);
 
@@ -188,15 +191,14 @@ static NSString *querystring;
     }
 }
 
-- (NSMutableArray*)GetLikesForUser:(NSString *)_id
+- (void)GetLikesForUser:(NSString *)_id
+               callback:(void (^)(NSMutableArray* responde))callback
 {
-   
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     Paintingdic = [[NSMutableDictionary alloc]init];
-    NSMutableArray *urls = [[NSMutableArray alloc]init];
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    NSString *str = [NSString stringWithFormat:@"%@/favorite_paintings",_id];
+    __block NSMutableArray *urls = [[NSMutableArray alloc]init];
+    NSString *str = @"/favorite_paintings";
+    str = [self appedAcceseTockenToString:str];
     [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             for (int i = 0; i<((NSArray*)responseObject).count; i++)
             {
@@ -204,19 +206,14 @@ static NSString *querystring;
                 [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
                 NSString *Urlstr = [NSString stringWithFormat:str,[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
                 Urlstr = [Urlstr stringByAppendingString:@"?thumb=preview"];
-                NSLog(@"%@",Urlstr);
                 [urls addObject:Urlstr];
-                
             }
-            
-            dispatch_semaphore_signal(semaphore);
+          callback(urls);
+        
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             NSLog(@"%@",error);
-            dispatch_semaphore_signal(semaphore);
             
         }];
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-        return urls;
         }
 
     
@@ -227,7 +224,8 @@ static NSString *querystring;
     Paintingdic =[[NSMutableDictionary alloc]init];
     Artistdic = [[NSMutableArray alloc]init];
     __block NSMutableArray *ids = [[NSMutableArray alloc]init];
-    NSString *str = [NSString stringWithFormat:@"%@/favorite_artists",_id];
+    NSString *str = @"/favorite_artists";
+    str = [self appedAcceseTockenToString:str];
     [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         Artistdic = (NSMutableArray *)responseObject;
         for (int i=0; i<Artistdic.count; i++) {
@@ -299,7 +297,6 @@ static NSString *querystring;
 - (void)PutLikes:(NSString*)_id callback:(void (^)(NSString *responde))callback
 {
     
-
     __block NSString *responde;
     NSString *userid = @"/favorite_paintings/";
     userid = [userid stringByAppendingString:_id];
@@ -348,14 +345,30 @@ static NSString *querystring;
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         NSURL *urllstr = [[NSURL alloc]initWithString:BaseURLString];
         manager = [[AFHTTPSessionManager alloc] initWithBaseURL:urllstr sessionConfiguration:config];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"image/png",@"text/html",nil];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"image/jpeg",@"text/html",nil];
     } );
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
 
    
     return singleton;
 }
 
+- (void)search:(NSString*)searchString callback:(void (^)(NSDictionary *responde))callback{
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    NSString *str = [NSString stringWithFormat:@"?search\"%@\"",searchString];
+    str = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                     (CFStringRef)str,
+                                                                                     NULL,
+                                                                                     (CFStringRef)@"!*();':@&=+$,/?%#[]{}",kCFStringEncodingUTF8));
+    [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"%@",responseObject);
+        NSDictionary *responde = (NSDictionary *)responseObject;
+        callback(responde);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@",error);
+
+    }];
+}
 
 - (void)FetchArtists {
     //_artistdic = [[NSMutableDictionary alloc]init];
@@ -388,9 +401,12 @@ static NSString *querystring;
       parameters:nil
          success:^(NSURLSessionDataTask *task, id responseObject) {
              UIImage *image;
+             NSLog(@"%@",responseObject);
              image = (UIImage*)responseObject;
-             callback(image);
-             manager.responseSerializer = [AFJSONResponseSerializer serializer];
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 callback(image);
+
+             });
              
          } failure:^(NSURLSessionDataTask *task, NSError *error) {
              NSLog(@"Error: %@", error);
@@ -404,7 +420,6 @@ static NSString *querystring;
 
 - (void)GetPictureThumbWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback
 {
-    
     manager.responseSerializer = [AFImageResponseSerializer serializer];
     [manager GET:[NSString stringWithFormat:@"paintings/files/%@?thumb=preview", _id]
       parameters:nil

@@ -58,11 +58,8 @@ CGFloat neededScale;
 
 - (void)inputDataInit{
     
-    //self.pictureName.text = [self.paintingData valueForKey:@"title"];
-    //self.picturePrize.text = [self.paintingData valueForKey:@"price"];
+
     self.pictureDescription.text = [self.paintingData valueForKey:@"description"];
-    //self.pictureSize.text = [self.paintingData valueForKey:@"realsize"];
-   // self.pictureTag.text = [(NSArray*)[self.paintingData valueForKey:@"tags"] componentsJoinedByString:@","];
      self.authorsName.text = [self.artistData valueForKey:@"name"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.artistData valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *img = [UIImage imageWithData:imageData];
@@ -71,17 +68,17 @@ CGFloat neededScale;
     
     [self.indicator startAnimating];
     [self.view bringSubviewToFront:self.indicator];
-    
     [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.imageView.image = responde;
-            [self.indicator stopAnimating];
-            [self.indicator removeFromSuperview];
-            
-            NSLog(@"Ok");
-        });
+        self.imageView.image = responde;
+        [self.indicator stopAnimating];
+        [self.indicator removeFromSuperview];
+        NSLog(@"Ok");
+        
         
     }];
+    
+    
+
     
 }
 
@@ -102,7 +99,7 @@ CGFloat neededScale;
     [super viewDidLoad];
     [self mainInit];
     [self inputDataInit];
- 
+
     self.imageView = [[UIImageView alloc]initWithImage:self.ImageThumb];
     
     self.imageView.frame = self.mainView.frame;

@@ -20,6 +20,7 @@
 		4B4A32231A8D32BD0048078C /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A32181A8D32BD0048078C /* AFURLRequestSerialization.m */; };
 		4B4A32241A8D32BD0048078C /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A321A1A8D32BD0048078C /* AFURLResponseSerialization.m */; };
 		4B4A32251A8D32BD0048078C /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A321C1A8D32BD0048078C /* AFURLSessionManager.m */; };
+		4B6E38471AA8BFC300B516C1 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38461AA8BFC300B516C1 /* SearchResultsViewController.m */; };
 		4BBDF0331A9340CC002FA6D4 /* room10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDF0321A9340CC002FA6D4 /* room10.jpg */; };
 		4BC7F8751A8A2D000061CAAA /* ImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F86E1A8A2D000061CAAA /* ImagePickerController.m */; };
 		4BC7F8761A8A2D000061CAAA /* PreviewOnWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F8701A8A2D000061CAAA /* PreviewOnWallViewController.m */; };
@@ -155,7 +156,6 @@
 		843C97061A7EC09E0080FCAA /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843C97051A7EC09E0080FCAA /* AddressBook.framework */; };
 		84663EF91A7915DB0038A5B1 /* Abstract-Art-masterpiece.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84663EF81A7915DB0038A5B1 /* Abstract-Art-masterpiece.jpg */; };
 		846AB9081A793E200043214F /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = 846AB9071A793E200043214F /* remove.png */; };
-		846AB92C1A795BDA0043214F /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846AB92B1A795BDA0043214F /* SearchResultsViewController.m */; };
 		846AB9301A795C820043214F /* ArtistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846AB92F1A795C820043214F /* ArtistViewController.m */; };
 		84A0E8231A77B688009F6EA5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0E8221A77B688009F6EA5 /* main.m */; };
 		84A0E8261A77B688009F6EA5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A0E8251A77B688009F6EA5 /* AppDelegate.m */; };
@@ -229,6 +229,8 @@
 		4B4A321A1A8D32BD0048078C /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		4B4A321B1A8D32BD0048078C /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		4B4A321C1A8D32BD0048078C /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		4B6E38451AA8BFC200B516C1 /* SearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsViewController.h; sourceTree = "<group>"; };
+		4B6E38461AA8BFC300B516C1 /* SearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsViewController.m; sourceTree = "<group>"; };
 		4BBDF0321A9340CC002FA6D4 /* room10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room10.jpg; sourceTree = "<group>"; };
 		4BC7F86D1A8A2D000061CAAA /* ImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerController.h; sourceTree = "<group>"; };
 		4BC7F86E1A8A2D000061CAAA /* ImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerController.m; sourceTree = "<group>"; };
@@ -417,8 +419,6 @@
 		843C97051A7EC09E0080FCAA /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		84663EF81A7915DB0038A5B1 /* Abstract-Art-masterpiece.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Abstract-Art-masterpiece.jpg"; path = "Images.xcassets/Abstract-Art-masterpiece.jpg"; sourceTree = "<group>"; };
 		846AB9071A793E200043214F /* remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = remove.png; path = Images.xcassets/remove.png; sourceTree = "<group>"; };
-		846AB92A1A795BDA0043214F /* SearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsViewController.h; sourceTree = "<group>"; };
-		846AB92B1A795BDA0043214F /* SearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsViewController.m; sourceTree = "<group>"; };
 		846AB92E1A795C820043214F /* ArtistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistViewController.h; sourceTree = "<group>"; };
 		846AB92F1A795C820043214F /* ArtistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtistViewController.m; sourceTree = "<group>"; };
 		84A0E81D1A77B688009F6EA5 /* iArtist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iArtist.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -895,8 +895,6 @@
 		846AB9291A795BC80043214F /* Search Results */ = {
 			isa = PBXGroup;
 			children = (
-				846AB92A1A795BDA0043214F /* SearchResultsViewController.h */,
-				846AB92B1A795BDA0043214F /* SearchResultsViewController.m */,
 			);
 			name = "Search Results";
 			sourceTree = "<group>";
@@ -932,6 +930,8 @@
 		84A0E8141A77B688009F6EA5 = {
 			isa = PBXGroup;
 			children = (
+				4B6E38451AA8BFC200B516C1 /* SearchResultsViewController.h */,
+				4B6E38461AA8BFC300B516C1 /* SearchResultsViewController.m */,
 				4B2C3D601A9F4AD300EFF863 /* CoreData.framework */,
 				45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */,
 				84A0E81F1A77B688009F6EA5 /* iArtist */,
@@ -1469,7 +1469,6 @@
 				4B2BC53F1AA369F300CFEF8A /* Artist.m in Sources */,
 				4BDFAF4F1A9DFA6B00CE9F35 /* UIImage+WebP.m in Sources */,
 				60E69A721A865DF3007CA1C6 /* Picture+Create.m in Sources */,
-				846AB92C1A795BDA0043214F /* SearchResultsViewController.m in Sources */,
 				4BCBCBB91A932DDD00DA9C62 /* GooglePlusDelegate.m in Sources */,
 				4BCBCBBF1A932DF100DA9C62 /* FacebookDelegate.m in Sources */,
 				84A0E85C1A7811DE009F6EA5 /* FirstRunCarouselDelegateAndDataSource.m in Sources */,
@@ -1496,6 +1495,7 @@
 				84A4FBD91A782ACF0041BF50 /* FXImageView.m in Sources */,
 				4BC7F8751A8A2D000061CAAA /* ImagePickerController.m in Sources */,
 				4BDFAF451A9DFA6B00CE9F35 /* SDImageCache.m in Sources */,
+				4B6E38471AA8BFC300B516C1 /* SearchResultsViewController.m in Sources */,
 				604412F41A83D7A10099B184 /* CartViewController.m in Sources */,
 				4BDFAF431A9DFA6B00CE9F35 /* MKAnnotationView+WebCache.m in Sources */,
 				606E204F1A84E48300121589 /* StyleCarouselDelegateAndDataSource.m in Sources */,
