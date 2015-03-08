@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "Picture+Create.h"
 #import "SessionControl.h"
+#import "SDWebImageManager.h"
 
 @interface LikedViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic,strong) NSDictionary *AllPaintingData;
@@ -31,11 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.urls = [[NSMutableArray alloc]init];
-    [[ServerFetcher sharedInstance]GetLikesForUser:@"" callback:^(NSMutableArray *responde) {
-        self.urls = responde;
-    }];
+    self.ImageArray = [[NSMutableArray alloc]init];
     [self CDRequest];
-
 }
 
 - (void)CDRequest{
@@ -50,11 +48,32 @@
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
     request.predicate = nil;
     self.CachedPaintings = [context executeFetchRequest:request error:NULL];
+    if ([[SessionControl sharedManager]checkInternetConnection]) {
+        [[ServerFetcher sharedInstance]GetLikesForUser:@"" callback:^(NSMutableArray *responde) {
+            self.urls = responde;
+            NSDictionary *dic= [[ServerFetcher sharedInstance]Paintingdic];
+            if (self.CachedPaintings.count < responde.count) {
+                      __block NSInteger count = responde.count-1;
+                for(int i = 0;i<responde.count;i++){
+                            [[SDWebImageManager sharedManager]downloadImageWithURL:self.urls[i] options: SDWebImageHighPriority progress:NULL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                [[SDImageCache sharedImageCache]storeImage:image forKey:[dic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
+                                [Picture CreatePictureWithData:[dic valueForKey:[NSString stringWithFormat:@"%d",i]] inManagedobjectcontext:context];
+                                if (i == count) {
+                                    [self CDRequest];
+                                    [self.LikedCollectionView reloadData];
+                                }
 
-    
-
+                }];
+              }
+          }
+       }];
+    };
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    self.index = indexPath.row;
+    return YES;
+}
 -(void)blurImage
 {
     UIVisualEffect *blurEffect;
@@ -79,6 +98,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
 
+    
     [self CDRequest];
     [self.LikedCollectionView reloadData];
 }
@@ -93,7 +113,6 @@
         [self.ImageArray addObject:image.image];
         image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
         image.contentMode = UIViewContentModeScaleAspectFit;
-    
         cell.contentMode = UIViewContentModeScaleAspectFit;
         if (cell.subviews != nil){
             [[cell.subviews firstObject] removeFromSuperview];
@@ -102,9 +121,7 @@
         cell.layer.borderWidth = 4.0f;
         cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
         cell.layer.cornerRadius = 40;
-        self.index = indexPath.row;
     }
-
     return cell;
 }
 
@@ -119,10 +136,9 @@
         NSInteger index =  [((UICollectionView *)(((UICollectionViewCell *)sender).superview))
                             indexPathForCell:(UICollectionViewCell *)sender].row;
         dataManager.index = index;
-     //   ((iCaruselViewController *)segue.destinationViewController).CachedImageArray = self.ImageArray;
-        ((iCaruselViewController *)segue.destinationViewController).index = index;
-
-
+        ((iCaruselViewController *)segue.destinationViewController).urls = self.urls;
+        ((iCaruselViewController *)segue.destinationViewController).index = self.index;
+        ((iCaruselViewController *)segue.destinationViewController).ImageArray = self.ImageArray;
     }
     if ([segue.identifier isEqualToString:@"Liked Cart"]) {
         

@@ -22,8 +22,10 @@
     
     //set imageOfArtist
    // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults ];
-    BOOL isFollowed = [[ServerFetcher sharedInstance]CheckIsFollowing:[self.CurrentArtist valueForKey:@"_id"] ];
-    isFollowed?[self.FollowButton setTitle:@"Unfollow-" forState:UIControlStateNormal]:nil;
+    [[ServerFetcher sharedInstance]CheckIsFollowing:[self.CurrentArtist valueForKey:@"_id"]callback:^(BOOL responde) {
+        responde?[self.FollowButton setTitle:@"Unfollow-" forState:UIControlStateNormal]:nil;
+
+    } ];
     self.imageOfArtist.image = self.img;
     self.nameOfArtist.text = [self.CurrentArtist valueForKey:@"name"];
     self.descriptionOfArtist.text = [self.CurrentArtist valueForKey:@"biography"];
@@ -44,18 +46,19 @@
 }
 - (IBAction)FollowArtist:(UIButton*)sender {
     [sender setTitle:@"Unfollow-" forState:UIControlStateNormal];
-     BOOL isFollowed = [[ServerFetcher sharedInstance]BecomeAFollower:[self.CurrentArtist valueForKey:@"_id"]];
-    int n = self.Folowers.text.intValue;
-    if(isFollowed){
-        n++;
-        [sender setTitle:@"Unfollow-" forState:UIControlStateNormal];
-    }
-    else{
-        n--;
-        [sender setTitle:@"Follow+" forState:UIControlStateNormal];
-    }
-    self.Folowers.text = [[[NSNumber numberWithInt:n]stringValue] stringByAppendingString:@" Folowers"];
-    
+     [[ServerFetcher sharedInstance]BecomeAFollower:[self.CurrentArtist valueForKey:@"_id"]callback:^(BOOL responde) {
+         int n = self.Folowers.text.intValue;
+         if(responde){
+             n++;
+             [sender setTitle:@"Unfollow-" forState:UIControlStateNormal];
+         }
+         else{
+             n--;
+             [sender setTitle:@"Follow+" forState:UIControlStateNormal];
+         }
+         self.Folowers.text = [[[NSNumber numberWithInt:n]stringValue] stringByAppendingString:@" Folowers"];
+     }];
+
 }
 
 - (void)didReceiveMemoryWarning {

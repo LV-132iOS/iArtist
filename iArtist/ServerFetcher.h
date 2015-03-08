@@ -13,12 +13,13 @@ static  NSMutableArray *Artistdic;
 
 static NSMutableArray *urls;
 @interface ServerFetcher : NSObject
-@property (nonatomic, strong) NSDictionary  *Paintingdic;
-@property (nonatomic, strong) NSMutableArray  *artistdic;
-@property (nonatomic, strong) UIImage       *image;
+@property (nonatomic, strong) NSDictionary *Paintingdic;
+@property (nonatomic, strong) NSMutableArray *artistdic;
+@property (nonatomic, strong) UIImage *image;
+
 - (void)GetPictureThumbWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
 - (void)GetPictureWithID:(NSString*)_id callback:(void (^)(UIImage* responde))callback;
-- (void)FetchArtists;
+- (void)FetchArtistsWithID:(NSString*)_id callback:(void(^)(NSDictionary*responde))callback;
 - (void)GetLikesForUser:(NSString *)_id
               callback:(void (^)(NSMutableArray* responde))callback;
 - (void)GetNewsForUser:(NSString *)_id
@@ -30,14 +31,15 @@ static NSMutableArray *urls;
 - (NSDictionary *)Paintingdic;
 - (void)PutLikes:(NSString*)_id callback:(void (^)(NSString *responde))callback;
 - (void)GetLikesCount:(NSString *)_id callback:(void (^)(NSString *responde))callback;
-- (BOOL)BecomeAFollower:(NSString *)Artist;
-- (BOOL)CheckIsFollowing:(NSString *)_id;
+- (void)BecomeAFollower:(NSString *)_id
+               callback:(void (^)(BOOL responde))callback;
 - (void)GenerateQueryForMaterial:(NSString*)querry;
 - (void)GenerateQueryForArtist:(NSString*)querry;
-- (void)GenerateQueryForColor:(NSString*)querry;
 - (void)getPictureThumbWithSizeAndID:(NSString*)_id size:(NSNumber *)size callback:(void (^)(UIImage* responde))callback;
 + (ServerFetcher *)sharedInstance;
 - (void)search:(NSString*)searchString callback:(void (^)(NSDictionary *responde))callback;
+- (void)CheckIsFollowing:(NSString *)_id
+                callback:(void (^)(BOOL responde))callback;
 
 @end
 

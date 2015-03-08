@@ -118,22 +118,8 @@ UIVisualEffectView *visualEffectView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   /* if (self.CachedImageArray != nil) {
-        self.ImageArray = [[NSMutableArray alloc]init];
-        NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
-        NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
-        request.predicate = nil;
-        self.CurrentPainting = [[NSDictionary alloc]init];
-        self.CurrentArtist = [[NSDictionary alloc]init];
-        self.AllPaintingsCached = [[NSMutableDictionary alloc]init];
-        self.CDresults = [context executeFetchRequest:request error:NULL];
-        for (int i=0;i<self.CDresults.count;i++) {
-            [self.ImageArray addObject:[NSNull null]];
-        }
-        [self initPaintingsData];
 
-
-    } else{*/
+    if([[SessionControl sharedManager]checkInternetConnection]){
     self.ImageArray = [[NSMutableArray alloc]init];
     if (self.urls == nil) {
         [self.Indicator startAnimating];
@@ -149,7 +135,23 @@ UIVisualEffectView *visualEffectView;
            
             });
                     }];
-    };
+    }else{
+        for (int i=0;i<self.urls.count;i++) {
+            [self.ImageArray addObject:[NSNull null]];
+        }
+        [self.pictureView reloadData];
+
+    }
+    }else{
+    NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
+    request.predicate = nil;
+    self.CurrentPainting = [[NSDictionary alloc]init];
+    self.CurrentArtist = [[NSDictionary alloc]init];
+    self.AllPaintingsCached = [[NSMutableDictionary alloc]init];
+    self.CDresults = [context executeFetchRequest:request error:NULL];
+    [self initPaintingsData];
+    }
     self.pictureView.currentItemIndex = self.index;
     self.authorsImage = [[UIImageView alloc]init];
     self.authorsName = [UILabel new];
@@ -182,8 +184,11 @@ UIVisualEffectView *visualEffectView;
 #pragma mark - icarusel data source
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel{
     //return the total number of items in the carousel
-  
+    if (self.urls.count == 0) {
+        return self.ImageArray.count;
+    }else
     return self.urls.count;
+    
 
 }
 
@@ -246,35 +251,38 @@ UIVisualEffectView *visualEffectView;
         a.hidesWhenStopped = YES;
         [view addSubview:a];
     }
-    NSInteger count = self.urls.count;
-    if (self.urls == nil)
-        count = self.CDresults.count;
-    count = MAX(1, count);
-    self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
-    self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
-    self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
-    NSURL *url = self.urls[index];
     UIImageView *i = (UIImageView *)view;
-    UIActivityIndicatorView *a = (UIActivityIndicatorView *)[i viewWithTag:1000];
-    [a startAnimating];
-    [i sd_setImageWithURL:url
-                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
-                    cacheType = SDImageCacheTypeMemory;
-                    [a stopAnimating];
-                    [self.ImageArray replaceObjectAtIndex:index withObject:i.image];
+    if ([[SessionControl sharedManager]checkInternetConnection]) {
+        self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
+        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
+        self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
+               NSURL *url = self.urls[index];
+               UIActivityIndicatorView *a = (UIActivityIndicatorView *)[i viewWithTag:1000];
+        [a startAnimating];
+        [i sd_setImageWithURL:url
+                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
+                        cacheType = SDImageCacheTypeMemory;
+                        [a stopAnimating];
+                        [self.ImageArray replaceObjectAtIndex:index withObject:i.image];
+                    }];
+        [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]callback:^(NSString *responde) {
+            self.likeCounterLabel.text = responde;
+            
+        }];
+          }else{
+        i.image = [self.ImageArray objectAtIndex:index];
+          }
+        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
+        self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
+              self.price.text = [self.CurrentPainting valueForKey:@"price"];
+              self.pictureSize.text = [self.CurrentPainting valueForKey:@"realsize"];
+              NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
+              UIImage *img = [UIImage imageWithData:imageData];
+              self.authorsImage.image = img;
+              self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
 
-                    
-                }];
-    [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]callback:^(NSString *responde) {
-        self.likeCounterLabel.text = responde;
-        
-    }];
-    self.price.text = [self.CurrentPainting valueForKey:@"price"];
-    self.pictureSize.text = [self.CurrentPainting valueForKey:@"realsize"];
-    NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    UIImage *img = [UIImage imageWithData:imageData];
-    self.authorsImage.image = img;
-    self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
+
+    
     return view;
 
 

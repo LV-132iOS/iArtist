@@ -21,19 +21,35 @@
 		4B4A32241A8D32BD0048078C /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A321A1A8D32BD0048078C /* AFURLResponseSerialization.m */; };
 		4B4A32251A8D32BD0048078C /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A321C1A8D32BD0048078C /* AFURLSessionManager.m */; };
 		4B6E38471AA8BFC300B516C1 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38461AA8BFC300B516C1 /* SearchResultsViewController.m */; };
+		4B6E38AD1AAB5FDE00B516C1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38861AAB5FDD00B516C1 /* LoginViewController.m */; };
+		4B6E38AE1AAB5FDE00B516C1 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38881AAB5FDD00B516C1 /* ShareViewController.m */; };
+		4B6E38AF1AAB5FDE00B516C1 /* SNClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E388A1AAB5FDD00B516C1 /* SNClient.m */; };
+		4B6E38B01AAB5FDE00B516C1 /* SNFacebookDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E388C1AAB5FDD00B516C1 /* SNFacebookDelegate.m */; };
+		4B6E38B11AAB5FDE00B516C1 /* SNFacebookFabric.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E388E1AAB5FDD00B516C1 /* SNFacebookFabric.m */; };
+		4B6E38B21AAB5FDE00B516C1 /* SNFacebookSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38901AAB5FDD00B516C1 /* SNFacebookSocialNetwork.m */; };
+		4B6E38B31AAB5FDE00B516C1 /* SNGooglePlusDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38921AAB5FDD00B516C1 /* SNGooglePlusDelegate.m */; };
+		4B6E38B41AAB5FDE00B516C1 /* SNGooglePlusFabric.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38941AAB5FDD00B516C1 /* SNGooglePlusFabric.m */; };
+		4B6E38B51AAB5FDE00B516C1 /* SNGooglePlusSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38961AAB5FDE00B516C1 /* SNGooglePlusSocialNetwork.m */; };
+		4B6E38B61AAB5FDE00B516C1 /* SNSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38981AAB5FDE00B516C1 /* SNSocialNetwork.m */; };
+		4B6E38B71AAB5FDE00B516C1 /* SNSocialNetworkDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E389A1AAB5FDE00B516C1 /* SNSocialNetworkDelegate.m */; };
+		4B6E38B81AAB5FDE00B516C1 /* SNSocialNetworkFabric.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E389C1AAB5FDE00B516C1 /* SNSocialNetworkFabric.m */; };
+		4B6E38B91AAB5FDE00B516C1 /* SNTwitterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E389E1AAB5FDE00B516C1 /* SNTwitterDelegate.m */; };
+		4B6E38BA1AAB5FDE00B516C1 /* SNTwitterFabric.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38A01AAB5FDE00B516C1 /* SNTwitterFabric.m */; };
+		4B6E38BB1AAB5FDE00B516C1 /* SNTwitterSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38A21AAB5FDE00B516C1 /* SNTwitterSocialNetwork.m */; };
+		4B6E38BC1AAB5FDE00B516C1 /* SNVkontakteDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38A41AAB5FDE00B516C1 /* SNVkontakteDelegate.m */; };
+		4B6E38BD1AAB5FDE00B516C1 /* SNVkontakteFabric.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38A61AAB5FDE00B516C1 /* SNVkontakteFabric.m */; };
+		4B6E38BE1AAB5FDE00B516C1 /* SNVkontakteSocialNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38A81AAB5FDE00B516C1 /* SNVkontakteSocialNetwork.m */; };
+		4B6E38BF1AAB5FDE00B516C1 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38AA1AAB5FDE00B516C1 /* SSKeychain.m */; };
+		4B6E38C01AAB5FDE00B516C1 /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38AC1AAB5FDE00B516C1 /* SSKeychainQuery.m */; };
+		4B6E38C31AAB603C00B516C1 /* CDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E38C21AAB603C00B516C1 /* CDManager.m */; };
 		4BBDF0331A9340CC002FA6D4 /* room10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4BBDF0321A9340CC002FA6D4 /* room10.jpg */; };
 		4BC7F8751A8A2D000061CAAA /* ImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F86E1A8A2D000061CAAA /* ImagePickerController.m */; };
 		4BC7F8761A8A2D000061CAAA /* PreviewOnWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F8701A8A2D000061CAAA /* PreviewOnWallViewController.m */; };
 		4BC7F8771A8A2D000061CAAA /* SetWallPopoverTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F8721A8A2D000061CAAA /* SetWallPopoverTableViewController.m */; };
 		4BC7F8781A8A2D000061CAAA /* SetDistanceToWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC7F8741A8A2D000061CAAA /* SetDistanceToWallViewController.m */; };
-		4BCBCBAB1A932D6800DA9C62 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBCBAA1A932D6800DA9C62 /* ShareViewController.m */; };
 		4BCBCBB01A932D9500DA9C62 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBCBAF1A932D9500DA9C62 /* Reachability.m */; };
 		4BCBCBB31A932D9F00DA9C62 /* SessionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBCBB21A932D9F00DA9C62 /* SessionControl.m */; };
-		4BCBCBB91A932DDD00DA9C62 /* GooglePlusDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBCBB81A932DDD00DA9C62 /* GooglePlusDelegate.m */; };
-		4BCBCBBC1A932DE500DA9C62 /* VKDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBCBBB1A932DE500DA9C62 /* VKDelegate.m */; };
-		4BCBCBBF1A932DF100DA9C62 /* FacebookDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBCBBE1A932DF100DA9C62 /* FacebookDelegate.m */; };
 		4BCBCBC21A932DFD00DA9C62 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBCBC11A932DFD00DA9C62 /* ProfileViewController.m */; };
-		4BCBCBC51A93320A00DA9C62 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBCBC41A93320A00DA9C62 /* LoginViewController.m */; };
 		4BCC5FE91A8660690086B14C /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BCC5FE81A8660690086B14C /* GooglePlus.bundle */; };
 		4BCF61A01A8CB4E4002A365F /* ServerFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF619F1A8CB4E3002A365F /* ServerFetcher.m */; };
 		4BCF631D1A8CB58E002A365F /* FullSizePictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCF631C1A8CB58E002A365F /* FullSizePictureViewController.m */; };
@@ -229,8 +245,50 @@
 		4B4A321A1A8D32BD0048078C /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		4B4A321B1A8D32BD0048078C /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		4B4A321C1A8D32BD0048078C /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		4B6E38451AA8BFC200B516C1 /* SearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsViewController.h; sourceTree = "<group>"; };
-		4B6E38461AA8BFC300B516C1 /* SearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsViewController.m; sourceTree = "<group>"; };
+		4B6E38451AA8BFC200B516C1 /* SearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchResultsViewController.h; path = ../SearchResultsViewController.h; sourceTree = "<group>"; };
+		4B6E38461AA8BFC300B516C1 /* SearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchResultsViewController.m; path = ../SearchResultsViewController.m; sourceTree = "<group>"; };
+		4B6E38851AAB5FDD00B516C1 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		4B6E38861AAB5FDD00B516C1 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		4B6E38871AAB5FDD00B516C1 /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
+		4B6E38881AAB5FDD00B516C1 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
+		4B6E38891AAB5FDD00B516C1 /* SNClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNClient.h; sourceTree = "<group>"; };
+		4B6E388A1AAB5FDD00B516C1 /* SNClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNClient.m; sourceTree = "<group>"; };
+		4B6E388B1AAB5FDD00B516C1 /* SNFacebookDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFacebookDelegate.h; sourceTree = "<group>"; };
+		4B6E388C1AAB5FDD00B516C1 /* SNFacebookDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFacebookDelegate.m; sourceTree = "<group>"; };
+		4B6E388D1AAB5FDD00B516C1 /* SNFacebookFabric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFacebookFabric.h; sourceTree = "<group>"; };
+		4B6E388E1AAB5FDD00B516C1 /* SNFacebookFabric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFacebookFabric.m; sourceTree = "<group>"; };
+		4B6E388F1AAB5FDD00B516C1 /* SNFacebookSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNFacebookSocialNetwork.h; sourceTree = "<group>"; };
+		4B6E38901AAB5FDD00B516C1 /* SNFacebookSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNFacebookSocialNetwork.m; sourceTree = "<group>"; };
+		4B6E38911AAB5FDD00B516C1 /* SNGooglePlusDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNGooglePlusDelegate.h; sourceTree = "<group>"; };
+		4B6E38921AAB5FDD00B516C1 /* SNGooglePlusDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNGooglePlusDelegate.m; sourceTree = "<group>"; };
+		4B6E38931AAB5FDD00B516C1 /* SNGooglePlusFabric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNGooglePlusFabric.h; sourceTree = "<group>"; };
+		4B6E38941AAB5FDD00B516C1 /* SNGooglePlusFabric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNGooglePlusFabric.m; sourceTree = "<group>"; };
+		4B6E38951AAB5FDD00B516C1 /* SNGooglePlusSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNGooglePlusSocialNetwork.h; sourceTree = "<group>"; };
+		4B6E38961AAB5FDE00B516C1 /* SNGooglePlusSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNGooglePlusSocialNetwork.m; sourceTree = "<group>"; };
+		4B6E38971AAB5FDE00B516C1 /* SNSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNSocialNetwork.h; sourceTree = "<group>"; };
+		4B6E38981AAB5FDE00B516C1 /* SNSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNSocialNetwork.m; sourceTree = "<group>"; };
+		4B6E38991AAB5FDE00B516C1 /* SNSocialNetworkDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNSocialNetworkDelegate.h; sourceTree = "<group>"; };
+		4B6E389A1AAB5FDE00B516C1 /* SNSocialNetworkDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNSocialNetworkDelegate.m; sourceTree = "<group>"; };
+		4B6E389B1AAB5FDE00B516C1 /* SNSocialNetworkFabric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNSocialNetworkFabric.h; sourceTree = "<group>"; };
+		4B6E389C1AAB5FDE00B516C1 /* SNSocialNetworkFabric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNSocialNetworkFabric.m; sourceTree = "<group>"; };
+		4B6E389D1AAB5FDE00B516C1 /* SNTwitterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTwitterDelegate.h; sourceTree = "<group>"; };
+		4B6E389E1AAB5FDE00B516C1 /* SNTwitterDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTwitterDelegate.m; sourceTree = "<group>"; };
+		4B6E389F1AAB5FDE00B516C1 /* SNTwitterFabric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTwitterFabric.h; sourceTree = "<group>"; };
+		4B6E38A01AAB5FDE00B516C1 /* SNTwitterFabric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTwitterFabric.m; sourceTree = "<group>"; };
+		4B6E38A11AAB5FDE00B516C1 /* SNTwitterSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTwitterSocialNetwork.h; sourceTree = "<group>"; };
+		4B6E38A21AAB5FDE00B516C1 /* SNTwitterSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTwitterSocialNetwork.m; sourceTree = "<group>"; };
+		4B6E38A31AAB5FDE00B516C1 /* SNVkontakteDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNVkontakteDelegate.h; sourceTree = "<group>"; };
+		4B6E38A41AAB5FDE00B516C1 /* SNVkontakteDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNVkontakteDelegate.m; sourceTree = "<group>"; };
+		4B6E38A51AAB5FDE00B516C1 /* SNVkontakteFabric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNVkontakteFabric.h; sourceTree = "<group>"; };
+		4B6E38A61AAB5FDE00B516C1 /* SNVkontakteFabric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNVkontakteFabric.m; sourceTree = "<group>"; };
+		4B6E38A71AAB5FDE00B516C1 /* SNVkontakteSocialNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNVkontakteSocialNetwork.h; sourceTree = "<group>"; };
+		4B6E38A81AAB5FDE00B516C1 /* SNVkontakteSocialNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNVkontakteSocialNetwork.m; sourceTree = "<group>"; };
+		4B6E38A91AAB5FDE00B516C1 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		4B6E38AA1AAB5FDE00B516C1 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		4B6E38AB1AAB5FDE00B516C1 /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
+		4B6E38AC1AAB5FDE00B516C1 /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
+		4B6E38C11AAB603C00B516C1 /* CDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDManager.h; sourceTree = "<group>"; };
+		4B6E38C21AAB603C00B516C1 /* CDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDManager.m; sourceTree = "<group>"; };
 		4BBDF0321A9340CC002FA6D4 /* room10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room10.jpg; sourceTree = "<group>"; };
 		4BC7F86D1A8A2D000061CAAA /* ImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerController.h; sourceTree = "<group>"; };
 		4BC7F86E1A8A2D000061CAAA /* ImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerController.m; sourceTree = "<group>"; };
@@ -240,22 +298,12 @@
 		4BC7F8721A8A2D000061CAAA /* SetWallPopoverTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetWallPopoverTableViewController.m; sourceTree = "<group>"; };
 		4BC7F8731A8A2D000061CAAA /* SetDistanceToWallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetDistanceToWallViewController.h; sourceTree = "<group>"; };
 		4BC7F8741A8A2D000061CAAA /* SetDistanceToWallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetDistanceToWallViewController.m; sourceTree = "<group>"; };
-		4BCBCBA91A932D6800DA9C62 /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
-		4BCBCBAA1A932D6800DA9C62 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
 		4BCBCBAE1A932D9500DA9C62 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		4BCBCBAF1A932D9500DA9C62 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		4BCBCBB11A932D9F00DA9C62 /* SessionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionControl.h; sourceTree = "<group>"; };
 		4BCBCBB21A932D9F00DA9C62 /* SessionControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionControl.m; sourceTree = "<group>"; };
-		4BCBCBB71A932DDD00DA9C62 /* GooglePlusDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusDelegate.h; sourceTree = "<group>"; };
-		4BCBCBB81A932DDD00DA9C62 /* GooglePlusDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusDelegate.m; sourceTree = "<group>"; };
-		4BCBCBBA1A932DE500DA9C62 /* VKDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKDelegate.h; sourceTree = "<group>"; };
-		4BCBCBBB1A932DE500DA9C62 /* VKDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKDelegate.m; sourceTree = "<group>"; };
-		4BCBCBBD1A932DF100DA9C62 /* FacebookDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookDelegate.h; sourceTree = "<group>"; };
-		4BCBCBBE1A932DF100DA9C62 /* FacebookDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookDelegate.m; sourceTree = "<group>"; };
 		4BCBCBC01A932DFD00DA9C62 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		4BCBCBC11A932DFD00DA9C62 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
-		4BCBCBC31A93320A00DA9C62 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		4BCBCBC41A93320A00DA9C62 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		4BCC5FE81A8660690086B14C /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GooglePlus.bundle; sourceTree = "<group>"; };
 		4BCF619E1A8CB4E3002A365F /* ServerFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerFetcher.h; sourceTree = "<group>"; };
 		4BCF619F1A8CB4E3002A365F /* ServerFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerFetcher.m; sourceTree = "<group>"; };
@@ -534,9 +582,49 @@
 		4BCBCBA41A932D1F00DA9C62 /* Social Networks */ = {
 			isa = PBXGroup;
 			children = (
-				4BCBCBA81A932D3000DA9C62 /* Share */,
+				4B6E38851AAB5FDD00B516C1 /* LoginViewController.h */,
+				4B6E38861AAB5FDD00B516C1 /* LoginViewController.m */,
+				4B6E38871AAB5FDD00B516C1 /* ShareViewController.h */,
+				4B6E38881AAB5FDD00B516C1 /* ShareViewController.m */,
+				4B6E38891AAB5FDD00B516C1 /* SNClient.h */,
+				4B6E388A1AAB5FDD00B516C1 /* SNClient.m */,
+				4B6E388B1AAB5FDD00B516C1 /* SNFacebookDelegate.h */,
+				4B6E388C1AAB5FDD00B516C1 /* SNFacebookDelegate.m */,
+				4B6E388D1AAB5FDD00B516C1 /* SNFacebookFabric.h */,
+				4B6E388E1AAB5FDD00B516C1 /* SNFacebookFabric.m */,
+				4B6E388F1AAB5FDD00B516C1 /* SNFacebookSocialNetwork.h */,
+				4B6E38901AAB5FDD00B516C1 /* SNFacebookSocialNetwork.m */,
+				4B6E38911AAB5FDD00B516C1 /* SNGooglePlusDelegate.h */,
+				4B6E38921AAB5FDD00B516C1 /* SNGooglePlusDelegate.m */,
+				4B6E38931AAB5FDD00B516C1 /* SNGooglePlusFabric.h */,
+				4B6E38C11AAB603C00B516C1 /* CDManager.h */,
+				4B6E38C21AAB603C00B516C1 /* CDManager.m */,
+				4B6E38941AAB5FDD00B516C1 /* SNGooglePlusFabric.m */,
+				4B6E38951AAB5FDD00B516C1 /* SNGooglePlusSocialNetwork.h */,
+				4B6E38961AAB5FDE00B516C1 /* SNGooglePlusSocialNetwork.m */,
+				4B6E38971AAB5FDE00B516C1 /* SNSocialNetwork.h */,
+				4B6E38981AAB5FDE00B516C1 /* SNSocialNetwork.m */,
+				4B6E38991AAB5FDE00B516C1 /* SNSocialNetworkDelegate.h */,
+				4B6E389A1AAB5FDE00B516C1 /* SNSocialNetworkDelegate.m */,
+				4B6E389B1AAB5FDE00B516C1 /* SNSocialNetworkFabric.h */,
+				4B6E389C1AAB5FDE00B516C1 /* SNSocialNetworkFabric.m */,
+				4B6E389D1AAB5FDE00B516C1 /* SNTwitterDelegate.h */,
+				4B6E389E1AAB5FDE00B516C1 /* SNTwitterDelegate.m */,
+				4B6E389F1AAB5FDE00B516C1 /* SNTwitterFabric.h */,
+				4B6E38A01AAB5FDE00B516C1 /* SNTwitterFabric.m */,
+				4B6E38A11AAB5FDE00B516C1 /* SNTwitterSocialNetwork.h */,
+				4B6E38A21AAB5FDE00B516C1 /* SNTwitterSocialNetwork.m */,
+				4B6E38A31AAB5FDE00B516C1 /* SNVkontakteDelegate.h */,
+				4B6E38A41AAB5FDE00B516C1 /* SNVkontakteDelegate.m */,
+				4B6E38A51AAB5FDE00B516C1 /* SNVkontakteFabric.h */,
+				4B6E38A61AAB5FDE00B516C1 /* SNVkontakteFabric.m */,
+				4B6E38A71AAB5FDE00B516C1 /* SNVkontakteSocialNetwork.h */,
+				4B6E38A81AAB5FDE00B516C1 /* SNVkontakteSocialNetwork.m */,
+				4B6E38A91AAB5FDE00B516C1 /* SSKeychain.h */,
+				4B6E38AA1AAB5FDE00B516C1 /* SSKeychain.m */,
+				4B6E38AB1AAB5FDE00B516C1 /* SSKeychainQuery.h */,
+				4B6E38AC1AAB5FDE00B516C1 /* SSKeychainQuery.m */,
 				4BCBCBA71A932D2E00DA9C62 /* Session Control */,
-				4BCBCBA61A932D2B00DA9C62 /* Login */,
 				4BCBCBA51A932D2800DA9C62 /* Profile */,
 			);
 			name = "Social Networks";
@@ -551,18 +639,6 @@
 			name = Profile;
 			sourceTree = "<group>";
 		};
-		4BCBCBA61A932D2B00DA9C62 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				4BCBCBC31A93320A00DA9C62 /* LoginViewController.h */,
-				4BCBCBC41A93320A00DA9C62 /* LoginViewController.m */,
-				4BCBCBB61A932DC500DA9C62 /* FB */,
-				4BCBCBB51A932DBF00DA9C62 /* VK */,
-				4BCBCBB41A932DB700DA9C62 /* GP */,
-			);
-			name = Login;
-			sourceTree = "<group>";
-		};
 		4BCBCBA71A932D2E00DA9C62 /* Session Control */ = {
 			isa = PBXGroup;
 			children = (
@@ -570,15 +646,6 @@
 				4BCBCBAC1A932D7400DA9C62 /* Session */,
 			);
 			name = "Session Control";
-			sourceTree = "<group>";
-		};
-		4BCBCBA81A932D3000DA9C62 /* Share */ = {
-			isa = PBXGroup;
-			children = (
-				4BCBCBA91A932D6800DA9C62 /* ShareViewController.h */,
-				4BCBCBAA1A932D6800DA9C62 /* ShareViewController.m */,
-			);
-			name = Share;
 			sourceTree = "<group>";
 		};
 		4BCBCBAC1A932D7400DA9C62 /* Session */ = {
@@ -597,33 +664,6 @@
 				4BCBCBAF1A932D9500DA9C62 /* Reachability.m */,
 			);
 			name = Reachability;
-			sourceTree = "<group>";
-		};
-		4BCBCBB41A932DB700DA9C62 /* GP */ = {
-			isa = PBXGroup;
-			children = (
-				4BCBCBB71A932DDD00DA9C62 /* GooglePlusDelegate.h */,
-				4BCBCBB81A932DDD00DA9C62 /* GooglePlusDelegate.m */,
-			);
-			name = GP;
-			sourceTree = "<group>";
-		};
-		4BCBCBB51A932DBF00DA9C62 /* VK */ = {
-			isa = PBXGroup;
-			children = (
-				4BCBCBBA1A932DE500DA9C62 /* VKDelegate.h */,
-				4BCBCBBB1A932DE500DA9C62 /* VKDelegate.m */,
-			);
-			name = VK;
-			sourceTree = "<group>";
-		};
-		4BCBCBB61A932DC500DA9C62 /* FB */ = {
-			isa = PBXGroup;
-			children = (
-				4BCBCBBD1A932DF100DA9C62 /* FacebookDelegate.h */,
-				4BCBCBBE1A932DF100DA9C62 /* FacebookDelegate.m */,
-			);
-			name = FB;
 			sourceTree = "<group>";
 		};
 		4BDFAF211A9DFA4D00CE9F35 /* SDImage-master */ = {
@@ -895,6 +935,8 @@
 		846AB9291A795BC80043214F /* Search Results */ = {
 			isa = PBXGroup;
 			children = (
+				4B6E38451AA8BFC200B516C1 /* SearchResultsViewController.h */,
+				4B6E38461AA8BFC300B516C1 /* SearchResultsViewController.m */,
 			);
 			name = "Search Results";
 			sourceTree = "<group>";
@@ -930,8 +972,6 @@
 		84A0E8141A77B688009F6EA5 = {
 			isa = PBXGroup;
 			children = (
-				4B6E38451AA8BFC200B516C1 /* SearchResultsViewController.h */,
-				4B6E38461AA8BFC300B516C1 /* SearchResultsViewController.m */,
 				4B2C3D601A9F4AD300EFF863 /* CoreData.framework */,
 				45E298E41A8CD6E8003CC0D6 /* GoogleOpenSource.framework */,
 				84A0E81F1A77B688009F6EA5 /* iArtist */,
@@ -1432,34 +1472,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B6E38C31AAB603C00B516C1 /* CDManager.m in Sources */,
 				4B4A32201A8D32BD0048078C /* AFNetworkReachabilityManager.m in Sources */,
 				4BDFAF4A1A9DFA6B00CE9F35 /* SDWebImageManager.m in Sources */,
 				604413021A83D7A10099B184 /* Wall.m in Sources */,
 				606E20471A84E44100121589 /* SizeCarouselDelegateAndDataSource.m in Sources */,
+				4B6E38B31AAB5FDE00B516C1 /* SNGooglePlusDelegate.m in Sources */,
 				4BC7F8761A8A2D000061CAAA /* PreviewOnWallViewController.m in Sources */,
 				4B4A32251A8D32BD0048078C /* AFURLSessionManager.m in Sources */,
 				604412F31A83D7A10099B184 /* CartTableViewCell.m in Sources */,
 				4BCBCBC21A932DFD00DA9C62 /* ProfileViewController.m in Sources */,
 				4BDFAF4E1A9DFA6B00CE9F35 /* UIImage+MultiFormat.m in Sources */,
 				604412F21A83D7A10099B184 /* AVAuthor.m in Sources */,
+				4B6E38B61AAB5FDE00B516C1 /* SNSocialNetwork.m in Sources */,
 				604412FA1A83D7A10099B184 /* NewsTableViewCell.m in Sources */,
+				4B6E38B91AAB5FDE00B516C1 /* SNTwitterDelegate.m in Sources */,
 				604412F71A83D7A10099B184 /* LikedViewController.m in Sources */,
 				4B4A32211A8D32BD0048078C /* AFSecurityPolicy.m in Sources */,
 				604412F91A83D7A10099B184 /* NewsViewController.m in Sources */,
 				4BDFAF4D1A9DFA6B00CE9F35 /* UIImage+GIF.m in Sources */,
 				4B4A32241A8D32BD0048078C /* AFURLResponseSerialization.m in Sources */,
+				4B6E38B21AAB5FDE00B516C1 /* SNFacebookSocialNetwork.m in Sources */,
 				4B4A321E1A8D32BD0048078C /* AFHTTPRequestOperationManager.m in Sources */,
 				4BDFAF4B1A9DFA6B00CE9F35 /* SDWebImagePrefetcher.m in Sources */,
-				4BCBCBC51A93320A00DA9C62 /* LoginViewController.m in Sources */,
 				84A0E8291A77B688009F6EA5 /* ViewController.m in Sources */,
+				4B6E38BE1AAB5FDE00B516C1 /* SNVkontakteSocialNetwork.m in Sources */,
 				60E69AAD1A865E2E007CA1C6 /* DArt.xcdatamodeld in Sources */,
+				4B6E38C01AAB5FDE00B516C1 /* SSKeychainQuery.m in Sources */,
 				4B4A321D1A8D32BD0048078C /* AFHTTPRequestOperation.m in Sources */,
+				4B6E38AF1AAB5FDE00B516C1 /* SNClient.m in Sources */,
 				604412FC1A83D7A10099B184 /* AVPicture.m in Sources */,
 				84A4FBDA1A782ACF0041BF50 /* UIImage+FX.m in Sources */,
 				84A0E8581A780EE7009F6EA5 /* iCarousel.m in Sources */,
+				4B6E38AD1AAB5FDE00B516C1 /* LoginViewController.m in Sources */,
+				4B6E38BA1AAB5FDE00B516C1 /* SNTwitterFabric.m in Sources */,
 				4BC7F8771A8A2D000061CAAA /* SetWallPopoverTableViewController.m in Sources */,
 				4BDFAF4C1A9DFA6B00CE9F35 /* UIButton+WebCache.m in Sources */,
-				4BCBCBAB1A932D6800DA9C62 /* ShareViewController.m in Sources */,
 				4BDFAF511A9DFA6B00CE9F35 /* UIImageView+WebCache.m in Sources */,
 				606E20531A84E53F00121589 /* PriceCarouselDelegateAndDataSource.m in Sources */,
 				4B4A32231A8D32BD0048078C /* AFURLRequestSerialization.m in Sources */,
@@ -1469,33 +1517,41 @@
 				4B2BC53F1AA369F300CFEF8A /* Artist.m in Sources */,
 				4BDFAF4F1A9DFA6B00CE9F35 /* UIImage+WebP.m in Sources */,
 				60E69A721A865DF3007CA1C6 /* Picture+Create.m in Sources */,
-				4BCBCBB91A932DDD00DA9C62 /* GooglePlusDelegate.m in Sources */,
-				4BCBCBBF1A932DF100DA9C62 /* FacebookDelegate.m in Sources */,
 				84A0E85C1A7811DE009F6EA5 /* FirstRunCarouselDelegateAndDataSource.m in Sources */,
 				84A0E8261A77B688009F6EA5 /* AppDelegate.m in Sources */,
 				4BCBCBB01A932D9500DA9C62 /* Reachability.m in Sources */,
 				84A0E8231A77B688009F6EA5 /* main.m in Sources */,
 				4B4A321F1A8D32BD0048078C /* AFHTTPSessionManager.m in Sources */,
 				4BDFAF461A9DFA6B00CE9F35 /* SDWebImageCompat.m in Sources */,
+				4B6E38B01AAB5FDE00B516C1 /* SNFacebookDelegate.m in Sources */,
 				4BC7F8781A8A2D000061CAAA /* SetDistanceToWallViewController.m in Sources */,
-				4BCBCBBC1A932DE500DA9C62 /* VKDelegate.m in Sources */,
 				4BF2F2F41A92623700DEF7FB /* ArtistsCarouselDelegateAndDataSource.m in Sources */,
 				4BDFAF581A9E021D00CE9F35 /* Picture.m in Sources */,
 				604412FF1A83D7A10099B184 /* Sesion.m in Sources */,
+				4B6E38B71AAB5FDE00B516C1 /* SNSocialNetworkDelegate.m in Sources */,
 				4B1FE8881A87838C00897D7B /* AsyncImageView.m in Sources */,
 				4BDFAF471A9DFA6B00CE9F35 /* SDWebImageDecoder.m in Sources */,
 				4BDFAF521A9DFA6B00CE9F35 /* UIView+WebCacheOperation.m in Sources */,
 				4B4A32221A8D32BD0048078C /* AFURLConnectionOperation.m in Sources */,
+				4B6E38B81AAB5FDE00B516C1 /* SNSocialNetworkFabric.m in Sources */,
 				4BCF61A01A8CB4E4002A365F /* ServerFetcher.m in Sources */,
 				4BF2F2EE1A92621200DEF7FB /* MaterialCarouselDelegateAndDataSource.m in Sources */,
 				4BF2F2F11A92622300DEF7FB /* ColorCarouselDelegateAndDataSource.m in Sources */,
+				4B6E38B41AAB5FDE00B516C1 /* SNGooglePlusFabric.m in Sources */,
 				84A0E8541A77D6B9009F6EA5 /* FirstRunViewController.m in Sources */,
+				4B6E38BF1AAB5FDE00B516C1 /* SSKeychain.m in Sources */,
 				60E69A6C1A865DE4007CA1C6 /* Artist+Create.m in Sources */,
+				4B6E38AE1AAB5FDE00B516C1 /* ShareViewController.m in Sources */,
+				4B6E38BC1AAB5FDE00B516C1 /* SNVkontakteDelegate.m in Sources */,
 				4BF2F33B1A9278F900DEF7FB /* AVManager.m in Sources */,
 				84A4FBD91A782ACF0041BF50 /* FXImageView.m in Sources */,
+				4B6E38BB1AAB5FDE00B516C1 /* SNTwitterSocialNetwork.m in Sources */,
 				4BC7F8751A8A2D000061CAAA /* ImagePickerController.m in Sources */,
 				4BDFAF451A9DFA6B00CE9F35 /* SDImageCache.m in Sources */,
+				4B6E38B51AAB5FDE00B516C1 /* SNGooglePlusSocialNetwork.m in Sources */,
+				4B6E38BD1AAB5FDE00B516C1 /* SNVkontakteFabric.m in Sources */,
 				4B6E38471AA8BFC300B516C1 /* SearchResultsViewController.m in Sources */,
+				4B6E38B11AAB5FDE00B516C1 /* SNFacebookFabric.m in Sources */,
 				604412F41A83D7A10099B184 /* CartViewController.m in Sources */,
 				4BDFAF431A9DFA6B00CE9F35 /* MKAnnotationView+WebCache.m in Sources */,
 				606E204F1A84E48300121589 /* StyleCarouselDelegateAndDataSource.m in Sources */,

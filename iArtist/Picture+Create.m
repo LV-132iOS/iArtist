@@ -35,7 +35,7 @@
         picture.size = [data valueForKeyPath:[NSString stringWithFormat:@"size" ]];
         picture.realsize = [data valueForKeyPath:[NSString stringWithFormat:@"realsize"]];
         picture.thumbnailURL = [NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/%@?thumb=preview",_id];
-        picture.orginURL = [NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/%@",_id];
+        picture.orginURL = [NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/p%@",_id];
         picture.price = [data valueForKeyPath:[NSString stringWithFormat:@"price" ]];
         picture.materials = [data valueForKey:@"materials"];
         picture.genre = [data valueForKey:@"genre"];

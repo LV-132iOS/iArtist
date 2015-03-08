@@ -461,7 +461,6 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
     UIVisualEffectView *visualEffectView;
     visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     visualEffectView.frame = self.roomImage.frame;
-    
     visualEffectView.alpha = 0;
     
     [self.roomImage addSubview:visualEffectView];
