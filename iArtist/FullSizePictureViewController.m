@@ -8,7 +8,7 @@
 
 #import "FullSizePictureViewController.h"
 #import "ServerFetcher.h"
-
+#import "ActivityIndicator.h"
 
 typedef NS_ENUM(NSInteger, AVLeftView) {
     AVLeftViewEnable,
@@ -29,17 +29,15 @@ typedef NS_ENUM(NSInteger, AVLeftView) {
 @property (nonatomic)                  AVLeftView  leftviewindex;
 @property (strong, nonatomic) IBOutlet UILabel     *price;
 @property (strong, nonatomic) IBOutlet UIButton    *like;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
-
-
-
-
+@property (strong, nonatomic) IBOutlet ActivityIndicator *indicator;
 
 @end
 
 @implementation FullSizePictureViewController
 
 CGFloat neededScale;
+CGPoint positionOfFirstTapOfPinchGestureGecognizer;
+
 
 #pragma mark - data initialization
 //getting data from input
@@ -47,31 +45,52 @@ CGFloat neededScale;
 
 - (void)mainInit
 {
+    
     self.mainView.contentSize = CGSizeMake(1024, 768);
     self.leftviewindex = AVLeftViewEnable;
     self.mainView.delegate = self;
-    self.mainView.maximumZoomScale = 2.5;
+    
+    NSString *realsize = [self.paintingData valueForKey:@"realsize"];
+    
+    NSLog(@"%@",realsize);
+    NSInteger indexOfX;
+    NSInteger pictureRealWidth = 0;
+    NSInteger pictureRealHeight = 0;
+    for (indexOfX = 0; indexOfX < realsize.length; indexOfX ++) {
+        if ([realsize characterAtIndex:indexOfX] == 'x') {
+            pictureRealWidth = [realsize substringToIndex:indexOfX].intValue;
+            pictureRealHeight = [realsize substringFromIndex:(indexOfX + 1)].intValue ;
+        }
+    }
+    
+    CGFloat scale = 0.;
+    scale = MAX((CGFloat)pictureRealHeight/12., (CGFloat)pictureRealWidth/16.);
+    
+    
+    
+    self.mainView.maximumZoomScale = scale;
     self.mainView.minimumZoomScale = 1;
     [self.mainView bringSubviewToFront:self.closeButton];
     
 }
 
 - (void)inputDataInit{
-    
-
+    self.authorInfo.hidden = YES;
     self.pictureDescription.text = [self.paintingData valueForKey:@"description"];
      self.authorsName.text = [self.artistData valueForKey:@"name"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.artistData valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *img = [UIImage imageWithData:imageData];
-    self.authorsImage.image = img;
-    self.authorsImage.contentMode = UIViewContentModeScaleAspectFit;
+
+
+    [self.authorButton setBackgroundImage:img forState:UIControlStateNormal];
     
+    [self.indicator megaInit];
     [self.indicator startAnimating];
     [self.view bringSubviewToFront:self.indicator];
     [[ServerFetcher sharedInstance]GetPictureWithID:[self.paintingData valueForKey:@"_id"] callback:^(UIImage *responde) {
         self.imageView.image = responde;
         [self.indicator stopAnimating];
-        [self.indicator removeFromSuperview];
+        self.indicator.hidden = YES;
         NSLog(@"Ok");
         
         
@@ -99,9 +118,7 @@ CGFloat neededScale;
     [super viewDidLoad];
     [self mainInit];
     [self inputDataInit];
-
     self.imageView = [[UIImageView alloc]initWithImage:self.ImageThumb];
-    
     self.imageView.frame = self.mainView.frame;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.mainView addSubview:self.imageView];
@@ -116,15 +133,44 @@ CGFloat neededScale;
     return self.imageView;
 }
 
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale{
+    if (self.leftviewindex == AVLeftViewEnable)[self showLeftView];
+}
+
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view{
+    if (scrollView.pinchGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        positionOfFirstTapOfPinchGestureGecognizer = [scrollView.pinchGestureRecognizer locationInView:self.imageView];
+    }
+    if (self.leftviewindex == AVLeftViewEnable)[self hideLeftView];
+}
+
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView{
+    NSLog(@"neededScale %f",neededScale);
+    NSLog(@"scrollView.zoomScale %f",scrollView.zoomScale);
+    NSLog(@"scrollView.pinchGestureRecognizer.scale %f",scrollView.pinchGestureRecognizer.scale);
     if(scrollView.pinchGestureRecognizer.state == UIGestureRecognizerStateChanged){
         neededScale  = scrollView.zoomScale;
     }
-    if((scrollView.pinchGestureRecognizer.state == UIGestureRecognizerStateEnded)&&(neededScale < 0.8)){
-        [self closeController:nil];
+        /*        if (neededScale < 1) {
+            CGPoint differenceInLocation = CGPointMake([scrollView.pinchGestureRecognizer locationInView:self.imageView].x -
+                                                       positionOfFirstTapOfPinchGestureGecognizer.x,
+                                                       [scrollView.pinchGestureRecognizer locationInView:self.imageView].y -positionOfFirstTapOfPinchGestureGecognizer.y);
+            CGPoint newCenter = CGPointMake(self.imageView.center.x + differenceInLocation.x,
+                                            self.imageView.center.y + differenceInLocation.y);
+            self.imageView.center = newCenter;
+        }
+    }*/
+    if (scrollView.pinchGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        if (neededScale < 0.8) {
+            [self closeController:nil];
+            
+            
+        } /*else if (neededScale < 1) {
+            self.imageView.center = CGPointMake(512, 384);
+        }*/
+        [self tapAction:nil];
     }
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 5;
 }
@@ -169,38 +215,65 @@ CGFloat neededScale;
 }
 
 //tap gesture recognizer
-- (IBAction)tapAction:(id)sender {
-    
+- (void) hideLeftView{
     CGFloat time = 0.3;
+    [UIView animateWithDuration:time
+                     animations:^{
+                         self.leftView.frame = CGRectMake( - self.leftView.frame.size.width, 0,
+                                                          self.leftView.frame.size.width, self.leftView.frame.size.height);
+                     }
+                     completion:NULL];
+}
+
+- (void) showLeftView{
+    CGFloat time = 0.3;
+    [UIView animateWithDuration:time
+                     animations:^{
+                         self.leftView.frame = CGRectMake(0, 0,
+                                                          self.leftView.frame.size.width, self.leftView.frame.size.height);
+                     }
+                     completion:NULL];
+}
+
+- (IBAction)tapAction:(id)sender {
     if (self.leftviewindex == AVLeftViewEnable) {
         self.leftviewindex = AVLeftViewDisable;
-        [UIView animateWithDuration:time
-                         animations:^{
-                             self.leftView.frame = CGRectMake( - self.leftView.frame.size.width, 0,
-                                                              self.leftView.frame.size.width, self.leftView.frame.size.height);
-                         }
-                         completion:NULL];
+        [self hideLeftView];
     } else {
         self.leftviewindex = AVLeftViewEnable;
-        [UIView animateWithDuration:time
-                         animations:^{
-                             self.leftView.frame = CGRectMake(0, 0,
-                                                              self.leftView.frame.size.width, self.leftView.frame.size.height);
-                         }
-                         completion:NULL];
+        [self showLeftView];
     }
 }
+
+//
+
 //dismissing current view controller
 - (IBAction)closeController:(id)sender {
     CGFloat timeForAnimation = 0.3;
-    [UIView animateWithDuration:timeForAnimation animations:^{
-        self.imageView.frame = CGRectMake(112, 44, 800, 656);
-        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    } completion:^(BOOL finished) {
-    }];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((timeForAnimation) * NSEC_PER_SEC)),
+    [[ServerFetcher sharedInstance]CancelDownloads];
+    if (self.mainView.zoomScale > 1) {
+        [UIView animateWithDuration:timeForAnimation
+                         animations:^{
+                             
+                             [self.mainView setZoomScale:0.9];
+                             
+                         } completion:^(BOOL finished) {
+                         }];
+    } //else {
+    [UIView animateWithDuration:timeForAnimation
+                     animations:^{
+                         self.imageView.layer.frame = CGRectMake(112, 44, 800, 656);
+                         self.imageView.center = CGPointMake(512, 372);
+                     } completion:^(BOOL finished) {
+                     }];
+    //  }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((timeForAnimation ) * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^{
+                       
                        [self dismissViewControllerAnimated:NO completion:nil];
+                       
+                       
+                       
                    });
 }
 

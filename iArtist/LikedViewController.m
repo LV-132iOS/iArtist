@@ -70,10 +70,7 @@
     };
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    self.index = indexPath.row;
-    return YES;
-}
+
 -(void)blurImage
 {
     UIVisualEffect *blurEffect;
@@ -96,20 +93,17 @@
 
 }
 
-- (void)viewWillAppear:(BOOL)animated{
 
-    
-    [self CDRequest];
-    [self.LikedCollectionView reloadData];
-}
 
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ColectionCell" forIndexPath:indexPath];
-{
+//{
+    cell.tag = indexPath.item;
         UIImageView *image = [[UIImageView alloc]init];
-        image.image = [[SDImageCache sharedImageCache]imageFromDiskCacheForKey:((Picture*)[self.CachedPaintings objectAtIndex:indexPath.row]).id_];
+        image.image = [[SDImageCache sharedImageCache]imageFromDiskCacheForKey:((Picture*)[self.CachedPaintings objectAtIndex:indexPath.item]).id_];
         [self.ImageArray addObject:image.image];
         image.frame = (CGRect){.origin.x = 0., .origin.y = 0., .size.width = 200, .size.height = 200};
         image.contentMode = UIViewContentModeScaleAspectFit;
@@ -121,12 +115,12 @@
         cell.layer.borderWidth = 4.0f;
         cell.layer.borderColor = ([UIColor whiteColor]).CGColor;
         cell.layer.cornerRadius = 40;
-    }
+
+   // }
     return cell;
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
     Sesion *session = [Sesion sessionInit];
     AVManager *dataManager = [AVManager sharedInstance];
     dataManager.session = session;
@@ -137,20 +131,20 @@
                             indexPathForCell:(UICollectionViewCell *)sender].row;
         dataManager.index = index;
         ((iCaruselViewController *)segue.destinationViewController).urls = self.urls;
-        ((iCaruselViewController *)segue.destinationViewController).index = self.index;
+    ((iCaruselViewController *)segue.destinationViewController).index = ((UICollectionViewCell *)sender).tag;
+        
         ((iCaruselViewController *)segue.destinationViewController).ImageArray = self.ImageArray;
     }
-    if ([segue.identifier isEqualToString:@"Liked Cart"]) {
-        
-        
-        
-    }
+ 
 }
 
 - (IBAction)backReturn:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [self CDRequest];
+    [self.LikedCollectionView reloadData];
+}
 /*
 #pragma mark - Navigation
 

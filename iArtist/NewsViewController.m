@@ -8,6 +8,7 @@
 
 #import "NewsViewController.h"
 #import "iCaruselViewController.h"
+#import "ArtistViewController.h"
 
 @interface NewsViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -17,38 +18,44 @@
 @property (strong, nonatomic) __block NSMutableArray *Ids;
 @property (strong,nonatomic) NSMutableArray *ImagesArray;
 
+@property (strong, nonatomic) NSMutableArray *dataArray;
 
 @end
 
 @implementation NewsViewController
 
+NSInteger indexDelete;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self blurImage];
-    
-    
+    self.dataArray = [NSMutableArray new];
     
     UILabel *tableHeader = [[UILabel alloc] initWithFrame:(CGRect)
                             {.origin.x = 482,.origin.y = 0,.size.height = 60,.size.width = 60}];
+    
     tableHeader.text = @"News";
     tableHeader.textColor = [UIColor blackColor];
     tableHeader.textAlignment = NSTextAlignmentCenter;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.urls = [[NSMutableArray alloc]init];
-    self.AllPaintingData = [[NSDictionary alloc]init];
+    self.AllPaintingData = [[NSMutableDictionary alloc]init];
     self.AllArtistData = [[NSMutableArray alloc]init];
     self.ImagesArray = [[NSMutableArray alloc]init];
     
-    //    - (void)GetNewsForUser:(NSString *)_id
-    //callback:(void (^)(NSMutableArray* responde))callback
+    
     
     void (^callback)(NSMutableArray*) = ^(NSMutableArray* array){
         [self setIds:array];
-        self.AllArtistData = [[ServerFetcher sharedInstance]artistdic];
-        self.AllPaintingData = [[ServerFetcher sharedInstance]Paintingdic];
-        for (int i=0; i<self.Ids.count;i++){
-        //[self.ImagesArray addObject:([[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[i]])];
+        
+        self.AllArtistData = [[NSMutableArray alloc] initWithArray:[[ServerFetcher sharedInstance]artistdic]];
+        
+        //self.AllPaintingData = [[ServerFetcher sharedInstance]Paintingdic];
+        
+        
+        for (NSInteger i = 0;  i < self.AllArtistData.count; i++) {
+            [self.dataArray addObject:[NSNull null]];
         }
         [self.newsTable reloadData];
     };
@@ -69,7 +76,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)blurImage
@@ -83,69 +89,51 @@
     [self.view sendSubviewToBack:visualEffectView];
 }
 
-
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return self.AllArtistData.count;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-        return self.Ids.count ;
+        return self.AllArtistData.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AVTableViewCell" forIndexPath:indexPath];
-
-     self.CurrentPainting = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
-    // NSLog(@"%@",[self.CurrentPainting valueForKey:@"_id"]);
-    // NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKeyPath:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    // UIImage *img = [UIImage imageWithData:imageData];
-    cell.pictureName.text = [self.CurrentPainting valueForKey:@"title"];
-    cell.newsDescription.text = [self.CurrentPainting valueForKey:@"description"];
-    cell.pictureTag.text = [(NSArray*)[self.CurrentPainting valueForKey:@"tags"] componentsJoinedByString:@"," ];
-    cell.date.text = [self.CurrentPainting valueForKey:@"created_at"];
-    //cell.authorName.text = []
-
     
-    UIImage *img = [UIImage new];
-    img = cell.pictureImage.image ;
-  
     
-       // NSLog(@"row %ld",indexPath.row);
-       // NSLog(@"section %ld",indexPath.section);
-    //if(cell.pictureImage.image == nil){
-       //cell.pictureImage = [[UIImageView alloc]initWithImage:[[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[indexPath.row] ]];
-
-    UIImage * im = self.ImagesArray[indexPath.row];
-        UIImageView *imm = [[UIImageView alloc] initWithImage:im];
-        imm.frame = CGRectMake(10, 10, 290, 290);
-        [cell addSubview:imm];
- /*
-         cell.pictureImage.image = [[ServerFetcher sharedInstance]GetPictureThumbWithID:self.Ids[0][indexPath.section][indexPath.row]];
-          cell.pictureName.text = [self.AllArtistData[i] valueForKeyPath:[(NSArray*)[NSString stringWithFormat:@"paintings.%ld",indexPath.row]objectAtIndex:indexPath.row]];
-         cell.authorName.text = [self.AllArtistData[indexPath.section] valueForKey:@"name"];
-         NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.AllArtistData[indexPath.section] valueForKeyPath:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
-         UIImage *img = [UIImage imageWithData:imageData];
-         cell.authorImage.image = img;     [[AVNewsTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AVTableViewCell"];
-         
-         */
+    self.CurrentPainting = [self.AllArtistData objectAtIndex:indexPath.row];
+    
+    cell.picture = self.CurrentPainting;
+    cell.author = [self.CurrentPainting valueForKey:@"artistId"];
+    
+    [cell reloadCell];
+    
+    cell.tag = indexPath.row;
+    
+    if ([self.dataArray objectAtIndex:indexPath.row] == [NSNull null]) {
+        cell.loadPictureIndicator.hidden = NO;
+        [cell.loadPictureIndicator megaInit];
+        [cell.loadPictureIndicator startAnimating];
+        [[ServerFetcher sharedInstance]getPictureThumbWithSizeAndID:[self.CurrentPainting valueForKey:@"_id"]
+                                                               size:@200
+                                                           callback:^(UIImage *responde) {
+            [cell.loadPictureIndicator stopAnimating];
+            cell.loadPictureIndicator.hidden = YES;
+            cell.pictureImage.image = responde;
+            cell.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
+                                                               
+            cell.pictureImage.hidden = NO;
+            if (responde != nil) {
+                [self.dataArray replaceObjectAtIndex:indexPath.row withObject:responde];
+            }
+            
+                                                               
+            }];
+    } else {
         cell.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
-    
-        //cell.authorImage.image = img;
-        
-        
-        //cell.authorName.text = [self.CurrentArtist valueForKey:@"name"];
-        
-
-  
-    
-    
-    
-    // Configure the cell...
+        cell.pictureImage.image = [self.dataArray objectAtIndex:indexPath.row];
+        cell.pictureImage.hidden = NO;
+    }
     
     return cell;
 }
@@ -155,22 +143,79 @@
     AVManager *dataManager = [AVManager sharedInstance];
     dataManager.session = self.session;
     
-    if ([segue.identifier isEqualToString:@"FromNewsToPicture"]) {
+    NewsTableViewCell *currentCell =  ((NewsTableViewCell *)sender);
+    
+    NSInteger index = ([self.newsTable indexPathForCell:currentCell]).row;
+    
+    if ([segue.identifier isEqualToString:@"NewsToICarusel"]) {
+
+        dataManager.index = ((NewsTableViewCell *)sender).tag;
+        for (int i = 0;i<self.AllArtistData.count;i++){
+            NSString *str =[NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/%@?thumb=preview",[self.AllArtistData[i] valueForKey:@"_id"]];
+            [self.urls addObject:str];
+            [self.AllPaintingData setObject:self.AllArtistData[i] forKey:[NSString stringWithFormat: @"%d",i]];
+        }
         ((iCaruselViewController *)segue.destinationViewController).urls = self.urls;
         ((iCaruselViewController *)segue.destinationViewController).AllPaintingData = self.AllPaintingData;
-        
-        //((AVPictureViewController *)segue.destinationViewController).intputPictureIndex = ((AVNewsTableCell *)sender).tag;
-        dataManager.index = ((NewsTableViewCell *)sender).tag;
-        
+        ((iCaruselViewController *)segue.destinationViewController).index = index;
     }
-    if ([segue.identifier isEqualToString:@"News Cart"]) {
+    if ([segue.identifier isEqualToString:@"NewsAuthor"]) {
         
-        
-        
-        
+        ((ArtistViewController *)segue.destinationViewController).CurrentArtist = currentCell.author;
+        ((ArtistViewController *)segue.destinationViewController).img = currentCell.authorImage.image;
+
     }
     
+    
 }
+
+
+- (IBAction)shouldUnfolowAutor:(id)sender {
+    NewsTableViewCell *currentCell =  (NewsTableViewCell *)((((UIButton *)sender).superview).superview);
+    
+    indexDelete = [self.newsTable indexPathForCell:currentCell].row;
+
+    
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"You clicked on unfollow Author"
+                                                    message:@"Do you realy want to unfollow Author?"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Ok",nil];
+    alert.delegate = self;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1){
+        self.CurrentPainting = [self.AllArtistData objectAtIndex:indexDelete];
+        
+        NSDictionary *artist = [self.CurrentPainting valueForKey:@"artistId"];
+        NSString *artistId = [artist valueForKey:@"_id"];
+        
+        NSMutableArray *indexPaths = [NSMutableArray new];
+        NSMutableIndexSet *indexes = [NSMutableIndexSet new];
+        for (NSInteger i = 0; i < [self.AllArtistData count]; i++) {
+            
+            NSDictionary *newArtist = [[self.AllArtistData objectAtIndex:i]valueForKey:@"artistId"];
+            
+            if ([artistId isEqual:[newArtist valueForKey:@"_id"]]) {
+ 
+                [indexes addIndex:i];
+                [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+            }
+        }
+        
+        [self.AllArtistData removeObjectsAtIndexes:indexes];
+        [self.dataArray removeObjectsAtIndexes:indexes];
+        [[ServerFetcher sharedInstance]BecomeAFollower:artistId
+                                              callback:^(BOOL responde) {
+                                                  NSLog(@"Unfollow Ok");
+        }];
+
+        [self.newsTable deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
 
 - (IBAction)backReturn:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];

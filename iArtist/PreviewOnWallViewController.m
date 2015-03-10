@@ -13,6 +13,9 @@
 #import "CartViewController.h"
 #import "AVManager.h"
 
+
+NSString *const BackToiCaruselViewController = @"BackToiCaruselViewController";
+
 @interface PreviewOnWallViewController (){
     NSString* kindOfSharing;
     UIImage* locImageToShare;
@@ -213,35 +216,28 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
     
 }
 - (void) mainInit{
-    //AVManager *manager = [AVManager sharedInstance];
-    //self.pictureIndex = manager.index;
-    
     [self initWals];
     self.roomImage.image = self.currentWall.wallPicture;
     UIImage *picture = [self.ImageArray objectAtIndex:self.pictureIndex];
-    //self.roomImage.backgroundColor = [UIColor colorWithPatternImage:picture];
-    
     AVManager *manager = [AVManager sharedInstance];
-     self.pictureIndex = manager.index;
-     self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
-     
-     self.currentWall = manager.wallImage;
-     
-     self.roomImage.image = self.currentWall.wallPicture;
+    self.pictureIndex = manager.index;
+    self.currentPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureIndex];
+    self.currentWall = manager.wallImage;
+    self.roomImage.image = self.currentWall.wallPicture;
     
-     [self setImageWithWall:picture
-                           :self.roomImage.center
-                           :AVInitTypeOfPictureChange];
-     self.rightSwipe = [UISwipeGestureRecognizer new];
-     self.rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
-     self.rightSwipe.delegate = self;
-     self.leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-     self.leftSwipe.delegate = self;
-     self.panGestureRecognizer.delegate = self;
-     self.pinchGestureRecognizer = [UIPinchGestureRecognizer new];
-     self.pinchGestureRecognizer.delegate = self;
-     [self.pinchGestureRecognizer addTarget:self action:@selector(pinchAction:)];
-     [self.roomImage addGestureRecognizer:self.pinchGestureRecognizer];
+    [self setImageWithWall:picture
+                          :self.roomImage.center
+                          :AVInitTypeOfPictureChange];
+    self.rightSwipe = [UISwipeGestureRecognizer new];
+    self.rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
+    self.rightSwipe.delegate = self;
+    self.leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
+    self.leftSwipe.delegate = self;
+    self.panGestureRecognizer.delegate = self;
+    self.pinchGestureRecognizer = [UIPinchGestureRecognizer new];
+    self.pinchGestureRecognizer.delegate = self;
+    [self.pinchGestureRecognizer addTarget:self action:@selector(pinchAction:)];
+    [self.roomImage addGestureRecognizer:self.pinchGestureRecognizer];
     
     kindOfSharing = [[NSMutableString alloc] init];
     locImageToShare = [[UIImage alloc] init];
@@ -257,7 +253,6 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self mainInit];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -540,6 +535,10 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
 }
 //input data into manager when we disappear view controller
 - (void)viewWillDisappear:(BOOL)animated{
+    
+    NSDictionary *newDictionary = @{@"index" :@(self.pictureIndex)};
+    [[NSNotificationCenter defaultCenter]postNotificationName:BackToiCaruselViewController object:nil userInfo:newDictionary];
+    
     self.dataManager = [AVManager sharedInstance];
     self.dataManager.index = self.pictureIndex;
     //self.dataManager.wallImage = self.currentWall.wallPicture;

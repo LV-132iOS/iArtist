@@ -21,6 +21,7 @@
 #import "SessionControl.h"
 #import "Artist.h"
 #import "UIImageView+WebCache.h"
+#import "ActivityIndicator.h"
 
 static dispatch_group_t downloadGroup;
 @interface iCaruselViewController (){
@@ -53,7 +54,7 @@ static dispatch_group_t downloadGroup;
 @property (nonatomic, strong) NSDictionary *CurrentArtist;
 @property (nonatomic, strong) NSMutableDictionary *AllPaintingsCached;
 @property (nonatomic, strong) NSArray *CDresults;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *Indicator;
+@property (weak, nonatomic) IBOutlet ActivityIndicator *Indicator;
 @property (strong, nonatomic) IBOutlet UIPinchGestureRecognizer *pinchGestureRecognizer;
 @property (assign,nonatomic) int *counter;
 @property (nonatomic, strong) NSMutableArray *deletedIndexes;
@@ -83,7 +84,6 @@ UIVisualEffectView *visualEffectView;
                              (CGRect){.origin.x = 5, .origin.y = 10, .size.width = 50, .size.height = 30 }];
     
     self.likeCounterLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray*)[self.CurrentPainting valueForKeyPath:@"liked_by"] count]];
-    
     self.likeCounterLabel.textAlignment = NSTextAlignmentCenter;
     self.likeCounterLabel.textColor = [UIColor whiteColor];
     [self.likeButton addSubview:self.likeCounterLabel];
@@ -103,6 +103,7 @@ UIVisualEffectView *visualEffectView;
     [self.backgroundView bringSubviewToFront:self.price];
     [self.backgroundView bringSubviewToFront:self.pictureSize];
     [self.backgroundView bringSubviewToFront:self.addToCart];
+    [self.backgroundView bringSubviewToFront:self.Indicator];
 }
 //to add blure efect
 -(void)blurImage
@@ -118,11 +119,16 @@ UIVisualEffectView *visualEffectView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    //self.pictureView.currentItemIndex = self.index;
     if([[SessionControl sharedManager]checkInternetConnection]){
     self.ImageArray = [[NSMutableArray alloc]init];
     if (self.urls == nil) {
+        
+        [self.Indicator megaInit];
+        [self.view bringSubviewToFront:self.Indicator];
         [self.Indicator startAnimating];
+        self.Indicator.hidden = NO;
+        
         [[ServerFetcher sharedInstance] RunQueryWithcallback:^(NSMutableArray *responde) {
             self.urls = responde;
             for (int i=0;i<self.urls.count;i++) {
@@ -130,7 +136,7 @@ UIVisualEffectView *visualEffectView;
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.Indicator stopAnimating];
-                [self.Indicator removeFromSuperview];
+                self.Indicator.hidden = YES;
                 [self.pictureView reloadData];
            
             });
@@ -159,11 +165,7 @@ UIVisualEffectView *visualEffectView;
     self.pictureView.dataSource =self;
     self.deletedIndexes = [[NSMutableArray alloc]init];
     [self mainInit];
-    // Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(shareWithTwitter:)
-                                                 name:@"ShareWithTwitter"
-                                               object:nil];
+
 }
 //view will appear. we need this when we dismiss presented view controller and return here
 
@@ -173,11 +175,11 @@ UIVisualEffectView *visualEffectView;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    
+    [super viewWillAppear:YES];
     self.pictureView.hidden = NO;
     [self.backgroundView sendSubviewToBack:visualEffectView];
-    self.pictureView.currentItemIndex = self.index;
-    //self.intputPictureIndex = self.dataManager.index;
+     self.pictureView.currentItemIndex = self.index;
+    [self.pictureView reloadData];
     
 }
 
@@ -245,25 +247,47 @@ UIVisualEffectView *visualEffectView;
     if (view == nil) {
         view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];
         view.contentMode = UIViewContentModeScaleAspectFit;
+////
+        
+        
+        
+        /*
         UIActivityIndicatorView *a = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 800.0f, 700.0f)];
         a.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
         a.tag = 1000;
         a.hidesWhenStopped = YES;
         [view addSubview:a];
+         */
+ /////
     }
     UIImageView *i = (UIImageView *)view;
     if ([[SessionControl sharedManager]checkInternetConnection]) {
-        self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
+        if (!self.AllPaintingData) {
+            self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
+
+        };
         self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
         self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
                NSURL *url = self.urls[index];
+  /////
+        [self.Indicator megaInit];
+        self.Indicator.hidden = NO;
+        [self.backgroundView bringSubviewToFront:self.Indicator];
+        [self.Indicator startAnimating];
+        /*
                UIActivityIndicatorView *a = (UIActivityIndicatorView *)[i viewWithTag:1000];
-        [a startAnimating];
+        [a startAnimating];*/
+  //////
         [i sd_setImageWithURL:url
                     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
-                        cacheType = SDImageCacheTypeMemory;
-                        [a stopAnimating];
+                     //   cacheType = SDImageCacheTypeMemory;
+     ////
+                        self.Indicator.hidden = YES;
+                        [self.Indicator stopAnimating];
+                        //[a stopAnimating];
+                        ///////
                         [self.ImageArray replaceObjectAtIndex:index withObject:i.image];
+                        
                     }];
         [[ServerFetcher sharedInstance]GetLikesCount:[self.CurrentPainting valueForKey:@"_id"]callback:^(NSString *responde) {
             self.likeCounterLabel.text = responde;
@@ -280,19 +304,25 @@ UIVisualEffectView *visualEffectView;
               UIImage *img = [UIImage imageWithData:imageData];
               self.authorsImage.image = img;
               self.authorsName.text = [self.CurrentArtist valueForKey:@"name"];
-
-
-    
     return view;
-
-
-   
-
 }
+
+- (void)returnFromPicturePreview:(NSNotification *)notification{
+    self.index = ((NSNumber *)[notification.userInfo valueForKey:@"index"]).intValue;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:BackToiCaruselViewController object:nil];
+    //[self.pictureView reloadData];
+    
+    
+}
+
 #pragma mark - seque
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString: @"ModalToPreviewOnWall"]) {
-        NSLog(@"%@",self.AllPaintingData);
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(returnFromPicturePreview:)
+                                                     name:BackToiCaruselViewController
+                                                   object:nil];
+        
         ((PreviewOnWallViewController *)segue.destinationViewController).session = self.session;
         ((PreviewOnWallViewController *)segue.destinationViewController).pictureIndex = self.pictureView.currentItemIndex;
         
@@ -304,7 +334,7 @@ UIVisualEffectView *visualEffectView;
     }
 
     if ([segue.identifier isEqualToString: @"ModalToDetail"]) {
-        
+        self. index = self.pictureView.currentItemIndex;
         AVManager *manager = [AVManager sharedInstance];
         manager.index = self.pictureView.currentItemIndex;
         ((FullSizePictureViewController *)segue.destinationViewController).paintingData = self.CurrentPainting;
@@ -408,21 +438,29 @@ UIVisualEffectView *visualEffectView;
     [self.backgroundView bringSubviewToFront:self.titleOfSession];
     [self.backgroundView bringSubviewToFront:self.previewOnWallButton];
     [self.backgroundView bringSubviewToFront:self.likeButton];
+    [self.backgroundView bringSubviewToFront:self.Indicator];
     self.pictureView.hidden = YES;
     CGRect rect;
-    if ([identifier isEqualToString: @"ModalToPreviewOnWall"]) {
-        
-        
-        NSNumber *number = [NSNumber numberWithDouble:(3 * [AVManager sharedInstance].wallImage.distanceToWall.doubleValue)];
-        CGPoint sizeOfNewPicture = CGPointMake(
-                                               (((UIImage *)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).size.width)
-                                               / number.doubleValue,
-                                               (((UIImage *)[self.ImageArray objectAtIndex:self.pictureView.currentItemIndex]).size.height)
-                                                 /number.doubleValue);
-        
-        rect = (CGRect){.origin.x = 512 - sizeOfNewPicture.x / 2, .origin.y = 384 - sizeOfNewPicture.y / 2,
-            .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
-    } else if ([identifier isEqualToString:@"ModalToDetail"]){
+        if ([identifier isEqualToString: @"ModalToPreviewOnWall"]) {
+            
+            NSString *realsize = [NSString stringWithString:self.pictureSize.text];
+            NSLog(@"%@",realsize);
+            NSInteger indexOfX;
+            CGPoint sizeOfNewPicture;
+            for (indexOfX = 0; indexOfX < realsize.length; indexOfX ++) {
+                if ([realsize characterAtIndex:indexOfX] == 'x') {
+                    
+                    sizeOfNewPicture = CGPointMake([realsize substringFromIndex:(indexOfX + 1)].doubleValue * 7.6 /
+                                                   ([AVManager sharedInstance].wallImage.distanceToWall.doubleValue),
+                                                   [realsize substringToIndex:indexOfX].doubleValue * 7.6 /
+                                                   ([AVManager sharedInstance].wallImage.distanceToWall.doubleValue));
+                }
+            }
+            
+            rect = (CGRect){.origin.x = 512 - sizeOfNewPicture.x / 2, .origin.y = 384 - sizeOfNewPicture.y / 2,
+                 .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
+
+            } else if ([identifier isEqualToString:@"ModalToDetail"]){
         rect = CGRectMake(0, 0, 1024, 768);
     }
     [UIView animateWithDuration:time

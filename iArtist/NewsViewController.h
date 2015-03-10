@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic) AVManager *dataManger;
 @property (strong, nonatomic) Sesion *session;
-@property (nonatomic, strong) NSDictionary *AllPaintingData;
+@property (nonatomic, strong) NSMutableDictionary *AllPaintingData;
 @property (strong,nonatomic) NSMutableArray *ImageArray;
 @property (nonatomic, strong) NSDictionary *CurrentPainting;
 @property (nonatomic, strong) NSDictionary *CurrentArtist;

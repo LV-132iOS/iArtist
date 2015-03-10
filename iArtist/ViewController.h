@@ -13,6 +13,7 @@
 #import "AVManager.h"
 #import "Sesion.h"
 #import "ServerFetcher.h"
+#import "SearchResultsViewController.h"
 
 @interface ViewController : UIViewController <UISearchBarDelegate, UIPopoverControllerDelegate,UIPopoverPresentationControllerDelegate>
 
@@ -28,7 +29,7 @@
 @property (strong, nonatomic) NSMutableArray *urls;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
 @property (nonatomic, strong) UIPopoverController *popoverSearchController;
-
+@property (nonatomic, strong) SearchResultsViewController *tableController;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem    *loginButton;
 @property (strong, nonatomic) NSMutableDictionary       *searchDictionary;
 

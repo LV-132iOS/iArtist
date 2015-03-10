@@ -8,18 +8,32 @@
 
 #import "SearchResultsViewController.h"
 #import "ServerFetcher.h"
-
 @implementation SearchResultsViewController
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    self.AllPaintingsData = [[NSArray alloc]init];
     self.ArtistsTV.tableHeaderView = [self titleInit:@"Artist"];
     self.PaintingsTV.tableHeaderView = [self titleInit:@"Paintings"];
+    [self addObserver:self forKeyPath:@"searchString" options:NSKeyValueObservingOptionNew context:NULL];
     
-    [[ServerFetcher sharedInstance]search:self.searchString callback:^(NSDictionary *responde) {
-        [self.ArtistsTV reloadData];
-        [self.PaintingsTV reloadData];
-    }];
+}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    
+        [[ServerFetcher sharedInstance]search:_searchString callback:^(NSArray *responde) {
+            if (responde.count == 0){
+                self.AllPaintingsData = nil;
+                [self.ArtistsTV reloadData];
+                [self.PaintingsTV reloadData];
+                return;
+            }
+           
+            self.AllPaintingsData = (NSArray*)responde[0];
+            [self.ArtistsTV reloadData];
+            [self.PaintingsTV reloadData];
+            
+        }];
 }
 
 - (UILabel*)titleInit:(NSString*)str
@@ -36,10 +50,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView == self.ArtistsTV)
-        return 10;
+   if(self.AllPaintingsData.count == 0)
+       return 0;
     else
-        return 10;
+        return self.AllPaintingsData.count;
+        
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -50,7 +65,7 @@
         return cell;
     } else {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Paintings" forIndexPath:indexPath];
-    cell.textLabel.text = @"picture";
+    cell.textLabel.text = [[self.AllPaintingsData objectAtIndex:indexPath.row] valueForKey:@"title"];
     
     return cell;
     }

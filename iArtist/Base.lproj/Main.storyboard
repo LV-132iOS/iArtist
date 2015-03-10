@@ -466,6 +466,9 @@
                                                     <state key="normal" image="remove.png">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="shouldUnfolowAutor:" destination="h88-e1-SN3" eventType="touchUpInside" id="bCe-TW-hYy"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GHI-Oe-bBI">
                                                     <rect key="frame" x="807" y="13" width="120" height="30"/>
@@ -479,9 +482,12 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="AqX-hk-yQu" kind="modal" modalPresentationStyle="formSheet" id="vib-vZ-Kxc"/>
+                                                        <segue destination="AqX-hk-yQu" kind="modal" identifier="NewsAuthor" modalPresentationStyle="formSheet" id="vib-vZ-Kxc"/>
                                                     </connections>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aAa-k7-J8P" customClass="ActivityIndicator">
+                                                    <rect key="frame" x="87" y="60" width="200" height="200"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -489,10 +495,12 @@
                                             <outlet property="authorImage" destination="EUv-5l-niW" id="6R2-VB-k4t"/>
                                             <outlet property="authorName" destination="vEs-P6-vYg" id="KDJ-1s-CtC"/>
                                             <outlet property="date" destination="GHI-Oe-bBI" id="ug0-77-hFI"/>
+                                            <outlet property="loadPictureIndicator" destination="aAa-k7-J8P" id="Pl5-ZC-7gK"/>
                                             <outlet property="newsDescription" destination="UcO-kr-vST" id="D9i-Fa-YWp"/>
                                             <outlet property="pictureImage" destination="ILj-fk-fAN" id="GwB-AP-TpY"/>
                                             <outlet property="pictureName" destination="QrN-4c-4t6" id="YvZ-yM-V44"/>
                                             <outlet property="pictureTag" destination="faO-23-aAh" id="M6R-rk-0Jl"/>
+                                            <segue destination="HLU-mf-ZVQ" kind="modal" identifier="NewsToICarusel" id="mv4-dZ-DuR"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -965,7 +973,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EZ3-MG-6v7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5314" y="3701"/>
+            <point key="canvasLocation" x="-184" y="976"/>
         </scene>
         <!--Set Distance To Wall View Controller-->
         <scene sceneID="KgP-1f-2ti">
@@ -1364,11 +1372,6 @@
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FiS-Fa-IY3" customClass="iCarousel">
                                 <rect key="frame" x="-6" y="44" width="1024" height="656"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dZN-kU-aP3">
-                                        <rect key="frame" x="494" y="309" width="37" height="37"/>
-                                    </activityIndicatorView>
-                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -1376,6 +1379,9 @@
                                     <outletCollection property="gestureRecognizers" destination="9a8-lO-1LT" appends="YES" id="4yt-7u-6UZ"/>
                                 </connections>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SB4-oW-s8V" customClass="ActivityIndicator">
+                                <rect key="frame" x="412" y="284" width="200" height="200"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1383,7 +1389,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="1024" height="768"/>
                     <connections>
-                        <outlet property="Indicator" destination="dZN-kU-aP3" id="icR-P9-4H1"/>
+                        <outlet property="Indicator" destination="SB4-oW-s8V" id="sfK-sS-dJw"/>
                         <outlet property="actionBarBautton" destination="xbc-1K-amS" id="GNh-Ad-7SJ"/>
                         <outlet property="addToCart" destination="Ugo-8U-A9p" id="3C9-1f-sHO"/>
                         <outlet property="authorButton" destination="OsS-e0-Vtf" id="MTV-pD-HVU"/>
@@ -1611,9 +1617,6 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yck-AB-e9D">
                                         <rect key="frame" x="8" y="8" width="70" height="70"/>
-                                        <state key="normal">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
                                     </button>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2Y9-Vm-tEr">
                                         <rect key="frame" x="25" y="86" width="194" height="29"/>
@@ -1757,10 +1760,9 @@
                                     <action selector="closeController:" destination="Llz-p3-sxk" eventType="touchUpInside" id="m7h-oB-fkU"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Vtd-CN-9nv">
-                                <rect key="frame" x="502" y="374" width="20" height="20"/>
-                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ve-FK-tLE" customClass="ActivityIndicator">
+                                <rect key="frame" x="412" y="284" width="200" height="200"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <connections>
@@ -1776,7 +1778,7 @@
                         <outlet property="authorsData" destination="reK-aw-d3l" id="MBh-Bh-y6O"/>
                         <outlet property="authorsName" destination="A4o-sb-uf7" id="pvC-5W-uty"/>
                         <outlet property="closeButton" destination="wfU-hy-aUa" id="eBZ-Ky-iro"/>
-                        <outlet property="indicator" destination="Vtd-CN-9nv" id="z9f-Z4-jaV"/>
+                        <outlet property="indicator" destination="3ve-FK-tLE" id="fJC-yf-YlO"/>
                         <outlet property="leftView" destination="a2G-I0-2HD" id="qAb-2P-GCI"/>
                         <outlet property="like" destination="3x1-da-Tay" id="iak-p4-WdO"/>
                         <outlet property="mainView" destination="Y0p-L9-U9A" id="cqF-WQ-aMf"/>
@@ -1809,9 +1811,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Rg6-9f-bnQ"/>
-        <segue reference="MJL-gi-ees"/>
-        <segue reference="XqC-q2-HwM"/>
-        <segue reference="nay-hd-SZI"/>
+        <segue reference="vib-vZ-Kxc"/>
+        <segue reference="rgd-cC-rRv"/>
+        <segue reference="mv4-dZ-DuR"/>
+        <segue reference="9Q1-oe-U60"/>
     </inferredMetricsTieBreakers>
 </document>

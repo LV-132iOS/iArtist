@@ -37,9 +37,10 @@ static NSMutableArray *urls;
 - (void)GenerateQueryForArtist:(NSString*)querry;
 - (void)getPictureThumbWithSizeAndID:(NSString*)_id size:(NSNumber *)size callback:(void (^)(UIImage* responde))callback;
 + (ServerFetcher *)sharedInstance;
-- (void)search:(NSString*)searchString callback:(void (^)(NSDictionary *responde))callback;
+- (void)search:(NSString*)searchString callback:(void (^)(NSArray *responde))callback;
 - (void)CheckIsFollowing:(NSString *)_id
                 callback:(void (^)(BOOL responde))callback;
+- (void)CancelDownloads;
 
 @end
 

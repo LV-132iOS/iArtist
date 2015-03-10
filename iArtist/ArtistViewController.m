@@ -18,10 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    //set imageOfArtist
-   // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults ];
     [[ServerFetcher sharedInstance]CheckIsFollowing:[self.CurrentArtist valueForKey:@"_id"]callback:^(BOOL responde) {
         responde?[self.FollowButton setTitle:@"Unfollow-" forState:UIControlStateNormal]:nil;
 
@@ -38,10 +34,6 @@
     self.imageOfArtist.layer.borderWidth = 2.0;
     self.imageOfArtist.layer.masksToBounds = YES;
     self.imageOfArtist.layer.borderColor = [[UIColor blackColor] CGColor];
-    
-    //set description
-
-  
 
 }
 - (IBAction)FollowArtist:(UIButton*)sender {

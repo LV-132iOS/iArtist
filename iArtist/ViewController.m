@@ -37,6 +37,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableController = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchPopover"];
+
     self.urls = [[NSMutableArray alloc]init];
     self.SearchBar.delegate = self;
     self.popoverSearchController.delegate = self;
@@ -128,7 +130,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    
+    [super viewDidAppear:YES];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:@"firstRun"] ==nil )
     {
@@ -335,12 +337,11 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     NSLog(@"Text changed search");
-    SearchResultsViewController *tableController = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchPopover"];
     if (!self.popoverSearchController) {
-        self.popoverSearchController = [[UIPopoverController alloc] initWithContentViewController:tableController];
+        self.popoverSearchController = [[UIPopoverController alloc] initWithContentViewController:self.tableController];
          [self.popoverSearchController presentPopoverFromBarButtonItem:self.searchBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
-        tableController.searchString = searchText;
+    [self.tableController setValue:searchText forKey:@"searchString"];
     
     
     

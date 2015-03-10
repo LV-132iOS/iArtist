@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+static NSString *searchString;
 
 @interface SearchResultsViewController :UIViewController<UITableViewDataSource, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *ArtistsTV;
 @property (weak, nonatomic) IBOutlet UITableView *PaintingsTV;
+@property (strong, nonatomic) NSArray *AllPaintingsData;
 @property(nonatomic,strong) NSString *searchString;
 @end

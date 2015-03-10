@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Sesion.h"
 #import "AVManager.h"
+#import "SearchResultsViewController.h"
 
 @interface LikedViewController : UIViewController
 
