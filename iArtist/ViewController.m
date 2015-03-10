@@ -45,11 +45,6 @@
     //allocating user defaults for the whole file
     //not sure if this needed
     _signIn = [GPPSignIn sharedInstance];
-    //notification for sending info to server
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(sendInfo:)
-                                                 name:@"SendInfo"
-                                               object:nil];
     //notification to perform segue to pictures (notif posted from carousels)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(goToPictures)
@@ -216,81 +211,6 @@
 }
 
 
--(void)sendInfo:(NSNotification*)notification {
-    //here we need to send info to server
-    //check if info is already sent. if no - then send. if yes - do nothing and log that out
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:@"informationSent"] == NO) {
-        //creating dictionary for data to pass with dataTask
-        NSLog(@"%@", [defaults objectForKey:@"id"]);
-        NSLog(@"%@", [defaults objectForKey:@"username"]);
-        NSLog(@"%@", [defaults objectForKey:@"useremail"]);
-        NSDictionary* dataToPassDic = @{
-                                        @"_id" : [defaults objectForKey:@"id"],
-                                        @"username" : [defaults objectForKey:@"username"],
-                                        @"useremail": [defaults objectForKey:@"useremail"],
-                                        };
-        //and convert dictionary to proper type
-        NSData* dataToPass = [NSJSONSerialization dataWithJSONObject:dataToPassDic
-                                                             options:0
-                                                               error:nil];
-        //current url for request
-                NSURL* url = [NSURL URLWithString:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/users/"];
-        //NSURL* url = [NSURL URLWithString:@"http://192.168.103.5/users/"];
-        //creating request to use it with dataTask
-        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-        //preparing session and request
-        NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
-        request.HTTPMethod = @"POST";
-        request.HTTPBody = dataToPass;
-        //request.timeoutInterval = 20;
-        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        //creating data task
-        
-        NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
-                                                    completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
-                                                        //logging received response
-                                                        NSLog(@"%@",response);
-                                                        
-                                                        if (!error) {
-                                                            NSString* locString = [NSString stringWithFormat:@"loggedInWith%@",
-                                                                                   [notification.userInfo objectForKey:@"with"]];
-                                                            [defaults setBool:YES forKey:@"loggedIn"];
-                                                            [defaults setBool:YES forKey:locString];
-                                                            [defaults setBool:YES forKey:@"informationSent"];
-                                                            [defaults synchronize];
-                                                            //when information succesfully sent it is needed
-                                                            //need to close login view
-                                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"NeedCloseLoginView"
-                                                                                                                object:nil];
-                                                            //self.urls = [[ServerFetcher sharedInstance]GetLikesForUser:@""];
-                                                            for (int i=0; i<self.urls.count; i++) {
-                                                                [[ServerFetcher sharedInstance]GetPictureThumbWithID:self.urls[i] callback:^(UIImage *responde) {
-                                                                NSDictionary *CurrentPainting = [[[ServerFetcher sharedInstance]Paintingdic] valueForKey:[NSString stringWithFormat:@"%d",i]];
-                                                                    [[SDImageCache sharedImageCache]storeImage:responde forKey:[CurrentPainting valueForKey:@"_id"]];
-                                                                    [Picture CreatePictureWithData:CurrentPainting inManagedobjectcontext:((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext];
-
-
-                                                                }];
-
-                                                            };
-                                                                                                               } else {
-                                                            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Failed to send info"
-                                                                                                            message:@"Please, re-login later"
-                                                                                                           delegate:nil
-                                                                                                  cancelButtonTitle:@"OK"
-                                                                                                  otherButtonTitles:nil];
-                                                            [alert show];
-                                                        }
-                                                        
-                                                    }];
-        //sending data task
-        
-        [dataTask resume];
-        
-    }
-}
 
 - (IBAction)goToProfile:(id)sender {
     SessionControl* control = [SessionControl sharedManager];

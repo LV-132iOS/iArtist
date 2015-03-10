@@ -50,7 +50,7 @@
         {
             // Update the UI on the main thread
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"Server OK");
+               // NSLog(@"Server OK");
                 NSDictionary* locDic  = @{ @"OK" : @"1" };
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSessionInfo" object:nil userInfo:locDic];
             });
@@ -61,7 +61,7 @@
         {
             // Update the UI on the main thread
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"Server not OK");
+             //   NSLog(@"Server not OK");
                 NSDictionary* locDic  = @{ @"OK" : @"0" };
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSessionInfo" object:nil userInfo:locDic];
                 NSDictionary* locDictionary;
@@ -103,10 +103,10 @@
     NSString* locString = [dict objectForKey:@"OK"];
     if ([locString isEqualToString:@"1"]) {
         isOK = YES;
-        NSLog(@"Server OK");
+      //  NSLog(@"Server OK");
     } else {
         isOK = NO;
-        NSLog(@"Server not OK");
+      //  NSLog(@"Server not OK");
     }
     if (handler != nil)
         handler();
@@ -117,10 +117,10 @@
     currentSocial = [dictionary objectForKey:@"social"];
     if ([locString isEqualToString:@"1"]) {
         isOKSocial = YES;
-        NSLog(@"social ok");
+      //  NSLog(@"social ok");
     } else {
         isOKSocial = NO;
-        NSLog(@"social not ok");
+     //   NSLog(@"social not ok");
     }
     if (handler != nil)
         handler();
@@ -138,8 +138,8 @@
         //  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         if ([sn isEqualToString:@"Facebook"]) {
             SNSocialNetworkFabric *fabric = [SNClient getFabricWithName:SNnameFacebook];
-            SNSocialNetwork *network = [fabric getSocialNetwork];
-            NSLog(@"previously logged in with %@", network.socialName);
+            [fabric getSocialNetwork];
+        //    NSLog(@"previously logged in with %@", network.socialName);
             FBSession* session = [FBSession activeSession];
             
             [session refreshPermissionsWithCompletionHandler:^(FBSession *session, NSError *error) {
@@ -162,8 +162,8 @@
         } else
             if ([sn isEqualToString:@"Twitter"]){
                   SNSocialNetworkFabric *fabric = [SNClient getFabricWithName:SNnameTwitter];
-                  SNSocialNetwork *network = [fabric getSocialNetwork];
-                NSLog(@"previously logged in with %@", network.socialName);
+                  [fabric getSocialNetwork];
+             //   NSLog(@"previously logged in with %@", network.socialName);
                 //there is no simple way to check if session is active, so I need to send smth to Twitter to get some response
                 [[[Twitter sharedInstance] APIClient] loadUserWithID:[[Twitter sharedInstance] session].userID
                                                           completion:^(TWTRUser *user, NSError *error) {
@@ -186,9 +186,9 @@
                     //check if session is valid be sending a request that needs authorization
                     SNSocialNetworkFabric *fabric = [SNClient getFabricWithName:SNnameGooglePlus];
                     SNSocialNetwork *network = [fabric getSocialNetwork];
-                    NSLog(@"previously logged in with %@", network.socialName);
+               //     NSLog(@"previously logged in with %@", network.socialName);
                     GPPSignIn *signIn = [GPPSignIn sharedInstance];
-                    NSLog(@"%hhd", [signIn hasAuthInKeychain]);
+                //    NSLog(@"%hhd", [signIn hasAuthInKeychain]);
                     network.delegate.block = nil;
                     [signIn trySilentAuthentication];
                     
@@ -228,8 +228,8 @@
                     if ([sn isEqualToString:@"Vkontakte"]){
                         
                         SNSocialNetworkFabric *fabric = [SNClient getFabricWithName:SNnameVkontakte];
-                        SNSocialNetwork *network = [fabric getSocialNetwork];
-                        NSLog(@"previously logged in with %@", network.socialName);
+                        [fabric getSocialNetwork];
+                   //     NSLog(@"previously logged in with %@", network.socialName);
                         
                         VKRequest * audioReq = [[VKApi users] get];
                         [audioReq executeWithResultBlock:^(VKResponse * response) {

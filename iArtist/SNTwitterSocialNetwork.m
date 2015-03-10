@@ -57,7 +57,7 @@
              }];
              handler();
          } else {
-             NSLog(@"error: %@", [error localizedDescription]);
+          //   NSLog(@"error: %@", [error localizedDescription]);
          }
      }];
 }
@@ -74,7 +74,7 @@
 
 -(void) deleteAccountWithCompletionHandler:(void(^)())handler {
     [self logOutWithCompletionHandler:^{
-        NSLog(@"account deleted");
+     //   NSLog(@"account deleted");
     }];
     [CDManager deleteAccountInfoFromServerWithCompletionHandler:handler];
     
@@ -96,10 +96,10 @@
     [composer showWithCompletion:^(TWTRComposerResult result) {
         handler();
         if (result == TWTRComposerResultCancelled) {
-            NSLog(@"Tweet composition cancelled");
+         //   NSLog(@"Tweet composition cancelled");
         }
         else {
-            NSLog(@"Sending Tweet!");
+         //   NSLog(@"Sending Tweet!");
         }
     }];
     

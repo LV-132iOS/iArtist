@@ -34,7 +34,7 @@
 }
 
 -(NSMutableArray *)ImageArray{
-    NSLog(@"%@",PurchuasedImageArray);
+  //  NSLog(@"%@",PurchuasedImageArray);
     @synchronized(self){return PurchuasedImageArray;}
 }
 

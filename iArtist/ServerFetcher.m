@@ -142,12 +142,12 @@ static NSString *querystring;
                 [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
                 NSString *Urlstr = [NSString stringWithFormat:str,[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
                 Urlstr = [Urlstr stringByAppendingString:@"?thumb=preview"];
-                NSLog(@"%@",Urlstr);
+               // NSLog(@"%@",Urlstr);
                 [urls addObject:Urlstr];
             }
             callback(urls);
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"%@",error);
+      //  NSLog(@"%@",error);
     }];
    }
 }
@@ -163,7 +163,7 @@ static NSString *querystring;
             for (int i = 0; i<((NSArray*)responseObject).count; i++)
             {
                 NSString *str = [BaseURLString stringByAppendingString:@"paintings/files/%@"];
-                NSLog(@"%@",((NSArray*)responseObject)[i]);
+              //  NSLog(@"%@",((NSArray*)responseObject)[i]);
                 [Paintingdic setValue:((NSArray*)responseObject)[i] forKey:[NSString stringWithFormat:@"%d",i]];
                 NSString *Urlstr = [NSString stringWithFormat:str,[Paintingdic valueForKeyPath:[NSString stringWithFormat:@"%d._id",i]]];
                 Urlstr = [Urlstr stringByAppendingString:@"?thumb=preview"];
@@ -171,7 +171,7 @@ static NSString *querystring;
             }
           callback(urls);
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"%@",error);
+          //  NSLog(@"%@",error);
     }];
 }
 
@@ -189,7 +189,7 @@ static NSString *querystring;
         Artistdic = (NSMutableArray *)responseObject;
                     callback(ids);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"%@",error);
+      //  NSLog(@"%@",error);
     }];
 }
 - (void)BecomeAFollower:(NSString *)_id
@@ -209,7 +209,7 @@ static NSString *querystring;
               callback(isFollowed);
           });
       } failure:^(NSURLSessionDataTask *task, NSError *error) {
-          NSLog(@"%@",error);
+       //   NSLog(@"%@",error);
       }];
 }
 
@@ -289,7 +289,7 @@ static NSString *querystring;
                                                                                      NULL,
                                                                                      (CFStringRef)@"",kCFStringEncodingUTF8));
     [manager GET:str parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@",responseObject);
+     //   NSLog(@"%@",responseObject);
         NSArray *responde = (NSArray *)responseObject;
         callback(responde);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -318,7 +318,7 @@ static NSString *querystring;
       parameters:nil
          success:^(NSURLSessionDataTask *task, id responseObject) {
              UIImage *image;
-             NSLog(@"%@",responseObject);
+            // NSLog(@"%@",responseObject);
              image = (UIImage*)responseObject;
              dispatch_async(dispatch_get_main_queue(), ^{
                  callback(image);

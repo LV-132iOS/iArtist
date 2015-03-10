@@ -57,7 +57,7 @@
 
 -(void) deleteAccountWithCompletionHandler:(void(^)())handler {
     [self logOutWithCompletionHandler:^{
-        NSLog(@"account deleted");
+     //   NSLog(@"account deleted");
     }];
     [CDManager deleteAccountInfoFromServerWithCompletionHandler:handler];
     

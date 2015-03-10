@@ -288,7 +288,7 @@
             NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
             if (error)
             {
-                NSLog(@"Error loading image for URL: %@, %@", imageURL, error);
+             //   NSLog(@"Error loading image for URL: %@, %@", imageURL, error);
                 image = nil;
             }
             else

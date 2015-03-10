@@ -157,13 +157,10 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
     MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
     messageController.messageComposeDelegate = mDelegate;
     [messageController setBody:self.headString];
-   
 
-    NSData *imageData = UIImageJPEGRepresentation(self.imageToShare, 1.0);
-    
-    [messageController addAttachmentData:imageData
-                          typeIdentifier:@"image/jpeg"
-                                filename:@"Art"];
+    [messageController addAttachmentData:UIImagePNGRepresentation(self.imageToShare)
+                          typeIdentifier:@"image/png"
+                                filename:@"tag"];
 
     [self presentViewController:messageController animated:YES completion:nil];
 

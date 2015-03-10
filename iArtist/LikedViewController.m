@@ -142,6 +142,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self CDRequest];
     [self.LikedCollectionView reloadData];
 }

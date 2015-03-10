@@ -16,7 +16,7 @@
 {
   
     Artist *artist = nil;
-    NSLog(@"%@",artid);
+   // NSLog(@"%@",artid);
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Artist"];
     request.predicate = [NSPredicate predicateWithFormat:@"id_=%@", artid];
     NSError *error;

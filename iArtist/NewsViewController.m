@@ -210,7 +210,7 @@ NSInteger indexDelete;
         [self.dataArray removeObjectsAtIndexes:indexes];
         [[ServerFetcher sharedInstance]BecomeAFollower:artistId
                                               callback:^(BOOL responde) {
-                                                  NSLog(@"Unfollow Ok");
+                                              //    NSLog(@"Unfollow Ok");
         }];
 
         [self.newsTable deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];

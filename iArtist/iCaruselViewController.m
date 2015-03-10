@@ -266,8 +266,8 @@ UIVisualEffectView *visualEffectView;
             self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
 
         };
-        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
-        self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
+        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureView.currentItemIndex]];
+        self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureView.currentItemIndex]];
                NSURL *url = self.urls[index];
   /////
         [self.Indicator megaInit];
@@ -296,8 +296,8 @@ UIVisualEffectView *visualEffectView;
           }else{
         i.image = [self.ImageArray objectAtIndex:index];
           }
-        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
-        self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
+        self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureView.currentItemIndex]];
+        self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureView.currentItemIndex]];
               self.price.text = [NSString stringWithFormat:@"%@",[self.CurrentPainting valueForKey:@"price"]];
               self.pictureSize.text = [self.CurrentPainting valueForKey:@"realsize"];
               NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];

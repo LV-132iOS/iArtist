@@ -64,7 +64,7 @@
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
                                                     //logging received response
-                                                    NSLog(@"%@",response);
+                                                 //   NSLog(@"%@",response);
                                                     
                                                     
                                                     if (!error) {
@@ -125,7 +125,7 @@
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
                                                     //logging received response
-                                                    NSLog(@"%@",response);
+                                                 //   NSLog(@"%@",response);
                                                     
                                                     
                                                     if (!error) {
@@ -185,7 +185,7 @@
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
                                                     //logging received response
-                                                    NSLog(@"%@",response);
+                                                 //   NSLog(@"%@",response);
                                                     
                                                     
                                                     if (!error) {
@@ -252,17 +252,13 @@
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
                                                     //logging received response
-                                                    NSLog(@"%@",response);
+                                                //    NSLog(@"%@",response);
                                                     
                                                     
                                                     if (!error) {
-                                                        NSMutableDictionary * innerJson = [NSJSONSerialization
-                                                                                           JSONObjectWithData:data
-                                                                                           options:kNilOptions
-                                                                                           error:nil
-                                                                                           ];
+
                                                         [CDManager deleteServerTokenFromKeychain];
-                                                        NSLog(@"%@", innerJson);
+                                                    //    NSLog(@"%@", innerJson);
                                                         NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                                                         NSLog(@"%@", str);
                                                         handler();
@@ -301,17 +297,13 @@
     NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data,                                                                                                  NSURLResponse *response,                                                                                                  NSError *error) {
                                                     //logging received response
-                                                    NSLog(@"%@",response);
+                                                 //   NSLog(@"%@",response);
                                                     
                                                     
                                                     if (!error) {
-                                                        NSMutableDictionary * innerJson = [NSJSONSerialization
-                                                                                           JSONObjectWithData:data
-                                                                                           options:kNilOptions
-                                                                                           error:nil
-                                                                                           ];
+
                                                         [CDManager deleteServerTokenFromKeychain];
-                                                        NSLog(@"%@", innerJson);
+                                                    
                                                         NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                                                         NSLog(@"%@", str);
                                                         handler();

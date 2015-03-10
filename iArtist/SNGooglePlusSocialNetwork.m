@@ -72,7 +72,7 @@
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
     [signIn disconnect];
     [self logOutWithCompletionHandler:^{
-        NSLog(@"account deleted");
+      //  NSLog(@"account deleted");
     }];
     [CDManager deleteAccountInfoFromServerWithCompletionHandler:handler];
     

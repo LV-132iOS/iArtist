@@ -52,7 +52,7 @@ CGPoint positionOfFirstTapOfPinchGestureGecognizer;
     
     NSString *realsize = [self.paintingData valueForKey:@"realsize"];
     
-    NSLog(@"%@",realsize);
+  //  NSLog(@"%@",realsize);
     NSInteger indexOfX;
     NSInteger pictureRealWidth = 0;
     NSInteger pictureRealHeight = 0;
@@ -91,7 +91,7 @@ CGPoint positionOfFirstTapOfPinchGestureGecognizer;
         self.imageView.image = responde;
         [self.indicator stopAnimating];
         self.indicator.hidden = YES;
-        NSLog(@"Ok");
+      //  NSLog(@"Ok");
         
         
     }];
@@ -145,9 +145,9 @@ CGPoint positionOfFirstTapOfPinchGestureGecognizer;
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView{
-    NSLog(@"neededScale %f",neededScale);
-    NSLog(@"scrollView.zoomScale %f",scrollView.zoomScale);
-    NSLog(@"scrollView.pinchGestureRecognizer.scale %f",scrollView.pinchGestureRecognizer.scale);
+   // NSLog(@"neededScale %f",neededScale);
+  //  NSLog(@"scrollView.zoomScale %f",scrollView.zoomScale);
+ //   NSLog(@"scrollView.pinchGestureRecognizer.scale %f",scrollView.pinchGestureRecognizer.scale);
     if(scrollView.pinchGestureRecognizer.state == UIGestureRecognizerStateChanged){
         neededScale  = scrollView.zoomScale;
     }

@@ -15,7 +15,7 @@
 {
     // If the session was opened successfully
     if (!error && state == FBSessionStateOpen){
-        NSLog(@"Session opened");
+      //  NSLog(@"Session opened");
         // Show the user the logged-in UI
        // [self userLoggedIn];
         [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -48,14 +48,14 @@
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
         // If the session is closed
-        NSLog(@"Session closed");
+      //  NSLog(@"Session closed");
         // Show the user the logged-out UI
        // [self userLoggedOut];
     }
     
     // Handle errors
     if (error){
-        NSLog(@"FB Error");
+     //   NSLog(@"FB Error");
         
     }
 }

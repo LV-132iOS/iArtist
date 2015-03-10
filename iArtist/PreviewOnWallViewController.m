@@ -107,7 +107,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     
     NSString *realsize = [NSString stringWithString:
                           [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.realsize",(long)self.pictureIndex]]];
-    NSLog(@"%@",realsize);
+  //  NSLog(@"%@",realsize);
     NSInteger indexOfX;
     for (indexOfX = 0; indexOfX < realsize.length; indexOfX ++) {
         if ([realsize characterAtIndex:indexOfX] == 'x') {
@@ -624,6 +624,7 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
 }
 //input data into manager when we disappear view controller
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     
     NSDictionary *newDictionary = @{@"index" :@(self.pictureIndex)};
     [[NSNotificationCenter defaultCenter]postNotificationName:BackToiCaruselViewController object:nil userInfo:newDictionary];
@@ -697,7 +698,7 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
 #pragma mark UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"%ld", (long)buttonIndex);
+ //   NSLog(@"%ld", (long)buttonIndex);
     if (buttonIndex == 1) {
         //only picture
         kindOfSharing = @"OnlyPicture";
