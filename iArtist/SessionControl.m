@@ -19,7 +19,6 @@
     BOOL isOK;
     BOOL isOKSocial;
     NSString* currentSocial;
-    // = ^void() {};
 }
 
 @end

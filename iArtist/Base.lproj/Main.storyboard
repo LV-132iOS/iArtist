@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="0ka-ro-dsY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="0ka-ro-dsY">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
@@ -782,55 +782,76 @@
                         <viewControllerLayoutGuide type="bottom" id="vdQ-Xd-J3P"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rcJ-fQ-uXx">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e8p-yO-Ufv">
-                                <rect key="frame" x="28" y="10" width="80" height="80"/>
-                                <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
-                                <state key="normal" title="FB">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="shareWithFacebook:" destination="8LZ-N4-2to" eventType="touchUpInside" id="m6t-jA-Ngx"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xTo-CQ-Xft">
-                                <rect key="frame" x="116" y="10" width="80" height="80"/>
+                                <rect key="frame" x="128" y="10" width="80" height="80"/>
                                 <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
                                 <state key="normal" title="TW">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="shareWithTwitter:" destination="8LZ-N4-2to" eventType="touchUpInside" id="deN-ZE-AKd"/>
+                                    <action selector="shareWithTwitter:" destination="8LZ-N4-2to" eventType="touchUpInside" id="jxj-um-SHQ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5C-Jy-Byv">
-                                <rect key="frame" x="204" y="10" width="80" height="80"/>
+                                <rect key="frame" x="216" y="10" width="80" height="80"/>
                                 <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
                                 <state key="normal" title="G+">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="shareWithGooglePlus:" destination="8LZ-N4-2to" eventType="touchUpInside" id="QTr-FV-fNJ"/>
+                                    <action selector="shareWithGooglePlus:" destination="8LZ-N4-2to" eventType="touchUpInside" id="N1R-00-m3i"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhK-w3-xOB">
-                                <rect key="frame" x="292" y="10" width="80" height="80"/>
+                                <rect key="frame" x="304" y="10" width="80" height="80"/>
                                 <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
                                 <state key="normal" title="VK">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="shareWithVkontakte:" destination="8LZ-N4-2to" eventType="touchUpInside" id="1aW-KP-YPb"/>
+                                    <action selector="shareWithVkontakte:" destination="8LZ-N4-2to" eventType="touchUpInside" id="Jx4-cB-gJU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8Y-hp-Jnk">
+                                <rect key="frame" x="392" y="10" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="Email">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareWithEmail:" destination="8LZ-N4-2to" eventType="touchUpInside" id="kna-iA-8S7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ER-cs-bqi">
+                                <rect key="frame" x="480" y="10" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="Messages">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareWithMessages:" destination="8LZ-N4-2to" eventType="touchUpInside" id="mOq-BV-UxK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e8p-yO-Ufv">
+                                <rect key="frame" x="40" y="10" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.84705889229999998" green="0.84705889229999998" blue="0.84705889229999998" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="FB">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareWithFacebook:" destination="8LZ-N4-2to" eventType="touchUpInside" id="hHO-vj-9Rm"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="600" height="100"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="400" height="100"/>
+                    <size key="freeformSize" width="600" height="100"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MMj-4L-mat" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1333,36 +1354,6 @@
                                     <action selector="likeClicked:" destination="HLU-mf-ZVQ" eventType="touchUpInside" id="22y-f7-pG4"/>
                                 </connections>
                             </button>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cad-OD-XKh">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <barButtonItem systemItem="reply" id="eCF-bI-Ajg">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <action selector="didBackButtonClick:" destination="HLU-mf-ZVQ" id="zpB-fI-pBt"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="863" style="plain" systemItem="fixedSpace" id="Mtc-le-PUM"/>
-                                    <barButtonItem systemItem="compose" id="ja1-MI-X9L">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <action selector="EmailSending:" destination="HLU-mf-ZVQ" id="Z9H-Cb-ejA"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="cIe-Ws-RHc"/>
-                                    <barButtonItem systemItem="action" id="xbc-1K-amS">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
-                                        <connections>
-                                            <segue destination="8LZ-N4-2to" kind="popover" identifier="SimpleShare" popoverAnchorBarButtonItem="xbc-1K-amS" id="9Q1-oe-U60">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nXM-7E-6jT">
                                 <rect key="frame" x="844" y="696" width="164" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1398,6 +1389,36 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SB4-oW-s8V" customClass="ActivityIndicator">
                                 <rect key="frame" x="412" y="284" width="200" height="200"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cad-OD-XKh">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <barButtonItem systemItem="reply" id="eCF-bI-Ajg">
+                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
+                                        <connections>
+                                            <action selector="didBackButtonClick:" destination="HLU-mf-ZVQ" id="zpB-fI-pBt"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="863" style="plain" systemItem="fixedSpace" id="Mtc-le-PUM"/>
+                                    <barButtonItem systemItem="compose" id="ja1-MI-X9L">
+                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
+                                        <connections>
+                                            <action selector="EmailSending:" destination="HLU-mf-ZVQ" id="Z9H-Cb-ejA"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="cIe-Ws-RHc"/>
+                                    <barButtonItem systemItem="action" id="xbc-1K-amS">
+                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
+                                        <connections>
+                                            <segue destination="8LZ-N4-2to" kind="popover" identifier="SimpleShare" popoverAnchorBarButtonItem="xbc-1K-amS" id="9Q1-oe-U60">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -2035,8 +2056,8 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="Jgj-hT-4sq"/>
-        <segue reference="9Q1-oe-U60"/>
-        <segue reference="vib-vZ-Kxc"/>
         <segue reference="rgd-cC-rRv"/>
+        <segue reference="9Q1-oe-U60"/>
+        <segue reference="XqC-q2-HwM"/>
     </inferredMetricsTieBreakers>
 </document>

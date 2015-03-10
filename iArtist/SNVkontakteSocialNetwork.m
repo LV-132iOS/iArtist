@@ -70,6 +70,8 @@
     self.isNotMainAuth = YES;
     self.permissions = vkScope;
     [VKSdk authorize:vkScope  revokeAccess:YES];
+    } else {
+        handler();
     }
 }
 

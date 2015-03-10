@@ -677,66 +677,13 @@
 		4B56F4A31AAF67F800B9489B /* SocialNetworks */ = {
 			isa = PBXGroup;
 			children = (
-				4B56F4FD1AAF695600B9489B /* Reachability.h */,
-				4B56F4FE1AAF695600B9489B /* Reachability.m */,
-				4B56F4FA1AAF68CB00B9489B /* CDManager.h */,
-				4B56F4FB1AAF68CB00B9489B /* CDManager.m */,
-				4B56F4A41AAF684000B9489B /* EmailLoginController.h */,
-				4B56F4A51AAF684000B9489B /* EmailLoginController.m */,
-				4B56F4A61AAF684000B9489B /* EmailRegisterController.h */,
-				4B56F4A71AAF684000B9489B /* EmailRegisterController.m */,
-				4B56F4A81AAF684000B9489B /* LoginViewController.h */,
-				4B56F4A91AAF684000B9489B /* LoginViewController.m */,
-				4B56F4AA1AAF684000B9489B /* MessageDelegate.h */,
-				4B56F4AB1AAF684000B9489B /* MessageDelegate.m */,
-				4B56F4AC1AAF684000B9489B /* ProfileViewController.h */,
-				4B56F4AD1AAF684000B9489B /* ProfileViewController.m */,
-				4B56F4AE1AAF684000B9489B /* SessionControl.h */,
-				4B56F4AF1AAF684000B9489B /* SessionControl.m */,
-				4B56F4B01AAF684000B9489B /* ShareViewController.h */,
-				4B56F4B11AAF684000B9489B /* ShareViewController.m */,
-				4B56F4B21AAF684000B9489B /* SNClient.h */,
-				4B56F4B31AAF684000B9489B /* SNClient.m */,
-				4B56F4B41AAF684000B9489B /* SNEmailDelegate.h */,
-				4B56F4B51AAF684000B9489B /* SNEmailDelegate.m */,
-				4B56F4B61AAF684000B9489B /* SNEmailFabric.h */,
-				4B56F4B71AAF684000B9489B /* SNEmailFabric.m */,
-				4B56F4B81AAF684000B9489B /* SNEmailSocialNetwork.h */,
-				4B56F4B91AAF684000B9489B /* SNEmailSocialNetwork.m */,
-				4B56F4BA1AAF684000B9489B /* SNFacebookDelegate.h */,
-				4B56F4BB1AAF684000B9489B /* SNFacebookDelegate.m */,
-				4B56F4BC1AAF684000B9489B /* SNFacebookFabric.h */,
-				4B56F4BD1AAF684000B9489B /* SNFacebookFabric.m */,
-				4B56F4BE1AAF684000B9489B /* SNFacebookSocialNetwork.h */,
-				4B56F4BF1AAF684000B9489B /* SNFacebookSocialNetwork.m */,
-				4B56F4C01AAF684000B9489B /* SNGooglePlusDelegate.h */,
-				4B56F4C11AAF684000B9489B /* SNGooglePlusDelegate.m */,
-				4B56F4C21AAF684000B9489B /* SNGooglePlusFabric.h */,
-				4B56F4C31AAF684000B9489B /* SNGooglePlusFabric.m */,
-				4B56F4C41AAF684000B9489B /* SNGooglePlusSocialNetwork.h */,
-				4B56F4C51AAF684000B9489B /* SNGooglePlusSocialNetwork.m */,
-				4B56F4C61AAF684000B9489B /* SNSocialNetwork.h */,
-				4B56F4C71AAF684000B9489B /* SNSocialNetwork.m */,
-				4B56F4C81AAF684000B9489B /* SNSocialNetworkDelegate.h */,
-				4B56F4C91AAF684000B9489B /* SNSocialNetworkDelegate.m */,
-				4B56F4CA1AAF684000B9489B /* SNSocialNetworkFabric.h */,
-				4B56F4CB1AAF684000B9489B /* SNSocialNetworkFabric.m */,
-				4B56F4CC1AAF684000B9489B /* SNTwitterDelegate.h */,
-				4B56F4CD1AAF684000B9489B /* SNTwitterDelegate.m */,
-				4B56F4CE1AAF684000B9489B /* SNTwitterFabric.h */,
-				4B56F4CF1AAF684000B9489B /* SNTwitterFabric.m */,
-				4B56F4D01AAF684000B9489B /* SNTwitterSocialNetwork.h */,
-				4B56F4D11AAF684000B9489B /* SNTwitterSocialNetwork.m */,
-				4B56F4D21AAF684000B9489B /* SNVkontakteDelegate.h */,
-				4B56F4D31AAF684000B9489B /* SNVkontakteDelegate.m */,
-				4B56F4D41AAF684000B9489B /* SNVkontakteFabric.h */,
-				4B56F4D51AAF684000B9489B /* SNVkontakteFabric.m */,
-				4B56F4D61AAF684000B9489B /* SNVkontakteSocialNetwork.h */,
-				4B56F4D71AAF684100B9489B /* SNVkontakteSocialNetwork.m */,
-				4B56F4D81AAF684100B9489B /* SSKeychain.h */,
-				4B56F4D91AAF684100B9489B /* SSKeychain.m */,
-				4B56F4DA1AAF684100B9489B /* SSKeychainQuery.h */,
-				4B56F4DB1AAF684100B9489B /* SSKeychainQuery.m */,
+				841734351AAF8352007AC681 /* SSKeyChain */,
+				8417343A1AAF842A007AC681 /* Networks */,
+				841734391AAF8406007AC681 /* Fabrics */,
+				841734381AAF83D4007AC681 /* Controllers */,
+				841734371AAF83B5007AC681 /* Abstract */,
+				841734341AAF8327007AC681 /* Client */,
+				841734331AAF8318007AC681 /* Session Control */,
 			);
 			name = SocialNetworks;
 			sourceTree = "<group>";
@@ -902,6 +849,123 @@
 				4B1FE8871A87838C00897D7B /* AsyncImageView.m */,
 			);
 			name = "Download Manager";
+			sourceTree = "<group>";
+		};
+		841734331AAF8318007AC681 /* Session Control */ = {
+			isa = PBXGroup;
+			children = (
+				4B56F4AE1AAF684000B9489B /* SessionControl.h */,
+				4B56F4AF1AAF684000B9489B /* SessionControl.m */,
+				4B56F4FD1AAF695600B9489B /* Reachability.h */,
+				4B56F4FE1AAF695600B9489B /* Reachability.m */,
+			);
+			name = "Session Control";
+			sourceTree = "<group>";
+		};
+		841734341AAF8327007AC681 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				4B56F4B21AAF684000B9489B /* SNClient.h */,
+				4B56F4B31AAF684000B9489B /* SNClient.m */,
+				4B56F4FA1AAF68CB00B9489B /* CDManager.h */,
+				4B56F4FB1AAF68CB00B9489B /* CDManager.m */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
+		841734351AAF8352007AC681 /* SSKeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				4B56F4D81AAF684100B9489B /* SSKeychain.h */,
+				4B56F4D91AAF684100B9489B /* SSKeychain.m */,
+				4B56F4DA1AAF684100B9489B /* SSKeychainQuery.h */,
+				4B56F4DB1AAF684100B9489B /* SSKeychainQuery.m */,
+			);
+			name = SSKeyChain;
+			sourceTree = "<group>";
+		};
+		841734361AAF8370007AC681 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				4B56F4D21AAF684000B9489B /* SNVkontakteDelegate.h */,
+				4B56F4D31AAF684000B9489B /* SNVkontakteDelegate.m */,
+				4B56F4CC1AAF684000B9489B /* SNTwitterDelegate.h */,
+				4B56F4CD1AAF684000B9489B /* SNTwitterDelegate.m */,
+				4B56F4C01AAF684000B9489B /* SNGooglePlusDelegate.h */,
+				4B56F4C11AAF684000B9489B /* SNGooglePlusDelegate.m */,
+				4B56F4BA1AAF684000B9489B /* SNFacebookDelegate.h */,
+				4B56F4BB1AAF684000B9489B /* SNFacebookDelegate.m */,
+				4B56F4B41AAF684000B9489B /* SNEmailDelegate.h */,
+				4B56F4B51AAF684000B9489B /* SNEmailDelegate.m */,
+				4B56F4AA1AAF684000B9489B /* MessageDelegate.h */,
+				4B56F4AB1AAF684000B9489B /* MessageDelegate.m */,
+			);
+			name = Delegates;
+			sourceTree = "<group>";
+		};
+		841734371AAF83B5007AC681 /* Abstract */ = {
+			isa = PBXGroup;
+			children = (
+				4B56F4C61AAF684000B9489B /* SNSocialNetwork.h */,
+				4B56F4C71AAF684000B9489B /* SNSocialNetwork.m */,
+				4B56F4C81AAF684000B9489B /* SNSocialNetworkDelegate.h */,
+				4B56F4C91AAF684000B9489B /* SNSocialNetworkDelegate.m */,
+				4B56F4CA1AAF684000B9489B /* SNSocialNetworkFabric.h */,
+				4B56F4CB1AAF684000B9489B /* SNSocialNetworkFabric.m */,
+			);
+			name = Abstract;
+			sourceTree = "<group>";
+		};
+		841734381AAF83D4007AC681 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4B56F4AC1AAF684000B9489B /* ProfileViewController.h */,
+				4B56F4AD1AAF684000B9489B /* ProfileViewController.m */,
+				4B56F4B01AAF684000B9489B /* ShareViewController.h */,
+				4B56F4B11AAF684000B9489B /* ShareViewController.m */,
+				4B56F4A41AAF684000B9489B /* EmailLoginController.h */,
+				4B56F4A51AAF684000B9489B /* EmailLoginController.m */,
+				4B56F4A61AAF684000B9489B /* EmailRegisterController.h */,
+				4B56F4A71AAF684000B9489B /* EmailRegisterController.m */,
+				4B56F4A81AAF684000B9489B /* LoginViewController.h */,
+				4B56F4A91AAF684000B9489B /* LoginViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		841734391AAF8406007AC681 /* Fabrics */ = {
+			isa = PBXGroup;
+			children = (
+				4B56F4C21AAF684000B9489B /* SNGooglePlusFabric.h */,
+				4B56F4C31AAF684000B9489B /* SNGooglePlusFabric.m */,
+				4B56F4D41AAF684000B9489B /* SNVkontakteFabric.h */,
+				4B56F4D51AAF684000B9489B /* SNVkontakteFabric.m */,
+				4B56F4CE1AAF684000B9489B /* SNTwitterFabric.h */,
+				4B56F4CF1AAF684000B9489B /* SNTwitterFabric.m */,
+				4B56F4B61AAF684000B9489B /* SNEmailFabric.h */,
+				4B56F4B71AAF684000B9489B /* SNEmailFabric.m */,
+				4B56F4BC1AAF684000B9489B /* SNFacebookFabric.h */,
+				4B56F4BD1AAF684000B9489B /* SNFacebookFabric.m */,
+			);
+			name = Fabrics;
+			sourceTree = "<group>";
+		};
+		8417343A1AAF842A007AC681 /* Networks */ = {
+			isa = PBXGroup;
+			children = (
+				841734361AAF8370007AC681 /* Delegates */,
+				4B56F4B81AAF684000B9489B /* SNEmailSocialNetwork.h */,
+				4B56F4B91AAF684000B9489B /* SNEmailSocialNetwork.m */,
+				4B56F4BE1AAF684000B9489B /* SNFacebookSocialNetwork.h */,
+				4B56F4BF1AAF684000B9489B /* SNFacebookSocialNetwork.m */,
+				4B56F4C41AAF684000B9489B /* SNGooglePlusSocialNetwork.h */,
+				4B56F4C51AAF684000B9489B /* SNGooglePlusSocialNetwork.m */,
+				4B56F4D01AAF684000B9489B /* SNTwitterSocialNetwork.h */,
+				4B56F4D11AAF684000B9489B /* SNTwitterSocialNetwork.m */,
+				4B56F4D61AAF684000B9489B /* SNVkontakteSocialNetwork.h */,
+				4B56F4D71AAF684100B9489B /* SNVkontakteSocialNetwork.m */,
+			);
+			name = Networks;
 			sourceTree = "<group>";
 		};
 		843C97071A7EC0EF0080FCAA /* Frameworks */ = {
@@ -1707,8 +1771,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1731,7 +1795,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "9d161863-dbf8-4771-a0af-7e1e618e2937";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = NO;
@@ -1755,8 +1819,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "-";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1772,7 +1836,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "9d161863-dbf8-4771-a0af-7e1e618e2937";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = NO;
@@ -1784,8 +1848,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = iArtist/iArtist.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/iArtist/iArtist",
@@ -1802,7 +1866,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9d161863-dbf8-4771-a0af-7e1e618e2937";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -1812,8 +1876,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = iArtist/iArtist.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Roman Hubal (BPHL6MD5D6)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/iArtist/iArtist",
@@ -1830,7 +1894,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9d161863-dbf8-4771-a0af-7e1e618e2937";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;

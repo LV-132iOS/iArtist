@@ -107,7 +107,7 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
     }];
 }
 
-- (void)shareWithTwitter:(NSNotification*)notification {
+- (IBAction)shareWithTwitter:(id)sender {
     
     SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameTwitter];
     SNSocialNetwork* network = [fabric getSocialNetwork];

@@ -20,7 +20,4 @@
 
 +(id)sharedManager;
 
-typedef void (^compBlock)();
-
-
 @end
