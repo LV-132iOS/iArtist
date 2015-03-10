@@ -2,7 +2,7 @@
 //  Picture.m
 //  iArtist
 //
-//  Created by Clark on 2/25/15.
+//  Created by Clark on 3/10/15.
 //  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
@@ -13,16 +13,16 @@
 @implementation Picture
 
 @dynamic descript;
+@dynamic genre;
 @dynamic id_;
+@dynamic materials;
 @dynamic orginURL;
 @dynamic price;
 @dynamic realsize;
 @dynamic size;
+@dynamic tags;
 @dynamic thumbnailURL;
 @dynamic title;
-@dynamic materials;
-@dynamic tags;
-@dynamic genre;
 @dynamic owner;
 
 @end

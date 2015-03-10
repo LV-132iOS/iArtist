@@ -13,8 +13,9 @@
 #import "Sesion.h"
 #import "iCaruselViewController.h"
 #import "AVManager.h"
+#import <MessageUI/MessageUI.h>
 
-@interface PreviewOnWallViewController : UIViewController <UIGestureRecognizerDelegate, UIPopoverControllerDelegate>
+@interface PreviewOnWallViewController : UIViewController <UIGestureRecognizerDelegate, UIPopoverControllerDelegate,MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *roomImage;
 @property (strong, nonatomic) IBOutlet UIImageView *pictureImage;
@@ -27,6 +28,7 @@
 @property (strong,nonatomic) NSMutableArray *ImageArray;
 @property (nonatomic, strong) NSDictionary *CurrentPainting;
 @property (nonatomic, strong) NSDictionary *CurrentArtist;
+@property(strong, nonatomic) MFMailComposeViewController *myMail;
 
 extern NSString *const BackToiCaruselViewController;
 

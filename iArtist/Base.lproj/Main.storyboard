@@ -1178,6 +1178,11 @@
                                             <action selector="HelpButtonAction:" destination="0ka-ro-dsY" id="X2y-9t-RD8"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Local Artist" id="lGM-2R-lKA">
+                                        <connections>
+                                            <segue destination="Hkk-yp-hPW" kind="modal" id="jlP-5Y-Nud"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="HHd-q3-xIR"/>
                                     <barButtonItem id="J8y-uq-qV9">
                                         <searchBar key="customView" contentMode="redraw" searchBarStyle="minimal" placeholder="search" id="rRo-ja-5Aw">
@@ -1189,11 +1194,6 @@
                                             <segue destination="LmL-hT-0P2" kind="popover" identifier="SearchrRsults" popoverAnchorBarButtonItem="J8y-uq-qV9" id="sPG-xK-f0N">
                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                             </segue>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem image="shopping-cart-grey-hi.png" id="5XZ-8b-gcm">
-                                        <connections>
-                                            <segue destination="MYj-qk-6mf" kind="modal" identifier="ModalToCart" id="QDs-DP-rXf"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -1344,8 +1344,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="863" style="plain" systemItem="fixedSpace" id="Mtc-le-PUM"/>
-                                    <barButtonItem image="shopping-cart-grey-hi.png" id="ja1-MI-X9L">
+                                    <barButtonItem systemItem="compose" id="ja1-MI-X9L">
                                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
+                                        <connections>
+                                            <action selector="EmailSending:" destination="HLU-mf-ZVQ" id="Z9H-Cb-ejA"/>
+                                        </connections>
                                     </barButtonItem>
                                     <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="cIe-Ws-RHc"/>
                                     <barButtonItem systemItem="action" id="xbc-1K-amS">
@@ -1383,17 +1386,6 @@
                                     <segue destination="AqX-hk-yQu" kind="modal" identifier="ArtistInfo" modalPresentationStyle="formSheet" modalTransitionStyle="coverVertical" id="XqC-q2-HwM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugo-8U-A9p">
-                                <rect key="frame" x="640" y="708" width="196" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Add to cart">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="addPictureToCart:" destination="HLU-mf-ZVQ" eventType="touchUpInside" id="RAm-rX-G4b"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FiS-Fa-IY3" customClass="iCarousel">
                                 <rect key="frame" x="-6" y="44" width="1024" height="656"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1415,7 +1407,6 @@
                     <connections>
                         <outlet property="Indicator" destination="SB4-oW-s8V" id="sfK-sS-dJw"/>
                         <outlet property="actionBarBautton" destination="xbc-1K-amS" id="GNh-Ad-7SJ"/>
-                        <outlet property="addToCart" destination="Ugo-8U-A9p" id="3C9-1f-sHO"/>
                         <outlet property="authorButton" destination="OsS-e0-Vtf" id="MTV-pD-HVU"/>
                         <outlet property="backBarBatton" destination="eCF-bI-Ajg" id="lug-Ag-zfT"/>
                         <outlet property="backgroundView" destination="Ggp-KN-6pc" id="4Td-QP-Yw1"/>
@@ -1477,8 +1468,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="4Zh-Ob-mq2"/>
-                                    <barButtonItem image="shopping-cart-grey-hi.png" id="aLh-aC-Xzv">
+                                    <barButtonItem systemItem="compose" id="aLh-aC-Xzv">
                                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-12"/>
+                                        <connections>
+                                            <action selector="EmailSending:" destination="glK-by-361" id="NJ3-dZ-vps"/>
+                                        </connections>
                                     </barButtonItem>
                                     <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="jNb-Zg-bn8"/>
                                     <barButtonItem systemItem="action" id="0AA-le-wzn">
@@ -1729,23 +1723,16 @@
                                             <barButtonItem width="6" style="plain" systemItem="fixedSpace" id="Wk1-vK-fxq"/>
                                             <barButtonItem systemItem="action" id="bz4-pa-yr1"/>
                                             <barButtonItem width="30" style="plain" systemItem="fixedSpace" id="11x-PY-XWr"/>
-                                            <barButtonItem image="shopping-cart-grey-hi.png" id="s6r-Gh-37w"/>
+                                            <barButtonItem systemItem="compose" id="s6r-Gh-37w">
+                                                <connections>
+                                                    <action selector="EmailSending:" destination="Llz-p3-sxk" id="dVU-xq-flZ"/>
+                                                </connections>
+                                            </barButtonItem>
                                             <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="vyb-oM-7NP"/>
                                         </items>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </toolbar>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3x1-da-Tay">
-                                        <rect key="frame" x="131" y="724" width="74" height="44"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="38"/>
-                                        <state key="normal" title="♡">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="likeClicked:" destination="Llz-p3-sxk" eventType="touchUpInside" id="Jlr-pM-RRe"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Prise" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Se0-cO-Nd0">
                                         <rect key="frame" x="205" y="677" width="197" height="39"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1804,7 +1791,6 @@
                         <outlet property="closeButton" destination="wfU-hy-aUa" id="eBZ-Ky-iro"/>
                         <outlet property="indicator" destination="3ve-FK-tLE" id="fJC-yf-YlO"/>
                         <outlet property="leftView" destination="a2G-I0-2HD" id="qAb-2P-GCI"/>
-                        <outlet property="like" destination="3x1-da-Tay" id="iak-p4-WdO"/>
                         <outlet property="mainView" destination="Y0p-L9-U9A" id="cqF-WQ-aMf"/>
                         <outlet property="pictureInfo" destination="dAd-sQ-P3c" id="PzS-9N-ter"/>
                         <outlet property="price" destination="Se0-cO-Nd0" id="qRa-Hd-8s8"/>
@@ -1962,6 +1948,77 @@
             </objects>
             <point key="canvasLocation" x="1467" y="-896"/>
         </scene>
+        <!--Local Artist View Controller-->
+        <scene sceneID="EFZ-98-sma">
+            <objects>
+                <viewController id="Hkk-yp-hPW" customClass="LocalArtistViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Q6c-nd-KCq"/>
+                        <viewControllerLayoutGuide type="bottom" id="vI3-dx-i5U"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Skr-EF-hFD">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cJ5-l7-BP0">
+                                <rect key="frame" x="0.0" y="44" width="1024" height="724"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Hkk-yp-hPW" id="jS6-1Z-uyY"/>
+                                </connections>
+                            </mapView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="83X-aD-faE">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="reply" id="dNf-VE-DFy">
+                                        <connections>
+                                            <action selector="backReturn:" destination="Hkk-yp-hPW" id="gcC-iw-Sn5"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="49" style="plain" systemItem="fixedSpace" id="4dm-7O-nOU"/>
+                                    <barButtonItem style="plain" id="COr-HY-LVk">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="8y0-dh-yKG">
+                                            <rect key="frame" x="104" y="7" width="235" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="Standard"/>
+                                                <segment title="Satellite"/>
+                                                <segment title="Hybrid"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="SetMap:" destination="Hkk-yp-hPW" eventType="valueChanged" id="gpC-e8-7Xa"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Fz-9k-zAf">
+                                <rect key="frame" x="0.0" y="44" width="180" height="166"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose artist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89d-RI-kWZ">
+                                <rect key="frame" x="35" y="45" width="110" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="mapView" destination="cJ5-l7-BP0" id="yTl-hM-XxD"/>
+                        <outlet property="myPicker" destination="0Fz-9k-zAf" id="Mog-xT-Jry"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FTD-Uj-4c2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1787" y="4331"/>
+        </scene>
     </scenes>
     <resources>
         <image name="background.jpg" width="1440" height="900"/>
@@ -1977,9 +2034,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="Jgj-hT-4sq"/>
+        <segue reference="9Q1-oe-U60"/>
         <segue reference="vib-vZ-Kxc"/>
         <segue reference="rgd-cC-rRv"/>
-        <segue reference="mv4-dZ-DuR"/>
-        <segue reference="9Q1-oe-U60"/>
     </inferredMetricsTieBreakers>
 </document>

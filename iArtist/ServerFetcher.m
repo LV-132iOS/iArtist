@@ -20,7 +20,6 @@ static NSString *querystring;
 @interface ServerFetcher ()
 @property (nonatomic,assign) dispatch_group_t downloadGroup;
 @end
-#pragma GCC diagnostic ignored "-Wwarning-flag"
 
 @implementation ServerFetcher
 

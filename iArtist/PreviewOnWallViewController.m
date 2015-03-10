@@ -82,7 +82,6 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     
     self.CurrentArtist = [[NSDictionary alloc]init];
     self.CurrentPainting = [[NSDictionary alloc]init];
-    NSLog(@"%@",self.AllPaintingData);
     self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",(long)self.pictureIndex]];
     self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",(long)self.pictureIndex]];
     
@@ -92,7 +91,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
     
     CGRect frame = {.origin.x = 0.0, .origin.y = 0.0, .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
     
-    self.price.text = [self.CurrentPainting valueForKey:@"price"];
+    self.price.text = [NSString stringWithFormat:@"%@",[self.CurrentPainting valueForKey:@"price"]];
     self.pictureSize.text = [self.CurrentPainting valueForKey:@"size"];
     NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *img = [UIImage imageWithData:imageData];
@@ -124,7 +123,7 @@ typedef NS_ENUM(NSInteger, AVTypeOfPictureChange){
         
         [self.pictureImage removeFromSuperview];
         self.pictureImage = [[UIImageView alloc] initWithFrame:frame];
-        
+        self.pictureImage.contentMode = UIViewContentModeScaleAspectFit;
         self.pictureImage.image = image;
         
         self.pictureImage.center = self.view.center;
@@ -326,7 +325,7 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
             }
         }
         
-        size = @(size.intValue / (3 * self.currentWall.distanceToWall.doubleValue ));
+        size = @(size.intValue * 7.6 /(self.currentWall.distanceToWall.doubleValue));
         
         if ([self.ImageArray objectAtIndex:self.pictureIndex] == [NSNull null]) {
             
@@ -410,6 +409,96 @@ if ((typeOfPictureChange == AVSwipeRightTypeOfPictureChange)||(typeOfPictureChan
         }
     }
     return NO;
+}
+
+
+- (IBAction)EmailSending:(id)sender {
+    
+    if ([MFMailComposeViewController canSendMail] == YES)
+        
+    {
+        // Set up
+        self.myMail = [[MFMailComposeViewController alloc] init];
+        
+        self.myMail.mailComposeDelegate = self;
+        
+        
+        // Set the subject
+        
+        [self.myMail setSubject:@"My app feedback"];
+        
+        // To recipients
+        
+        NSArray *toResipients = [[NSArray alloc] initWithObjects:@"iArtistGreatTeam@gmail.com", nil];
+        
+        [self.myMail setToRecipients:toResipients];
+        
+        // Add some text to message body
+        
+        NSString *sentFrom = @"Email sent from my app";
+        
+        [self.myMail setMessageBody:sentFrom
+                             isHTML:YES];
+        
+        // Display the view controller
+        
+        [self presentViewController:self.myMail
+                           animated:YES
+                         completion:nil];
+    }
+    
+    else
+        
+    {
+        
+        UIAlertView *errorAlter = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message:@"Your device can not send email"
+                                                            delegate:self
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles: nil];
+        
+        [errorAlter show];
+        
+    }
+}
+
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result) {
+            
+        case MFMailComposeResultCancelled:
+            // Do something
+            break;
+            
+        case MFMailComposeResultFailed:
+            // Do something
+            break;
+            
+        case MFMailComposeResultSaved:
+            // Do something
+            break;
+            
+        case MFMailComposeResultSent:
+        {
+            
+            UIAlertView *thanyouAlter = [[UIAlertView alloc] initWithTitle:@"Thank You"
+                                                                   message:@"Thank you for your email"
+                                                                  delegate:self cancelButtonTitle:@"OK"
+                                                         otherButtonTitles: nil];
+            
+            [thanyouAlter show];
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
+    
 }
 
 //pan picture recognizer for moving picture on the screen

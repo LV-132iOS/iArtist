@@ -298,7 +298,7 @@ UIVisualEffectView *visualEffectView;
           }
         self.CurrentPainting = [self.AllPaintingData valueForKey:[NSString stringWithFormat:@"%ld",self.pictureView.currentItemIndex]];
         self.CurrentArtist = [self.AllPaintingData valueForKeyPath:[NSString stringWithFormat:@"%ld.artistId",self.pictureView.currentItemIndex]];
-              self.price.text = [self.CurrentPainting valueForKey:@"price"];
+              self.price.text = [NSString stringWithFormat:@"%@",[self.CurrentPainting valueForKey:@"price"]];
               self.pictureSize.text = [self.CurrentPainting valueForKey:@"realsize"];
               NSData *imageData = [[NSData alloc]initWithBase64EncodedString:[self.CurrentArtist valueForKey:@"thumbnail"] options:NSDataBase64DecodingIgnoreUnknownCharacters];
               UIImage *img = [UIImage imageWithData:imageData];
@@ -444,7 +444,6 @@ UIVisualEffectView *visualEffectView;
         if ([identifier isEqualToString: @"ModalToPreviewOnWall"]) {
             
             NSString *realsize = [NSString stringWithString:self.pictureSize.text];
-            NSLog(@"%@",realsize);
             NSInteger indexOfX;
             CGPoint sizeOfNewPicture;
             for (indexOfX = 0; indexOfX < realsize.length; indexOfX ++) {
@@ -493,30 +492,96 @@ UIVisualEffectView *visualEffectView;
 }
 
 //add to cart button clicked
-- (IBAction)addPictureToCart:(id)sender {
-    AVPicture *inputPicture = [self.session.arrayOfPictures objectAtIndex:self.pictureView.currentItemIndex];
-    BOOL isCart = NO;
-    for (int i = 0; i < inputPicture.pictureTags.count; i++) {
-        if ([@"Cart" isEqualToString:(NSString *)[inputPicture.pictureTags objectAtIndex:i]]) {
-            isCart = YES;
-        }
+- (IBAction)EmailSending:(id)sender {
+    
+    if ([MFMailComposeViewController canSendMail] == YES)
+        
+    {
+        // Set up
+        self.myMail = [[MFMailComposeViewController alloc] init];
+        
+        self.myMail.mailComposeDelegate = self;
+        
+        
+        // Set the subject
+        
+        [self.myMail setSubject:@"My app feedback"];
+        
+        // To recipients
+        
+        NSArray *toResipients = [[NSArray alloc] initWithObjects:@"iArtistGreatTeam@gmail.com", nil];
+        
+        [self.myMail setToRecipients:toResipients];
+        
+        // Add some text to message body
+        
+        NSString *sentFrom = @"Email sent from my app";
+        
+        [self.myMail setMessageBody:sentFrom
+                             isHTML:YES];
+        
+        // Display the view controller
+        
+        [self presentViewController:self.myMail
+                           animated:YES
+                         completion:nil];
     }
-    if (isCart == NO) {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"You clicked on Add to cart"
-                                                        message:@"Do you want to add picture from cart?"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Ok",nil];
-        alert.delegate = self;
-        [alert show];
+    
+    else
+        
+    {
+        
+        UIAlertView *errorAlter = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message:@"Your device can not send email"
+                                                            delegate:self
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles: nil];
+        
+        [errorAlter show];
+        
     }
 }
-//if you want to add picture to cart
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 
 
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result) {
+            
+        case MFMailComposeResultCancelled:
+            // Do something
+            break;
+            
+        case MFMailComposeResultFailed:
+            // Do something
+            break;
+            
+        case MFMailComposeResultSaved:
+            // Do something
+            break;
+            
+        case MFMailComposeResultSent:
+        {
+            
+            UIAlertView *thanyouAlter = [[UIAlertView alloc] initWithTitle:@"Thank You"
+                                                                   message:@"Thank you for your email"
+                                                                  delegate:self cancelButtonTitle:@"OK"
+                                                         otherButtonTitles: nil];
+            
+            [thanyouAlter show];
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
     
 }
+
+
 
 //like button clicked
 - (IBAction)likeClicked:(id)sender {

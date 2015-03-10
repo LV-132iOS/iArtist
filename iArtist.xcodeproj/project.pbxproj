@@ -11,6 +11,10 @@
 		4B1FE8881A87838C00897D7B /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1FE8871A87838C00897D7B /* AsyncImageView.m */; };
 		4B2BC53F1AA369F300CFEF8A /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2BC53E1AA369F300CFEF8A /* Artist.m */; };
 		4B2C3D611A9F4AD300EFF863 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2C3D601A9F4AD300EFF863 /* CoreData.framework */; };
+		4B3F010D1AAF77B70069D0AA /* ArtistCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3F01081AAF77B70069D0AA /* ArtistCoordinate.m */; };
+		4B3F010E1AAF77B70069D0AA /* LocalArtistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3F010A1AAF77B70069D0AA /* LocalArtistViewController.m */; };
+		4B3F010F1AAF77B70069D0AA /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3F010C1AAF77B70069D0AA /* MapPin.m */; };
+		4B3F01131AAF7FED0069D0AA /* Picture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3F01121AAF7FED0069D0AA /* Picture.m */; };
 		4B4A321D1A8D32BD0048078C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A320B1A8D32BC0048078C /* AFHTTPRequestOperation.m */; };
 		4B4A321E1A8D32BD0048078C /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A320D1A8D32BC0048078C /* AFHTTPRequestOperationManager.m */; };
 		4B4A321F1A8D32BD0048078C /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A320F1A8D32BC0048078C /* AFHTTPSessionManager.m */; };
@@ -89,7 +93,6 @@
 		4BDFAF501A9DFA6B00CE9F35 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFAF3E1A9DFA6B00CE9F35 /* UIImageView+HighlightedWebCache.m */; };
 		4BDFAF511A9DFA6B00CE9F35 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFAF401A9DFA6B00CE9F35 /* UIImageView+WebCache.m */; };
 		4BDFAF521A9DFA6B00CE9F35 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFAF421A9DFA6B00CE9F35 /* UIView+WebCacheOperation.m */; };
-		4BDFAF581A9E021D00CE9F35 /* Picture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFAF571A9E021D00CE9F35 /* Picture.m */; };
 		4BF2F2EE1A92621200DEF7FB /* MaterialCarouselDelegateAndDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF2F2ED1A92621200DEF7FB /* MaterialCarouselDelegateAndDataSource.m */; };
 		4BF2F2F11A92622300DEF7FB /* ColorCarouselDelegateAndDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF2F2F01A92622300DEF7FB /* ColorCarouselDelegateAndDataSource.m */; };
 		4BF2F2F41A92623700DEF7FB /* ArtistsCarouselDelegateAndDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF2F2F31A92623700DEF7FB /* ArtistsCarouselDelegateAndDataSource.m */; };
@@ -244,6 +247,14 @@
 		4B2BC53D1AA369F300CFEF8A /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Artist.h; path = ../Artist.h; sourceTree = "<group>"; };
 		4B2BC53E1AA369F300CFEF8A /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Artist.m; path = ../Artist.m; sourceTree = "<group>"; };
 		4B2C3D601A9F4AD300EFF863 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4B3F01071AAF77B70069D0AA /* ArtistCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistCoordinate.h; sourceTree = "<group>"; };
+		4B3F01081AAF77B70069D0AA /* ArtistCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtistCoordinate.m; sourceTree = "<group>"; };
+		4B3F01091AAF77B70069D0AA /* LocalArtistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalArtistViewController.h; sourceTree = "<group>"; };
+		4B3F010A1AAF77B70069D0AA /* LocalArtistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalArtistViewController.m; sourceTree = "<group>"; };
+		4B3F010B1AAF77B70069D0AA /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPin.h; sourceTree = "<group>"; };
+		4B3F010C1AAF77B70069D0AA /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPin.m; sourceTree = "<group>"; };
+		4B3F01111AAF7FED0069D0AA /* Picture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Picture.h; sourceTree = "<group>"; };
+		4B3F01121AAF7FED0069D0AA /* Picture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Picture.m; sourceTree = "<group>"; };
 		4B4A320A1A8D32BC0048078C /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		4B4A320B1A8D32BC0048078C /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		4B4A320C1A8D32BC0048078C /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -389,8 +400,6 @@
 		4BDFAF401A9DFA6B00CE9F35 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		4BDFAF411A9DFA6B00CE9F35 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		4BDFAF421A9DFA6B00CE9F35 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
-		4BDFAF561A9E021D00CE9F35 /* Picture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Picture.h; path = ../Picture.h; sourceTree = "<group>"; };
-		4BDFAF571A9E021D00CE9F35 /* Picture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Picture.m; path = ../Picture.m; sourceTree = "<group>"; };
 		4BF2F2EC1A92621200DEF7FB /* MaterialCarouselDelegateAndDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialCarouselDelegateAndDataSource.h; sourceTree = "<group>"; };
 		4BF2F2ED1A92621200DEF7FB /* MaterialCarouselDelegateAndDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaterialCarouselDelegateAndDataSource.m; sourceTree = "<group>"; };
 		4BF2F2EF1A92622300DEF7FB /* ColorCarouselDelegateAndDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorCarouselDelegateAndDataSource.h; sourceTree = "<group>"; };
@@ -597,6 +606,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B3F01101AAF77C60069D0AA /* Local Artist */ = {
+			isa = PBXGroup;
+			children = (
+				4B3F01071AAF77B70069D0AA /* ArtistCoordinate.h */,
+				4B3F01081AAF77B70069D0AA /* ArtistCoordinate.m */,
+				4B3F01091AAF77B70069D0AA /* LocalArtistViewController.h */,
+				4B3F010A1AAF77B70069D0AA /* LocalArtistViewController.m */,
+				4B3F010B1AAF77B70069D0AA /* MapPin.h */,
+				4B3F010C1AAF77B70069D0AA /* MapPin.m */,
+			);
+			name = "Local Artist";
+			path = ..;
+			sourceTree = "<group>";
+		};
 		4B4A32091A8D32BC0048078C /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -859,9 +882,9 @@
 			children = (
 				4B2BC53D1AA369F300CFEF8A /* Artist.h */,
 				4B2BC53E1AA369F300CFEF8A /* Artist.m */,
-				4BDFAF561A9E021D00CE9F35 /* Picture.h */,
-				4BDFAF571A9E021D00CE9F35 /* Picture.m */,
 				60E69AAB1A865E2E007CA1C6 /* DArt.xcdatamodeld */,
+				4B3F01111AAF7FED0069D0AA /* Picture.h */,
+				4B3F01121AAF7FED0069D0AA /* Picture.m */,
 				60E69A6F1A865DF3007CA1C6 /* Picture+Create.h */,
 				60E69A701A865DF3007CA1C6 /* Picture+Create.m */,
 				60E69A691A865DE4007CA1C6 /* Artist+Create.h */,
@@ -1045,6 +1068,7 @@
 				604412CF1A83D7870099B184 /* AV classes */,
 				846AB9311A795EF80043214F /* Preview on wall */,
 				846AB92D1A795C630043214F /* Artist Info */,
+				4B3F01101AAF77C60069D0AA /* Local Artist */,
 				846AB9291A795BC80043214F /* Search Results */,
 				846AB9251A795B910043214F /* Details of painting */,
 				846AB9211A795B380043214F /* Paintings */,
@@ -1537,11 +1561,13 @@
 				606E20471A84E44100121589 /* SizeCarouselDelegateAndDataSource.m in Sources */,
 				4BC7F8761A8A2D000061CAAA /* PreviewOnWallViewController.m in Sources */,
 				4B56F4EE1AAF684100B9489B /* SNSocialNetworkDelegate.m in Sources */,
+				4B3F010F1AAF77B70069D0AA /* MapPin.m in Sources */,
 				4B4A32251A8D32BD0048078C /* AFURLSessionManager.m in Sources */,
 				604412F31A83D7A10099B184 /* CartTableViewCell.m in Sources */,
 				4BDFAF4E1A9DFA6B00CE9F35 /* UIImage+MultiFormat.m in Sources */,
 				4B56F4F71AAF684100B9489B /* SSKeychainQuery.m in Sources */,
 				604412F21A83D7A10099B184 /* AVAuthor.m in Sources */,
+				4B3F010E1AAF77B70069D0AA /* LocalArtistViewController.m in Sources */,
 				4B56F4F51AAF684100B9489B /* SNVkontakteSocialNetwork.m in Sources */,
 				604412F71A83D7A10099B184 /* LikedViewController.m in Sources */,
 				4B4A32211A8D32BD0048078C /* AFSecurityPolicy.m in Sources */,
@@ -1571,9 +1597,11 @@
 				4B56F4F41AAF684100B9489B /* SNVkontakteFabric.m in Sources */,
 				4BDFAF511A9DFA6B00CE9F35 /* UIImageView+WebCache.m in Sources */,
 				606E20531A84E53F00121589 /* PriceCarouselDelegateAndDataSource.m in Sources */,
+				4B3F010D1AAF77B70069D0AA /* ArtistCoordinate.m in Sources */,
 				4B4A32231A8D32BD0048078C /* AFURLRequestSerialization.m in Sources */,
 				4BDFAF481A9DFA6B00CE9F35 /* SDWebImageDownloader.m in Sources */,
 				4B56F4E21AAF684100B9489B /* ShareViewController.m in Sources */,
+				4B3F01131AAF7FED0069D0AA /* Picture.m in Sources */,
 				4BCF631D1A8CB58E002A365F /* FullSizePictureViewController.m in Sources */,
 				4B2BC53F1AA369F300CFEF8A /* Artist.m in Sources */,
 				4BDFAF4F1A9DFA6B00CE9F35 /* UIImage+WebP.m in Sources */,
@@ -1590,7 +1618,6 @@
 				4B56F4E91AAF684100B9489B /* SNFacebookSocialNetwork.m in Sources */,
 				4BC7F8781A8A2D000061CAAA /* SetDistanceToWallViewController.m in Sources */,
 				4BF2F2F41A92623700DEF7FB /* ArtistsCarouselDelegateAndDataSource.m in Sources */,
-				4BDFAF581A9E021D00CE9F35 /* Picture.m in Sources */,
 				604412FF1A83D7A10099B184 /* Sesion.m in Sources */,
 				4B1FE8881A87838C00897D7B /* AsyncImageView.m in Sources */,
 				4BDFAF471A9DFA6B00CE9F35 /* SDWebImageDecoder.m in Sources */,

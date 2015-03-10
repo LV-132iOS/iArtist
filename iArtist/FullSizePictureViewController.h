@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
+@interface FullSizePictureViewController : UIViewController<MFMailComposeViewControllerDelegate>
 
-@interface FullSizePictureViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIScrollView *mainView;
 
 @property (strong, nonatomic) UIImageView *imageView;
 
+@property(strong, nonatomic) MFMailComposeViewController *myMail;
 
 @property (strong, nonatomic) NSDictionary *paintingData;
 
