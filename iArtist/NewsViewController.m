@@ -143,12 +143,13 @@ NSInteger indexDelete;
     AVManager *dataManager = [AVManager sharedInstance];
     dataManager.session = self.session;
     
-    NewsTableViewCell *currentCell =  ((NewsTableViewCell *)sender);
+   
     
-    NSInteger index = ([self.newsTable indexPathForCell:currentCell]).row;
+   
     
     if ([segue.identifier isEqualToString:@"NewsToICarusel"]) {
-
+        NewsTableViewCell *currentCell =  ((NewsTableViewCell *)sender);
+         NSInteger index = ([self.newsTable indexPathForCell:currentCell]).row;
         dataManager.index = ((NewsTableViewCell *)sender).tag;
         for (int i = 0;i<self.AllArtistData.count;i++){
             NSString *str =[NSString stringWithFormat:@"http://ec2-54-93-36-107.eu-central-1.compute.amazonaws.com/paintings/files/%@?thumb=preview",[self.AllArtistData[i] valueForKey:@"_id"]];
@@ -160,7 +161,7 @@ NSInteger indexDelete;
         ((iCaruselViewController *)segue.destinationViewController).index = index;
     }
     if ([segue.identifier isEqualToString:@"NewsAuthor"]) {
-        
+        NewsTableViewCell *currentCell =  (NewsTableViewCell *)((((UIButton *)sender).superview).superview);
         ((ArtistViewController *)segue.destinationViewController).CurrentArtist = currentCell.author;
         ((ArtistViewController *)segue.destinationViewController).img = currentCell.authorImage.image;
 

@@ -15,7 +15,7 @@
 
 +(void) deleteAccountInfoFromCD;
 
-+(void) deleteAccountInfoFromServer;
++(void) deleteAccountInfoFromServerWithCompletionHandler:(void(^)())handler;
 
 +(void) setServerTokenToKeychain:(NSString*) string;
 +(void) deleteServerTokenFromKeychain;

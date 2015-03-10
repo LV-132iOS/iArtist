@@ -120,7 +120,7 @@ UIVisualEffectView *visualEffectView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     //self.pictureView.currentItemIndex = self.index;
-    if([[SessionControl sharedManager]checkInternetConnection]){
+    if([[SessionControl sharedManager]checkInternetConnectionWithHandler:nil]){
     self.ImageArray = [[NSMutableArray alloc]init];
     if (self.urls == nil) {
         
@@ -261,7 +261,7 @@ UIVisualEffectView *visualEffectView;
  /////
     }
     UIImageView *i = (UIImageView *)view;
-    if ([[SessionControl sharedManager]checkInternetConnection]) {
+    if ([[SessionControl sharedManager]checkInternetConnectionWithHandler:nil]) {
         if (!self.AllPaintingData) {
             self.AllPaintingData = [[ServerFetcher sharedInstance] Paintingdic];
 
@@ -520,7 +520,7 @@ UIVisualEffectView *visualEffectView;
 
 //like button clicked
 - (IBAction)likeClicked:(id)sender {
-    if ([[SessionControl sharedManager]checkInternetConnection]){
+    if ([[SessionControl sharedManager]checkInternetConnectionWithHandler:nil]){
     NSManagedObjectContext *context = ((AppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext;
    //     [self.CurrentPainting valueForKey:@"_id"]
       [[ServerFetcher sharedInstance]PutLikes:[self.CurrentPainting valueForKey:@"_id"] callback:^(NSString *responde) {

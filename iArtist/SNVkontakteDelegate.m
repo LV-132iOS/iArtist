@@ -57,6 +57,8 @@
              }
          }
          
+         self.block();
+         
      } errorBlock:^(NSError *error) {
          //something went wrong, do nothing
          NSLog(@"Error with getting user info from VK: %@", [error localizedDescription]);

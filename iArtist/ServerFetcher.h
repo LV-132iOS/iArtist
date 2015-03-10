@@ -41,6 +41,7 @@ static NSMutableArray *urls;
 - (void)CheckIsFollowing:(NSString *)_id
                 callback:(void (^)(BOOL responde))callback;
 - (void)CancelDownloads;
+- (NSString *)appedAcceseTockenToString:(NSString*)string;
 
 @end
 

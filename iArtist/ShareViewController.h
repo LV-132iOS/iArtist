@@ -13,6 +13,7 @@
 #import <TwitterKit/TwitterKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "SNClient.h"
+#import "MessageDelegate.h"
 
 
 @interface ShareViewController : UIViewController <UIAlertViewDelegate>

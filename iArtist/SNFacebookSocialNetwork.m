@@ -20,9 +20,14 @@
         delegate = [[SNFacebookDelegate alloc] init];
         sharedMyManager.delegate = delegate;
         delegate.network = sharedMyManager;
-        delegate.network.socialName = @"Facebook";
-        delegate.network.clientID = @"fb1384822491823366";
+        sharedMyManager.socialName = @"Facebook";
+        sharedMyManager.clientID = @"fb1384822491823366";
         [FBLoginView class];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        sharedMyManager.userid = [defaults objectForKey:@"userid"];
+        sharedMyManager.username = [defaults objectForKey:@"username"];
+        sharedMyManager.useremail = [defaults objectForKey:@"useremail"];
         
     });
     
@@ -31,7 +36,7 @@
 
 //general methods
 
--(void) logIn {
+-(void) logInWithCompletionHandler:(void (^)())handler {
     NSArray* fbScope = @[ @"public_profile", @"email"];
     self.isMainAuth = YES;
     self.permissions = fbScope;
@@ -44,52 +49,63 @@
      ^(FBSession *session, FBSessionState state, NSError *error) {
          
          // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
-         [((SNFacebookDelegate*)self.delegate) sessionStateChanged:session state:state error:error];
+         [((SNFacebookDelegate*)self.delegate) sessionStateChanged:session
+                                                             state:state
+                                                             error:error
+                                                          complete:handler];
          
          
      }];
     
 }
 
--(void) logOut {
-    [FBSession.activeSession closeAndClearTokenInformation];
+-(void) logOutWithCompletionHandler:(void (^)())handler {
+    self.isLoggedIn = NO;
+    self.isMainAuth = NO;
+    [[FBSession activeSession] closeAndClearTokenInformation];
+    FBSession.activeSession = nil;
     [CDManager deleteAccountInfoFromCD];
     SessionControl* control = [SessionControl sharedManager];
     [control reset];
+    handler();
 }
 
--(void) deleteAccount {
-    [self logOut];
-    [CDManager deleteAccountInfoFromServer];
+-(void) deleteAccountWithCompletionHandler:(void (^)())handler {
+    [self logOutWithCompletionHandler:^{
+        [CDManager deleteAccountInfoFromServerWithCompletionHandler:handler];
+
+    }];
     
 }
 
--(void) askForSharing {
+-(void) askForSharingWithCompletionHandler:(void (^)())handler {
     if (self.isSharingGranted == NO) {
-        NSArray* scope = @[ @"publish_actions"];
-        self.isNotMainAuth = YES;
-        if ([FBSession activeSession].state !=FBSessionStateOpen ) {
-            [FBSession openActiveSessionWithPublishPermissions:scope
-                                               defaultAudience:FBSessionDefaultAudienceEveryone
-                                                  allowLoginUI:YES
-                                             completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-                                                 
-                                             }];
-        } else {
-            [[FBSession activeSession] requestNewPublishPermissions:scope
-                                                    defaultAudience:FBSessionDefaultAudienceEveryone
-                                                  completionHandler:^(FBSession *session, NSError *error) {
-                                                      
-                                                  }];
-        }
-        
-        
-        //[FBSession ref]
-        self.permissions = scope;
+//        NSArray* scope = @[ @"publish_actions"];
+//        self.isNotMainAuth = YES;
+//        if ([FBSession activeSession].state !=FBSessionStateOpen ) {
+//            [FBSession openActiveSessionWithPublishPermissions:scope
+//                                               defaultAudience:FBSessionDefaultAudienceEveryone
+//                                                  allowLoginUI:YES
+//                                             completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+//                                                 if (!error) handler();
+//                                             }];
+//        } else {
+//            [[FBSession activeSession] requestNewPublishPermissions:scope
+//                                                    defaultAudience:FBSessionDefaultAudienceEveryone
+//                                                  completionHandler:^(FBSession *session, NSError *error) {
+//                                                      if (!error) handler();
+//                                                  }];
+//        }
+//        
+//        
+//        //[FBSession ref]
+//        self.permissions = scope;
+        handler();
     }
 }
 
--(void) shareInfo:(NSDictionary*)info withViewController:(UIViewController*)controller {
+-(void) shareInfo:(NSDictionary*)info withViewController:(UIViewController*)controller WithCompletionHandler:(void (^)())handler {
+   
     
       
 }

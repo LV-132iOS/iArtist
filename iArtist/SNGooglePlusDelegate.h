@@ -7,7 +7,9 @@
 //
 
 #import "SNSocialNetworkDelegate.h"
+#import <GooglePlus/GooglePlus.h> 
+#import <GoogleOpenSource/GoogleOpenSource.h>
 
-@interface SNGooglePlusDelegate : SNSocialNetworkDelegate
+@interface SNGooglePlusDelegate : SNSocialNetworkDelegate <GPPSignInDelegate>
 
 @end

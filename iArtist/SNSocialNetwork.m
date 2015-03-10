@@ -12,12 +12,6 @@
 
 @implementation SNSocialNetwork
 
--(void)setIsLoggedIn:(BOOL)isLoggedIn {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"isLoggedInChanged" object:nil];
-    _isLoggedIn = isLoggedIn;
-}
-
-
 //class methods
 
 +(id) sharedManager {
@@ -26,23 +20,23 @@
 
 //general methods
 
--(void) logIn {
+-(void) logInWithCompletionHandler:(void(^)())handler; {
     needToRewrite()
 }
 
--(void) logOut {
+-(void) logOutWithCompletionHandler:(void(^)())handler; {
     needToRewrite()
 }
 
--(void) deleteAccount {
+-(void) deleteAccountWithCompletionHandler:(void(^)())handler; {
     needToRewrite()
 }
 
--(void) askForSharing {
+-(void) askForSharingWithCompletionHandler:(void(^)())handler; {
     needToRewrite()
 }
 
--(void) shareInfo:(NSDictionary*)info withViewController:(UIViewController*)controller {
+-(void) shareInfo:(NSDictionary*)info withViewController:(UIViewController*)controller WithCompletionHandler:(void(^)())handler;{
     needToRewrite()
 }
 

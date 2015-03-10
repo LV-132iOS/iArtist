@@ -12,5 +12,5 @@
 
 @interface SNFacebookDelegate : SNSocialNetworkDelegate
 
-- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
+- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error complete:(void(^)())handler;
 @end

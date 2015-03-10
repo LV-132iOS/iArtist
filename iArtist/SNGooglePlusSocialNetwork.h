@@ -7,6 +7,11 @@
 //
 
 #import "SNSocialNetwork.h"
+#import "SNGooglePlusDelegate.h"
+#import <GooglePlus/GooglePlus.h>
+#import <GoogleOpenSource/GoogleOpenSource.h> 
+#import "SNClient.h"
+#import "SessionControl.h"
 
 @interface SNGooglePlusSocialNetwork : SNSocialNetwork
 

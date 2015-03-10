@@ -181,10 +181,9 @@
 
 - (IBAction)likedButtonAction:(id)sender {
     SessionControl* control = [SessionControl sharedManager];
-    [control refresh];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500000000), dispatch_get_main_queue(), ^{
+    [control refreshWithCompletionHandler:^{
         [self performSegueWithIdentifier:@"pushToLiked" sender:nil];
-    });
+    }];
 }
 
 -(void)goToPictures{
@@ -295,16 +294,14 @@
 
 - (IBAction)goToProfile:(id)sender {
     SessionControl* control = [SessionControl sharedManager];
-    [control refresh];
-   
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500000000), dispatch_get_main_queue(), ^{
-         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [control refreshWithCompletionHandler:^{
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         if ([defaults boolForKey:@"loggedIn"]) {
             [self performSegueWithIdentifier:@"GoToProfile" sender:nil];
         } else{
             [self performSegueWithIdentifier:@"Login" sender:nil];
         }
-    });
+    }];
 }
 
 #pragma mark UISearchBar

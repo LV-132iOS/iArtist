@@ -1,16 +1,15 @@
 //
-//  SNGooglePlusFabric.h
-//  TestingSN
+//  SNEmailFabric.h
+//  iArtist
 //
-//  Created by Admin on 04.03.15.
+//  Created by Vitalii Zamirko on 3/9/15.
 //  Copyright (c) 2015 SS projects. All rights reserved.
 //
 
 #import "SNSocialNetworkFabric.h"
-#import "SNGooglePlusSocialNetwork.h"
+#import "SNEmailSocialNetwork.h"
 
-@interface SNGooglePlusFabric : SNSocialNetworkFabric
-
+@interface SNEmailFabric : SNSocialNetworkFabric
 -(SNSocialNetwork *)getSocialNetwork;
 
 -(SNSocialNetworkButton *)getSocialNetworkLoginButtonAtView:(UIView *)view withPosition:(CGPoint)position;

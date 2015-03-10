@@ -271,9 +271,6 @@ CGPoint positionOfFirstTapOfPinchGestureGecognizer;
                    dispatch_get_main_queue(), ^{
                        
                        [self dismissViewControllerAnimated:NO completion:nil];
-                       
-                       
-                       
                    });
 }
 

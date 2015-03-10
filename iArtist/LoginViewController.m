@@ -17,7 +17,6 @@
 
 
 @interface LoginViewController (){
-    dispatch_semaphore_t semaphore;
 }
 
 @end
@@ -26,11 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(loggedInChanged)
-                                                     name:@"isLoggedInChanged"
-                                                   object:nil];
-        semaphore = dispatch_semaphore_create(0);
    }
 
 - (void)didReceiveMemoryWarning {
@@ -38,10 +32,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void) loggedInChanged {
-    dispatch_semaphore_signal(semaphore);
-    
-}
 
 
 
@@ -63,30 +53,68 @@
 - (IBAction)loginWithVkontakte:(id)sender {
     SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameVkontakte];
     SNSocialNetwork* network = [fabric getSocialNetwork];
-    [network logIn];
-    
-    dispatch_queue_t q = dispatch_queue_create("lbl", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_async(q, ^{
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-        [SNClient logInWithSocialNetwork:network];
-        NSLog(@"done");
-        [self CloseView:nil];
-    });
-    
+    network.delegate.block = nil;
+    [network logInWithCompletionHandler:^{
+        [SNClient logInWithSocialNetwork:network WithCompletionHandler:^{
+            [self CloseView:nil];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:@"Vkontakte" forKey:@"loggedInWith"];
+            [defaults setObject:network.userid forKey:@"userid"];
+            [defaults setObject:network.username forKey:@"username"];
+            [defaults setObject:network.useremail forKey:@"useremail"];
+
+        }];
+    }];
 
 }
+
+
 - (IBAction)loginWithFacebook:(id)sender {
     SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameFacebook];
     SNSocialNetwork* network = [fabric getSocialNetwork];
-    [network logIn];
-    
-    dispatch_queue_t q = dispatch_queue_create("lbl", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_async(q, ^{
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-        [SNClient logInWithSocialNetwork:network];
-        NSLog(@"done");
+    network.delegate.block = nil;
+    [network logInWithCompletionHandler:^{
+        [SNClient logInWithSocialNetwork:network WithCompletionHandler:^{
+            [self CloseView:nil];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:@"Facebook" forKey:@"loggedInWith"];
+            [defaults setObject:network.userid forKey:@"userid"];
+            [defaults setObject:network.username forKey:@"username"];
+            [defaults setObject:network.useremail forKey:@"useremail"];
+        }];
+    }];
+}
+
+- (IBAction)loginWithTwitter:(id)sender {
+    SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameTwitter];
+    SNSocialNetwork* network = [fabric getSocialNetwork];
+    network.delegate.block = nil;
+    [network logInWithCompletionHandler:^{
+            [self CloseView:nil];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:@"Twitter" forKey:@"loggedInWith"];
+            [defaults setObject:network.userid forKey:@"userid"];
+            [defaults setObject:network.username forKey:@"username"];
+            [defaults setObject:network.useremail forKey:@"useremail"];
+    }];
+
+}
+- (IBAction)loginWithGooglePlus:(id)sender {
+    SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameGooglePlus];
+    SNSocialNetwork* network = [fabric getSocialNetwork];
+    network.delegate.block = nil;
+    [network logInWithCompletionHandler:^{
         [self CloseView:nil];
-    });
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"loggedIn"];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@"GooglePlus" forKey:@"loggedInWith"];
+        [defaults setObject:network.userid forKey:@"userid"];
+        [defaults setObject:network.username forKey:@"username"];
+        [defaults setObject:network.useremail forKey:@"useremail"];
+    }];
 }
 
 @end

@@ -42,11 +42,11 @@
 
 //general methods
 
--(void) logIn;
--(void) logOut;
--(void) deleteAccount;
--(void) askForSharing;
--(void) shareInfo:(NSDictionary*)info withViewController:(UIViewController*)controller;
+-(void) logInWithCompletionHandler:(void(^)())handler;
+-(void) logOutWithCompletionHandler:(void(^)())handler;
+-(void) deleteAccountWithCompletionHandler:(void(^)())handler;
+-(void) askForSharingWithCompletionHandler:(void(^)())handler;
+-(void) shareInfo:(NSDictionary*)info withViewController:(UIViewController*)controller WithCompletionHandler:(void(^)())handler;
 
 
 

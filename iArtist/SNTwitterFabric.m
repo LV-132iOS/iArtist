@@ -10,4 +10,17 @@
 
 @implementation SNTwitterFabric
 
+-(SNSocialNetwork *)getSocialNetwork {
+    SNTwitterSocialNetwork *network = [SNTwitterSocialNetwork sharedManager];
+    return network;
+}
+
+-(SNSocialNetworkButton *)getSocialNetworkLoginButtonAtView:(UIView *)view withPosition:(CGPoint)position {
+    return Nil;
+}
+
+-(SNSocialNetworkButton *)getSocialNetworkShareButtonAtView:(UIView *)view withPosition:(CGPoint)position {
+    return Nil;
+}
+
 @end

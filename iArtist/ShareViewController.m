@@ -10,7 +10,7 @@
 
 @interface ShareViewController (){
     GPPSignIn *signIn;
-
+    MessageDelegate* mDelegate;
 }
 
 @end
@@ -23,9 +23,17 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GoogleShare) name:@"GoogleShare" object:nil];
-    
+    // Do any additional setup after loading the view.    
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    mDelegate = [[MessageDelegate alloc] init];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    mDelegate = nil;
 }
 
 
@@ -35,29 +43,23 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
 }
 
 - (IBAction)shareWithFacebook:(id)sender {
-    // Check if the Facebook app is installed and we can present the share dialog
+ /*
     SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameFacebook];
     SNSocialNetwork* network = [fabric getSocialNetwork];
-//    [network askForSharing];
-//    
-//    dispatch_queue_t q = dispatch_queue_create("lbl", DISPATCH_QUEUE_CONCURRENT);
-//    dispatch_async(q, ^{
-//        while (network.isSharingGranted == NO) {
-//            
-//        }
-    
+    [network askForSharingWithCompletionHandler:^{
+        
         NSDictionary* dic = @{@"image": self.imageToShare,
                               @"text": self.headString,
                               @"url": self.urlToPass
                               };
         
         [self dismissViewControllerAnimated:YES completion:nil];
-        [network shareInfo:dic withViewController:[self presentingViewController]];
-//    });
-
+        [network shareInfo:dic withViewController:[self presentingViewController] WithCompletionHandler:nil];
+        
+    }];
+*/
    
 }
-
 
 // A function for parsing URL parameters returned by the Feed Dialog.
 - (NSDictionary*)parseURLParams:(NSString *)query {
@@ -74,116 +76,98 @@ static NSString * const kClientId = @"151071407108-tdf2fd0atjggs26i68tepgupb0501
 
 
 - (IBAction)shareWithGooglePlus:(id)sender {
-    signIn = [GPPSignIn sharedInstance];
-    signIn.clientID = kClientId;
-    signIn.scopes = [NSArray arrayWithObjects:
-                     kGTLAuthScopePlusLogin,
-                     kGTLAuthScopePlusUserinfoEmail,
-                     nil];
-    signIn.attemptSSO = YES;
-    if (signIn.delegate == nil) {
-     //   delegateG = [[GooglePlusDelegate alloc] init];
-      //  signIn.delegate = delegateG;
-    }
     
-    if ([signIn authentication]) {
-        id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
-        [shareBuilder setPrefillText:self.headString];
-        [shareBuilder attachImage:self.imageToShare];
-        [shareBuilder open];
-        
-    } else {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"You need to login first."
-                                                        message:@"Do you want to log in?"
-                                                       delegate:self
-                                              cancelButtonTitle:@"No"
-                                              otherButtonTitles:@"Yes", nil];
-        [alert show];
-    }
-}
-
-- (IBAction)shareWithVkontakte:(id)sender {
-//    VKShareDialogController * shareDialog = [VKShareDialogController new]; 
-//    VKUploadImage* locImage = [VKUploadImage uploadImageWithImage:self.imageToShare
-//                                                        andParams:[VKImageParameters pngImage]];
-//    
-//    shareDialog.dismissAutomatically = YES;
-//    shareDialog.text = self.headString;
-//    shareDialog.uploadImages = @[locImage];
-//    shareDialog.shareLink = [[VKShareLink alloc] initWithTitle:@"Picture on the wall"
-//                                                          link:self.urlToPass];
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//    [[self presentingViewController] presentViewController:shareDialog animated:YES completion:nil];
-    SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameVkontakte];
+    SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameGooglePlus];
     SNSocialNetwork* network = [fabric getSocialNetwork];
-    [network askForSharing];
- 
-    dispatch_queue_t q = dispatch_queue_create("lbl", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_async(q, ^{
-        while (network.isSharingGranted == NO) {
-            
-        }
-
-        
+    [network askForSharingWithCompletionHandler:^{
         NSDictionary* dic = @{@"image": self.imageToShare,
-                             @"text": self.headString,
-                             @"url": self.urlToPass
+                              @"text": self.headString,
+                              @"url": self.urlToPass
                               };
         
         [self dismissViewControllerAnimated:YES completion:nil];
-        [network shareInfo:dic withViewController:[self presentingViewController]];
-    });
-    
-    
-}
-
-#pragma mark UIAlertView delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
-        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:@"yes" forKey:@"flagForGoogleShare"];
-        [signIn authenticate];
-    }
-}
-
--(void)GoogleShare {
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-
-    signIn = [GPPSignIn sharedInstance];
-    signIn.clientID = kClientId;
-    signIn.scopes = [NSArray arrayWithObjects:
-                     kGTLAuthScopePlusLogin,
-                     kGTLAuthScopePlusUserinfoEmail,
-                     nil];
-    signIn.attemptSSO = YES;
-            id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
-            [shareBuilder setPrefillText:self.headString];
-            [shareBuilder attachImage:self.imageToShare];
-            [shareBuilder open];
-        [defaults setObject:@"no" forKey:@"flagForGoogleShare"];
-}
-
-- (void)shareWithTwitter:(NSNotification*)notification {
-    TWTRComposer* composer = [[TWTRComposer alloc] init];
-    
-    
-    [composer setText:self.headString];
-    [composer setImage:self.imageToShare];
-    [composer setURL:self.urlToPass];
-    
-    [composer showWithCompletion:^(TWTRComposerResult result) {
-        if (result == TWTRComposerResultCancelled) {
-            NSLog(@"Tweet composition cancelled");
-        }
-        else {
-            NSLog(@"Sending Tweet!");
-        }
+        [network shareInfo:dic withViewController:[self presentingViewController] WithCompletionHandler:nil];
+        
     }];
 }
 
-+(void) setServerTokenToKeychain:(NSString*) string{
-    
+- (IBAction)shareWithVkontakte:(id)sender {
+
+    SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameVkontakte];
+    SNSocialNetwork* network = [fabric getSocialNetwork];
+    [network askForSharingWithCompletionHandler:^{
+        NSDictionary* dic = @{@"image": self.imageToShare,
+                              @"text": self.headString,
+                              @"url": self.urlToPass
+                              };
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [network shareInfo:dic withViewController:[self presentingViewController] WithCompletionHandler:nil];
+        
+    }];
 }
+
+- (void)shareWithTwitter:(NSNotification*)notification {
+    
+    SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameTwitter];
+    SNSocialNetwork* network = [fabric getSocialNetwork];
+    [network askForSharingWithCompletionHandler:^{
+        NSDictionary* dic = @{@"image": self.imageToShare,
+                              @"text": self.headString,
+                              @"url": self.urlToPass
+                              };
+        
+        
+        [network shareInfo:dic withViewController:[self presentingViewController] WithCompletionHandler:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+    }];
+}
+
+- (IBAction)shareWithEmail:(id)sender {
+    SNSocialNetworkFabric* fabric = [SNClient getFabricWithName:SNnameEmail];
+    SNSocialNetwork* network = [fabric getSocialNetwork];
+    [network askForSharingWithCompletionHandler:^{
+        NSDictionary* dic = @{@"image": self.imageToShare,
+                              @"text": self.headString,
+                              @"url": self.urlToPass
+                              };
+        
+        
+        [network shareInfo:dic withViewController:self WithCompletionHandler:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+    }];
+}
+
+- (IBAction)shareWithMessages:(id)sender {
+    
+    if(![MFMessageComposeViewController canSendText]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Your device doesn't support SMS!"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+    messageController.messageComposeDelegate = mDelegate;
+    [messageController setBody:self.headString];
+   
+
+    NSData *imageData = UIImageJPEGRepresentation(self.imageToShare, 1.0);
+    
+    [messageController addAttachmentData:imageData
+                          typeIdentifier:@"image/jpeg"
+                                filename:@"Art"];
+
+    [self presentViewController:messageController animated:YES completion:nil];
+
+}
+
 
 @end

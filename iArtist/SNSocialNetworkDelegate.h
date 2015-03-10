@@ -12,7 +12,9 @@
 @class SNSocialNetwork;
 
 @interface SNSocialNetworkDelegate : NSObject
+typedef void (^SucBlock)();
 
 @property(nonatomic,strong) SNSocialNetwork *network;
+@property(nonatomic,strong) SucBlock block;
 
 @end

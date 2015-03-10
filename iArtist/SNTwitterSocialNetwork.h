@@ -7,6 +7,10 @@
 //
 
 #import "SNSocialNetwork.h"
+#import "SNTwitterSocialNetwork.h"
+#import "SNTwitterDelegate.h"
+#import <TwitterKit/TwitterKit.h> 
+
 
 @interface SNTwitterSocialNetwork : SNSocialNetwork
 

@@ -20,10 +20,15 @@
         delegate = [[SNVkontakteDelegate alloc] init];
         sharedMyManager.delegate = delegate;
         delegate.network = sharedMyManager;
-        delegate.network.socialName = @"Vkontakte";
-        delegate.network.clientID = @"4738060";
-        [VKSdk initializeWithDelegate:delegate andAppId:delegate.network.clientID];
+        sharedMyManager.socialName = @"Vkontakte";
+        sharedMyManager.clientID = @"4738060";
+        [VKSdk initializeWithDelegate:delegate andAppId:sharedMyManager.clientID];
         [VKSdk wakeUpSession];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        sharedMyManager.userid = [defaults objectForKey:@"userid"];
+        sharedMyManager.username = [defaults objectForKey:@"username"];
+        sharedMyManager.useremail = [defaults objectForKey:@"useremail"];
         
     });
     
@@ -32,28 +37,35 @@
 
 //general methods
 
--(void) logIn {
+-(void) logInWithCompletionHandler:(void(^)())handler {
+    self.delegate.block = handler;
     NSArray* vkScope = @[ @"email"];
     self.isMainAuth = YES;
     self.permissions = vkScope;
     [VKSdk authorize:vkScope  revokeAccess:YES];
 }
 
--(void) logOut {
+-(void) logOutWithCompletionHandler:(void(^)())handler {
+    self.isLoggedIn = NO;
+    self.isMainAuth = NO;
     [VKSdk forceLogout];
     [CDManager deleteAccountInfoFromCD];
     SessionControl* control = [SessionControl sharedManager];
     [control reset];
+    handler();
 }
 
--(void) deleteAccount {
-    [self logOut];
-    [CDManager deleteAccountInfoFromServer];
+-(void) deleteAccountWithCompletionHandler:(void(^)())handler {
+    [self logOutWithCompletionHandler:^{
+        NSLog(@"account deleted");
+    }];
+    [CDManager deleteAccountInfoFromServerWithCompletionHandler:handler];
     
 }
 
--(void) askForSharing {
+-(void) askForSharingWithCompletionHandler:(void(^)())handler {
     if (self.isSharingGranted == NO) {
+    self.delegate.block = handler;
     NSArray* vkScope = @[ @"email", @"wall"];
     self.isNotMainAuth = YES;
     self.permissions = vkScope;
@@ -61,7 +73,7 @@
     }
 }
 
--(void) shareInfo:(NSDictionary*)info withViewController:(UIViewController*)controller {
+-(void) shareInfo:(NSDictionary*)info withViewController:(UIViewController*)controller WithCompletionHandler:(void(^)())handler {
     VKShareDialogController * shareDialog = [VKShareDialogController new];
     VKUploadImage* locImage = [VKUploadImage uploadImageWithImage:[info valueForKey:@"image"]
                                                         andParams:[VKImageParameters pngImage]];
@@ -71,7 +83,7 @@
     shareDialog.uploadImages = @[locImage];
     shareDialog.shareLink = [[VKShareLink alloc] initWithTitle:@"Picture on the wall"
                                                           link:[info valueForKey:@"url"]];
-    [controller presentViewController:shareDialog animated:YES completion:nil];
+    [controller presentViewController:shareDialog animated:YES completion:handler];
 }
 
 

@@ -48,7 +48,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Picture"];
     request.predicate = nil;
     self.CachedPaintings = [context executeFetchRequest:request error:NULL];
-    if ([[SessionControl sharedManager]checkInternetConnection]) {
+    if ([[SessionControl sharedManager]checkInternetConnectionWithHandler:nil]) {
         [[ServerFetcher sharedInstance]GetLikesForUser:@"" callback:^(NSMutableArray *responde) {
             self.urls = responde;
             NSDictionary *dic= [[ServerFetcher sharedInstance]Paintingdic];

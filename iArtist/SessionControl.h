@@ -12,12 +12,15 @@
 }
 
 -(void)beginNotify;
--(BOOL)checkInternetConnection;
+-(BOOL)checkInternetConnectionWithHandler:(void(^)())handler;
 -(NSString*)checkSession:(NSString*)sessionName;
 -(NSString*)currentSocialNetwork;
--(void)refresh;
+-(void)refreshWithCompletionHandler:(void(^)())handler;
 -(void)reset;
 
 +(id)sharedManager;
+
+typedef void (^compBlock)();
+
 
 @end

@@ -7,7 +7,14 @@
 //
 
 #import "SNSocialNetworkFabric.h"
+#import "SNTwitterSocialNetwork.h"
 
 @interface SNTwitterFabric : SNSocialNetworkFabric
+
+-(SNSocialNetwork *)getSocialNetwork;
+
+-(SNSocialNetworkButton *)getSocialNetworkLoginButtonAtView:(UIView *)view withPosition:(CGPoint)position;
+
+-(SNSocialNetworkButton *)getSocialNetworkShareButtonAtView:(UIView *)view withPosition:(CGPoint)position;
 
 @end
