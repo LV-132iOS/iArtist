@@ -218,12 +218,13 @@ static NSString *querystring;
 {
     __block BOOL isFollowed = NO;
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    NSString *userid = @"/favorite_artists/";
+    NSString *userid = @"/artists/db/";
     userid = [userid stringByAppendingString:_id];
+    userid = [userid stringByAppendingString:@"/is_following"];
     userid =[self appedAcceseTockenToString:userid];
     [manager GET:userid
       parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-          if ([[responseObject valueForKey:@"result"] isEqualToString:@"true"] ) {
+          if ([[responseObject valueForKey:@"following"] isEqualToString:@"true"] ) {
               isFollowed = YES;
           }
           dispatch_async(dispatch_get_main_queue(), ^{
