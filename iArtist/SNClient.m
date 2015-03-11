@@ -199,7 +199,7 @@
                                                         NSLog(@"%@", str);
                                                         
                                                         NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-                                                        int responseStatusCode = [httpResponse statusCode];
+                                                        long responseStatusCode = [httpResponse statusCode];
                                                         
                                                         if (responseStatusCode == 200) {
                                                               handler();
@@ -324,7 +324,8 @@
 }
 
 +(NSString*) getServerTokenFromKeychain {
-    return [SSKeychain passwordForService:@"SS.iArtist.serverToken" account:@"useraccount"];
+   // return [SSKeychain passwordForService:@"SS.iArtist.serverToken" account:@"useraccount"];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
 }
 
 @end

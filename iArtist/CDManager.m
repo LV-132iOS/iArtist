@@ -69,16 +69,19 @@
 //    //sending data task
 //    
 //    [dataTask resume];
-    
+
     [self deleteServerTokenFromKeychain];
+    handler();
 }
 
 +(void) setServerTokenToKeychain:(NSString*) string {
     [SSKeychain setPassword:string forService:@"SS.iArtist.serverToken" account:@"useraccount"];
+    [[NSUserDefaults standardUserDefaults] setObject:string forKey:@"token"];
 }
 
 +(void) deleteServerTokenFromKeychain {
     [SSKeychain deletePasswordForService:@"SS.iArtist.serverToken" account:@"useraccount"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
 }
 
 

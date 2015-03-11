@@ -9,6 +9,7 @@
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)SS.iArtist</string>
+		<string>$(AppIdentifierPrefix)SS.iArtist.serverToken</string>
 	</array>
 </dict>
 </plist>
