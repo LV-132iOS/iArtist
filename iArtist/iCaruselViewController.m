@@ -443,22 +443,26 @@ UIVisualEffectView *visualEffectView;
     CGRect rect;
         if ([identifier isEqualToString: @"ModalToPreviewOnWall"]) {
             
-            NSString *realsize = [NSString stringWithString:self.pictureSize.text];
-            NSInteger indexOfX;
-            CGPoint sizeOfNewPicture;
+          //  NSString *realsize = [NSString stringWithString:self.pictureSize.text];
+            
+            NSString *realsize = [self.CurrentPainting valueForKey:@"realsize"];//self.pictureSize.text;
+           
+            NSInteger indexOfX = 0;
+            CGSize sizeOfNewPicture;
             for (indexOfX = 0; indexOfX < realsize.length; indexOfX ++) {
                 if ([realsize characterAtIndex:indexOfX] == 'x') {
                     
-                    sizeOfNewPicture = CGPointMake([realsize substringFromIndex:(indexOfX + 1)].doubleValue * 7.6 /
+                    sizeOfNewPicture = CGSizeMake([realsize substringFromIndex:(indexOfX + 1)].doubleValue * 7.6 /
                                                    ([AVManager sharedInstance].wallImage.distanceToWall.doubleValue),
                                                    [realsize substringToIndex:indexOfX].doubleValue * 7.6 /
                                                    ([AVManager sharedInstance].wallImage.distanceToWall.doubleValue));
+                    
+                    rect = (CGRect){.origin.x = 512 - sizeOfNewPicture.width / 2, .origin.y = 384 - sizeOfNewPicture.height / 2,
+                        .size.width = sizeOfNewPicture.width, .size.height = sizeOfNewPicture.height};
+                    break;
                 }
             }
             
-            rect = (CGRect){.origin.x = 512 - sizeOfNewPicture.x / 2, .origin.y = 384 - sizeOfNewPicture.y / 2,
-                 .size.width = sizeOfNewPicture.x, .size.height = sizeOfNewPicture.y};
-
             } else if ([identifier isEqualToString:@"ModalToDetail"]){
         rect = CGRectMake(0, 0, 1024, 768);
     }
