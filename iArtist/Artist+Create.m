@@ -14,9 +14,7 @@
 
 +(Artist *)CreateArtistinWithId:(NSDictionary*)artid inManagedobjectcontext:(NSManagedObjectContext *)context;
 {
-  
     Artist *artist = nil;
-   // NSLog(@"%@",artid);
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Artist"];
     request.predicate = [NSPredicate predicateWithFormat:@"id_=%@", artid];
     NSError *error;

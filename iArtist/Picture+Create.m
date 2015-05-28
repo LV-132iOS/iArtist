@@ -41,7 +41,6 @@
         picture.genre = [data valueForKey:@"genre"];
         picture.tags = [[data valueForKey:@"tags"]componentsJoinedByString:@","];
         picture.owner = [Artist CreateArtistinWithId:[data valueForKeyPath:[NSString stringWithFormat:@"artistId" ]] inManagedobjectcontext:context];
-     //   NSLog(@"%@",picture);
         [(AppDelegate *)[[UIApplication sharedApplication] delegate] saveContext];
     }
 
